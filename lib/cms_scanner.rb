@@ -1,5 +1,5 @@
 require 'opt_parse_validator'
-require 'browser'
+require 'cms_scanner/browser'
 require 'cms_scanner/version'
 
 # Module
