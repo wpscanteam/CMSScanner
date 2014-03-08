@@ -38,7 +38,7 @@ module CMSScanner
 
       def after_scan; end
 
-      # @return [ Array<OptParseValidator::Opt> ]
+      # @return [ Array<OptParseValidator::OptBase> ]
       def self.cli_options; end
     end
   end
