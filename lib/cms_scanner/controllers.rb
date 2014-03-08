@@ -17,6 +17,10 @@ module CMSScanner
     end
 
     def run
+      parsed_options             = option_parser.results
+      first.class.parsed_options = parsed_options
+      first.class.target         = Target.new(parsed_options[:url])
+
       each         { |c| c.before_scan }
       each         { |c| c.run }
       reverse.each { |c| c.after_scan }

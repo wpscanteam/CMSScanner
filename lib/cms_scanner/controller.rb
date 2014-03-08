@@ -32,6 +32,15 @@ module CMSScanner
         @@parsed_options
       end
 
+      # For output formating (TODO)
+      def self.formatter=(formatter)
+        @@formatter = formatter
+      end
+
+      def formatter
+        @@formatter
+      end
+
       def before_scan; end
 
       def run; end

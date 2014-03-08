@@ -25,11 +25,6 @@ module CMSScanner
     end
 
     def run
-      parsed_options = controllers.option_parser.results
-
-      Controller::Core.parsed_options = parsed_options
-      Controller::Core.target         = Target.new(parsed_options[:url])
-
       controllers.run
     end
   end
