@@ -2,7 +2,6 @@
 require 'opt_parse_validator'
 require 'typhoeus'
 require 'nokogiri'
-require 'active_support/inflector'
 # Custom Libs
 require 'cms_scanner/target'
 require 'cms_scanner/browser'
