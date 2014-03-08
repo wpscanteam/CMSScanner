@@ -1,5 +1,3 @@
-require 'typhoeus'
-
 # Singleton used to perform HTTP/HTTPS request to the target
 class Browser
   @@instance = nil
