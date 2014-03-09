@@ -1,7 +1,7 @@
 module CMSScanner
   module Controller
     # Core Controller
-    class Core < Controller::Base
+    class Core < Base
       def self.cli_options
         [
           OptParseValidator::OptBoolean.new(%w[-v --verbose]),

@@ -1,7 +1,7 @@
 module CMSScanner
   module Controller
     # Custom Controller
-    class Custom < Controller::Base
+    class Custom < Base
       def before_scan
         puts "Custom Before #{target.url}"
       end

@@ -7,9 +7,7 @@ require 'cms_scanner/target'
 require 'cms_scanner/browser'
 require 'cms_scanner/version'
 require 'cms_scanner/controllers'
-require 'cms_scanner/controller'
-require 'cms_scanner/controller/core'
-require 'cms_scanner/controller/custom'
+require 'cms_scanner/formatters'
 
 # Module
 module CMSScanner

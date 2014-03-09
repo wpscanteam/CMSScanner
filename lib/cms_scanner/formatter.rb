@@ -1,10 +1,18 @@
 module CMSScanner
+  # Formatter
   module Formatter
-    # Base & Default Formatter
-    class Cli
-      def format
-        'cli'
-      end
+    # @param [ String ] format
+    #
+    # @return [ Formatter ]
+    def self.load(format = nil)
+      format ||= 'CLI' # default format
+
+      const_get(format).new
+    end
+
+    # Base Formatter
+    class Base
+      def format; end
 
       # @param [ String ] tpl
       # @param [ Hash ] vars
