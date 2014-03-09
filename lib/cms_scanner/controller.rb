@@ -5,22 +5,12 @@ module CMSScanner
       def initialize
       end
 
-      # @param [ CMSScanner::Target ] target
-      def self.target=(target)
-        @@target = target
-      end
-
       def target
-        @@target
+        @@target ||= Target.new(parsed_options[:url])
       end
 
-      # @param [ Boolean ] verbose
-      def self.verbose=(verbose)
-        @@verbose = verbose
-      end
-
-      def verbose
-        @@verbose
+      def verbose?
+        parsed_options[:verbose]
       end
 
       # @param [ Hash ] options
@@ -32,13 +22,8 @@ module CMSScanner
         @@parsed_options
       end
 
-      # For output formating (TODO)
-      def self.formatter=(formatter)
-        @@formatter = formatter
-      end
-
       def formatter
-        @@formatter
+        @@formatter ||= Formatter::Cli.new
       end
 
       def before_scan; end

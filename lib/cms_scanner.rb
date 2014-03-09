@@ -16,8 +16,7 @@ module CMSScanner
   # Scan
   class Scan
     def initialize
-      controllers << Controller::Core.new <<
-                     Controller::Custom.new
+      controllers << Controller::Core.new
     end
 
     def controllers
