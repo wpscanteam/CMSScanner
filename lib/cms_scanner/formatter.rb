@@ -16,23 +16,30 @@ module CMSScanner
 
       # @param [ String ] tpl
       # @param [ Hash ] vars
-      def render(tpl, vars)
-        view(tpl).render(vars)
+      def render(tpl, vars = {})
+        template_vars(vars)
+
+        ERB.new(File.read(view_path(tpl))).result(binding)
       end
 
       # @param [ String ] tpl
       #
-      # @return [ View ] The view
-      def view(tpl)
+      # @return [ String ] The path of the view
+      def view_path(tpl)
         fail "Wrong tpl format: '#{tpl}'" unless tpl =~ /\A[\w\/]+\z/
 
         views_directories.reverse.each do |dir|
           potential_file = File.join(dir, format, "#{tpl}.erb")
 
-          return View.new(potential_file) if File.exist?(potential_file)
+          return potential_file if File.exist?(potential_file)
         end
 
         fail "View not found for #{tpl}"
+      end
+
+      # @return [ Void ]
+      def template_vars(vars)
+        vars.each { |key, value| instance_variable_set("@#{key}", value) }
       end
 
       def views_directories

@@ -33,9 +33,10 @@ module CMSScanner
       # @param [ String ] tpl
       # @param [ Hash ] vars
       def render(tpl, vars = {})
-        tpl = "#{self.class.name.demodulize.downcase}/#{tpl}"
-
-        formatter.render(tpl, instance_variable_values.merge(vars))
+        formatter.render(
+          "#{self.class.name.demodulize.downcase}/#{tpl}",
+          instance_variable_values.merge(vars)
+        )
       end
 
       # @return [ Hash ] All the instance variable keys associated to their values
