@@ -10,7 +10,10 @@ module CMSScanner
       end
 
       def before_scan
-        puts "Core Before #{target.url}"
+        # puts 'Core Before'
+        @url = target.url
+        puts render('start')
+
         target.url = 'http://new-url.com/'
       end
 

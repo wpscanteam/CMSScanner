@@ -30,6 +30,25 @@ module CMSScanner
         @@formatter ||= Formatter.load(parsed_options[:format])
       end
 
+      # @param [ String ] tpl
+      # @param [ Hash ] vars
+      def render(tpl, vars = {})
+        tpl = "#{self.class.name.demodulize.downcase}/#{tpl}"
+
+        formatter.render(tpl, instance_variable_values.merge(vars))
+      end
+
+      # @return [ Hash ] All the instance variable keys associated to their values
+      def instance_variable_values
+        h = {}
+        instance_variables.each do |a|
+          s    = a.to_s
+          n    = s[1..s.size]
+          h[n] = instance_variable_get(a)
+        end
+        h
+      end
+
       def before_scan; end
 
       def run; end
