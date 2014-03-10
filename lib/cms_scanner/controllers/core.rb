@@ -4,8 +4,9 @@ module CMSScanner
     class Core < Base
       def self.cli_options
         [
-          OptParseValidator::OptBoolean.new(%w[-v --verbose]),
-          OptParseValidator::OptString.new(['-u', '--url URL'], required: true)
+          OptParseValidator::OptBoolean.new(%w{-v --verbose}),
+          OptParseValidator::OptString.new(['-u', '--url URL'], required: true),
+          OptParseValidator::OptString.new(['-o', '--output FILE', 'Output to FILE']) # TODO: modify the OptFilePath for writing permissions
         ]
       end
 

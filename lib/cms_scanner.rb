@@ -7,6 +7,7 @@ require 'active_support/inflector'
 require 'pathname'
 require 'erb'
 # Custom Libs
+require 'helper'
 require 'cms_scanner/target'
 require 'cms_scanner/browser'
 require 'cms_scanner/version'
