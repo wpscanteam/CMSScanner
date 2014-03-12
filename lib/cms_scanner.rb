@@ -3,6 +3,7 @@ require 'opt_parse_validator'
 require 'typhoeus'
 require 'nokogiri'
 require 'active_support/inflector'
+require 'addressable/uri'
 # Standard Libs
 require 'pathname'
 require 'erb'

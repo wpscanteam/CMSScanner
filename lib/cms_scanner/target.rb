@@ -1,10 +1,7 @@
+require 'cms_scanner/web_site'
+
 module CMSScanner
   # Target to Scan
-  class Target
-    attr_accessor :url
-
-    def initialize(url)
-      @url = url
-    end
+  class Target < WebSite
   end
 end

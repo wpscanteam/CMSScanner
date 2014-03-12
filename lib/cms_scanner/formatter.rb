@@ -5,9 +5,9 @@ module CMSScanner
     #
     # @return [ Formatter ]
     def self.load(format = nil)
-      format ||= 'CLI' # default format
+      format ||= 'cli' # default format
 
-      const_get(format).new
+      const_get(format.capitalize).new
     end
 
     # Base Formatter
