@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'opt_parse_validator'
   s.add_dependency 'typhoeus'
   s.add_dependency 'nokogiri'
+  s.add_dependency 'addressable'
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rs', '~> 2.14'
