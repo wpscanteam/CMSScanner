@@ -5,6 +5,15 @@ module CMSScanner
       def initialize
       end
 
+      # @return [ Array<OptParseValidator::OptBase> ]
+      def cli_options; end
+
+      def before_scan; end
+
+      def run; end
+
+      def after_scan; end
+
       # @return [ Target ]
       def target
         @@target ||= Target.new(parsed_options[:url])
@@ -39,7 +48,7 @@ module CMSScanner
         )
       end
 
-      # @return [ Hash ] All the instance variable keys associated to their values
+      # @return [ Hash ] All the instance variable keys associated and their values
       def instance_variable_values
         h = {}
         instance_variables.each do |a|
@@ -49,15 +58,6 @@ module CMSScanner
         end
         h
       end
-
-      def before_scan; end
-
-      def run; end
-
-      def after_scan; end
-
-      # @return [ Array<OptParseValidator::OptBase> ]
-      def self.cli_options; end
     end
   end
 end

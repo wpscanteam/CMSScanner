@@ -2,7 +2,7 @@ module CMSScanner
   module Controller
     # Core Controller
     class Core < Base
-      def self.cli_options
+      def cli_options
         [
           OptParseValidator::OptBoolean.new(%w{-v --verbose}),
           OptParseValidator::OptURL.new(['-u', '--url URL'], required: true),

@@ -14,7 +14,7 @@ module CMSScanner
 
     # @param [ CMSScanner::Controller::Base ] controller
     def <<(controller)
-      options = controller.class.cli_options
+      options = controller.cli_options
 
       option_parser.add(*options) if options
       super(controller)
