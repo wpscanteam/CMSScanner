@@ -12,7 +12,14 @@ module CMSScanner
 
     # Base Formatter
     class Base
-      def format; end
+      def format
+        self.class.name.demodulize.downcase
+      end
+
+      # This is called after the scan
+      # and used in some format (e.g JSON)
+      # to indent results
+      def beautify; end
 
       # @see #render
       def output(tpl, vars = {})
@@ -50,8 +57,6 @@ module CMSScanner
       def views_directories
         @views_directories ||= [Pathname.new(__FILE__).dirname.join('..', 'views').to_s]
       end
-
-      def beautify; end
     end
   end
 end

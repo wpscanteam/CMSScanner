@@ -2,10 +2,6 @@ module CMSScanner
   module Formatter
     # JSON Formatter
     class Json < Base
-      def format
-        'json'
-      end
-
       def output(tpl, vars = {})
         @buffer ||= render(tpl, vars)
       end
