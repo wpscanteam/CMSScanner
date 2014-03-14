@@ -17,7 +17,7 @@ module CMSScanner
       end
 
       # This is called after the scan
-      # and used in some format (e.g JSON)
+      # and used in some formatters (e.g JSON)
       # to indent results
       def beautify; end
 
