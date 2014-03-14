@@ -14,12 +14,22 @@ module CMSScanner
     class Base
       def format; end
 
+      # @see #render
+      def output(tpl, vars = {})
+        puts render(tpl, vars)
+      end
+
       # @param [ String ] tpl
       # @param [ Hash ] vars
       def render(tpl, vars = {})
         template_vars(vars)
 
         ERB.new(File.read(view_path(tpl))).result(binding)
+      end
+
+      # @return [ Void ]
+      def template_vars(vars)
+        vars.each { |key, value| instance_variable_set("@#{key}", value) }
       end
 
       # @param [ String ] tpl
@@ -37,14 +47,11 @@ module CMSScanner
         fail "View not found for #{tpl}"
       end
 
-      # @return [ Void ]
-      def template_vars(vars)
-        vars.each { |key, value| instance_variable_set("@#{key}", value) }
-      end
-
       def views_directories
         @views_directories ||= [Pathname.new(__FILE__).dirname.join('..', 'views').to_s]
       end
+
+      def beautify; end
     end
   end
 end

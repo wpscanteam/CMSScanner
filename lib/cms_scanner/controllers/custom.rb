@@ -3,15 +3,15 @@ module CMSScanner
     # Custom Controller
     class Custom < Base
       def before_scan
-        puts "Custom Before #{target.url}"
+        # puts "Custom Before #{target.url}"
       end
 
       def run
-        puts 'Custom Running'
+        # puts 'Custom Running'
       end
 
       def after_scan
-        puts 'Custom After'
+        # puts 'Custom After'
       end
     end
   end

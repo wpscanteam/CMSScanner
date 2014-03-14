@@ -41,6 +41,19 @@ module CMSScanner
 
       # @param [ String ] tpl
       # @param [ Hash ] vars
+      #
+      # @return [ Void ]
+      def output(tpl, vars = {})
+        formatter.output(
+          "#{self.class.name.demodulize.downcase}/#{tpl}",
+          instance_variable_values.merge(vars)
+        )
+      end
+
+      # @param [ String ] tpl
+      # @param [ Hash ] vars
+      #
+      # @return [ String ]
       def render(tpl, vars = {})
         formatter.render(
           "#{self.class.name.demodulize.downcase}/#{tpl}",
