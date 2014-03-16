@@ -1,6 +1,5 @@
 require 'cms_scanner/controller'
 require 'cms_scanner/controllers/core'
-require 'cms_scanner/controllers/custom'
 
 module CMSScanner
   # Controllers Container

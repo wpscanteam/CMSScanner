@@ -12,9 +12,9 @@ module CMSScanner
 
     # Base Formatter
     class Base
-      # @return [ String ] The downcased name of the class
+      # @return [ String ] The underscored name of the class
       def format
-        self.class.name.demodulize.downcase
+        self.class.name.demodulize.underscore
       end
 
       # This is called after the scan
@@ -53,12 +53,15 @@ module CMSScanner
           return potential_file if File.exist?(potential_file)
         end
 
-        fail "View not found for #{tpl} in #{format} formatter"
+        fail "View not found for #{format}/#{tpl}"
       end
 
       # @return [ Array<String> ] The directories to look into for views
       def views_directories
-        @views_directories ||= [Pathname.new(__FILE__).dirname.join('..', 'views').to_s]
+        @views_directories ||= [
+          Pathname.new(__FILE__).dirname.join('..', 'views').to_s,
+          Pathname.new(Dir.pwd).join('views').to_s
+        ]
       end
     end
   end

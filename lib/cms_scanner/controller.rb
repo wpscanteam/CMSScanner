@@ -2,6 +2,8 @@ module CMSScanner
   module Controller
     # Base Controller
     class Base
+      include OptParseValidator
+
       # @return [ Array<OptParseValidator::OptBase> ]
       def cli_options; end
 
@@ -37,7 +39,7 @@ module CMSScanner
       # @return [ Void ]
       def output(tpl, vars = {})
         formatter.output(
-          "#{self.class.name.demodulize.downcase}/#{tpl}",
+          "#{self.class.name.demodulize.underscore}/#{tpl}",
           instance_variable_values.merge(vars)
         )
       end
@@ -48,7 +50,7 @@ module CMSScanner
       # @return [ String ]
       def render(tpl, vars = {})
         formatter.render(
-          "#{self.class.name.demodulize.downcase}/#{tpl}",
+          "#{self.class.name.demodulize.underscore}/#{tpl}",
           instance_variable_values.merge(vars)
         )
       end
