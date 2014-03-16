@@ -16,12 +16,6 @@ module CMSScanner
         @@target ||= Target.new(parsed_options[:url])
       end
 
-      # TODO: This should be in the formatter
-      # @return [ Boolean ]
-      def verbose?
-        parsed_options[:verbose]
-      end
-
       # @param [ Hash ] options
       def self.parsed_options=(options)
         @@parsed_options = options
@@ -59,9 +53,9 @@ module CMSScanner
         )
       end
 
-      # @return [ Hash ] All the instance variable keys associated and their values
+      # @return [ Hash ] All the instance variable keys (and their values) and the verbose value
       def instance_variable_values
-        h = {}
+        h = { verbose: parsed_options[:verbose] }
         instance_variables.each do |a|
           s    = a.to_s
           n    = s[1..s.size]

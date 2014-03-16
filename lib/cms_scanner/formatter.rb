@@ -32,7 +32,8 @@ module CMSScanner
       def render(tpl, vars = {})
         template_vars(vars)
 
-        ERB.new(File.read(view_path(tpl))).result(binding)
+        # '<>' is used to disabled new lines for <% and %> statements
+        ERB.new(File.read(view_path(tpl)), nil, '<>').result(binding)
       end
 
       # @return [ Void ]

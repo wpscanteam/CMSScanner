@@ -4,7 +4,7 @@ module CMSScanner
     class Core < Base
       def cli_options
         [
-          OptParseValidator::OptBoolean.new(%w{-v --verbose}),
+          OptParseValidator::OptBoolean.new(%w(-v --verbose)),
           OptParseValidator::OptURL.new(['-u', '--url URL'], required: true),
           OptParseValidator::OptString.new(['-o', '--output FILE', 'Output to FILE']), # TODO: modify the OptFilePath for writing permissions
           OptParseValidator::OptString.new(['-f', '--format FORMAT']) # Should be OptChoice
@@ -19,7 +19,7 @@ module CMSScanner
 
       def run
         # puts 'Core Running'
-        # fail 'dummy error'
+        fail 'dummy error'
       end
 
       def after_scan

@@ -4,3 +4,5 @@ ClassVars:
   Enabled: false
 RedundantBegin:
   Enabled: false
+MethodLength:
+  Max: 15
