@@ -1,6 +1,15 @@
 # CMSScanner
 
-This gem is currently Experimental
+The goal of this gem is to provide a quick and easy way to create a CMS/WebSite Scanner by acting like a Framework and providing classes, formatters etc.
+
+## /!\ This gem is currently Experimental /!\
+
+To be able to run the test.rb, the OptParseValidator gem is needed and currently has to be built manually:
+```
+git clone https://github.com/wpscanteam/OptParseValidator.git
+cd OptParseValidator
+rake install
+```
 
 ## Contributing
 
