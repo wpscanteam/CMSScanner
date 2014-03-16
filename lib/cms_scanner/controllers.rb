@@ -12,7 +12,7 @@ module CMSScanner
       # @option_parser.options_files << TODO
     end
 
-    # @param [ CMSScanner::Controller::Base ] controller
+    # @param [ Controller::Base ] controller
     def <<(controller)
       options = controller.cli_options
 

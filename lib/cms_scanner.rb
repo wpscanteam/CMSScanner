@@ -23,6 +23,7 @@ module CMSScanner
       controllers << Controller::Core.new
     end
 
+    # @return [ Controllers ]
     def controllers
       @controllers ||= Controllers.new
     end

@@ -3,7 +3,7 @@ module CMSScanner
   module Formatter
     # @param [ String ] format
     #
-    # @return [ Formatter ]
+    # @return [ Formatter::Base ]
     def self.load(format = nil)
       format ||= 'cli' # default format
 
@@ -12,6 +12,7 @@ module CMSScanner
 
     # Base Formatter
     class Base
+      # @return [ String ] The downcased name of the class
       def format
         self.class.name.demodulize.downcase
       end
@@ -51,9 +52,10 @@ module CMSScanner
           return potential_file if File.exist?(potential_file)
         end
 
-        fail "View not found for #{tpl}"
+        fail "View not found for #{tpl} in #{format} formatter"
       end
 
+      # @return [ Array<String> ] The directories to look into for views
       def views_directories
         @views_directories ||= [Pathname.new(__FILE__).dirname.join('..', 'views').to_s]
       end

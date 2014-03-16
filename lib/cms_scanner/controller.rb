@@ -2,9 +2,6 @@ module CMSScanner
   module Controller
     # Base Controller
     class Base
-      def initialize
-      end
-
       # @return [ Array<OptParseValidator::OptBase> ]
       def cli_options; end
 
@@ -35,7 +32,7 @@ module CMSScanner
         @@parsed_options ||= {}
       end
 
-      # @return [ Formatter ]
+      # @return [ Formatter::Base ]
       def formatter
         @@formatter ||= Formatter.load(parsed_options[:format])
       end
