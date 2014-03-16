@@ -2,3 +2,5 @@ LineLength:
   Enabled: false
 ClassVars:
   Enabled: false
+RedundantBegin:
+  Enabled: false

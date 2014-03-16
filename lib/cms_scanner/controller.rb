@@ -19,6 +19,7 @@ module CMSScanner
         @@target ||= Target.new(parsed_options[:url])
       end
 
+      # TODO: This should be in the formatter
       # @return [ Boolean ]
       def verbose?
         parsed_options[:verbose]
@@ -31,7 +32,7 @@ module CMSScanner
 
       # @return [ Hash ]
       def parsed_options
-        @@parsed_options
+        @@parsed_options ||= {}
       end
 
       # @return [ Formatter ]

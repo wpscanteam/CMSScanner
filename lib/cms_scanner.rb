@@ -28,7 +28,13 @@ module CMSScanner
     end
 
     def run
-      controllers.run
+      begin
+        controllers.run
+      rescue => e
+        controllers.first.formatter.output('scan_aborted', reason: e.message)
+      ensure
+        controllers.first.formatter.beautify
+      end
     end
   end
 end

@@ -19,6 +19,7 @@ module CMSScanner
 
       def run
         # puts 'Core Running'
+        # fail 'dummy error'
       end
 
       def after_scan

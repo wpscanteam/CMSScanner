@@ -29,8 +29,6 @@ module CMSScanner
       each         { |c| c.before_scan }
       each         { |c| c.run }
       reverse.each { |c| c.after_scan }
-
-      first.formatter.beautify
     end
   end
 end
