@@ -8,12 +8,7 @@ The goal of this gem is to provide a quick and easy way to create a CMS/WebSite 
 
 ## /!\ This gem is currently Experimental /!\
 
-To be able to run the test.rb, the OptParseValidator gem is needed and currently has to be built manually:
-```
-git clone https://github.com/wpscanteam/OptParseValidator.git
-cd OptParseValidator
-rake install
-```
+Install Dependencies: ```bundle install```
 
 ## Contributing
 
