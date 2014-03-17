@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'typhoeus'
   s.add_dependency 'nokogiri'
   s.add_dependency 'addressable'
+  s.add_dependency 'activesupport'
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec', '~> 2.14'
