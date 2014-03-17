@@ -4,8 +4,6 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 # FIXTURES = File.expand_path(File.join(File.dirname(__FILE__), 'fixtures'))
 
 require 'simplecov'
-require 'cms_scanner'
-# require 'shared_examples'
 
 if ENV['TRAVIS']
   require 'coveralls'
@@ -15,3 +13,6 @@ end
 SimpleCov.start do
   add_filter '/spec/'
 end
+
+require 'cms_scanner'
+# require 'shared_examples'
