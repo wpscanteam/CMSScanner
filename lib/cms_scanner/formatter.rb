@@ -45,7 +45,7 @@ module CMSScanner
       #
       # @return [ String ] The path of the view
       def view_path(tpl)
-        fail "Wrong tpl format: '#{tpl}'" unless tpl =~ /\A[\w\/]+\z/
+        fail "Wrong tpl format: '#{tpl}'" unless tpl =~ /\A[\w\/_]+\z/
 
         views_directories.reverse.each do |dir|
           potential_file = File.join(dir, format, "#{tpl}.erb")
