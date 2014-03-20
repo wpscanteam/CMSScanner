@@ -1,7 +1,8 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
-FIXTURES = Pathname.new(__FILE__).dirname.join('fixtures').to_s
+FIXTURES       = Pathname.new(__FILE__).dirname.join('fixtures').to_s
+FIXTURES_VIEWS = File.join(FIXTURES, 'views')
 
 require 'simplecov'
 
@@ -12,6 +13,7 @@ end
 
 SimpleCov.start do
   add_filter '/spec/'
+  add_filter 'helper'
 end
 
 require 'cms_scanner'

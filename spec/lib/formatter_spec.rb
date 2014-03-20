@@ -17,10 +17,19 @@ end
 describe CMSScanner::Formatter::Base do
 
   subject(:formatter) { described_class.new }
-  let(:fixture_views) { File.join(FIXTURES, 'views') }
 
   describe '#format' do
     its(:format) { should eq 'base' }
+  end
+
+  describe '#render, output' do
+    before { formatter.views_directories << FIXTURES_VIEWS }
+
+    it 'renders the template and does not override the @views_directories' do
+      $stdout.should_receive(:puts).with("It Works!\nViews Dirs: #{formatter.views_directories}")
+
+      formatter.output('test', test: 'Works!', views_directories: 'owned')
+    end
   end
 
   describe '#view_path' do
@@ -41,11 +50,11 @@ describe CMSScanner::Formatter::Base do
     end
 
     context 'when the tpl is found' do
-      before { formatter.views_directories << fixture_views }
+      before { formatter.views_directories << FIXTURES_VIEWS }
 
       it 'returns its path' do
         tpl      = 'test'
-        expected = File.join(fixture_views, 'base', "#{tpl}.erb")
+        expected = File.join(FIXTURES_VIEWS, 'base', "#{tpl}.erb")
 
         formatter.view_path(tpl).should eq expected
       end

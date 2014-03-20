@@ -36,9 +36,13 @@ module CMSScanner
         ERB.new(File.read(view_path(tpl)), nil, '<>').result(binding)
       end
 
+      # @param [ Hash ] vars
+      #
       # @return [ Void ]
       def template_vars(vars)
-        vars.each { |key, value| instance_variable_set("@#{key}", value) }
+        vars.each do |key, value|
+          instance_variable_set("@#{key}", value) unless key == :views_directories
+        end
       end
 
       # @param [ String ] tpl
