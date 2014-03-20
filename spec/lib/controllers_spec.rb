@@ -9,30 +9,44 @@ end
 
 describe CMSScanner::Controllers do
 
-  subject(:controllers) { described_class.new }
+  subject(:controllers)  { described_class.new }
+  let(:controller_mod) { CMSScanner::Controller }
 
   describe '#<<' do
     its(:size) { should be 0 }
 
     context 'when controllers are added' do
-      before { controllers << CMSScanner::Controller::Spec.new << CMSScanner::Controller::Base.new }
+      before { controllers << controller_mod::Spec.new << controller_mod::Base.new }
 
       its(:size) { should be 2 }
     end
 
     context 'when a controller is added twice' do
-      before { 2.times { controllers << CMSScanner::Controller::Spec.new } }
+      before { 2.times { controllers << controller_mod::Spec.new } }
 
       its(:size) { should be 1 }
     end
 
     it 'returns self' do
-      (controllers << CMSScanner::Controller::Spec.new).should be_a described_class
+      (controllers << controller_mod::Spec.new).should be_a described_class
     end
   end
 
   describe '#run' do
-    xit
+    it 'runs the before_scan, run and after_scan methods of each controller' do
+      spec = controller_mod::Spec.new
+      base = controller_mod::Base.new
+
+      controllers << spec << base
+
+      # TODO: Any way to test the orders ? (after_scan should reverse the order)
+      [base, spec].each do |c|
+        c.should_receive(:before_scan)
+        c.should_receive(:run)
+        c.should_receive(:after_scan)
+      end
+      controllers.run
+    end
   end
 
 end
