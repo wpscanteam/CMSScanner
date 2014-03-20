@@ -12,11 +12,16 @@ module CMSScanner
     end
 
     # @param [ Controller::Base ] controller
+    #
+    # @retun [ Controllers ] self
     def <<(controller)
       options = controller.cli_options
 
-      option_parser.add(*options) if options
-      super(controller)
+      unless include?(controller)
+        option_parser.add(*options) if options
+        super(controller)
+      end
+      self
     end
 
     def run

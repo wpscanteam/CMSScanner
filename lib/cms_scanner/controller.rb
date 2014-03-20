@@ -13,6 +13,10 @@ module CMSScanner
 
       def after_scan; end
 
+      def ==(other)
+        self.class == other.class
+      end
+
       # @return [ Target ]
       def target
         @@target ||= Target.new(parsed_options[:url])
