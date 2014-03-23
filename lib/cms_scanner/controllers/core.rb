@@ -12,18 +12,24 @@ module CMSScanner
       end
 
       def before_scan
-        output('start', url: target.url)
-
-        target.url = 'http://new-url.com/'
+        # TODO: basic checks (target.online? etc)
       end
 
       def run
-        # puts 'Core Running'
+        @start_time   = Time.now
+        @start_memory = memory_usage
+
+        output('started', url: target.url)
+        sleep(5) # Simulate a scan
         # fail 'dummy error'
       end
 
       def after_scan
-        # puts 'Core After'
+        @stop_time   = Time.now
+        @elapsed     = @stop_time - @start_time
+        @used_memory = memory_usage - @start_memory
+
+        output('finished')
       end
     end
   end

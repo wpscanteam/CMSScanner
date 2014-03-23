@@ -10,6 +10,12 @@ describe CMSScanner::Formatter do
         f.should be_a described_class::Cli
       end
     end
+
+    it 'loads the correct formatter' do
+      f = described_class.load('cli_no_colour')
+
+      f.should be_a described_class::CliNoColour
+    end
   end
 
 end

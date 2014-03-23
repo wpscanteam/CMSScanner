@@ -7,7 +7,7 @@ module CMSScanner
     def self.load(format = nil)
       format ||= 'cli' # default format
 
-      const_get(format.capitalize).new
+      const_get(format.gsub(/-/, '_').camelize).new
     end
 
     # Base Formatter
@@ -32,8 +32,9 @@ module CMSScanner
       def render(tpl, vars = {})
         template_vars(vars)
 
-        # '<>' is used to disable new lines for <% and %> statements
-        ERB.new(File.read(view_path(tpl)), nil, '<>').result(binding)
+        # '-' is used to disable new lines when -%> is used
+        # See http://www.ruby-doc.org/stdlib-2.1.1/libdoc/erb/rdoc/ERB.html
+        ERB.new(File.read(view_path(tpl)), nil, '-').result(binding)
       end
 
       # @param [ Hash ] vars
