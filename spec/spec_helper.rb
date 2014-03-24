@@ -5,6 +5,7 @@ FIXTURES       = Pathname.new(__FILE__).dirname.join('fixtures').to_s
 FIXTURES_VIEWS = File.join(FIXTURES, 'views')
 
 require 'simplecov'
+require 'webmock/rspec'
 
 if ENV['TRAVIS']
   require 'coveralls'

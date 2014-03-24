@@ -4,14 +4,17 @@ module CMSScanner
     attr_reader :uri
 
     def initialize(site_url)
-      # Add a trailing slash to the site url
-      site_url << '/' if site_url[-1, 1] != '/'
       self.url = site_url
     end
 
-    def url=(url)
-      @uri = Addressable::URI.parse(url)
-      fail Addressable::URI::InvalidURIError unless @uri.scheme
+    def url=(site_url)
+      # Add a trailing slash to the site url
+      site_url << '/' if site_url[-1, 1] != '/'
+
+      # Use the validator to ensure the site_url has a correct format
+      OptParseValidator::OptURL.new([]).validate(site_url)
+
+      @uri = Addressable::URI.parse(site_url)
     end
 
     # Used for convenience
