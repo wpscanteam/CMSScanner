@@ -24,7 +24,7 @@ module WPScan
   end
 end
 
-scanner = WPScan::Scan.new
-scanner.controllers << WPScan::Controller::WpCustom.new
-
-scanner.run
+WPScan::Scan.new do |s|
+  s.controllers << WPScan::Controller::WpCustom.new
+  s.run
+end

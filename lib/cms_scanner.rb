@@ -21,6 +21,7 @@ module CMSScanner
   class Scan
     def initialize
       controllers << Controller::Core.new
+      yield self if block_given?
     end
 
     # @return [ Controllers ]
