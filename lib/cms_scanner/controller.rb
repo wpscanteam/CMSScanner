@@ -65,7 +65,7 @@ module CMSScanner
         instance_variables.each do |a|
           s    = a.to_s
           n    = s[1..s.size]
-          h[n] = instance_variable_get(a)
+          h[n.to_sym] = instance_variable_get(a)
         end
         h
       end

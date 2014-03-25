@@ -20,7 +20,7 @@ module CMSScanner
         @start_memory = memory_usage
 
         output('started', url: target.url)
-        sleep(5) # Simulate a scan
+        sleep(2) # Simulate a scan
         # fail 'dummy error'
       end
 

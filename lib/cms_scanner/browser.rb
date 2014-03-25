@@ -23,7 +23,7 @@ module CMSScanner
     #
     # @return [ Typhoeus::Request ]
     def forge_request(url, params = {})
-      Typhoeus::Request.new(url, merge_request_params(params))
+      Typhoeus::Request.new(url, request_params(params))
     end
 
     # @param [ Hash ] params
