@@ -18,4 +18,4 @@ SimpleCov.start do
 end
 
 require 'cms_scanner'
-# require 'shared_examples'
+require 'shared_examples'

@@ -1,1 +1,2 @@
-require 'shared_examples/'
+
+require 'shared_examples/browser_actions'
