@@ -37,26 +37,31 @@ module CMSScanner
         @@formatter ||= Formatter.load(parsed_options[:format])
       end
 
-      # @param [ String ] tpl
-      # @param [ Hash ] vars
+      # @see Formatter#output
       #
       # @return [ Void ]
       def output(tpl, vars = {})
-        formatter.output(
-          "#{self.class.name.demodulize.underscore}/#{tpl}",
-          instance_variable_values.merge(vars)
-        )
+        formatter.output(*tpl_params(tpl, vars))
       end
+
+      # @see Formatter#render
+      #
+      # @return [ String ]
+      def render(tpl, vars = {})
+        formatter.render(*tpl_params(tpl, vars))
+      end
+
+      protected
 
       # @param [ String ] tpl
       # @param [ Hash ] vars
       #
-      # @return [ String ]
-      def render(tpl, vars = {})
-        formatter.render(
+      # @return [ Array<String> ]
+      def tpl_params(tpl, vars)
+        [
           "#{self.class.name.demodulize.underscore}/#{tpl}",
           instance_variable_values.merge(vars)
-        )
+        ]
       end
 
       # @return [ Hash ] All the instance variable keys (and their values) and the verbose value
