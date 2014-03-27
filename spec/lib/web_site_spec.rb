@@ -34,13 +34,13 @@ describe CMSScanner::WebSite do
     it 'returns false when offline' do
       stub_request(:get, url).to_return(status: 0)
 
-      web_site.online?.should be_false
+      web_site.should_not be_online
     end
 
     it 'returns true when online' do
       stub_request(:get, url).to_return(status: 200)
 
-      web_site.online?.should be_true
+      web_site.should be_online
     end
   end
 
@@ -48,13 +48,13 @@ describe CMSScanner::WebSite do
     it 'returns true if basic auth is detected' do
       stub_request(:get, url).to_return(status: 401)
 
-      web_site.basic_auth?.should be_true
+      web_site.should be_basic_auth
     end
 
     it 'returns false otherwise' do
       stub_request(:get, url).to_return(status: 200)
 
-      web_site.basic_auth?.should be_false
+      web_site.should_not be_basic_auth
     end
   end
 
