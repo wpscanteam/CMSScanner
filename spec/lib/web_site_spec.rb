@@ -58,4 +58,42 @@ describe CMSScanner::WebSite do
     end
   end
 
+  describe '#redirection' do
+    it 'returns nil if no redirection detected' do
+      stub_request(:get, web_site.url).to_return(status: 200, body: '')
+
+      web_site.redirection.should be_nil
+    end
+
+    [301, 302].each do |status_code|
+      it "returns http://new-location.com if the status code is #{status_code}" do
+        new_location = 'http://new-location.com'
+
+        stub_request(:get, web_site.url)
+          .to_return(status: status_code, headers: { location: new_location })
+
+        stub_request(:get, new_location).to_return(status: 200)
+
+        web_site.redirection.should eq new_location
+      end
+    end
+
+    context 'when multiple redirections' do
+      it 'returns the last redirection' do
+        first_redirection = 'www.redirection.com'
+        last_redirection  = 'redirection.com'
+
+        stub_request(:get, web_site.url)
+          .to_return(status: 301, headers: { location: first_redirection })
+
+        stub_request(:get, first_redirection)
+          .to_return(status: 302, headers: { location: last_redirection })
+
+        stub_request(:get, last_redirection).to_return(status: 200)
+
+        web_site.redirection.should eq last_redirection
+      end
+    end
+  end
+
 end

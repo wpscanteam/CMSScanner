@@ -29,7 +29,10 @@ describe CMSScanner::Scan do
 
       it 'aborts the scan with the associated output' do
         scanner.controllers[0] = CMSScanner::Controller::Failure.new
-        scanner.controllers.first.formatter.should_receive(:output).with('scan_aborted', hash_including(:reason, :trace))
+
+        scanner.controllers.first.formatter.should_receive(:output)
+          .with('scan_aborted', hash_including(:reason, :trace))
+
         scanner.run
       end
     end

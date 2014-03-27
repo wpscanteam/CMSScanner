@@ -35,5 +35,25 @@ module CMSScanner
     def basic_auth?
       Browser.get(url).code == 401
     end
+
+    # See if the remote url returns 30x redirect
+    # This method is recursive
+    # Return a string with the redirection or nil
+    def redirection(url = nil)
+      # redirection = nil
+      url    ||= @uri.to_s
+      response = Browser.get(url)
+
+      if response.code == 301 || response.code == 302
+        redirection = response.headers_hash['location']
+
+        # Let's check if there is a redirection in the redirection
+        if (other_redirection = redirection(redirection))
+          redirection = other_redirection
+        end
+      end
+
+      redirection
+    end
   end
 end

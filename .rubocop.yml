@@ -1,5 +1,5 @@
 LineLength:
-  Enabled: false
+  Max: 100
 ClassVars:
   Enabled: false
 RedundantBegin:

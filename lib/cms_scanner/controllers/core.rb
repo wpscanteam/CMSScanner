@@ -6,7 +6,8 @@ module CMSScanner
         [
           OptBoolean.new(%w(-v --verbose)),
           OptURL.new(['-u', '--url URL'], required: true),
-          OptString.new(['-o', '--output FILE', 'Output to FILE']), # TODO: modify the OptFilePath for writing permissions
+          # TODO: modify the OptFilePath for writing permissions
+          OptString.new(['-o', '--output FILE', 'Output to FILE']),
           OptString.new(['-f', '--format FORMAT']) # Should be OptChoice
         ]
       end
