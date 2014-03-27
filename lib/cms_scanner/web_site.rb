@@ -38,9 +38,11 @@ module CMSScanner
 
     # See if the remote url returns 30x redirect
     # This method is recursive
-    # Return a string with the redirection or nil
+    #
+    # @param [ String ] url
+    #
+    # @return [ String ] The redirection url or nil
     def redirection(url = nil)
-      # redirection = nil
       url    ||= @uri.to_s
       response = Browser.get(url)
 
