@@ -16,7 +16,7 @@ class Numeric
   # @return [ String ] A human readable string of the value
   def bytes_to_human
     units = %w(B KB MB GB TB)
-    e     = (Math.log(self) / Math.log(1024)).floor
+    e     = self > 0 ? (Math.log(self) / Math.log(1024)).floor : 0
     s     = format('%.3f', (to_f / 1024**e))
 
     s.sub(/\.?0*$/, ' ' + units[e])
