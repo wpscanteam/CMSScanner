@@ -17,7 +17,7 @@ describe CMSScanner::Formatter::Json do
 
   describe '#output' do
     it 'puts the rendered text in the buffer' do
-      2.times { formatter.output('render_me', test: 'Working') }
+      2.times { formatter.output('@render_me', test: 'Working') }
 
       formatter.buffer.should eq '"test": "Working","test": "Working",'
     end
@@ -25,7 +25,7 @@ describe CMSScanner::Formatter::Json do
 
   describe '#beautify' do
     it 'writes the buffer in the file' do
-      formatter.output('render_me', test: 'yolo')
+      formatter.output('@render_me', test: 'yolo')
 
       $stdout.should_receive(:puts).with(JSON.pretty_generate(JSON.parse('{"test": "yolo"}')))
       formatter.beautify

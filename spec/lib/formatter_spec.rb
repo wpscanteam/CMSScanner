@@ -31,19 +31,28 @@ describe CMSScanner::Formatter::Base do
   describe '#render, output' do
     before { formatter.views_directories << FIXTURES_VIEWS }
 
-    it 'renders the template and does not override the @views_directories' do
+    it 'renders the global template and does not override the @views_directories' do
       $stdout.should_receive(:puts).with("It Works!\nViews Dirs: #{formatter.views_directories}")
 
-      formatter.output('test', test: 'Works!', views_directories: 'owned')
+      formatter.output('@test', test: 'Works!', views_directories: 'owned')
+    end
+
+    it 'raises an error if the controller_name is nil and tpl is not a global one' do
+      expect { formatter.output('test') }.to raise_error('The controller_name can not be nil')
     end
   end
 
   describe '#view_path' do
+    before do
+      formatter.views_directories << FIXTURES_VIEWS
+      formatter.render('local', {}, 'ctrl') # Used to set the @controller_name
+    end
+
     context 'when the tpl format is invalid' do
       let(:tpl) { '../try-this' }
 
       it 'raises an error' do
-        expect { formatter.view_path(tpl) }.to raise_error("Wrong tpl format: '#{tpl}'")
+        expect { formatter.view_path(tpl) }.to raise_error("Wrong tpl format: 'ctrl/#{tpl}'")
       end
     end
 
@@ -51,18 +60,25 @@ describe CMSScanner::Formatter::Base do
       let(:tpl) { 'not_there' }
 
       it 'raises an error' do
-        expect { formatter.view_path(tpl) }.to raise_error("View not found for base/#{tpl}")
+        expect { formatter.view_path(tpl) }.to raise_error("View not found for base/ctrl/#{tpl}")
       end
     end
 
     context 'when the tpl is found' do
-      before { formatter.views_directories << FIXTURES_VIEWS }
+      context 'if it\'s a global tpl' do
+        it 'returns its path' do
+          expected = File.join(FIXTURES_VIEWS, 'base', 'test.erb')
 
-      it 'returns its path' do
-        tpl      = 'test'
-        expected = File.join(FIXTURES_VIEWS, 'base', "#{tpl}.erb")
+          formatter.view_path('@test').should eq expected
+        end
+      end
 
-        formatter.view_path(tpl).should eq expected
+      context 'if it\s a local tpl' do
+        it 'retuns its path' do
+          expected = File.join(FIXTURES_VIEWS, 'base', 'ctrl', 'local.erb')
+
+          formatter.view_path('local').should eq expected
+        end
       end
     end
   end

@@ -59,8 +59,9 @@ module CMSScanner
       # @return [ Array<String> ]
       def tpl_params(tpl, vars)
         [
-          "#{self.class.name.demodulize.underscore}/#{tpl}",
-          instance_variable_values.merge(vars)
+          tpl,
+          instance_variable_values.merge(vars),
+          self.class.name.demodulize.underscore
         ]
       end
 

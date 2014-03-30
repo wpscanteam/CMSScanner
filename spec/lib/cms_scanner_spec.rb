@@ -31,7 +31,7 @@ describe CMSScanner::Scan do
         scanner.controllers[0] = CMSScanner::Controller::Failure.new
 
         scanner.controllers.first.formatter.should_receive(:output)
-          .with('scan_aborted', hash_including(:reason, :trace))
+          .with('@scan_aborted', hash_including(:reason, :trace))
 
         scanner.run
       end

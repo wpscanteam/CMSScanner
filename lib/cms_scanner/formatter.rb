@@ -12,6 +12,8 @@ module CMSScanner
 
     # Base Formatter
     class Base
+      attr_reader :controller_name
+
       # @return [ String ] The underscored name of the class
       def format
         self.class.name.demodulize.underscore
@@ -23,14 +25,16 @@ module CMSScanner
       def beautify; end
 
       # @see #render
-      def output(tpl, vars = {})
-        puts render(tpl, vars)
+      def output(tpl, vars = {}, controller_name = nil)
+        puts render(tpl, vars, controller_name)
       end
 
       # @param [ String ] tpl
       # @param [ Hash ] vars
-      def render(tpl, vars = {})
+      # @param [ String ] controller_name
+      def render(tpl, vars = {}, controller_name = nil)
         template_vars(vars)
+        @controller_name = controller_name if controller_name
 
         # '-' is used to disable new lines when -%> is used
         # See http://www.ruby-doc.org/stdlib-2.1.1/libdoc/erb/rdoc/ERB.html
@@ -50,6 +54,13 @@ module CMSScanner
       #
       # @return [ String ] The path of the view
       def view_path(tpl)
+        if tpl[0, 1] == '@' # Global Template
+          tpl = tpl.delete('@')
+        else
+          fail 'The controller_name can not be nil' unless controller_name
+          tpl = "#{controller_name}/#{tpl}"
+        end
+
         fail "Wrong tpl format: '#{tpl}'" unless tpl =~ /\A[\w\/_]+\z/
 
         views_directories.reverse.each do |dir|
