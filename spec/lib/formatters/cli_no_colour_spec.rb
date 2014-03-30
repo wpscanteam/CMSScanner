@@ -10,7 +10,7 @@ describe CMSScanner::Formatter::CliNoColour do
 
   describe '#colorize' do
     it 'returns the text w/o any colour' do
-      formatter.red('Text').should eq('Text')
+      expect(formatter.red('Text')).to eq 'Text'
     end
   end
 

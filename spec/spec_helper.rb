@@ -18,14 +18,12 @@ SimpleCov.start do
   add_filter 'helper'
 end
 
-# TODO: Uncomment the lines below and replace all .should by expect(statement).to
 # See http://betterspecs.org/
-#
-# RSpec.configure do |config|
-#  config.expect_with :rspec do |c|
-#    c.syntax = :expect
-#  end
-# end
+RSpec.configure do |config|
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
+end
 
 require 'cms_scanner'
 require 'shared_examples'

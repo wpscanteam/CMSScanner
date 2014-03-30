@@ -7,7 +7,7 @@ shared_examples CMSScanner::Browser::Actions do
     [:get, :post, :head].each do |method|
       it 'calls the method and returns a Typhoeus::Response' do
         stub_request(method, url).to_return(status: 200)
-        CMSScanner::Browser.send(method, url).should be_a Typhoeus::Response
+        expect(CMSScanner::Browser.send(method, url)).to be_a Typhoeus::Response
       end
     end
   end
@@ -20,10 +20,10 @@ shared_examples CMSScanner::Browser::Actions do
       stub_request(:get, redirection).to_return(status: 200, body: 'Got me')
 
       response = CMSScanner::Browser.get_and_follow_location(url)
-      response.should be_a Typhoeus::Response
+      expect(response).to be_a Typhoeus::Response
       # Line below is not working due to an issue in Typhoeus/Webmock
       # See https://github.com/typhoeus/typhoeus/issues/279
-      # response.body.should eq('Got me')
+      # expect(response.body).to eq 'Got me'
     end
   end
 

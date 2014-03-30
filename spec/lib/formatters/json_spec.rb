@@ -19,7 +19,7 @@ describe CMSScanner::Formatter::Json do
     it 'puts the rendered text in the buffer' do
       2.times { formatter.output('@render_me', test: 'Working') }
 
-      formatter.buffer.should eq '"test": "Working","test": "Working",'
+      expect(formatter.buffer).to eq '"test": "Working","test": "Working",'
     end
   end
 

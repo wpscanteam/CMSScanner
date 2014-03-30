@@ -28,7 +28,7 @@ describe CMSScanner::Controllers do
     end
 
     it 'returns self' do
-      (controllers << controller_mod::Spec.new).should be_a described_class
+      expect(controllers << controller_mod::Spec.new).to be_a described_class
     end
   end
 

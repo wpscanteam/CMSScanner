@@ -24,37 +24,38 @@ describe CMSScanner::WebSite do
     context 'when valid' do
       it 'creates an Addressable object and adds a traling slash' do
         web_site.url = 'http://site.com'
-        web_site.url.should eq('http://site.com/')
-        web_site.uri.should be_a Addressable::URI
+
+        expect(web_site.url).to eq('http://site.com/')
+        expect(web_site.uri).to be_a Addressable::URI
       end
     end
   end
 
   describe '#online?' do
-    it 'returns false when offline' do
-      stub_request(:get, url).to_return(status: 0)
+    context 'when online' do
+      before { stub_request(:get, url).to_return(status: 200) }
 
-      web_site.should_not be_online
+      it { should be_online }
     end
 
-    it 'returns true when online' do
-      stub_request(:get, url).to_return(status: 200)
+    context 'when offline' do
+      before { stub_request(:get, url).to_return(status: 0) }
 
-      web_site.should be_online
+      it { should_not be_online }
     end
   end
 
   describe '#basic_auth?' do
-    it 'returns true if basic auth is detected' do
-      stub_request(:get, url).to_return(status: 401)
+    context 'when basic auth' do
+      before { stub_request(:get, url).to_return(status: 401) }
 
-      web_site.should be_basic_auth
+      it { should be_basic_auth }
     end
 
-    it 'returns false otherwise' do
-      stub_request(:get, url).to_return(status: 200)
+    context 'when no basic auth' do
+      before { stub_request(:get, url).to_return(status: 200) }
 
-      web_site.should_not be_basic_auth
+      it { should_not be_basic_auth }
     end
   end
 
@@ -62,7 +63,7 @@ describe CMSScanner::WebSite do
     it 'returns nil if no redirection detected' do
       stub_request(:get, web_site.url).to_return(status: 200, body: '')
 
-      web_site.redirection.should be_nil
+      expect(web_site.redirection).to be_nil
     end
 
     [301, 302].each do |status_code|
@@ -74,7 +75,7 @@ describe CMSScanner::WebSite do
 
         stub_request(:get, new_location).to_return(status: 200)
 
-        web_site.redirection.should eq new_location
+        expect(web_site.redirection).to eq new_location
       end
     end
 
@@ -91,7 +92,7 @@ describe CMSScanner::WebSite do
 
         stub_request(:get, last_redirection).to_return(status: 200)
 
-        web_site.redirection.should eq last_redirection
+        expect(web_site.redirection).to eq last_redirection
       end
     end
   end

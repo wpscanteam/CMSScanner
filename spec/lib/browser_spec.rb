@@ -9,7 +9,7 @@ describe CMSScanner::Browser do
 
   describe '#forge_request' do
     it 'returns a Typhoeus::Request' do
-      browser.forge_request('http://example.com').should be_a Typhoeus::Request
+      expect(browser.forge_request('http://example.com')).to be_a Typhoeus::Request
     end
   end
 
@@ -18,7 +18,7 @@ describe CMSScanner::Browser do
 
     context 'when no param is given' do
       it 'returns the default params' do
-        browser.request_params.should eq(default)
+        expect(browser.request_params).to eq(default)
       end
     end
 
@@ -26,7 +26,7 @@ describe CMSScanner::Browser do
       let(:params) { { maxredirs: 10, another_param: true } }
 
       it 'merges them' do
-        browser.request_params(params).should eq(default.merge(params))
+        expect(browser.request_params(params)).to eq(default.merge(params))
       end
     end
   end

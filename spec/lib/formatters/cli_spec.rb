@@ -10,11 +10,11 @@ describe CMSScanner::Formatter::Cli do
 
   describe '#green, #red, #colorize' do
     it 'returns the correct red string' do
-      formatter.red('Text').should eq("\e[31mText\e[0m")
+      expect(formatter.red('Text')).to eq "\e[31mText\e[0m"
     end
 
     it 'returns the correct green string' do
-      formatter.green('Another Text').should eq("\e[32mAnother Text\e[0m")
+      expect(formatter.green('Another Text')).to eq "\e[32mAnother Text\e[0m"
     end
   end
 

@@ -5,16 +5,12 @@ describe CMSScanner::Formatter do
   describe '#load' do
     context 'w/o parameter' do
       it 'loads the default formatter' do
-        f = described_class.load
-
-        f.should be_a described_class::Cli
+        expect(described_class.load).to be_a described_class::Cli
       end
     end
 
     it 'loads the correct formatter' do
-      f = described_class.load('cli_no_colour')
-
-      f.should be_a described_class::CliNoColour
+      expect(described_class.load('cli_no_colour')).to be_a described_class::CliNoColour
     end
   end
 
@@ -65,19 +61,19 @@ describe CMSScanner::Formatter::Base do
     end
 
     context 'when the tpl is found' do
+      after { expect(formatter.view_path(@tpl)).to eq @expected }
+
       context 'if it\'s a global tpl' do
         it 'returns its path' do
-          expected = File.join(FIXTURES_VIEWS, 'base', 'test.erb')
-
-          formatter.view_path('@test').should eq expected
+          @expected = File.join(FIXTURES_VIEWS, 'base', 'test.erb')
+          @tpl      = '@test'
         end
       end
 
       context 'if it\s a local tpl' do
         it 'retuns its path' do
-          expected = File.join(FIXTURES_VIEWS, 'base', 'ctrl', 'local.erb')
-
-          formatter.view_path('local').should eq expected
+          @expected = File.join(FIXTURES_VIEWS, 'base', 'ctrl', 'local.erb')
+          @tpl      = 'local'
         end
       end
     end
@@ -94,7 +90,7 @@ describe CMSScanner::Formatter::Base do
       it 'adds them' do
         formatter.views_directories << 'testing'
 
-        formatter.views_directories.should eq(default_directories << 'testing')
+        expect(formatter.views_directories).to eq(default_directories << 'testing')
       end
     end
   end
