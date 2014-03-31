@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe CMSScanner::Formatter::Json do
 
+  it_behaves_like CMSScanner::Formatter::Buffer
+
   subject(:formatter) { described_class.new }
   let(:output_file)   { File.join(FIXTURES, 'output.txt') }
 
@@ -9,10 +11,6 @@ describe CMSScanner::Formatter::Json do
 
   describe '#format' do
     its(:format) { should eq 'json' }
-  end
-
-  describe '#buffer' do
-    its(:buffer) { should be_empty }
   end
 
   describe '#output' do

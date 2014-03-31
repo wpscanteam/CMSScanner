@@ -1,3 +1,5 @@
+require 'cms_scanner/formatter/buffer'
+
 module CMSScanner
   # Formatter
   module Formatter
