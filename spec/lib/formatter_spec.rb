@@ -33,6 +33,14 @@ describe CMSScanner::Formatter::Base do
       formatter.output('@test', test: 'Works!', views_directories: 'owned')
     end
 
+    context 'when global and local rendering are used inside a template' do
+      it 'renders them correcly' do
+        rendered = formatter.render('test', { var: 'Works' }, 'ctrl')
+
+        expect(rendered).to eq "Test: Works\nLocal View\nGlobal View"
+      end
+    end
+
     it 'raises an error if the controller_name is nil and tpl is not a global one' do
       expect { formatter.output('test') }.to raise_error('The controller_name can not be nil')
     end
