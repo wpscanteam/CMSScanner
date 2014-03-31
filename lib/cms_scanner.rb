@@ -33,7 +33,11 @@ module CMSScanner
       begin
         controllers.run
       rescue => e
-        controllers.first.formatter.output('@scan_aborted', reason: e.message, trace: e.backtrace)
+        controllers.first.formatter
+          .output('@scan_aborted',
+                  reason: e.message,
+                  trace: e.backtrace,
+                  verbose: controllers.first.parsed_options[:verbose])
       ensure
         controllers.first.formatter.beautify
       end

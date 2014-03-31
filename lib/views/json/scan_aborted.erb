@@ -1,1 +1,4 @@
-"scan_aborted": "<%= @reason %>"
+"scan_aborted": "<%= @reason %>",
+<% if @verbose -%>
+"trace": <%= @trace %>,
+<% end %>

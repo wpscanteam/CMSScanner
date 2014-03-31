@@ -2,8 +2,8 @@ module CMSScanner
   module Formatter
     # JSON Formatter
     class Json < Base
-      def output(tpl, vars = {})
-        buffer << render(tpl, vars)
+      def output(tpl, vars = {}, controller_name = nil)
+        buffer << render(tpl, vars, controller_name)
       end
 
       def buffer
@@ -11,7 +11,7 @@ module CMSScanner
       end
 
       def beautify
-        puts JSON.pretty_generate(JSON.parse("{#{buffer.chomp(',')}}"))
+        puts JSON.pretty_generate(JSON.parse("{#{buffer.chomp.chomp(',')}}"))
       end
     end
   end
