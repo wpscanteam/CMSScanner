@@ -4,12 +4,15 @@ module CMSScanner
     class Core < Base
       def cli_options
         [
-          OptBoolean.new(%w(-v --verbose)),
           OptURL.new(['-u', '--url URL'], required: true),
-          # TODO: modify the OptFilePath for writing permissions
-          OptString.new(['-o', '--output FILE', 'Output to FILE']),
+          OptBoolean.new(%w(-v --verbose)),
+          OptFilePath.new(['-o', '--output FILE', 'Output to FILE'], writable: true, exists: false),
           OptString.new(['-f', '--format FORMAT']), # Should be OptChoice
-          OptString.new(['--basic-auth login:password']) # TODO: Create an OptCredentials
+          # TODO: implement the options below in Browser
+          OptCredentials.new(['--http-auth login:password']),
+          OptProxy.new(['--proxy protocol://IP:port',
+                        'Supported protocols depend on the cURL installed']),
+          OptCredentials.new(['--proxy-auth login:password'])
         ]
       end
 
