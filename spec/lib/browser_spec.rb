@@ -17,9 +17,7 @@ describe CMSScanner::Browser do
     let(:default) { { maxredirs: 3, ssl_verifypeer: false, ssl_verifyhost: 2 } }
 
     context 'when no param is given' do
-      it 'returns the default params' do
-        expect(browser.request_params).to eq(default)
-      end
+      its(:request_params) { should eq default }
     end
 
     context 'when params are supplied' do
