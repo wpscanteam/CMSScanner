@@ -4,15 +4,21 @@ module CMSScanner
     class Core < Base
       def cli_options
         [
-          OptURL.new(['-u', '--url URL'], required: true),
-          OptBoolean.new(%w(-v --verbose)),
-          OptFilePath.new(['-o', '--output FILE', 'Output to FILE'], writable: true, exists: false),
-          OptString.new(['-f', '--format FORMAT']), # Should be OptChoice
-          # TODO: implement the options below in Browser
+          OptURL.new(['--url URL', '-u'], required: true),
+          OptBoolean.new(%w(--verbose -v)),
+          OptFilePath.new(['--output FILE', '-o', 'Output to FILE'], writable: true, exists: false),
+          OptString.new(['--format FORMAT', '-f']), # Should be OptChoice
+          # Browser Options
+          OptInteger.new(['--cache-ttl TIME_TO_LIVE']), # TODO: the cache system
+          # TODO: Create an OptPositiveInteger ?
+          OptInteger.new(['--connect-timeout SECONDS', 'The connection timeout in seconds']),
           OptCredentials.new(['--http-auth login:password']),
+          OptInteger.new(['--threads VALUE', '-t', 'The max threads to use']),
           OptProxy.new(['--proxy protocol://IP:port',
                         'Supported protocols depend on the cURL installed']),
-          OptCredentials.new(['--proxy-auth login:password'])
+          OptCredentials.new(['--proxy-auth login:password']),
+          OptInteger.new(['--request-timeout SECONDS', 'The request timeout in seconds']),
+          OptString.new(['--user-agent VALUE', '--ua'])
         ]
       end
 

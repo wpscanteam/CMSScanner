@@ -22,9 +22,14 @@ module CMSScanner
         @@target ||= Target.new(parsed_options[:url])
       end
 
+      # Set the parsed options and initialize the browser
+      # with them
+      #
       # @param [ Hash ] options
       def self.parsed_options=(options)
         @@parsed_options = options
+
+        Browser.instance(options)
       end
 
       # @return [ Hash ]

@@ -1,17 +1,25 @@
 require 'cms_scanner/browser/actions'
+require 'cms_scanner/browser/options'
 
 module CMSScanner
   # Singleton used to perform HTTP/HTTPS request to the target
   class Browser
     extend Actions
 
-    def initialize
+    # @param [ Hash ] parsed_options
+    #
+    # @return [ Void ]
+    def initialize(parsed_options = {})
+      load_options(parsed_options)
     end
 
     private_class_method :new
 
-    def self.instance
-      @@instance ||= new
+    # @param [ Hash ] parsed_options
+    #
+    # @return [ Browser ] The instance
+    def self.instance(parsed_options = {})
+      @@instance ||= new(parsed_options)
     end
 
     def self.reset
@@ -30,14 +38,16 @@ module CMSScanner
     #
     # @return [ Hash ]
     def request_params(params = {})
-      # Prevent infinite self redirection
-      params.merge!(maxredirs: 3) unless params.key?(:maxredirs)
+      default = {
+        maxredirs: 3, # Prevent infinite self redirection
+        # Disable SSL-Certificate checks
+        ssl_verifypeer: false,
+        ssl_verifyhost: 2
+      }
 
-      # Disable SSL-Certificate checks
-      params.merge!(ssl_verifypeer: false)
-      params.merge!(ssl_verifyhost: 2)
+      # TODO: add the other options (proxy etc)
 
-      params
+      default.merge(params)
     end
   end
 end
