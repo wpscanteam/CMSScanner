@@ -15,17 +15,36 @@ describe CMSScanner::Browser do
   end
 
   describe '#request_params' do
-    let(:default) { { maxredirs: 3, ssl_verifypeer: false, ssl_verifyhost: 2 } }
+    let(:default) do
+      { cache_ttl: nil, connecttimeout: nil, maxredirs: 3,
+        proxy: nil, proxyauth: nil,
+        ssl_verifypeer: false, ssl_verifyhost: 2,
+        timeout: nil, userpwd: nil }
+    end
 
     context 'when no param is given' do
       its(:request_params) { should eq default }
+
+      context 'when browser options' do
+        let(:options) { { http_auth: { username: 'log', password: 'pwd' } } }
+
+        its(:request_params) { should eq default.merge(userpwd: 'log:pwd') }
+      end
     end
 
     context 'when params are supplied' do
       let(:params) { { maxredirs: 10, another_param: true } }
 
       it 'merges them' do
-        expect(browser.request_params(params)).to eq(default.merge(params))
+        expect(browser.request_params(params)).to eq default.merge(params)
+      end
+
+      context 'when browser options' do
+        let(:options) { { maxredirs: 20, proxy: 'http://127.0.0.1:8080' } }
+
+        it 'returns the correct hash' do
+          expect(browser.request_params(params)).to eq default.merge(options).merge(params)
+        end
       end
     end
   end
