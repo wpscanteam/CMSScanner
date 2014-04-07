@@ -79,4 +79,16 @@ describe CMSScanner::Browser do
       end
     end
   end
+
+  describe '#hydra' do
+    context 'when #threads is nil' do
+      its('hydra.max_concurrency') { should eq 1 }
+    end
+
+    context 'when #threads' do
+      let(:options) { { threads: 20 } }
+
+      its('hydra.max_concurrency') { should eq options[:threads] }
+    end
+  end
 end
