@@ -1,3 +1,12 @@
+module Typhoeus
+  # Hack to have a setter for the :max_concurrency
+  # Which will be officially added in the next version
+  # See: https://github.com/typhoeus/typhoeus/issues/366
+  class Hydra
+    attr_accessor :max_concurrency
+  end
+end
+
 module CMSScanner
   # Options available in the Browser
   class Browser
@@ -28,14 +37,10 @@ module CMSScanner
     # Set the threads attribute and update
     # the max_concurrency of Typhoeus::Hydra
     #
-    # /!\ Currently Hydra does not have this setter
-    # Issue opened: https://github.com/typhoeus/typhoeus/issues/366
-    #
     # @param [ Integer ] number
-    # def threads=(number)
-    #  # TODO: check if number > 0, if not, set to 1
-    #  @threads = number
-    #  hydra.max_concurrency = number
-    # end
+    def threads=(number)
+      @threads = number.to_i > 0 ? number.to_i : 1
+      hydra.max_concurrency = @threads
+    end
   end
 end

@@ -91,4 +91,27 @@ describe CMSScanner::Browser do
       its('hydra.max_concurrency') { should eq options[:threads] }
     end
   end
+
+  describe '#threads=' do
+    after do
+      browser.threads = @threads
+
+      expect(browser.threads).to eq @expected
+      expect(browser.hydra.max_concurrency).to eq @expected
+    end
+
+    context 'when <= 0' do
+      it 'sets the @threads to 1' do
+        @threads = -2
+        @expected = 1
+      end
+    end
+
+    context 'when > 0' do
+      it 'sets the @threads' do
+        @threads = 20
+        @expected = @threads
+      end
+    end
+  end
 end
