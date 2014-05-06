@@ -7,7 +7,7 @@ module CMSScanner
         'cli'
       end
 
-      def colorize(text, color_code)
+      def colorize(text, _color_code)
         text
       end
     end
