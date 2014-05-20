@@ -18,7 +18,7 @@ require 'app/app'
 
 # Module
 module CMSScanner
-  APP_DIR = Pathname.new(__FILE__).dirname.join('..', 'app').expand_path
+  APP_DIR = Pathname.new(__FILE__).dirname.join('app').expand_path
 
   # Scan
   class Scan
