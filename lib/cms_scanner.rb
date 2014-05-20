@@ -14,6 +14,7 @@ require 'cms_scanner/browser'
 require 'cms_scanner/version'
 require 'cms_scanner/controllers'
 require 'cms_scanner/formatters'
+require 'app/app'
 
 # Module
 module CMSScanner

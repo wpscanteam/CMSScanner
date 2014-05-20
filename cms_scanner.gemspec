@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.files                 = `git ls-files -z`.split("\x0")
   s.executables           = s.files.grep(/^bin\//) { |f| File.basename(f) }
   s.test_files            = s.files.grep(/^(test|spec|features)\//)
-  s.require_paths         = ['lib']
+  s.require_path          = 'lib'
 
   s.add_dependency 'opt_parse_validator', '~> 0.0.2'
   s.add_dependency 'typhoeus'
