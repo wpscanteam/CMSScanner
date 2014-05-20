@@ -2,7 +2,5 @@ LineLength:
   Max: 100
 ClassVars:
   Enabled: false
-RedundantBegin:
-  Enabled: false
 MethodLength:
   Max: 15

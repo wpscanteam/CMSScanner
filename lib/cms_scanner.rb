@@ -30,17 +30,15 @@ module CMSScanner
     end
 
     def run
-      begin
-        controllers.run
-      rescue => e
-        controllers.first.formatter
-          .output('@scan_aborted',
-                  reason: e.message,
-                  trace: e.backtrace,
-                  verbose: controllers.first.parsed_options[:verbose])
-      ensure
-        controllers.first.formatter.beautify
-      end
+      controllers.run
+    rescue => e
+      controllers.first.formatter
+        .output('@scan_aborted',
+                reason: e.message,
+                trace: e.backtrace,
+                verbose: controllers.first.parsed_options[:verbose])
+    ensure
+      controllers.first.formatter.beautify
     end
   end
 end
