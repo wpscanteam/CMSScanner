@@ -24,5 +24,6 @@ end
 
 WPScan::Scan.new do |s|
   s.controllers << WPScan::Controller::WpCustom.new
+  # s.controllers.first.formatter.views_directories << Pathname.new(Dir.pwd).join('views').to_s
   s.run
 end
