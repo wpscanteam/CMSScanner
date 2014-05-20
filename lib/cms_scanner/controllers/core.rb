@@ -36,9 +36,8 @@ module CMSScanner
 
         # TODO: ask if the redirection should be followed
         # if user_interaction? is allowed
-        if (redirection = target.redirection)
-          fail "The url supplied redirects to #{redirection}"
-        end
+        redirection = target.redirection
+        fail "The url supplied redirects to #{redirection}" if redirection
       end
 
       def run
