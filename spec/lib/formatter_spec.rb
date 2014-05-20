@@ -88,7 +88,7 @@ describe CMSScanner::Formatter::Base do
   end
 
   describe '#views_directories' do
-    let(:default_directories) { [LIB_VIEWS, Pathname.new(Dir.pwd).join('views').to_s] }
+    let(:default_directories) { [APP_VIEWS, Pathname.new(Dir.pwd).join('views').to_s] }
 
     context 'when default directories' do
       its(:views_directories) { should eq(default_directories) }

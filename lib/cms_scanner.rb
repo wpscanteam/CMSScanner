@@ -17,6 +17,8 @@ require 'cms_scanner/formatters'
 
 # Module
 module CMSScanner
+  APP_DIR = Pathname.new(__FILE__).dirname.join('..', 'app').expand_path
+
   # Scan
   class Scan
     def initialize
