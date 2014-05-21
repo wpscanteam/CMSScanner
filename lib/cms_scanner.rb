@@ -14,11 +14,11 @@ require 'cms_scanner/browser'
 require 'cms_scanner/version'
 require 'cms_scanner/controllers'
 require 'cms_scanner/formatters'
-require 'app/app'
+require 'app'
 
 # Module
 module CMSScanner
-  APP_DIR = Pathname.new(__FILE__).dirname.join('app').expand_path
+  APP_DIR = Pathname.new(__FILE__).dirname.join('..', 'app').expand_path
 
   # Scan
   class Scan

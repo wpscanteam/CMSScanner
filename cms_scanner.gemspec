@@ -19,7 +19,8 @@ Gem::Specification.new do |s|
   s.files                 = `git ls-files -z`.split("\x0")
   s.executables           = s.files.grep(/^bin\//) { |f| File.basename(f) }
   s.test_files            = s.files.grep(/^(test|spec|features)\//)
-  s.require_path          = 'lib'
+  s.require_paths         = ['lib', 'app'] # Might be better to no include the app dir there
+                                           # but directly in the require 'app'
 
   s.add_dependency 'opt_parse_validator', '~> 0.0.2'
   s.add_dependency 'typhoeus'
