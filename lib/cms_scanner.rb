@@ -13,7 +13,7 @@ require 'cms_scanner/target'
 require 'cms_scanner/browser'
 require 'cms_scanner/version'
 require 'cms_scanner/controllers'
-require 'cms_scanner/formatters'
+require 'cms_scanner/formatter'
 
 # Module
 module CMSScanner
