@@ -1,6 +1,3 @@
-require 'cms_scanner/controller'
-require 'cms_scanner/controllers/core'
-
 module CMSScanner
   # Controllers Container
   class Controllers < Array
