@@ -14,7 +14,6 @@ require 'cms_scanner/browser'
 require 'cms_scanner/version'
 require 'cms_scanner/controllers'
 require 'cms_scanner/formatters'
-require 'app'
 
 # Module
 module CMSScanner
@@ -45,3 +44,5 @@ module CMSScanner
     end
   end
 end
+
+require "#{CMSScanner::APP_DIR}/app"
