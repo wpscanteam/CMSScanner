@@ -4,7 +4,7 @@ describe CMSScanner::Controller::Core do
 
   subject(:core)       { described_class.new }
   before               { described_class.parsed_options = parsed_options  }
-  let!(:target_url)    { 'http://example.com/' }
+  let(:target_url)     { 'http://example.com/' }
   let(:parsed_options) { { url: target_url } }
 
   its(:cli_options) { should_not be_empty }
