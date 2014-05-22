@@ -35,13 +35,24 @@ module CMSScanner
     def run
       controllers.run
     rescue => e
-      controllers.first.formatter
-        .output('@scan_aborted',
-                reason: e.message,
-                trace: e.backtrace,
-                verbose: controllers.first.parsed_options[:verbose])
+      formatter.output('@scan_aborted',
+                       reason: e.message,
+                       trace: e.backtrace,
+                       verbose: controllers.first.parsed_options[:verbose])
     ensure
-      controllers.first.formatter.beautify
+      formatter.beautify
+    end
+
+    # Used for convenience
+    # @See Formatter
+    def formatter
+      controllers.first.formatter
+    end
+
+    # Used for convenience
+    # @See Formatter#views_directories
+    def views_directories
+      formatter.views_directories
     end
   end
 end
