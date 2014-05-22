@@ -76,10 +76,7 @@ module CMSScanner
 
       # @return [ Array<String> ] The directories to look into for views
       def views_directories
-        @views_directories ||= [
-          Pathname.new(APP_DIR).join('views').to_s,
-          Pathname.new(Dir.pwd).join('views').to_s
-        ]
+        @views_directories ||= [Pathname.new(APP_DIR).join('views').to_s]
       end
     end
   end
