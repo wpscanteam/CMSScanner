@@ -34,7 +34,7 @@ describe CMSScanner::Browser do
     end
 
     context 'when params are supplied' do
-      let(:params)   { { maxredirs: 10, another_param: true, headers: { 'Accept' => 'None' } } }
+      let(:params) { { maxredirs: 10, another_param: true, headers: { 'Accept' => 'None' } } }
 
       it 'merges them (headers should be correctly merged)' do
         expect(browser.request_params(params)).to eq default
