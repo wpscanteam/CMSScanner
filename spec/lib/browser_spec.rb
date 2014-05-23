@@ -19,7 +19,8 @@ describe CMSScanner::Browser do
       { cache_ttl: nil, connecttimeout: nil, maxredirs: 3,
         proxy: nil, proxyauth: nil,
         ssl_verifypeer: false, ssl_verifyhost: 2,
-        timeout: nil, userpwd: nil }
+        timeout: nil, userpwd: nil,
+        headers: { 'User-Agent' => "CMSScanner v#{CMSScanner::VERSION}" } }
     end
 
     context 'when no param is given' do
@@ -33,17 +34,20 @@ describe CMSScanner::Browser do
     end
 
     context 'when params are supplied' do
-      let(:params) { { maxredirs: 10, another_param: true } }
+      let(:params)   { { maxredirs: 10, another_param: true, headers: { 'Accept' => 'None' } } }
 
-      it 'merges them' do
-        expect(browser.request_params(params)).to eq default.merge(params)
+      it 'merges them (headers should be correctly merged)' do
+        expect(browser.request_params(params)).to eq default
+          .merge(params) { |key, oldval, newval| key == :headers ? oldval.merge(newval) : newval }
       end
 
       context 'when browser options' do
         let(:options) { { maxredirs: 20, proxy: 'http://127.0.0.1:8080' } }
 
         it 'returns the correct hash' do
-          expect(browser.request_params(params)).to eq default.merge(options).merge(params)
+          expect(browser.request_params(params)).to eq default
+            .merge(options)
+            .merge(params) { |key, oldval, newval| key == :headers ? oldval.merge(newval) : newval }
         end
       end
     end

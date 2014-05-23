@@ -47,9 +47,9 @@ module CMSScanner
         ssl_verifypeer: false, # Disable SSL-Certificate checks
         ssl_verifyhost: 2, # Disable SSL-Certificate checks
         timeout: request_timeout,
-        userpwd: http_auth ? "#{http_auth[:username]}:#{http_auth[:password]}" : nil
-      }.merge(params)
-      # TODO: add the user-agent
+        userpwd: http_auth ? "#{http_auth[:username]}:#{http_auth[:password]}" : nil,
+        headers: { 'User-Agent' => user_agent }
+      }.merge(params) { |key, oldval, newval| key == :headers ? oldval.merge(newval) : newval }
     end
   end
 end
