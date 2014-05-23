@@ -11,8 +11,6 @@ module CMSScanner
     # @return [ Void ]
     def initialize(parsed_options = {})
       load_options(parsed_options)
-
-      # TODO: init hydra with options[:threads] || 1
     end
 
     private_class_method :new
@@ -44,11 +42,10 @@ module CMSScanner
         cache_ttl: cache_ttl,
         connecttimeout: connect_timeout,
         maxredirs: 3, # Prevent infinite self redirection
-        # Disable SSL-Certificate checks
         proxy: proxy,
         proxyauth: proxy_auth ? "#{proxy_auth[:username]}:#{proxy_auth[:password]}" : nil,
-        ssl_verifypeer: false,
-        ssl_verifyhost: 2,
+        ssl_verifypeer: false, # Disable SSL-Certificate checks
+        ssl_verifyhost: 2, # Disable SSL-Certificate checks
         timeout: request_timeout,
         userpwd: http_auth ? "#{http_auth[:username]}:#{http_auth[:password]}" : nil
       }.merge(params)

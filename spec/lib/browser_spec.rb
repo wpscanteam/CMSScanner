@@ -53,7 +53,9 @@ describe CMSScanner::Browser do
     context 'when no options' do
       it 'does not load anything' do
         described_class::OPTIONS.each do |sym|
-          expect(browser.send(sym)).to be nil
+          expected = sym == :user_agent ? "CMSScanner v#{CMSScanner::VERSION}" : nil
+
+          expect(browser.send(sym)).to eq expected
         end
       end
     end
@@ -66,7 +68,10 @@ describe CMSScanner::Browser do
         end
       end
 
-      let(:options) { { cache_ttl: 200, threads: 10, test: 'should not be set' } }
+      let(:options) do
+        { cache_ttl: 200, threads: 10, test: 'should not be set',
+          user_agent: 'UA', proxy: false }
+      end
 
       it 'merges the browser options only' do
         described_class::OPTIONS.each do |sym|
@@ -102,14 +107,14 @@ describe CMSScanner::Browser do
 
     context 'when <= 0' do
       it 'sets the @threads to 1' do
-        @threads = -2
+        @threads  = -2
         @expected = 1
       end
     end
 
     context 'when > 0' do
       it 'sets the @threads' do
-        @threads = 20
+        @threads  = 20
         @expected = @threads
       end
     end

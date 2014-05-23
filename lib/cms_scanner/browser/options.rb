@@ -26,7 +26,7 @@ module CMSScanner
     # @param [ Hash ] options
     def load_options(options = {})
       OPTIONS.each do |sym|
-        send("#{sym}=", options[sym]) if options[sym]
+        send("#{sym}=", options[sym]) if options.key?(sym)
       end
     end
 
@@ -41,6 +41,11 @@ module CMSScanner
     def threads=(number)
       @threads = number.to_i > 0 ? number.to_i : 1
       hydra.max_concurrency = @threads
+    end
+
+    # Default user agent
+    def user_agent
+      @user_agent ||= "CMSScanner v#{VERSION}"
     end
   end
 end
