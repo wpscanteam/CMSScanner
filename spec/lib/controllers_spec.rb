@@ -41,9 +41,9 @@ describe CMSScanner::Controllers do
 
       # TODO: Any way to test the orders ? (after_scan should reverse the order)
       [base, spec].each do |c|
-        c.should_receive(:before_scan)
-        c.should_receive(:run)
-        c.should_receive(:after_scan)
+        expect(c).to receive(:before_scan)
+        expect(c).to receive(:run)
+        expect(c).to receive(:after_scan)
       end
       controllers.run
     end

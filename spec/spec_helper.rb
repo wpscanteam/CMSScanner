@@ -1,6 +1,7 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
 require 'simplecov'
+require 'rspec/its'
 require 'webmock/rspec'
 
 if ENV['TRAVIS']

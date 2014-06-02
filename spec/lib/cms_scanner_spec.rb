@@ -10,8 +10,8 @@ describe CMSScanner::Scan do
 
   describe '#run' do
     it 'runs the controlllers and calls the formatter#beautify' do
-      scanner.controllers.should_receive(:run)
-      scanner.controllers.first.formatter.should_receive(:beautify)
+      expect(scanner.controllers).to receive(:run)
+      expect(scanner.formatter).to receive(:beautify)
       scanner.run
     end
 
@@ -30,7 +30,7 @@ describe CMSScanner::Scan do
       it 'aborts the scan with the associated output' do
         scanner.controllers[0] = CMSScanner::Controller::Failure.new
 
-        scanner.controllers.first.formatter.should_receive(:output)
+        expect(scanner.formatter).to receive(:output)
           .with('@scan_aborted', hash_including(:reason, :trace, :verbose))
 
         scanner.run

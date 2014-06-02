@@ -14,7 +14,7 @@ describe CMSScanner::Controller do
 
     describe '#render' do
       it 'calls the formatter#render' do
-        controller.formatter.should_receive(:render).with('test', { verbose: nil }, 'base')
+        expect(controller.formatter).to receive(:render).with('test', { verbose: nil }, 'base')
         controller.render('test')
       end
     end

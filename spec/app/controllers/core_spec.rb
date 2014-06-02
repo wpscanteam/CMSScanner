@@ -50,7 +50,7 @@ describe CMSScanner::Controller::Core do
 
   describe '#run' do
     it 'calls the formatter with the correct parameters' do
-      core.formatter.should_receive(:output)
+      expect(core.formatter).to receive(:output)
         .with('started',
               hash_including(:start_memory, :start_time, :verbose, url: target_url),
               'core')
@@ -64,12 +64,12 @@ describe CMSScanner::Controller::Core do
 
     it 'calles the formatter with the correct parameters' do
       # Call the #run once to ensure that @start_time & @start_memory are set
-      core.should_receive(:output).with('started', url: target_url)
+      expect(core).to receive(:output).with('started', url: target_url)
       core.run
 
-      RSpec::Mocks.proxy_for(core).reset # Must reset due to the above statements
+      RSpec::Mocks.space.proxy_for(core).reset # Must reset due to the above statements
 
-      core.formatter.should_receive(:output)
+      expect(core.formatter).to receive(:output)
         .with('finished', hash_including(*keys), 'core')
 
       core.after_scan
