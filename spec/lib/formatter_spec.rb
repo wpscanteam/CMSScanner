@@ -28,7 +28,8 @@ describe CMSScanner::Formatter::Base do
     before { formatter.views_directories << FIXTURES_VIEWS }
 
     it 'renders the global template and does not override the @views_directories' do
-      expect($stdout).to receive(:puts).with("It Works!\nViews Dirs: #{formatter.views_directories}")
+      expect($stdout).to receive(:puts)
+        .with("It Works!\nViews Dirs: #{formatter.views_directories}")
 
       formatter.output('@test', test: 'Works!', views_directories: 'owned')
     end
