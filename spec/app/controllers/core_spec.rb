@@ -28,18 +28,18 @@ describe CMSScanner::Controller::Core do
         .to raise_error("The url supplied redirects to #{redirection}")
     end
 
-    context 'when basic authentication is detected' do
+    context 'when http authentication is detected' do
       before { stub_request(:get, target_url).to_return(status: 401) }
 
       context 'when no credentials are supplied' do
         it 'raises an error' do
           expect { core.before_scan }
-            .to raise_error('Basic authentication is required, please provide it with --basic-auth')
+            .to raise_error('HTTP authentication is required, please provide it with --http-auth')
         end
       end
 
       context 'when credentials are provided' do
-        let(:parsed_options) { { url: target_url, basic_auth: 'user:pass' } }
+        let(:parsed_options) { { url: target_url, http_auth: 'user:pass' } }
 
         it 'does not raise any error' do
           expect { core.before_scan }.to_not raise_error

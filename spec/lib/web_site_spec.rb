@@ -45,17 +45,17 @@ describe CMSScanner::WebSite do
     end
   end
 
-  describe '#basic_auth?' do
-    context 'when basic auth' do
+  describe '#http_auth?' do
+    context 'when http auth' do
       before { stub_request(:get, url).to_return(status: 401) }
 
-      it { should be_basic_auth }
+      it { should be_http_auth }
     end
 
-    context 'when no basic auth' do
+    context 'when no http auth' do
       before { stub_request(:get, url).to_return(status: 200) }
 
-      it { should_not be_basic_auth }
+      it { should_not be_http_auth }
     end
   end
 

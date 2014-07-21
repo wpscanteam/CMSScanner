@@ -32,7 +32,7 @@ module CMSScanner
     end
 
     # @return [ Boolean ]
-    def basic_auth?
+    def http_auth?
       Browser.get(url).code == 401
     end
 

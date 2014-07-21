@@ -30,8 +30,8 @@ module CMSScanner
       def before_scan
         fail "The url supplied '#{target.url}' seems to be down" unless target.online?
 
-        if target.basic_auth? && !parsed_options[:basic_auth]
-          fail 'Basic authentication is required, please provide it with --basic-auth'
+        if target.http_auth? && !parsed_options[:http_auth]
+          fail 'HTTP authentication is required, please provide it with --http-auth'
         end
 
         # TODO: ask if the redirection should be followed
