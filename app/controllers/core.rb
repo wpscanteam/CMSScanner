@@ -30,9 +30,9 @@ module CMSScanner
       def before_scan
         fail "The url supplied '#{target.url}' seems to be down" unless target.online?
 
-        if target.http_auth? && !parsed_options[:http_auth]
-          fail 'HTTP authentication is required, please provide it with --http-auth'
-        end
+        fail HTTPAuthRequiredError if target.http_auth?
+
+        fail ProxyAuthRequiredError if target.proxy_auth?
 
         # TODO: ask if the redirection should be followed
         # if user_interaction? is allowed

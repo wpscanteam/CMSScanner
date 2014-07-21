@@ -36,6 +36,11 @@ module CMSScanner
       Browser.get(url).code == 401
     end
 
+    # @return [ Boolean ]
+    def proxy_auth?
+      Browser.get(url).code == 407
+    end
+
     # See if the remote url returns 30x redirect
     # This method is recursive
     #

@@ -59,6 +59,10 @@ describe CMSScanner::WebSite do
     end
   end
 
+  describe '#proxy_auth?' do
+    # Handled in app/controllers/core_spec
+  end
+
   describe '#redirection' do
     it 'returns nil if no redirection detected' do
       stub_request(:get, web_site.url).to_return(status: 200, body: '')

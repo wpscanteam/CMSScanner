@@ -3,9 +3,13 @@ require 'spec_helper'
 describe CMSScanner::Controller::Core do
 
   subject(:core)       { described_class.new }
-  before               { described_class.parsed_options = parsed_options  }
   let(:target_url)     { 'http://example.com/' }
   let(:parsed_options) { { url: target_url } }
+
+  before do
+    CMSScanner::Browser.reset
+    described_class.parsed_options = parsed_options
+  end
 
   its(:cli_options) { should_not be_empty }
   its(:cli_options) { should be_a Array }
@@ -28,20 +32,75 @@ describe CMSScanner::Controller::Core do
         .to raise_error("The url supplied redirects to #{redirection}")
     end
 
-    context 'when http authentication is detected' do
-      before { stub_request(:get, target_url).to_return(status: 401) }
+    # This is quite a mess (as Webmock doesn't issue itself another 401
+    # when credential are incorrect :/)
+    context 'when http authentication' do
+      context 'when no credentials' do
+        before { stub_request(:get, target_url).to_return(status: 401) }
 
-      context 'when no credentials are supplied' do
         it 'raises an error' do
-          expect { core.before_scan }
-            .to raise_error('HTTP authentication is required, please provide it with --http-auth')
+          expect { core.before_scan }.to raise_error(CMSScanner::HTTPAuthRequiredError)
         end
       end
 
-      context 'when credentials are provided' do
-        let(:parsed_options) { { url: target_url, http_auth: 'user:pass' } }
+      context 'when credentials' do
+        context 'when valid' do
+          before { stub_request(:get, 'http://user:pass@example.com') }
 
-        it 'does not raise any error' do
+          let(:parsed_options) do
+            { url: target_url,  http_auth: { username: 'user', password: 'pass' } }
+          end
+
+          it 'does not raise any error' do
+            expect { core.before_scan }.to_not raise_error
+          end
+        end
+
+        context 'when invalid' do
+          before { stub_request(:get, 'http://user:p@ss@example.com').to_return(status: 401) }
+
+          let(:parsed_options) do
+            { url: target_url,  http_auth: { username: 'user', password: 'p@ss' } }
+          end
+
+          it 'raises an error' do
+            expect { core.before_scan }.to raise_error(CMSScanner::HTTPAuthRequiredError)
+          end
+        end
+      end
+    end
+
+    context 'when proxy authentication' do
+      before { stub_request(:get, target_url).to_return(status: 407) }
+
+      context 'when no credentials' do
+        it 'raises an error' do
+          expect { core.before_scan }.to raise_error(CMSScanner::ProxyAuthRequiredError)
+        end
+      end
+
+      context 'when invalid credentials' do
+        let(:parsed_options) do
+          { url: target_url,  proxy_auth: { username: 'user', password: 'p@ss' } }
+        end
+
+        it 'raises an error' do
+          expect(CMSScanner::Browser.instance.proxy_auth).to eq(parsed_options[:proxy_auth])
+
+          expect { core.before_scan }.to raise_error(CMSScanner::ProxyAuthRequiredError)
+        end
+      end
+
+      context 'when valid credentials' do
+        before { stub_request(:get, target_url) }
+
+        let(:parsed_options) do
+          { url: target_url,  proxy_auth: { username: 'user', password: 'pass' } }
+        end
+
+        it 'raises an error' do
+          expect(CMSScanner::Browser.instance.proxy_auth).to eq(parsed_options[:proxy_auth])
+
           expect { core.before_scan }.to_not raise_error
         end
       end

@@ -9,6 +9,7 @@ require 'pathname'
 require 'erb'
 # Custom Libs
 require 'helper'
+require 'cms_scanner/errors/auth_errors'
 require 'cms_scanner/target'
 require 'cms_scanner/browser'
 require 'cms_scanner/version'
