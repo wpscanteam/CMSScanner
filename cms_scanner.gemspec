@@ -32,6 +32,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-its'
   s.add_development_dependency 'bundler', '~> 1.6'
   s.add_development_dependency 'rubocop', '~> 0.24'
-  s.add_development_dependency 'webmock', '~> 1.17'
+  s.add_development_dependency 'webmock', '~> 1.18'
   s.add_development_dependency 'simplecov', '~> 0.9'
 end
