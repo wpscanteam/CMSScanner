@@ -34,7 +34,7 @@ module CMSScanner
     end
 
     def run
-      controllers.run(opts)
+      controllers.run
     rescue => e
       formatter.output('@scan_aborted',
                        reason: e.message,
@@ -50,13 +50,9 @@ module CMSScanner
       controllers.first.formatter
     end
 
-    # This hash is used to provided values to the run method of each controller
-    # These values are not the ones from the Cli Options
-    # (which are managed automatically by controllers)
-    #
     # @return [ Hash ]
-    def opts
-      @opts ||= {}
+    def datastore
+      controllers.first.datastore
     end
   end
 end

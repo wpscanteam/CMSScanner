@@ -7,11 +7,11 @@ module CMSScanner
       # @return [ Array<OptParseValidator::OptBase> ]
       def cli_options; end
 
-      def before_scan(_opts = {}); end
+      def before_scan; end
 
-      def run(_opts = {}); end
+      def run; end
 
-      def after_scan(_opts = {}); end
+      def after_scan; end
 
       def ==(other)
         self.class == other.class
@@ -37,9 +37,14 @@ module CMSScanner
         @@parsed_options ||= {}
       end
 
+      # @return [ Hash ]
+      def datastore
+        @@datastore ||= {}
+      end
+
       # @return [ Formatter::Base ]
       def formatter
-        @@formatter ||= Formatter.load(parsed_options[:format])
+        @@formatter ||= Formatter.load(parsed_options[:format], datastore[:views])
       end
 
       # @see Formatter#output

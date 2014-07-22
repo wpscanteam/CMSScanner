@@ -12,6 +12,12 @@ describe CMSScanner::Formatter do
     it 'loads the correct formatter' do
       expect(described_class.load('cli_no_colour')).to be_a described_class::CliNoColour
     end
+
+    it 'adds the custom_views' do
+      formatter = described_class.load(nil, %w(/path/views1 /path2/views))
+
+      expect(formatter.views_directories).to include('/path/views1', '/path2/views')
+    end
   end
 
   describe '#availables' do

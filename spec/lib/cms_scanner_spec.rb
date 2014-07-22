@@ -37,4 +37,8 @@ describe CMSScanner::Scan do
       end
     end
   end
+
+  describe '#datastore' do
+    its(:datastore) { should eq({}) }
+  end
 end

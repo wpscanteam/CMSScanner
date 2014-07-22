@@ -4,12 +4,16 @@ module CMSScanner
   # Formatter
   module Formatter
     # @param [ String ] format
+    # @param [ Array<String> ] custom_views
     #
     # @return [ Formatter::Base ]
-    def self.load(format = nil)
-      format ||= 'cli' # default format
+    def self.load(format = nil, custom_views = nil)
+      format       ||= 'cli'
+      custom_views ||= []
 
-      const_get(format.gsub(/-/, '_').camelize).new
+      f = const_get(format.gsub(/-/, '_').camelize).new
+      custom_views.each { |v| f.views_directories << v }
+      f
     end
 
     # @return [ Array<String> ] The list of the available formatters (except the Base one)
