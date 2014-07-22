@@ -34,7 +34,7 @@ module CMSScanner
     end
 
     def run
-      controllers.run(custom_views)
+      controllers.run(opts)
     rescue => e
       formatter.output('@scan_aborted',
                        reason: e.message,
@@ -50,9 +50,13 @@ module CMSScanner
       controllers.first.formatter
     end
 
-    # @return [ Array<String> ] A list of directories path where to look for views
-    def custom_views
-      @custom_views ||= []
+    # This hash is used to provided values to the run method of each controller
+    # These values are not the ones from the Cli Options
+    # (which are managed automatically by controllers)
+    #
+    # @return [ Hash ]
+    def opts
+      @opts ||= {}
     end
   end
 end

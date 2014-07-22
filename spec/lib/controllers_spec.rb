@@ -47,7 +47,7 @@ describe CMSScanner::Controllers do
         expect(c).to receive(:run)
         expect(c).to receive(:after_scan)
       end
-      controllers.run(views)
+      controllers.run(custom_views: views)
 
       expect(controllers.first.formatter.views_directories)
         .to include('/path/views1', '/path2/views')

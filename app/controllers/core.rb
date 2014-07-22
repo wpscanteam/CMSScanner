@@ -30,7 +30,7 @@ module CMSScanner
         ]
       end
 
-      def before_scan
+      def before_scan(_opts = {})
         fail "The url supplied '#{target.url}' seems to be down" unless target.online?
 
         fail HTTPAuthRequiredError if target.http_auth?
@@ -43,7 +43,7 @@ module CMSScanner
         fail "The url supplied redirects to #{redirection}" if redirection
       end
 
-      def run
+      def run(_opts = {})
         @start_time   = Time.now
         @start_memory = memory_usage
 
@@ -51,7 +51,7 @@ module CMSScanner
         # sleep(2) # Simulate a scan
       end
 
-      def after_scan
+      def after_scan(_opts = {})
         @stop_time   = Time.now
         @elapsed     = @stop_time - @start_time
         @used_memory = memory_usage - @start_memory

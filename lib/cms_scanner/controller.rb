@@ -7,11 +7,11 @@ module CMSScanner
       # @return [ Array<OptParseValidator::OptBase> ]
       def cli_options; end
 
-      def before_scan; end
+      def before_scan(_opts = {}); end
 
-      def run; end
+      def run(_opts = {}); end
 
-      def after_scan; end
+      def after_scan(_opts = {}); end
 
       def ==(other)
         self.class == other.class

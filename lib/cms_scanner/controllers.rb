@@ -21,18 +21,20 @@ module CMSScanner
       self
     end
 
-    # TODO: put the custom_views in an options hash
-    def run(custom_views = [])
+    # @param [ Hash ] opts
+    def run(opts = {})
       parsed_options             = option_parser.results
       first.class.parsed_options = parsed_options
 
-      custom_views.each { |v| first.formatter.views_directories << v }
+      if opts[:custom_views]
+        opts[:custom_views].each { |v| first.formatter.views_directories << v }
+      end
 
       redirect_output_to_file(parsed_options[:output]) if parsed_options[:output]
 
-      each         { |c| c.before_scan }
-      each         { |c| c.run }
-      reverse.each { |c| c.after_scan }
+      each         { |c| c.before_scan(opts) }
+      each         { |c| c.run(opts) }
+      reverse.each { |c| c.after_scan(opts) }
     end
   end
 end
