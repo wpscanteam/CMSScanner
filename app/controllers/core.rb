@@ -3,11 +3,14 @@ module CMSScanner
     # Core Controller
     class Core < Base
       def cli_options
+        formats = Formatter.availables
+
         [
           OptURL.new(['-u', '--url URL'], required: true),
           OptBoolean.new(%w(-v --verbose)),
           OptFilePath.new(['-o', '--output FILE', 'Output to FILE'], writable: true, exists: false),
-          OptString.new(['-f', '--format FORMAT']), # Should be OptChoice
+          OptChoice.new(['-f', '--format FORMAT',
+                         "Available formats: #{formats.join(', ')}"], choices: formats)
         ] + cli_browser_options
       end
 

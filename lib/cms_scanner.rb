@@ -34,7 +34,7 @@ module CMSScanner
     end
 
     def run
-      controllers.run
+      controllers.run(custom_views)
     rescue => e
       formatter.output('@scan_aborted',
                        reason: e.message,
@@ -50,10 +50,9 @@ module CMSScanner
       controllers.first.formatter
     end
 
-    # Used for convenience
-    # @See Formatter#views_directories
-    def views_directories
-      formatter.views_directories
+    # @return [ Array<String> ] A list of directories path where to look for views
+    def custom_views
+      @custom_views ||= []
     end
   end
 end

@@ -12,6 +12,17 @@ module CMSScanner
       const_get(format.gsub(/-/, '_').camelize).new
     end
 
+    # @return [ Array<String> ] The list of the available formatters (except the Base one)
+    # @note: the #load method above should then be used to create the associated formatter
+    def self.availables
+      formatters = Formatter.constants.select do |const|
+        name = Formatter.const_get(const)
+        name.is_a?(Class) && name != Formatter::Base
+      end
+
+      formatters.map(&:to_s).map(&:underscore).map(&:dasherize)
+    end
+
     # Base Formatter
     class Base
       attr_reader :controller_name

@@ -37,9 +37,4 @@ describe CMSScanner::Scan do
       end
     end
   end
-
-  describe '#views_directories' do
-    its(:views_directories) { should_not be_empty }
-  end
-
 end

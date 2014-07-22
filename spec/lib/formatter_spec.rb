@@ -14,6 +14,12 @@ describe CMSScanner::Formatter do
     end
   end
 
+  describe '#availables' do
+    it 'returns the right list' do
+      expect(described_class.availables).to match_array(%w(json cli-no-colour cli))
+    end
+  end
+
 end
 
 describe CMSScanner::Formatter::Base do

@@ -33,6 +33,8 @@ describe CMSScanner::Controllers do
   end
 
   describe '#run' do
+    let(:views) { %w(/path/views1 /path2/views) }
+
     it 'runs the before_scan, run and after_scan methods of each controller' do
       spec = controller_mod::Spec.new
       base = controller_mod::Base.new
@@ -45,7 +47,10 @@ describe CMSScanner::Controllers do
         expect(c).to receive(:run)
         expect(c).to receive(:after_scan)
       end
-      controllers.run
+      controllers.run(views)
+
+      expect(controllers.first.formatter.views_directories)
+        .to include('/path/views1', '/path2/views')
     end
   end
 
