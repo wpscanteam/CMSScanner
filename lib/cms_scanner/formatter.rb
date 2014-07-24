@@ -24,7 +24,7 @@ module CMSScanner
         name.is_a?(Class) && name != Formatter::Base
       end
 
-      formatters.map(&:to_s).map(&:underscore).map(&:dasherize)
+      formatters.map { |sym| sym.to_s.underscore.dasherize }
     end
 
     # Base Formatter
