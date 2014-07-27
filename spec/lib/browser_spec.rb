@@ -73,7 +73,7 @@ describe CMSScanner::Browser do
       end
 
       let(:options) do
-        { cache_ttl: 200, threads: 10, test: 'should not be set',
+        { cache_ttl: 200, max_threads: 10, test: 'should not be set',
           user_agent: 'UA', proxy: false }
       end
 
@@ -90,22 +90,22 @@ describe CMSScanner::Browser do
   end
 
   describe '#hydra' do
-    context 'when #threads is nil' do
+    context 'when #max_threads is nil' do
       its('hydra.max_concurrency') { should eq 1 }
     end
 
-    context 'when #threads' do
-      let(:options) { { threads: 20 } }
+    context 'when #max_threads' do
+      let(:options) { { max_threads: 20 } }
 
-      its('hydra.max_concurrency') { should eq options[:threads] }
+      its('hydra.max_concurrency') { should eq options[:max_threads] }
     end
   end
 
-  describe '#threads=' do
+  describe '#max_threads=' do
     after do
-      browser.threads = @threads
+      browser.max_threads = @threads
 
-      expect(browser.threads).to eq @expected
+      expect(browser.max_threads).to eq @expected
       expect(browser.hydra.max_concurrency).to eq @expected
     end
 

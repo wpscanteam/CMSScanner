@@ -14,7 +14,7 @@ module CMSScanner
       :cache_ttl,
       :connect_timeout,
       :http_auth,
-      :threads,
+      :max_threads,
       :proxy,
       :proxy_auth,
       :request_timeout,
@@ -31,16 +31,16 @@ module CMSScanner
     end
 
     def hydra
-      @hydra ||= Typhoeus::Hydra.new(max_concurrency: threads || 1)
+      @hydra ||= Typhoeus::Hydra.new(max_concurrency: max_threads || 1)
     end
 
     # Set the threads attribute and update
     # the max_concurrency of Typhoeus::Hydra
     #
     # @param [ Integer ] number
-    def threads=(number)
-      @threads = number.to_i > 0 ? number.to_i : 1
-      hydra.max_concurrency = @threads
+    def max_threads=(number)
+      @max_threads = number.to_i > 0 ? number.to_i : 1
+      hydra.max_concurrency = @max_threads
     end
 
     # Default user agent

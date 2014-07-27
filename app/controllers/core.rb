@@ -21,7 +21,7 @@ module CMSScanner
           OptPositiveInteger.new(['--connect-timeout SECONDS',
                                   'The connection timeout in seconds']),
           OptCredentials.new(['--http-auth login:password']),
-          OptPositiveInteger.new(['--threads VALUE', '-t', 'The max threads to use']),
+          OptPositiveInteger.new(['--max-threads VALUE', '-t', 'The max threads to use']),
           OptProxy.new(['--proxy protocol://IP:port',
                         'Supported protocols depend on the cURL installed']),
           OptCredentials.new(['--proxy-auth login:password']),
