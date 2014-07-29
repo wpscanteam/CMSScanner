@@ -7,6 +7,12 @@ describe CMSScanner::Browser do
   subject(:browser) { described_class.instance(options) }
   before            { described_class.reset }
   let(:options)     { {} }
+  let(:default) do
+    {
+      ssl_verifypeer: false, ssl_verifyhost: 2,
+      headers: { 'User-Agent' => "CMSScanner v#{CMSScanner::VERSION}" }
+    }
+  end
 
   describe '#forge_request' do
     it 'returns a Typhoeus::Request' do
@@ -14,27 +20,32 @@ describe CMSScanner::Browser do
     end
   end
 
-  describe '#request_params' do
-    let(:default) do
-      { cache_ttl: nil, connecttimeout: nil, maxredirs: 3,
-        proxy: nil, proxyauth: nil,
-        ssl_verifypeer: false, ssl_verifyhost: 2,
-        timeout: nil, userpwd: nil,
-        headers: { 'User-Agent' => "CMSScanner v#{CMSScanner::VERSION}" } }
-    end
+  describe '#default_request_params' do
+    its(:default_request_params) { should eq default }
 
+    context 'when some attributes are set' do
+      let(:options)  do
+        {
+          cache_ttl: 200, connect_timeout: 10,
+          http_auth: { username: 'log', password: 'pwd' }
+        }
+      end
+
+      let(:expected) do
+        default.merge(cache_ttl: 200, connecttimeout: 10, userpwd: 'log:pwd')
+      end
+
+      its(:default_request_params) { should eq expected }
+    end
+  end
+
+  describe '#request_params' do
     context 'when no param is given' do
       its(:request_params) { should eq default }
-
-      context 'when browser options' do
-        let(:options) { { http_auth: { username: 'log', password: 'pwd' } } }
-
-        its(:request_params) { should eq default.merge(userpwd: 'log:pwd') }
-      end
     end
 
     context 'when params are supplied' do
-      let(:params) { { maxredirs: 10, another_param: true, headers: { 'Accept' => 'None' } } }
+      let(:params) { { another_param: true, headers: { 'Accept' => 'None' } } }
 
       it 'merges them (headers should be correctly merged)' do
         expect(browser.request_params(params)).to eq default
@@ -42,7 +53,7 @@ describe CMSScanner::Browser do
       end
 
       context 'when browser options' do
-        let(:options) { { maxredirs: 20, proxy: 'http://127.0.0.1:8080' } }
+        let(:options) { { proxy: 'http://127.0.0.1:8080' } }
 
         it 'returns the correct hash' do
           expect(browser.request_params(params)).to eq default

@@ -34,22 +34,34 @@ module CMSScanner
       Typhoeus::Request.new(url, request_params(params))
     end
 
+    # @return [ Hash ]
+    def default_request_params
+      params = {
+        ssl_verifypeer: false, # Disable SSL-Certificate checks
+        ssl_verifyhost: 2, # Disable SSL-Certificate checks
+        headers: { 'User-Agent' => user_agent }
+      }
+
+      { connect_timeout: :connecttimeout, cache_ttl: :cache_ttl,
+        proxy: :proxy, request_timeout: :timeout
+      }.each do |attribute, key|
+        attr_value = public_send(attribute)
+        params[key] = attr_value unless attr_value.nil?
+      end
+
+      params[:proxyauth] = "#{proxy_auth[:username]}:#{proxy_auth[:password]}" if proxy_auth
+      params[:userpwd] = "#{http_auth[:username]}:#{http_auth[:password]}" if http_auth
+
+      params
+    end
+
     # @param [ Hash ] params
     #
     # @return [ Hash ]
     def request_params(params = {})
-      {
-        cache_ttl: cache_ttl,
-        connecttimeout: connect_timeout,
-        maxredirs: 3, # Prevent infinite self redirection
-        proxy: proxy,
-        proxyauth: proxy_auth ? "#{proxy_auth[:username]}:#{proxy_auth[:password]}" : nil,
-        ssl_verifypeer: false, # Disable SSL-Certificate checks
-        ssl_verifyhost: 2, # Disable SSL-Certificate checks
-        timeout: request_timeout,
-        userpwd: http_auth ? "#{http_auth[:username]}:#{http_auth[:password]}" : nil,
-        headers: { 'User-Agent' => user_agent }
-      }.merge(params) { |key, oldval, newval| key == :headers ? oldval.merge(newval) : newval }
+      default_request_params.merge(params) do |key, oldval, newval|
+        key == :headers ? oldval.merge(newval) : newval
+      end
     end
   end
 end
