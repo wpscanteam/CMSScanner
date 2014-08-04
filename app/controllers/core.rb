@@ -14,19 +14,38 @@ module CMSScanner
         ] + cli_browser_options
       end
 
-      # @return [ Array ]
+      # @return [ Array<OptParseValidator::OptBase> ]
       def cli_browser_options
         [
+          OptString.new(['--user-agent VALUE', '--ua']),
           OptInteger.new(['--cache-ttl TIME_TO_LIVE']), # TODO: the cache system
-          OptPositiveInteger.new(['--connect-timeout SECONDS',
-                                  'The connection timeout in seconds']),
           OptCredentials.new(['--http-auth login:password']),
           OptPositiveInteger.new(['--max-threads VALUE', '-t', 'The max threads to use']),
+          OptPositiveInteger.new(['--request-timeout SECONDS', 'The request timeout in seconds']),
+          OptPositiveInteger.new(['--connect-timeout SECONDS',
+                                  'The connection timeout in seconds'])
+        ] + cli_browser_proxy_options + cli_browser_cookies_options
+      end
+
+      # @return [ Array<OptParseValidator::OptBase> ]
+      def cli_browser_proxy_options
+        [
           OptProxy.new(['--proxy protocol://IP:port',
                         'Supported protocols depend on the cURL installed']),
-          OptCredentials.new(['--proxy-auth login:password']),
-          OptPositiveInteger.new(['--request-timeout SECONDS', 'The request timeout in seconds']),
-          OptString.new(['--user-agent VALUE', '--ua'])
+          OptCredentials.new(['--proxy-auth login:password'])
+        ]
+      end
+
+      # @return [ Array<OptParseValidator::OptBase> ]
+      def cli_browser_cookies_options
+        [
+          OptString.new(['--cookie-string COOKIE',
+                         'Cookie string to use in requests, ' \
+                         'format: cookie1=value1[; cookie2=value2]']),
+          OptFilePath.new(['--cookie-jar FILE-PATH', 'File to read and write cookies'],
+                          writable: true,
+                          exists: false,
+                          default: '/tmp/cms_scanner_cookie_jar.txt')
         ]
       end
 

@@ -42,11 +42,12 @@ module CMSScanner
         headers: { 'User-Agent' => user_agent }
       }
 
-      { connect_timeout: :connecttimeout, cache_ttl: :cache_ttl,
-        proxy: :proxy, request_timeout: :timeout
-      }.each do |attribute, key|
-        attr_value = public_send(attribute)
-        params[key] = attr_value unless attr_value.nil?
+      { connecttimeout: :connect_timeout, cache_ttl: :cache_ttl,
+        proxy: :proxy, timeout: :request_timeout, cookiejar: :cookie_jar,
+        cookiefile: :cookie_jar, cookie: :cookie_string
+      }.each do |typhoeus_opt, browser_opt|
+        attr_value = public_send(browser_opt)
+        params[typhoeus_opt] = attr_value unless attr_value.nil?
       end
 
       params[:proxyauth] = "#{proxy_auth[:username]}:#{proxy_auth[:password]}" if proxy_auth

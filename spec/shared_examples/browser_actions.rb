@@ -6,7 +6,8 @@ shared_examples CMSScanner::Browser::Actions do
   describe '#get, #post, #head' do
     [:get, :post, :head].each do |method|
       it 'calls the method and returns a Typhoeus::Response' do
-        stub_request(method, url).to_return(status: 200)
+        stub_request(method, url)
+
         expect(CMSScanner::Browser.send(method, url)).to be_a Typhoeus::Response
       end
     end

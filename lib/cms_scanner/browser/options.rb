@@ -12,6 +12,8 @@ module CMSScanner
   class Browser
     OPTIONS = [
       :cache_ttl,
+      :cookie_jar,
+      :cookie_string,
       :connect_timeout,
       :http_auth,
       :max_threads,
