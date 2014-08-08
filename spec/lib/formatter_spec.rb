@@ -28,6 +28,19 @@ describe CMSScanner::Formatter do
 
 end
 
+module CMSScanner
+  module Formatter
+    module Spec
+      # Base Format Test Class
+      class BasedFormat < Base
+        def base_format
+          'base'
+        end
+      end
+    end
+  end
+end
+
 describe CMSScanner::Formatter::Base do
 
   subject(:formatter) { described_class.new }
@@ -98,6 +111,25 @@ describe CMSScanner::Formatter::Base do
         end
       end
     end
+
+    context 'when base_format' do
+      subject(:formatter) { CMSScanner::Formatter::Spec::BasedFormat.new }
+
+      after { expect(formatter.view_path(@tpl)).to eq @expected }
+
+      context 'when the ovverided view exists' do
+        it 'returns it' do
+          @expected = File.join(FIXTURES_VIEWS, 'based_format', 'test.erb')
+          @tpl      = '@test'
+        end
+      end
+
+      it 'returns the base views otherwise' do
+        @expected = File.join(FIXTURES_VIEWS, 'base', 'ctrl', 'local.erb')
+        @tpl      = 'local'
+      end
+    end
+
   end
 
   describe '#views_directories' do

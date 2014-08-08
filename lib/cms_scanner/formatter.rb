@@ -36,6 +36,14 @@ module CMSScanner
         self.class.name.demodulize.underscore
       end
 
+      # @return [ String ] The underscored format to use as a base
+      def base_format; end
+
+      # @return [ Array<String> ]
+      def formats
+        [format, base_format].compact
+      end
+
       # This is called after the scan
       # and used in some formatters (e.g JSON)
       # to indent results
@@ -81,9 +89,11 @@ module CMSScanner
         fail "Wrong tpl format: '#{tpl}'" unless tpl =~ /\A[\w\/_]+\z/
 
         views_directories.reverse.each do |dir|
-          potential_file = File.join(dir, format, "#{tpl}.erb")
+          formats.each do |format|
+            potential_file = File.join(dir, format, "#{tpl}.erb")
 
-          return potential_file if File.exist?(potential_file)
+            return potential_file if File.exist?(potential_file)
+          end
         end
 
         fail "View not found for #{format}/#{tpl}"
