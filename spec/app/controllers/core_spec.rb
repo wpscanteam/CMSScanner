@@ -31,7 +31,7 @@ describe CMSScanner::Controller::Core do
         cache        = Typhoeus::Config.cache
         storage_path = File.join(parsed_options[:cache_dir], Digest::MD5.hexdigest(target_url))
 
-        expect(cache).to be_a CMSScanner::TyphoeusCache
+        expect(cache).to be_a CMSScanner::Cache::Typhoeus
         expect(cache.storage_path).to eq storage_path
       end
     end

@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-describe CMSScanner::TyphoeusCache do
+describe CMSScanner::Cache::Typhoeus do
+
   subject(:cache) { described_class.new(cache_dir) }
 
   let(:cache_dir) { File.join(CACHE, 'typhoeus_cache') }

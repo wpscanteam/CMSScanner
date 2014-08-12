@@ -11,7 +11,7 @@ require 'pathname'
 # Custom Libs
 require 'helper'
 require 'cms_scanner/errors/auth_errors'
-require 'cms_scanner/typhoeus_cache'
+require 'cms_scanner/cache/typhoeus'
 require 'cms_scanner/target'
 require 'cms_scanner/browser'
 require 'cms_scanner/version'

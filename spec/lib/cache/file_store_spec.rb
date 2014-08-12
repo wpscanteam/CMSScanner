@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-describe CMSScanner::CacheFileStore do
+describe CMSScanner::Cache::FileStore do
+
   let(:cache_dir) { File.join(CACHE, 'cache_file_store') }
   subject(:cache) { described_class.new(cache_dir) }
 

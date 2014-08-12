@@ -58,7 +58,7 @@ module CMSScanner
 
         storage_path = File.join(parsed_options[:cache_dir], Digest::MD5.hexdigest(target.url))
 
-        Typhoeus::Config.cache = TyphoeusCache.new(storage_path)
+        Typhoeus::Config.cache = Cache::Typhoeus.new(storage_path)
       end
 
       def before_scan
