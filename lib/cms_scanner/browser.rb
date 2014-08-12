@@ -1,4 +1,3 @@
-require 'cms_scanner/typhoeus_cache'
 require 'cms_scanner/browser/actions'
 require 'cms_scanner/browser/options'
 

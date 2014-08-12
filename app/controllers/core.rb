@@ -18,7 +18,11 @@ module CMSScanner
       def cli_browser_options
         [
           OptString.new(['--user-agent VALUE', '--ua']),
-          OptInteger.new(['--cache-ttl TIME_TO_LIVE']), # TODO: the cache system
+          OptInteger.new(['--cache-ttl TIME_TO_LIVE'], default: 600),
+          OptDirectoryPath.new(['--cache-dir PATH'],
+                               readable: true,
+                               writable: true,
+                               default: '/tmp/cms_scanner/cache/'),
           OptCredentials.new(['--http-auth login:password']),
           OptPositiveInteger.new(['--max-threads VALUE', '-t', 'The max threads to use']),
           OptPositiveInteger.new(['--request-timeout SECONDS', 'The request timeout in seconds']),
@@ -45,11 +49,21 @@ module CMSScanner
           OptFilePath.new(['--cookie-jar FILE-PATH', 'File to read and write cookies'],
                           writable: true,
                           exists: false,
-                          default: '/tmp/cms_scanner_cookie_jar.txt')
+                          default: '/tmp/cms_scanner/cookie_jar.txt')
         ]
       end
 
+      def setup_cache
+        return unless parsed_options[:cache_dir]
+
+        storage_path = File.join(parsed_options[:cache_dir], Digest::MD5.hexdigest(target.url))
+
+        Typhoeus::Config.cache = TyphoeusCache.new(storage_path)
+      end
+
       def before_scan
+        setup_cache
+
         fail "The url supplied '#{target.url}' seems to be down" unless target.online?
 
         fail HTTPAuthRequiredError if target.http_auth?

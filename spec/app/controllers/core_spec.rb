@@ -14,6 +14,27 @@ describe CMSScanner::Controller::Core do
   its(:cli_options) { should_not be_empty }
   its(:cli_options) { should be_a Array }
 
+  describe '#setup_cache' do
+    context 'when no cache_dir supplied (or default)' do
+      it 'returns nil' do
+        expect(core.setup_cache).to eq nil
+      end
+    end
+
+    context 'when cache_dir' do
+      let(:parsed_options) { { url: target_url, cache_dir: '/tmp/spec' } }
+
+      before { core.setup_cache }
+      after  { Typhoeus::Config.cache = nil }
+
+      it 'sets up the cache' do
+        cache = Typhoeus::Config.cache
+
+        expect(cache).to be_a CMSScanner::TyphoeusCache
+      end
+    end
+  end
+
   describe '#before_scan' do
     it 'raise an error when the site is down' do
       stub_request(:get, target_url).to_return(status: 0)
