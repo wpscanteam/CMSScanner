@@ -7,6 +7,7 @@ require 'addressable/uri'
 # Standard Libs
 require 'pathname'
 require 'erb'
+require 'fileutils'
 # Custom Libs
 require 'helper'
 require 'cms_scanner/errors/auth_errors'

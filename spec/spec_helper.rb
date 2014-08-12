@@ -21,9 +21,15 @@ RSpec.configure do |config|
   end
 end
 
+def count_files_in_dir(absolute_dir_path, files_pattern = '*')
+  Dir.glob(File.join(absolute_dir_path, files_pattern)).count
+end
+
 require 'cms_scanner'
 require 'shared_examples'
 
-FIXTURES       = Pathname.new(__FILE__).dirname.join('fixtures').to_s
+SPECS          = Pathname.new(__FILE__).dirname.to_s
+CACHE          = File.join(SPECS, 'cache')
+FIXTURES       = File.join(SPECS, 'fixtures')
 FIXTURES_VIEWS = File.join(FIXTURES, 'views')
-APP_VIEWS      = Pathname.new(CMSScanner::APP_DIR).join('views').to_s
+APP_VIEWS      = File.join(CMSScanner::APP_DIR, 'views')
