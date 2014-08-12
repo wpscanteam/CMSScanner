@@ -22,15 +22,17 @@ describe CMSScanner::Controller::Core do
     end
 
     context 'when cache_dir' do
-      let(:parsed_options) { { url: target_url, cache_dir: '/tmp/spec' } }
+      let(:parsed_options) { { url: target_url, cache_dir: CACHE } }
 
       before { core.setup_cache }
       after  { Typhoeus::Config.cache = nil }
 
       it 'sets up the cache' do
-        cache = Typhoeus::Config.cache
+        cache        = Typhoeus::Config.cache
+        storage_path = File.join(parsed_options[:cache_dir], Digest::MD5.hexdigest(target_url))
 
         expect(cache).to be_a CMSScanner::TyphoeusCache
+        expect(cache.storage_path).to eq storage_path
       end
     end
   end
