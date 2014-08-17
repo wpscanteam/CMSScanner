@@ -18,6 +18,7 @@ module CMSScanner
         FileUtils.mkdir_p(@storage_path) unless Dir.exist?(@storage_path)
       end
 
+      # TODO: rename this to clear ?
       def clean
         Dir[File.join(storage_path, '*')].each do |f|
           File.delete(f) unless File.symlink?(f)

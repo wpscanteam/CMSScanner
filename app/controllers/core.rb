@@ -18,17 +18,12 @@ module CMSScanner
       def cli_browser_options
         [
           OptString.new(['--user-agent VALUE', '--ua']),
-          OptInteger.new(['--cache-ttl TIME_TO_LIVE'], default: 600),
-          OptDirectoryPath.new(['--cache-dir PATH'],
-                               readable: true,
-                               writable: true,
-                               default: '/tmp/cms_scanner/cache/'),
           OptCredentials.new(['--http-auth login:password']),
           OptPositiveInteger.new(['--max-threads VALUE', '-t', 'The max threads to use']),
           OptPositiveInteger.new(['--request-timeout SECONDS', 'The request timeout in seconds']),
           OptPositiveInteger.new(['--connect-timeout SECONDS',
                                   'The connection timeout in seconds'])
-        ] + cli_browser_proxy_options + cli_browser_cookies_options
+        ] + cli_browser_proxy_options + cli_browser_cookies_options + cli_browser_cache_options
       end
 
       # @return [ Array<OptParseValidator::OptBase> ]
@@ -53,12 +48,25 @@ module CMSScanner
         ]
       end
 
+      # @return [ Array<OptParseValidator::OptBase> ]
+      def cli_browser_cache_options
+        [
+          OptInteger.new(['--cache-ttl TIME_TO_LIVE'], default: 600),
+          OptBoolean.new(['--clear-cache', 'Clear the cache before the scan']),
+          OptDirectoryPath.new(['--cache-dir PATH'],
+                               readable: true,
+                               writable: true,
+                               default: '/tmp/cms_scanner/cache/')
+        ]
+      end
+
       def setup_cache
         return unless parsed_options[:cache_dir]
 
         storage_path = File.join(parsed_options[:cache_dir], Digest::MD5.hexdigest(target.url))
 
         Typhoeus::Config.cache = Cache::Typhoeus.new(storage_path)
+        Typhoeus::Config.cache.clean if parsed_options[:clear_cache]
       end
 
       def before_scan
