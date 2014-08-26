@@ -13,10 +13,13 @@ module CMSScanner
 
             next unless r
 
-            method     = "#{finder.class} (#{symbol} detection)"
+            # TODO: create another method doing the below
+            method     = "#{finder.class.to_s.demodulize} (#{symbol} detection)"
             confidence = nil
+            result     = r
 
             if r.is_a?(Hash) && r.key?(:result)
+              result     = r[:result]
               method     = r[:method] if r.key?(:method)
               confidence = r[:confidence] if r.key?(:confidence)
             end

@@ -16,6 +16,12 @@ module CMSScanner
       def to_s
         result.to_s
       end
+
+      def eql?(other)
+        result == other.result &&
+        method == other.method &&
+        confidence == other.confidence
+      end
     end
   end
 end
