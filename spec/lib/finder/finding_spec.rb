@@ -17,6 +17,12 @@ describe CMSScanner::Finder::Finding do
 
       its(:references) { should eq %w(some-url) }
     end
+
+    context 'when :references is an array' do
+      let(:opts) { { references: %w(a b) } }
+
+      its(:references) { should eq opts[:references] }
+    end
   end
 
   describe '#to_s' do
