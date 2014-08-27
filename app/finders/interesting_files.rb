@@ -1,7 +1,7 @@
 require_relative 'interesting_files/robots_txt'
 
 module CMSScanner
-  # Test
+  # Interesting Files Finder
   class InterestingFiles
     include Finder
 
