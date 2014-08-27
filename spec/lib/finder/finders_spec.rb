@@ -8,6 +8,12 @@ describe CMSScanner::Finder::Finders do
   describe '#run' do
     let(:target)  { 'target' }
     let(:finding) { CMSScanner::Finder::Finding }
+    let(:expected_passive) do
+      [
+        finding.new('test', 'DummyFinder (passive detection)'),
+        finding.new('spotted', 'NoAggressiveResult (passive detection)', 10)
+      ]
+    end
 
     before do
       finders << CMSScanner::Finder::DummyFinder.new(target) <<
@@ -23,9 +29,10 @@ describe CMSScanner::Finder::Finders do
     context 'when :passive mode' do
       let(:mode) { :passive }
 
-      it 'returns 2 reults' do
+      it 'returns 2 results' do
         expect(@found.size).to eq 2
-        expect(@found.first).to eql finding.new('test', 'DummyFinder (passive detection)')
+        expect(@found.first).to eql expected_passive.first
+        expect(@found.last).to eql expected_passive.last
       end
     end
 
@@ -41,8 +48,11 @@ describe CMSScanner::Finder::Finders do
     context 'when :mixed mode' do
       let(:mode) { :mixed }
 
-      xit
-
+      it 'returns 2 results' do
+        expect(@found.size).to eq 2
+        expect(@found.first).to eql expected_passive.first
+        expect(@found.last).to eql expected_passive.last
+      end
     end
   end
 

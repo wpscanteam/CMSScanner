@@ -2,6 +2,11 @@ module CMSScanner
   module Finder
     # Finder container
     class Finders < Array
+      # @return [ Findings ]
+      def findings
+        @findings ||= Findings.new
+      end
+
       # @param [ Symbol ] mode :mixed, :passive or :aggressive
       # @param [ Hash ] opts
       #
@@ -13,20 +18,11 @@ module CMSScanner
 
             next unless r
 
-            # TODO: create another method doing the below
-            method     = "#{finder.class.to_s.demodulize} (#{symbol} detection)"
-            confidence = nil
-            result     = r
-
-            if r.is_a?(Hash) && r.key?(:result)
-              result     = r[:result]
-              method     = r[:method] if r.key?(:method)
-              confidence = r[:confidence] if r.key?(:confidence)
-            end
-
-            findings << Finding.new(result, method, confidence)
+            findings << create_finding(r, finder, symbol)
+            break
           end
         end
+
         findings
       end
 
@@ -39,8 +35,23 @@ module CMSScanner
         symbols.include?(mode) ? [*mode] : []
       end
 
-      def findings
-        @findings ||= Findings.new
+      # Create the finding object related to the result
+      #
+      # @param [ Mixed ] result
+      # @param [ Finder ] finder
+      # @param [ Symbol ] symbol
+      #
+      # @return [ Finding ]
+      def create_finding(result, finder, symbol)
+        method     = "#{finder.class.to_s.demodulize} (#{symbol} detection)"
+
+        if result.is_a?(Hash) && result.key?(:result)
+          r          = result[:result]
+          method     = result[:method] if result.key?(:method)
+          confidence = result[:confidence] if result.key?(:confidence)
+        end
+
+        Finding.new(r || result, method, confidence)
       end
     end
   end
