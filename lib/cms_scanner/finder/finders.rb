@@ -43,15 +43,11 @@ module CMSScanner
       #
       # @return [ Finding ]
       def create_finding(result, finder, symbol)
-        method = "#{finder.class.to_s.demodulize} (#{symbol} detection)"
+        opts = { method: "#{finder.class.to_s.demodulize} (#{symbol} detection)" }
 
-        if result.is_a?(Hash) && result.key?(:result)
-          r          = result[:result]
-          method     = result[:method] if result.key?(:method)
-          confidence = result[:confidence] if result.key?(:confidence)
-        end
+        return Finding.new(result, opts) unless result.is_a?(Hash) && result.key?(:result)
 
-        Finding.new(r || result, method, confidence)
+        Finding.new(result[:result], opts.merge(result))
       end
     end
   end

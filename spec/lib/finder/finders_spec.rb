@@ -10,8 +10,8 @@ describe CMSScanner::Finder::Finders do
     let(:finding) { CMSScanner::Finder::Finding }
     let(:expected_passive) do
       [
-        finding.new('test', 'DummyFinder (passive detection)'),
-        finding.new('spotted', 'NoAggressiveResult (passive detection)', 10)
+        finding.new('test', method: 'DummyFinder (passive detection)'),
+        finding.new('spotted', method: 'NoAggressiveResult (passive detection)', confidence: 10)
       ]
     end
 
@@ -41,7 +41,7 @@ describe CMSScanner::Finder::Finders do
 
       it 'returns 1 result' do
         expect(@found.size).to eq 1
-        expect(@found.first).to eql finding.new('test', 'override', 100)
+        expect(@found.first).to eql finding.new('test', method: 'override', confidence: 100)
       end
     end
 
