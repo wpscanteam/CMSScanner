@@ -1,7 +1,7 @@
 module CMSScanner
   module Finder
     # Base Finder
-    class Finder
+    class Base
       attr_accessor :target
 
       def initialize(target)

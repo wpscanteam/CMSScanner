@@ -1,7 +1,7 @@
 module CMSScanner
   module Finder
     # Dummy Test Finder
-    class DummyFinder < Finder
+    class DummyFinder < Base
       def passive(_opts = {})
         'test'
       end
@@ -12,7 +12,7 @@ module CMSScanner
     end
 
     # No aggressive result finder
-    class NoAggressiveResult < Finder
+    class NoAggressiveResult < Base
       def passive(_opts = {})
         { result: 'spotted', confidence: 10 }
       end

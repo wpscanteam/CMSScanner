@@ -1,4 +1,4 @@
-require 'cms_scanner/finder/finder'
+require 'cms_scanner/finder/base'
 require 'cms_scanner/finder/finding'
 require 'cms_scanner/finder/findings'
 require 'cms_scanner/finder/finders'
@@ -19,7 +19,7 @@ module CMSScanner
 
     # @param [ Symbol ] mode (:mixed, :passive, :aggressive)
     #
-    # @return [ Array ]
+    # @return [ Findings ]
     def find(mode = :mixed)
       finders.run(mode)
     end

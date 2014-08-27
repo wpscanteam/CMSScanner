@@ -43,7 +43,7 @@ module CMSScanner
       #
       # @return [ Finding ]
       def create_finding(result, finder, symbol)
-        method     = "#{finder.class.to_s.demodulize} (#{symbol} detection)"
+        method = "#{finder.class.to_s.demodulize} (#{symbol} detection)"
 
         if result.is_a?(Hash) && result.key?(:result)
           r          = result[:result]
