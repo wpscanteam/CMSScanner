@@ -27,9 +27,9 @@ module CMSScanner
 
       redirect_output_to_file(parsed_options[:output]) if parsed_options[:output]
 
-      each         { |c| c.before_scan }
-      each         { |c| c.run }
-      reverse.each { |c| c.after_scan }
+      each(&:before_scan)
+      each(&:run)
+      reverse.each(&:after_scan)
     end
   end
 end
