@@ -12,8 +12,7 @@ module CMSScanner
         def aggressive(_opts = {})
           res = Typhoeus.get(url)
 
-          return unless res && res.code == 200
-          return unless res.body.length > 0
+          return unless res && res.code == 200 && res.body.length > 0
 
           CMSScanner::InterestingFile.new(url, confidence: 100,
                                                found_by: found_by,
