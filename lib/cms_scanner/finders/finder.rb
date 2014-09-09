@@ -15,6 +15,10 @@ module CMSScanner
       # @param [ Hash ] _opts
       def aggressive(_opts = {})
       end
+
+      def found_by
+        "#{self.class.to_s.demodulize} (#{caller_locations(1, 1)[0].label} detection)"
+      end
     end
   end
 end

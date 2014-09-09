@@ -3,16 +3,16 @@ module CMSScanner
     # Findings container
     class Findings < Array
       # Override to include the confirmed_by logic
-      def <<(_other)
-        # Draft
+      def <<(other)
         each do |found|
-          if found == other
-            found.confirmed_by << other
-            # Increase confidence (e.g: (self + other) / 1.5 ?)
-          else
-            super(other)
-          end
+          next unless found == other
+
+          found.confirmed_by << other
+          # TODO: Increase confidence (e.g: (found + other) / 1.5 ?)
+          return self
         end
+
+        super(other)
       end
 
       # TODO: check for the #+ to see if it uses #<<

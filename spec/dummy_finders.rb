@@ -1,20 +1,40 @@
 module CMSScanner
-  module Finder
+  # Dummy Finding
+  class DummyFinding
+    include Finders::Finding
+
+    attr_reader :r
+
+    def initialize(r, opts = {})
+      @r = r
+      parse_finding_options(opts)
+    end
+
+    def ==(other)
+      r == other.r
+    end
+
+    def eql?(other)
+      r == other.r && confidence == other.confidence && found_by == other.found_by
+    end
+  end
+
+  module Finders
     # Dummy Test Finder
-    class DummyFinder < Base
+    class DummyFinder < Finder
       def passive(_opts = {})
-        'test'
+        DummyFinding.new('test', found_by: found_by)
       end
 
       def aggressive(_opts = {})
-        { result: 'test', confidence: 100, method: 'override' }
+        DummyFinding.new('test', confidence: 100, found_by: 'override')
       end
     end
 
     # No aggressive result finder
-    class NoAggressiveResult < Base
+    class NoAggressiveResult < Finder
       def passive(_opts = {})
-        { result: 'spotted', confidence: 10 }
+        DummyFinding.new('spotted', confidence: 10, found_by: found_by)
       end
     end
   end

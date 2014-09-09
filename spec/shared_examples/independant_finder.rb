@@ -1,5 +1,5 @@
 
-shared_examples CMSScanner::Finder do
+shared_examples CMSScanner::Finders::IndependantFinder do
 
   describe '::find' do
     it 'creates a new object and call finders#find' do
@@ -14,12 +14,14 @@ shared_examples CMSScanner::Finder do
 
   describe '#find' do
     it 'calls finders#run' do
-      expect(subject.finders).to receive(:run).with(:mixed)
+      expect(subject.finders).to receive(:run).with({})
       subject.find
     end
   end
 
   describe '#finders' do
+    its(:finders) { should be_a CMSScanner::Finders::IndependantFinders }
+
     it 'returns the correct finders' do
       finders = subject.finders
 

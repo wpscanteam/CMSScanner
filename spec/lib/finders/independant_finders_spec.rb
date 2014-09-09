@@ -1,27 +1,27 @@
 require 'spec_helper'
 require 'dummy_finders'
 
-describe CMSScanner::Finder::Finders do
+describe CMSScanner::Finders::IndependantFinders do
 
   subject(:finders) { described_class.new }
 
   describe '#run' do
     let(:target)  { 'target' }
-    let(:finding) { CMSScanner::Finder::Finding }
+    let(:finding) { CMSScanner::DummyFinding }
     let(:expected_passive) do
       [
-        finding.new('test', method: 'DummyFinder (passive detection)'),
-        finding.new('spotted', method: 'NoAggressiveResult (passive detection)', confidence: 10)
+        finding.new('test', found_by: 'DummyFinder (passive detection)'),
+        finding.new('spotted', found_by: 'NoAggressiveResult (passive detection)', confidence: 10)
       ]
     end
 
     before do
-      finders << CMSScanner::Finder::DummyFinder.new(target) <<
-                 CMSScanner::Finder::NoAggressiveResult.new(target)
+      finders << CMSScanner::Finders::DummyFinder.new(target) <<
+                 CMSScanner::Finders::NoAggressiveResult.new(target)
 
-      @found = finders.run(mode)
+      @found = finders.run(mode: mode)
 
-      expect(@found).to be_a(CMSScanner::Finder::Findings)
+      expect(@found).to be_a(CMSScanner::Finders::Findings)
 
       @found.each { |f| expect(f).to be_a finding }
     end
@@ -41,7 +41,7 @@ describe CMSScanner::Finder::Finders do
 
       it 'returns 1 result' do
         expect(@found.size).to eq 1
-        expect(@found.first).to eql finding.new('test', method: 'override', confidence: 100)
+        expect(@found.first).to eql finding.new('test', found_by: 'override', confidence: 100)
       end
     end
 
@@ -85,7 +85,7 @@ describe CMSScanner::Finder::Finders do
 
   describe '#findings' do
     it 'returns a Findings object' do
-      expect(finders.findings).to be_a CMSScanner::Finder::Findings
+      expect(finders.findings).to be_a CMSScanner::Finders::Findings
     end
   end
 

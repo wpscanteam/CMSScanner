@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe CMSScanner::InterestingFiles do
+describe CMSScanner::Finders::InterestingFiles do
 
-  it_behaves_like CMSScanner::Finder do
+  it_behaves_like CMSScanner::Finders::IndependantFinder do
     let(:expected_finders) { %w(RobotsTxt) }
   end
 
-  subject(:files)  { described_class.new(target) }
-  let(:target)     { CMSScanner::Target.new(url) }
-  let(:url)        { 'http://example.com/' }
+  subject(:files) { described_class.new(target) }
+  let(:target)    { CMSScanner::Target.new(url) }
+  let(:url)       { 'http://example.com/' }
 
 end

@@ -4,11 +4,11 @@ module CMSScanner
   module Finders
     # Interesting Files Finder
     class InterestingFiles
-      include Finders::IndependantFinder
+      include IndependantFinder
 
       # @param [ CMSScanner::Target ] target
       def initialize(target)
-        finders << Finders::InterestingFile::RobotsTxt.new(target)
+        finders << InterestingFile::RobotsTxt.new(target)
       end
     end
   end

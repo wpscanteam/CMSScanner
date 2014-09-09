@@ -23,7 +23,7 @@ module CMSScanner
 
       # @return [ Array ]
       def finders
-        @finders ||= IndependtantFinders.new
+        @finders ||= IndependantFinders.new
       end
     end
   end

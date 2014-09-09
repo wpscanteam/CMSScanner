@@ -1,6 +1,9 @@
 module CMSScanner
   module Finders
     # Independant Finders container
+    # This class is designed to handle independant results
+    # which are not related with others
+    # e.g: interesting files
     class IndependantFinders < Array
       # @return [ Findings ]
       def findings
@@ -13,12 +16,14 @@ module CMSScanner
       # @return [ Findings ]
       def run(opts = {})
         each do |finder|
-          symbols_from_mode(opts[:mode] || :mixed).each do |symbol|
+          symbols_from_mode(opts[:mode]).each do |symbol|
             r = finder.send(symbol, opts)
 
             next unless r
+            findings << r
 
-            findings << create_finding(r, finder, symbol)
+            # Stop the current finder if a result has been found
+            # This might be removed in the future, due to the confirmed_by system
             break
           end
         end
@@ -31,23 +36,8 @@ module CMSScanner
       def symbols_from_mode(mode)
         symbols = [:passive, :aggressive]
 
-        return symbols if mode == :mixed
+        return symbols if mode.nil? || mode == :mixed
         symbols.include?(mode) ? [*mode] : []
-      end
-
-      # Create the finding object related to the result
-      #
-      # @param [ Mixed ] result
-      # @param [ Finder ] finder
-      # @param [ Symbol ] symbol
-      #
-      # @return [ Finding ]
-      def create_finding(result, finder, symbol)
-        opts = { method: "#{finder.class.to_s.demodulize} (#{symbol} detection)" }
-
-        return Finding.new(result, opts) unless result.is_a?(Hash) && result.key?(:result)
-
-        Finding.new(result[:result], opts.merge(result))
       end
     end
   end

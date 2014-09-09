@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CMSScanner::Finder::InterestingFiles::RobotsTxt do
+describe CMSScanner::Finders::InterestingFile::RobotsTxt do
 
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
@@ -15,7 +15,7 @@ describe CMSScanner::Finder::InterestingFiles::RobotsTxt do
     after do
       stub_request(:get, robot_txt).to_return(status: status)
 
-      expect(finder.aggressive).to eq @expected
+      expect(finder.aggressive).to eql @expected
     end
 
     context 'when 404' do
@@ -30,7 +30,9 @@ describe CMSScanner::Finder::InterestingFiles::RobotsTxt do
       let(:status) { 200 }
 
       it 'returns a hash with the result' do
-        @expected = { result: robot_txt, confidence: 100 }
+        @expected = CMSScanner::InterestingFile.new(robot_txt,
+                                                    confidence: 100,
+                                                    found_by: 'RobotsTxt (aggressive detection)')
       end
     end
   end

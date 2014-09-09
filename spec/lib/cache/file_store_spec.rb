@@ -60,12 +60,12 @@ describe CMSScanner::Cache::FileStore do
 
   describe '#write_entry' do
     after do
-      cache.write_entry(@key, @data, @timeout)
+      cache.write_entry(@key, @data, @ttl)
       expect(cache.read_entry(@key)).to eq @expected
     end
 
     it 'should get the correct entry (string)' do
-      @timeout  = 10
+      @ttl      = 10
       @key      = 'some_key'
       @data     = 'Hello World !'
       @expected = @data
@@ -73,9 +73,18 @@ describe CMSScanner::Cache::FileStore do
 
     context 'when cache_ttl <= 0' do
       it 'does not write the entry' do
-        @timeout  = 0
+        @ttl      = 0
         @key      = 'another_key'
         @data     = 'Another Hello World !'
+        @expected = nil
+      end
+    end
+
+    context 'when cache_ttl is nil' do
+      it 'does not write the entry' do
+        @ttl      = nil
+        @key      = 'test'
+        @data     = 'test'
         @expected = nil
       end
     end

@@ -89,8 +89,6 @@ module CMSScanner
 
         output('started', url: target.url)
         # sleep(2) # Simulate a scan
-
-        p Finders::InterestingFiles.find(target)
       end
 
       def after_scan

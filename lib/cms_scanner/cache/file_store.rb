@@ -38,7 +38,7 @@ module CMSScanner
       # @param [ Mixed ] data_to_store
       # @param [ Integer ] cache_ttl
       def write_entry(key, data_to_store, cache_ttl)
-        return unless cache_ttl > 0
+        return unless cache_ttl.to_i > 0
 
         File.write(entry_path(key), serializer.dump(data_to_store))
         File.write(entry_expiration_path(key), Time.now.to_i + cache_ttl)
