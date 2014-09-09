@@ -1,13 +1,15 @@
 require_relative 'interesting_files/robots_txt'
 
 module CMSScanner
-  # Interesting Files Finder
-  class InterestingFiles
-    include Finder
+  module Finders
+    # Interesting Files Finder
+    class InterestingFiles
+      include Finders::IndependantFinder
 
-    # @param [ CMSScanner::Target ] target
-    def initialize(target)
-      finders << Finder::InterestingFiles::RobotsTxt.new(target)
+      # @param [ CMSScanner::Target ] target
+      def initialize(target)
+        finders << Finders::InterestingFile::RobotsTxt.new(target)
+      end
     end
   end
 end
