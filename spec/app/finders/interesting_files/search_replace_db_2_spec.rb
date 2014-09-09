@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe CMSScanner::Finders::InterestingFile::FantasticoFileslist do
+describe CMSScanner::Finders::InterestingFile::SearchReplaceDB2 do
 
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
-  let(:file)       { url + 'fantastico_fileslist.txt' }
-  let(:fixtures)   { File.join(FIXTURES, 'interesting_files', 'fantastico_fileslist') }
+  let(:file)       { url + 'searchreplacedb2.php' }
+  let(:fixtures)   { File.join(FIXTURES, 'interesting_files', 'search_replace_db_2') }
 
   describe '#url' do
     its(:url) { should eq file }
@@ -39,13 +39,13 @@ describe CMSScanner::Finders::InterestingFile::FantasticoFileslist do
       end
 
       context 'when the body matches' do
-        let(:body) { File.new(File.join(fixtures, 'fantastico_fileslist.txt')).read }
+        let(:body) { File.new(File.join(fixtures, 'searchreplacedb2.php')).read }
 
         it 'returns the InterestingFile result' do
           @expected = CMSScanner::InterestingFile.new(
             file,
             confidence: 100,
-            found_by: 'FantasticoFileslist (aggressive detection)'
+            found_by: 'SearchReplaceDB2 (aggressive detection)'
           )
         end
       end
