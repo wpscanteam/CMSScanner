@@ -8,11 +8,12 @@ module CMSScanner
           target.uri.join('robots.txt').to_s
         end
 
+        # @return [ InterestingFile ]
         def aggressive(_opts = {})
           res = Typhoeus.get(url)
 
-          # TODO: more accurate check
-          return unless res.code == 200
+          return unless res && res.code == 200
+          return unless res.body =~ /(?:user-agent|disallow):/i
 
           CMSScanner::InterestingFile.new(url, confidence: 100, found_by: found_by)
         end
