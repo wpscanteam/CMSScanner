@@ -41,6 +41,15 @@ describe CMSScanner::Cache::FileStore do
       end
     end
 
+    context 'when the file is empty (marshal data too short error)' do
+      it 'returns nil' do
+        File.new(cache.entry_path(key), File::CREAT)
+
+        @expiration = Time.now.to_i + 200
+        @expected   = nil
+      end
+    end
+
     context 'when the entry has expired' do
       it 'returns nil' do
         @expiration = Time.now.to_i - 200

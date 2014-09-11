@@ -31,7 +31,11 @@ module CMSScanner
       def read_entry(key)
         file_path = entry_path(key)
 
-        serializer.load(File.read(file_path)) if File.exist?(file_path) && !expired_entry?(key)
+        return if expired_entry?(key)
+
+        serializer.load(File.read(file_path))
+      rescue
+        nil
       end
 
       # @param [ String ] key
