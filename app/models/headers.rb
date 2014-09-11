@@ -1,0 +1,36 @@
+module CMSScanner
+  # Not really an interesting file, but will use this class for convenience
+  class Headers < InterestingFile
+    # @return [ Hash ] The headers
+    def entries
+      res = Browser.get(url)
+      return [] unless res
+      res.headers
+    end
+
+    # @return [ Array<String> ] The interesting headers detected
+    def interesting_entries
+      results = []
+
+      entries.each do |header, value|
+        next if known_headers.include?(header.downcase)
+
+        results << "#{header}: #{value}"
+      end
+      results
+    end
+
+    # @return [ Array<String> ] Downcased known headers
+    def known_headers
+      %w(
+        age accept-ranges cache-control content-type content-length connection date etag expires
+        location last-modified pragma set-cookie vary
+        x-cache x-content-type-options x-language x-pingback x-varnish
+      )
+    end
+
+    def eql?(other)
+      super(other) && interesting_entries == other.interesting_entries
+    end
+  end
+end

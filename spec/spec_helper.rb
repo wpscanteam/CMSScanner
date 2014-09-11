@@ -25,6 +25,12 @@ def count_files_in_dir(absolute_dir_path, files_pattern = '*')
   Dir.glob(File.join(absolute_dir_path, files_pattern)).count
 end
 
+# Parse a file containing raw headers and return the associated Hash
+# @return [ Hash ]
+def parse_headers_file(filepath)
+  Typhoeus::Response::Header.new(File.read(filepath))
+end
+
 require 'cms_scanner'
 require 'shared_examples'
 
