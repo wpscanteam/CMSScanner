@@ -16,7 +16,10 @@ describe CMSScanner::Finders::InterestingFile::FantasticoFileslist do
     after do
       stub_request(:get, file).to_return(status: status, body: body)
 
-      expect(finder.aggressive).to eql @expected
+      result = finder.aggressive
+
+      expect(result).to be_a CMSScanner::FantasticoFileslist if @expected
+      expect(result).to eql @expected
     end
 
     let(:body) { '' }
@@ -42,7 +45,7 @@ describe CMSScanner::Finders::InterestingFile::FantasticoFileslist do
         let(:body) { File.new(File.join(fixtures, 'fantastico_fileslist.txt')).read }
 
         it 'returns the InterestingFile result' do
-          @expected = CMSScanner::InterestingFile.new(
+          @expected = CMSScanner::FantasticoFileslist.new(
             file,
             confidence: 100,
             found_by: 'FantasticoFileslist (aggressive detection)'

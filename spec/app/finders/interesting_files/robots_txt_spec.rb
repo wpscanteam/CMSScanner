@@ -16,6 +16,9 @@ describe CMSScanner::Finders::InterestingFile::RobotsTxt do
     after do
       stub_request(:get, robots_txt).to_return(status: status, body: body)
 
+      result = finder.aggressive
+
+      expect(result).to be_a CMSScanner::RobotsTxt if @expected
       expect(finder.aggressive).to eql @expected
     end
 
@@ -42,9 +45,9 @@ describe CMSScanner::Finders::InterestingFile::RobotsTxt do
         let(:body) { File.new(File.join(fixtures, 'robots.txt')).read }
 
         it 'returns the InterestingFile result' do
-          @expected = CMSScanner::InterestingFile.new(robots_txt,
-                                                      confidence: 100,
-                                                      found_by: 'RobotsTxt (aggressive detection)')
+          @expected = CMSScanner::RobotsTxt.new(robots_txt,
+                                                confidence: 100,
+                                                found_by: 'RobotsTxt (aggressive detection)')
         end
       end
     end

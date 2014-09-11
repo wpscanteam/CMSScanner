@@ -14,7 +14,7 @@ module CMSScanner
 
           return unless res && res.code == 200 && res.body.length > 0
 
-          CMSScanner::InterestingFile.new(url, confidence: 100,
+          CMSScanner::FantasticoFileslist.new(url, confidence: 100,
                                                found_by: found_by,
                                                references: references)
         end

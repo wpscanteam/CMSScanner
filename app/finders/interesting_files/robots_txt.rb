@@ -14,7 +14,7 @@ module CMSScanner
 
           return unless res && res.code == 200 && res.body =~ /(?:user-agent|(?:dis)?allow):/i
 
-          CMSScanner::InterestingFile.new(url, confidence: 100, found_by: found_by)
+          CMSScanner::RobotsTxt.new(url, confidence: 100, found_by: found_by)
         end
       end
     end

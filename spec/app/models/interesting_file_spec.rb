@@ -6,6 +6,36 @@ describe CMSScanner::InterestingFile do
 
   subject(:file) { described_class.new(url) }
   let(:url)      { 'http://example.com/' }
+  let(:fixtures) { File.join(FIXTURES, 'interesting_files') }
+
+  describe '#entries' do
+    after do
+      stub_request(:get, file.url).to_return(headers: headers, body: @body)
+
+      expect(file.entries).to eq @expected
+    end
+
+    context 'when content-type matches text/plain' do
+      let(:headers) { { 'Content-Type' => 'text/plain; charset=utf-8' } }
+
+      it 'returns the file content as an array w/o empty strings' do
+        @body     = File.new(File.join(fixtures, 'file.txt')).read
+        @expected = ['This is', 'a test file', 'with some content']
+      end
+    end
+
+    context 'when other content-type' do
+      let(:headers) { { 'Content-Type' => 'text.html; charset=utf-8' } }
+
+      it 'returns an empty array' do
+        @expected = []
+      end
+    end
+  end
+
+  describe '#interesting_entries' do
+    its(:interesting_entries) { should eq [] }
+  end
 
   describe '#==' do
     context 'when same URL' do

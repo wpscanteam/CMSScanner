@@ -5,6 +5,7 @@ modules
 CHANGELOG.txt
 cron.php
 data.sql
+admin.txt
 robots.txt
 update.php
 UPGRADE.txt
