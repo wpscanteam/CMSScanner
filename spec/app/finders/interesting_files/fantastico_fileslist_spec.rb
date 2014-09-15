@@ -14,7 +14,7 @@ describe CMSScanner::Finders::InterestingFile::FantasticoFileslist do
 
   describe '#aggressive' do
     after do
-      stub_request(:get, file).to_return(status: status, body: body)
+      stub_request(:get, file).to_return(status: status, body: body, headers: headers)
 
       result = finder.aggressive
 
@@ -22,7 +22,8 @@ describe CMSScanner::Finders::InterestingFile::FantasticoFileslist do
       expect(result).to eql @expected
     end
 
-    let(:body) { '' }
+    let(:body)    { '' }
+    let(:headers) { { 'Content-Type' => 'text/html ' } }
 
     context 'when 404' do
       let(:status) { 404 }
@@ -41,8 +42,17 @@ describe CMSScanner::Finders::InterestingFile::FantasticoFileslist do
         end
       end
 
-      context 'when the body matches' do
-        let(:body) { File.new(File.join(fixtures, 'fantastico_fileslist.txt')).read }
+      context 'when not a text/plain Content-Type' do
+        let(:body) { 'not an empty body' }
+
+        it 'returns nil' do
+          @expected = nil
+        end
+      end
+
+      context 'when the body matches and Content-Type = text/plain' do
+        let(:body)    { File.new(File.join(fixtures, 'fantastico_fileslist.txt')).read }
+        let(:headers) { { 'Content-Type' => 'text/plain' } }
 
         it 'returns the InterestingFile result' do
           @expected = CMSScanner::FantasticoFileslist.new(
