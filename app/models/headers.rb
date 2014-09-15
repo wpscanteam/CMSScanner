@@ -24,8 +24,9 @@ module CMSScanner
     def known_headers
       %w(
         age accept-ranges cache-control content-type content-length connection date etag expires
-        location last-modified pragma set-cookie vary
-        x-cache x-content-type-options x-language x-pingback x-varnish
+        location last-modified pragma set-cookie strict-transport-security transfer-encoding vary
+        x-cache x-content-security-policy x-content-type-options x-frame-options x-language
+        x-permitted-cross-domain-policies x-pingback x-varnish x-webkit-csp x-xss-protection
       )
     end
 
