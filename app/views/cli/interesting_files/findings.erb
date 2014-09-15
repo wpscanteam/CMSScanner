@@ -1,0 +1,13 @@
+Interesting Findings: <%= @findings.size %>
+
+<% @findings.each do |finding| -%>
+[+] <%= finding.url %>
+ | Confidence: <%= finding.confidence %>%
+ | Found By: <%= finding.found_by %>
+<% unless (entries = finding.interesting_entries).empty? -%>
+ | Interesting Entries:
+<% entries.each do |entry| -%>
+ |  <%= entry %>
+<% end %>
+<% end %>
+<% end %>

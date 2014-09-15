@@ -88,7 +88,6 @@ module CMSScanner
         @start_memory = memory_usage
 
         output('started', url: target.url)
-        # sleep(2) # Simulate a scan
       end
 
       def after_scan

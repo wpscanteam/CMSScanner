@@ -3,9 +3,10 @@ require 'spec_helper'
 describe CMSScanner::Scan do
 
   subject(:scanner) { described_class.new }
+  let(:controller)  { CMSScanner::Controller }
 
   describe '#new, #controllers' do
-    its(:controllers) { should eq([CMSScanner::Controller::Core.new]) }
+    its(:controllers) { should eq([controller::Core.new, controller::InterestingFiles.new]) }
   end
 
   describe '#run' do
