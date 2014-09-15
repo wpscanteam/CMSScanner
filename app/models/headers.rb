@@ -4,7 +4,7 @@ module CMSScanner
     # @return [ Hash ] The headers
     def entries
       res = Browser.get(url)
-      return [] unless res
+      return [] unless res && res.headers
       res.headers
     end
 
