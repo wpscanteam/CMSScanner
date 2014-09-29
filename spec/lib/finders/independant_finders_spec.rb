@@ -6,8 +6,9 @@ describe CMSScanner::Finders::IndependantFinders do
   subject(:finders) { described_class.new }
 
   describe '#run' do
-    let(:target)  { 'target' }
-    let(:finding) { CMSScanner::DummyFinding }
+    let(:target)              { 'target' }
+    let(:finding)             { CMSScanner::DummyFinding }
+    let(:expected_aggressive) { finding.new('test', found_by: 'override', confidence: 100) }
     let(:expected_passive) do
       [
         finding.new('test', found_by: 'DummyFinder (passive detection)'),
@@ -41,7 +42,7 @@ describe CMSScanner::Finders::IndependantFinders do
 
       it 'returns 1 result' do
         expect(@found.size).to eq 1
-        expect(@found.first).to eql finding.new('test', found_by: 'override', confidence: 100)
+        expect(@found.first).to eql expected_aggressive
       end
     end
 
@@ -51,6 +52,7 @@ describe CMSScanner::Finders::IndependantFinders do
       it 'returns 2 results' do
         expect(@found.size).to eq 2
         expect(@found.first).to eql expected_passive.first
+        expect(@found.first.confirmed_by).to eql [expected_aggressive]
         expect(@found.last).to eql expected_passive.last
       end
     end

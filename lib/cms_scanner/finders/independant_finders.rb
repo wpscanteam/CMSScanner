@@ -21,10 +21,6 @@ module CMSScanner
 
             next unless r
             findings << r
-
-            # Stop the current finder if a result has been found
-            # This might be removed in the future, due to the confirmed_by system
-            break
           end
         end
 
