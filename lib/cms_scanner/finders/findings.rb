@@ -15,7 +15,11 @@ module CMSScanner
         super(other)
       end
 
-      # TODO: check for the #+ to see if it uses #<<
+      # Append the elements of other into self AND returns self
+      # This is not the default behaviour of Array#+ but it's intended
+      def +(other)
+        other.each { |f| self << f }
+      end
     end
   end
 end

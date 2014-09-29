@@ -56,6 +56,10 @@ describe CMSScanner::Finders::IndependantFinders do
         expect(@found.last).to eql expected_passive.last
       end
     end
+
+    context 'when multiple results returned' do
+
+    end
   end
 
   describe '#symbols_from_mode' do

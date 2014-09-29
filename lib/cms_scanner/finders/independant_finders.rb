@@ -20,7 +20,8 @@ module CMSScanner
             r = finder.send(symbol, opts)
 
             next unless r
-            findings << r
+
+            findings + [*r]
           end
         end
 

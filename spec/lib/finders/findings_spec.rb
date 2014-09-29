@@ -35,4 +35,15 @@ describe CMSScanner::Finders::Findings do
     end
   end
 
+  describe '#+' do
+    after { expect(findings).to eq @expected }
+
+    it 'adds it/them' do
+      # Dummy assignement to avoid the 'Operator used in void context'
+      _ = findings + %w(test1 test2)
+
+      @expected = %w(test1 test2)
+    end
+  end
+
 end
