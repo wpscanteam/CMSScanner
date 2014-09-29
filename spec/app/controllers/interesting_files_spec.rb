@@ -17,7 +17,7 @@ describe CMSScanner::Controller::InterestingFiles do
 
   describe '#run' do
     before do
-      expect(CMSScanner::Finders::InterestingFiles).to receive(:find).and_return(stubbed)
+      expect(controller.target).to receive(:interesting_files).and_return(stubbed)
     end
 
     after { controller.run }
