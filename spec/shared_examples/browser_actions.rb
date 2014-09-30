@@ -29,44 +29,4 @@ shared_examples CMSScanner::Browser::Actions do
     end
   end
 
-  describe '#xml_rpc_body' do
-    after { expect(browser.xml_rpc_body(method, params)).to eq @expected }
-
-    let(:method) { 'rpc-test' }
-    let(:params) { [] }
-
-    context 'when no params' do
-      it 'returns the correct body' do
-        @expected = '<?xml version="1.0"?><methodCall>'
-        @expected << "<methodName>#{method}</methodName>"
-        @expected << '</methodCall>'
-      end
-    end
-
-    context 'when params' do
-      let(:params) { %w(p1 p2) }
-
-      it 'returns the right body' do
-        @expected = '<?xml version="1.0"?><methodCall>'
-        @expected << "<methodName>#{method}</methodName><params>"
-        @expected << '<param><value><string>p1</string></value></param>'
-        @expected << '<param><value><string>p2</string></value></param>'
-        @expected << '</params></methodCall>'
-      end
-    end
-  end
-
-  describe '#xml_rpc_call' do
-    let(:rpc_method) { 'rpc-test' }
-
-    it 'returns a Typhoeus::Response' do
-      stub_request(:post, url).with(body: browser.xml_rpc_body(rpc_method)).to_return(body: 'OK')
-
-      response = browser.xml_rpc_call(url, rpc_method)
-
-      expect(response).to be_a Typhoeus::Response
-      expect(response.body).to eq 'OK'
-    end
-  end
-
 end
