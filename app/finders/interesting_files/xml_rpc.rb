@@ -5,7 +5,7 @@ module CMSScanner
       class XMLRPC < Finder
         # @return [ Array<String> ] The potential urls to the XMl RPC file
         def potential_urls
-          @potential_url ||= []
+          @potential_urls ||= []
         end
 
         def passive(opts = {})

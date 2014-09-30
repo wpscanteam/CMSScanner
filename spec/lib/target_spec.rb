@@ -5,6 +5,24 @@ describe CMSScanner::Target do
   subject(:target) { described_class.new(url) }
   let(:url)        { 'http://example.com' }
 
+  describe '#in_scope?' do
+    after { expect(target.in_scope?(@url)).to eq @expected }
+
+    [nil, '', 'http://out-of-scope.com'].each do |url|
+      it "returns false for #{url}" do
+        @url = url
+        @expected = false
+      end
+    end
+
+    %w(https://example.com/file.txt http://example.com/).each do |url|
+      it "returns true for #{url}" do
+        @url = url
+        @expected = true
+      end
+    end
+  end
+
   describe '#interesting_files' do
     before do
       expect(CMSScanner::Finders::InterestingFiles).to receive(:find).and_return(stubbed)
