@@ -3,7 +3,7 @@ module CMSScanner
     # InterestingFiles Controller
     class InterestingFiles < Base
       def run
-        findings = target.interesting_files # TODO: add the detection_mode option
+        findings = target.interesting_files(mode: parsed_options[:detection_mode])
 
         output('findings', findings: findings) unless findings.empty?
       end
