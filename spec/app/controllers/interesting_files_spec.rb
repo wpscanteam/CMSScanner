@@ -16,11 +16,8 @@ describe CMSScanner::Controller::InterestingFiles do
   its(:after_scan)  { should be_nil }
 
   describe '#run' do
-    before do
-      expect(controller.target).to receive(:interesting_files).and_return(stubbed)
-    end
-
-    after { controller.run }
+    before { expect(controller.target).to receive(:interesting_files).and_return(stubbed) }
+    after  { controller.run }
 
     context 'when no findings' do
       let(:stubbed) { [] }
