@@ -16,24 +16,32 @@ describe CMSScanner::Controller::InterestingFiles do
   its(:after_scan)  { should be_nil }
 
   describe '#run' do
-    before { expect(controller.target).to receive(:interesting_files).and_return(stubbed) }
-    after  { controller.run }
-
-    context 'when no findings' do
-      let(:stubbed) { [] }
-
-      it 'does not call the formatter' do
-        expect(controller.formatter).to_not receive(:output)
-      end
+    before do
+      expect(controller.target).to receive(:interesting_files)
+        .with(mode: mode).and_return(stubbed)
     end
+    after { controller.run }
 
-    # TODO: Test the output with a dummy finding ?
-    context 'when findings' do
-      let(:stubbed) { ['yolo'] }
+    [:mixed, :passive, :aggressive].each do |m|
+      let(:mode)           { m }
+      let(:parsed_options) { { url: target_url, detection_mode: mode } }
 
-      it 'calls the formatter with the correct parameter' do
-        expect(controller.formatter).to receive(:output)
-          .with('findings', hash_including(findings: stubbed), 'interesting_files')
+      context 'when no findings' do
+        let(:stubbed) { [] }
+
+        it 'does not call the formatter' do
+          expect(controller.formatter).to_not receive(:output)
+        end
+      end
+
+      # TODO: Test the output with a dummy finding ?
+      context 'when findings' do
+        let(:stubbed) { ['yolo'] }
+
+        it 'calls the formatter with the correct parameter' do
+          expect(controller.formatter).to receive(:output)
+            .with('findings', hash_including(findings: stubbed), 'interesting_files')
+        end
       end
     end
   end
