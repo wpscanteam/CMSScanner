@@ -18,12 +18,11 @@ describe CMSScanner::Controller::InterestingFiles do
   describe '#run' do
     before do
       expect(controller.target).to receive(:interesting_files)
-        .with(mode: mode).and_return(stubbed)
+        .with(mode: parsed_options[:detection_mode]).and_return(stubbed)
     end
     after { controller.run }
 
-    [:mixed, :passive, :aggressive].each do |m|
-      let(:mode)           { m }
+    [:mixed, :passive, :aggressive].each do |mode|
       let(:parsed_options) { { url: target_url, detection_mode: mode } }
 
       context 'when no findings' do
