@@ -1,12 +1,23 @@
 require 'spec_helper'
 
+module CMSScanner
+  module Controller
+    # Failure class for testing
+    class SpecFailure < Base
+      def before_scan
+        fail 'error spotted'
+      end
+    end
+  end
+end
+
 describe CMSScanner::Scan do
 
   subject(:scanner) { described_class.new }
   let(:controller)  { CMSScanner::Controller }
 
   describe '#new, #controllers' do
-    its(:controllers) { should eq([controller::Core.new, controller::InterestingFiles.new]) }
+    its(:controllers) { should eq([controller::Core.new]) }
   end
 
   describe '#run' do
@@ -17,19 +28,8 @@ describe CMSScanner::Scan do
     end
 
     context 'when an error is raised during the #run' do
-      module CMSScanner
-        module Controller
-          # Failure class for testing
-          class Failure < Base
-            def before_scan
-              fail 'error spotted'
-            end
-          end
-        end
-      end
-
       it 'aborts the scan with the associated output' do
-        scanner.controllers[0] = CMSScanner::Controller::Failure.new
+        scanner.controllers[0] = controller::SpecFailure.new
 
         expect(scanner.formatter).to receive(:output)
           .with('@scan_aborted', hash_including(:reason, :trace, :verbose))

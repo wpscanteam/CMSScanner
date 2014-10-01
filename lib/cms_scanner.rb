@@ -27,9 +27,7 @@ module CMSScanner
   # Scan
   class Scan
     def initialize
-      controllers <<
-        Controller::Core.new <<
-        Controller::InterestingFiles.new
+      controllers << Controller::Core.new
 
       yield self if block_given?
     end
