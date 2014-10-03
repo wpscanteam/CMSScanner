@@ -3,7 +3,7 @@ module CMSScanner
   class Headers < InterestingFile
     # @return [ Hash ] The headers
     def entries
-      res = Browser.get(url)
+      res = NS::Browser.get(url)
       return [] unless res && res.headers
       res.headers
     end

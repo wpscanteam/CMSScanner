@@ -23,18 +23,24 @@ require 'cms_scanner/finders'
 # Module
 module CMSScanner
   APP_DIR = Pathname.new(__FILE__).dirname.join('..', 'app').expand_path
+  NS      = self
+
+  def self.included(base)
+    remove_const(:NS)
+    const_set(:NS, base)
+  end
 
   # Scan
   class Scan
     def initialize
-      controllers << Controller::Core.new
+      controllers << NS::Controller::Core.new
 
       yield self if block_given?
     end
 
     # @return [ Controllers ]
     def controllers
-      @controllers ||= Controllers.new
+      @controllers ||= NS::Controllers.new
     end
 
     def run

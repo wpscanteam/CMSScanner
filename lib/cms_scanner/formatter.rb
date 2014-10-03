@@ -19,9 +19,9 @@ module CMSScanner
     # @return [ Array<String> ] The list of the available formatters (except the Base one)
     # @note: the #load method above should then be used to create the associated formatter
     def self.availables
-      formatters = Formatter.constants.select do |const|
-        name = Formatter.const_get(const)
-        name.is_a?(Class) && name != Formatter::Base
+      formatters = NS::Formatter.constants.select do |const|
+        name = NS::Formatter.const_get(const)
+        name.is_a?(Class) && name != NS::Formatter::Base
       end
 
       formatters.map { |sym| sym.to_s.underscore.dasherize }

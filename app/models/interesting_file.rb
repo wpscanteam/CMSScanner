@@ -1,7 +1,7 @@
 module CMSScanner
   # Interesting File
   class InterestingFile
-    include Finders::Finding
+    include NS::Finders::Finding
 
     attr_reader :url
 
@@ -12,7 +12,7 @@ module CMSScanner
 
     # @return [ Array<String> ]
     def entries
-      res = Browser.get(url)
+      res = NS::Browser.get(url)
 
       return [] unless res && res.headers['Content-Type'] =~ /\Atext\/plain;/i
 

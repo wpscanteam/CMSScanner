@@ -28,17 +28,17 @@ module CMSScanner
     #
     # @return [ Boolean ]
     def online?
-      Browser.get(url).code != 0
+      NS::Browser.get(url).code != 0
     end
 
     # @return [ Boolean ]
     def http_auth?
-      Browser.get(url).code == 401
+      NS::Browser.get(url).code == 401
     end
 
     # @return [ Boolean ]
     def proxy_auth?
-      Browser.get(url).code == 407
+      NS::Browser.get(url).code == 407
     end
 
     # See if the remote url returns 30x redirect
@@ -49,7 +49,7 @@ module CMSScanner
     # @return [ String ] The redirection url or nil
     def redirection(url = nil)
       url    ||= @uri.to_s
-      response = Browser.get(url)
+      response = NS::Browser.get(url)
 
       if response.code == 301 || response.code == 302
         redirection = response.headers_hash['location']

@@ -19,7 +19,7 @@ module CMSScanner
     #
     # @return [ Findings ]
     def interesting_files(opts = {})
-      @interesting_files ||= Finders::InterestingFiles.find(self, opts)
+      @interesting_files ||= NS::Finders::InterestingFiles.find(self, opts)
     end
   end
 end

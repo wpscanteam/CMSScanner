@@ -10,13 +10,13 @@ module CMSScanner
 
         # @return [ InterestingFile ]
         def aggressive(_opts = {})
-          res = Typhoeus.get(url)
+          res = NS::Browser.get(url)
 
           return unless res && res.code == 200 && res.body =~ /by interconnect/i
 
-          CMSScanner::InterestingFile.new(url, confidence: 100,
-                                               found_by: found_by,
-                                               references: references)
+          NS::InterestingFile.new(url, confidence: 100,
+                                       found_by: found_by,
+                                       references: references)
         end
 
         def references

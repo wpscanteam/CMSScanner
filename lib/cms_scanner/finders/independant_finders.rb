@@ -7,7 +7,7 @@ module CMSScanner
     class IndependantFinders < Array
       # @return [ Findings ]
       def findings
-        @findings ||= Findings.new
+        @findings ||= NS::Finders::Findings.new
       end
 
       # @param [ Hash ] opts

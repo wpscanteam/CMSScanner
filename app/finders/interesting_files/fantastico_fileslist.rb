@@ -10,14 +10,14 @@ module CMSScanner
 
         # @return [ InterestingFile ]
         def aggressive(_opts = {})
-          res = Typhoeus.get(url)
+          res = NS::Browser.get(url)
 
           return unless res && res.code == 200 && res.body.length > 0
           return unless res.headers && res.headers['Content-Type'] =~ /\Atext\/plain/
 
-          CMSScanner::FantasticoFileslist.new(url, confidence: 100,
-                                                   found_by: found_by,
-                                                   references: references)
+          NS::FantasticoFileslist.new(url, confidence: 100,
+                                           found_by: found_by,
+                                           references: references)
         end
 
         def references

@@ -7,7 +7,7 @@ module CMSScanner
     #
     # @return [ Typhoeus::Response ]
     def call(method, params = [], request_params = {})
-      Browser.post(url, request_params.merge(body: request_body(method, params)))
+      NS::Browser.post(url, request_params.merge(body: request_body(method, params)))
     end
 
     # Might be better to use Nokogiri to create the XML body ?

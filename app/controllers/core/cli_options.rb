@@ -3,7 +3,7 @@ module CMSScanner
     # CLI Options for the Core Controller
     class Core < Base
       def cli_options
-        formats = Formatter.availables
+        formats = NS::Formatter.availables
 
         [
           OptURL.new(['-u', '--url URL'], required: true),

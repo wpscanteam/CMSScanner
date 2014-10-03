@@ -19,7 +19,7 @@ module CMSScanner
 
       # @return [ Target ]
       def target
-        @@target ||= Target.new(parsed_options[:url])
+        @@target ||= NS::Target.new(parsed_options[:url])
       end
 
       # Set the parsed options and initialize the browser
@@ -29,7 +29,7 @@ module CMSScanner
       def self.parsed_options=(options)
         @@parsed_options = options
 
-        Browser.instance(options)
+        NS::Browser.instance(options)
       end
 
       # @return [ Hash ]
@@ -44,7 +44,7 @@ module CMSScanner
 
       # @return [ Formatter::Base ]
       def formatter
-        @@formatter ||= Formatter.load(parsed_options[:format], datastore[:views])
+        @@formatter ||= NS::Formatter.load(parsed_options[:format], datastore[:views])
       end
 
       # @see Formatter#output

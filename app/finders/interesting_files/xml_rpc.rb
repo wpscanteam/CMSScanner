@@ -15,17 +15,17 @@ module CMSScanner
 
         # @return [ XMLRPC ]
         def passive_headers(_opts = {})
-          url = Browser.get(target.url).headers['X-Pingback']
+          url = NS::Browser.get(target.url).headers['X-Pingback']
 
           return unless target.in_scope?(url)
           potential_urls << url
 
-          CMSScanner::XMLRPC.new(url, confidence: 30, found_by: 'Headers (passive detection)')
+          NS::XMLRPC.new(url, confidence: 30, found_by: 'Headers (passive detection)')
         end
 
         # @return [ XMLRPC ]
         def passive_body(_opts = {})
-          page = Nokogiri::HTML(Browser.get(target.url).body)
+          page = Nokogiri::HTML(NS::Browser.get(target.url).body)
 
           page.css('link[rel="pingback"]').each do |tag|
             url = tag.attribute('href').to_s
@@ -33,8 +33,8 @@ module CMSScanner
             next unless target.in_scope?(url)
             potential_urls << url
 
-            return CMSScanner::XMLRPC.new(url, confidence: 30,
-                                               found_by: 'Link Tag (passive detection)')
+            return NS::XMLRPC.new(url, confidence: 30,
+                                       found_by: 'Link Tag (passive detection)')
           end
           nil
         end
@@ -46,13 +46,13 @@ module CMSScanner
           potential_urls.uniq.each do |potential_url|
             next unless target.in_scope?(potential_url)
 
-            res = Browser.get(potential_url)
+            res = NS::Browser.get(potential_url)
 
             next unless res && res.body =~ /XML-RPC server accepts POST requests only/i
 
-            return CMSScanner::XMLRPC.new(potential_url,
-                                          confidence: 100,
-                                          found_by: 'Direct File Access (aggressive detection)')
+            return NS::XMLRPC.new(potential_url,
+                                  confidence: 100,
+                                  found_by: 'Direct File Access (aggressive detection)')
           end
           nil
         end
