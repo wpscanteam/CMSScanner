@@ -8,7 +8,7 @@ module CMSScanner
   module Finders
     # Interesting Files Finder
     class InterestingFiles
-      include IndependantFinder
+      include IndependentFinder
 
       # @param [ CMSScanner::Target ] target
       def initialize(target)

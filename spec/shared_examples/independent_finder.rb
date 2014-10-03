@@ -1,5 +1,5 @@
 
-shared_examples CMSScanner::Finders::IndependantFinder do
+shared_examples CMSScanner::Finders::IndependentFinder do
 
   describe '::find' do
     it 'creates a new object and call finders#find' do
@@ -20,7 +20,7 @@ shared_examples CMSScanner::Finders::IndependantFinder do
   end
 
   describe '#finders' do
-    its(:finders) { should be_a CMSScanner::Finders::IndependantFinders }
+    its(:finders) { should be_a CMSScanner::Finders::IndependentFinders }
 
     it 'returns the correct finders' do
       finders = subject.finders

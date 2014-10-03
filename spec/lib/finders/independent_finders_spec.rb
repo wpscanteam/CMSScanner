@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'dummy_finders'
 
-describe CMSScanner::Finders::IndependantFinders do
+describe CMSScanner::Finders::IndependentFinders do
 
   subject(:finders) { described_class.new }
 

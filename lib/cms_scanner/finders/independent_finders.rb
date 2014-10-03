@@ -1,10 +1,10 @@
 module CMSScanner
   module Finders
-    # Independant Finders container
-    # This class is designed to handle independant results
+    # Independent Finders container
+    # This class is designed to handle independent results
     # which are not related with others
     # e.g: interesting files
-    class IndependantFinders < Array
+    class IndependentFinders < Array
       # @return [ Findings ]
       def findings
         @findings ||= NS::Finders::Findings.new

@@ -28,6 +28,7 @@ module CMSScanner
   def self.included(base)
     remove_const(:NS)
     const_set(:NS, base)
+    super(base)
   end
 
   # Scan

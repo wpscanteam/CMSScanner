@@ -1,7 +1,7 @@
 module CMSScanner
   module Finders
-    # Independant Finder
-    module IndependantFinder
+    # Independent Finder
+    module IndependentFinder
       def self.included(base)
         base.extend(ClassMethods)
       end
@@ -23,7 +23,7 @@ module CMSScanner
 
       # @return [ Array ]
       def finders
-        @finders ||= NS::Finders::IndependantFinders.new
+        @finders ||= NS::Finders::IndependentFinders.new
       end
     end
   end
