@@ -25,4 +25,8 @@ describe CMSScanner::FantasticoFileslist do
       end
     end
   end
+
+  describe '#references' do
+    its(:references) { should_not be_nil }
+  end
 end

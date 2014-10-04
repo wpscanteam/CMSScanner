@@ -12,5 +12,9 @@ module CMSScanner
       end
       results
     end
+
+    def references
+      %w(http://www.acunetix.com/vulnerabilities/fantastico-fileslist/)
+    end
   end
 end
