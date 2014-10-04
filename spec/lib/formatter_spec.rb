@@ -1,31 +1,16 @@
 require 'spec_helper'
 
-describe CMSScanner::Formatter do
+# Test Module to check the correct inclusion of
+# the class methods
+module OtherFormatter
+  include CMSScanner::Formatter
+end
 
-  describe '#load' do
-    context 'w/o parameter' do
-      it 'loads the default formatter' do
-        expect(described_class.load).to be_a described_class::Cli
-      end
-    end
-
-    it 'loads the correct formatter' do
-      expect(described_class.load('cli_no_colour')).to be_a described_class::CliNoColour
-    end
-
-    it 'adds the custom_views' do
-      formatter = described_class.load(nil, %w(/path/views1 /path2/views))
-
-      expect(formatter.views_directories).to include('/path/views1', '/path2/views')
-    end
+[CMSScanner::Formatter, OtherFormatter].each do |f|
+  describe "#{f}" do
+    subject(:formatter) { f }
+    it_behaves_like CMSScanner::Formatter::ClassMethods
   end
-
-  describe '#availables' do
-    it 'returns the right list' do
-      expect(described_class.availables).to match_array(%w(json cli-no-colour cli))
-    end
-  end
-
 end
 
 module CMSScanner

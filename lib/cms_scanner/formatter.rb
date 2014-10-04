@@ -3,28 +3,38 @@ require 'cms_scanner/formatter/buffer'
 module CMSScanner
   # Formatter
   module Formatter
-    # @param [ String ] format
-    # @param [ Array<String> ] custom_views
-    #
-    # @return [ Formatter::Base ]
-    def self.load(format = nil, custom_views = nil)
-      format       ||= 'cli'
-      custom_views ||= []
+    # Module to be able to do Formatter.load() & Formatter.availables
+    # and do that as well when the Formatter is included in another module
+    module ClassMethods
+      # @param [ String ] format
+      # @param [ Array<String> ] custom_views
+      #
+      # @return [ Formatter::Base ]
+      def load(format = nil, custom_views = nil)
+        format       ||= 'cli'
+        custom_views ||= []
 
-      f = const_get(format.gsub(/-/, '_').camelize).new
-      custom_views.each { |v| f.views_directories << v }
-      f
-    end
-
-    # @return [ Array<String> ] The list of the available formatters (except the Base one)
-    # @note: the #load method above should then be used to create the associated formatter
-    def self.availables
-      formatters = NS::Formatter.constants.select do |const|
-        name = NS::Formatter.const_get(const)
-        name.is_a?(Class) && name != NS::Formatter::Base
+        f = const_get(format.gsub(/-/, '_').camelize).new
+        custom_views.each { |v| f.views_directories << v }
+        f
       end
 
-      formatters.map { |sym| sym.to_s.underscore.dasherize }
+      # @return [ Array<String> ] The list of the available formatters (except the Base one)
+      # @note: the #load method above should then be used to create the associated formatter
+      def availables
+        formatters = NS::Formatter.constants.select do |const|
+          name = NS::Formatter.const_get(const)
+          name.is_a?(Class) && name != NS::Formatter::Base
+        end
+
+        formatters.map { |sym| sym.to_s.underscore.dasherize }
+      end
+    end
+
+    extend ClassMethods
+
+    def self.included(base)
+      base.extend(ClassMethods)
     end
 
     # Base Formatter
