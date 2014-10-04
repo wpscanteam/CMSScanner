@@ -5,7 +5,6 @@ module CMSScanner
 
     def initialize(option_parser = OptParseValidator::OptParser.new)
       @option_parser = option_parser
-      # @option_parser.options_files << TODO
     end
 
     # @param [ Controller::Base ] controller
