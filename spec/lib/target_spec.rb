@@ -3,21 +3,21 @@ require 'spec_helper'
 describe CMSScanner::Target do
 
   subject(:target) { described_class.new(url) }
-  let(:url)        { 'http://example.com' }
+  let(:url)        { 'http://ex.lo' }
 
   describe '#in_scope?' do
     after { expect(target.in_scope?(@url)).to eq @expected }
 
-    [nil, '', 'http://out-of-scope.com'].each do |url|
+    [nil, '', 'http://out-of-scope.com', '//jquery.com/j.js'].each do |url|
       it "returns false for #{url}" do
-        @url = url
+        @url      = url
         @expected = false
       end
     end
 
-    %w(https://example.com/file.txt http://example.com/).each do |url|
+    %w(https://ex.lo/file.txt http://ex.lo/ /relative).each do |url|
       it "returns true for #{url}" do
-        @url = url
+        @url      = url
         @expected = true
       end
     end
