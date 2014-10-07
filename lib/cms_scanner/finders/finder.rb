@@ -2,6 +2,9 @@ module CMSScanner
   module Finders
     # Finder
     class Finder
+      # Constants for common found_by
+      DIRECT_FILE_ACCESS = 'Direct File Access (aggressive detection)'
+
       attr_accessor :target
 
       def initialize(target)

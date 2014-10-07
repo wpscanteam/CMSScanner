@@ -129,7 +129,7 @@ describe CMSScanner::Finders::InterestingFile::XMLRPC do
         @expected = CMSScanner::XMLRPC.new(
           xml_rpc_url,
           confidence: 100,
-          found_by: 'Direct File Access (aggressive detection)'
+          found_by: described_class::DIRECT_FILE_ACCESS
         )
       end
     end

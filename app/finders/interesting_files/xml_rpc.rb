@@ -52,7 +52,7 @@ module CMSScanner
 
             return NS::XMLRPC.new(potential_url,
                                   confidence: 100,
-                                  found_by: 'Direct File Access (aggressive detection)')
+                                  found_by: DIRECT_FILE_ACCESS)
           end
           nil
         end
