@@ -5,7 +5,7 @@ module CMSScanner
       class SearchReplaceDB2 < Finder
         # @return [ String ] The url to the searchreplacedb2 PHP file
         def url
-          target.uri.join('searchreplacedb2.php').to_s
+          target.url('searchreplacedb2.php')
         end
 
         # @return [ InterestingFile ]

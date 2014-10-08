@@ -5,7 +5,7 @@ module CMSScanner
       class FantasticoFileslist < Finder
         # @return [ String ] The url of the fantastico_fileslist.txt file
         def url
-          target.uri.join('fantastico_fileslist.txt').to_s
+          target.url('fantastico_fileslist.txt')
         end
 
         # @return [ InterestingFile ]

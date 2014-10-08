@@ -5,7 +5,7 @@ module CMSScanner
       class RobotsTxt < Finder
         # @return [ String ] The url of the robots.txt file
         def url
-          target.uri.join('robots.txt').to_s
+          target.url('robots.txt')
         end
 
         # @return [ InterestingFile ]

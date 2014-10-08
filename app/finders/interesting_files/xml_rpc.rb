@@ -41,7 +41,7 @@ module CMSScanner
 
         # @return [ XMLRPC ]
         def aggressive(_opts = {})
-          potential_urls << target.uri.join('xmlrpc.php').to_s
+          potential_urls << target.url('xmlrpc.php')
 
           potential_urls.uniq.each do |potential_url|
             next unless target.in_scope?(potential_url)
