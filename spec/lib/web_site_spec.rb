@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CMSScanner::WebSite do
 
   subject(:web_site) { described_class.new(url) }
-  let(:url)          { 'http://example.com' }
+  let(:url)          { 'http://ex.lo' }
 
   describe '#url=' do
     context 'when the url is incorrect' do
@@ -27,6 +27,26 @@ describe CMSScanner::WebSite do
 
         expect(web_site.url).to eq('http://site.com/')
         expect(web_site.uri).to be_a Addressable::URI
+      end
+    end
+  end
+
+  describe '#url' do
+    context 'when no path argument' do
+      its(:url) { should eql 'http://ex.lo/' }
+    end
+
+    context 'when a path argument' do
+      it 'appends the path' do
+        expect(web_site.url('file.txt')).to eql "#{url}/file.txt"
+      end
+
+      context 'when relative path' do
+        let(:url) { 'http://ex.lo/dir/' }
+
+        it 'appends it from the host/domain' do
+          expect(web_site.url('/sub/file.txt')).to eql 'http://ex.lo/sub/file.txt'
+        end
       end
     end
   end
