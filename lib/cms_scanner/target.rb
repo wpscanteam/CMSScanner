@@ -1,4 +1,5 @@
 require 'cms_scanner/web_site'
+require 'cms_scanner/target/platform'
 
 module CMSScanner
   # Target to Scan
