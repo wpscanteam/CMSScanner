@@ -9,7 +9,7 @@ module CMSScanner
         # @param [ String ] path
         # @param [ Hash ] prams The request params
         #
-        # @return [ Boolean ] true if the path is a debug log, false otherwise
+        # @return [ Boolean ] true if  url(path) is a debug log, false otherwise
         def debug_log?(path, params = {})
           res = NS::Browser.get(url(path), params.merge(headers: { 'range' => 'bytes=0-700' }))
 
@@ -27,7 +27,7 @@ module CMSScanner
         # @param [ String ] path
         # @param [ Hash ] prams The request params
         #
-        # @return [ Array<String> ] The FPD found, or an empty if none
+        # @return [ Array<String> ] The FPD found, or an empty array if none
         def full_path_disclosure_entries(path, params = {})
           res = NS::Browser.get(url(path), params)
 
