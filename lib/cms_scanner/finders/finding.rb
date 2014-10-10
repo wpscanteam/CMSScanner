@@ -2,7 +2,7 @@ module CMSScanner
   module Finders
     # Finding
     module Finding
-      FINDING_OPTS = [:confidence, :confirmed_by, :references, :found_by]
+      FINDING_OPTS = [:confidence, :confirmed_by, :references, :found_by, :interesting_entries]
 
       attr_accessor(*FINDING_OPTS)
 
@@ -14,6 +14,12 @@ module CMSScanner
       # @return [ Array ]
       def confirmed_by
         @confirmed_by ||= []
+      end
+
+      # Should be overriden in child classes
+      # @return [ Array ]
+      def interesting_entries
+        @interesting_entries ||= []
       end
 
       # @param [ Hash ] opts

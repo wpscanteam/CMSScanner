@@ -1,12 +1,16 @@
 
 shared_examples CMSScanner::Finders::Finding do
 
-  describe '#references' do
-    its(:references) { should eq [] }
-  end
+  [:references, :confirmed_by, :interesting_entries].each do |opt|
+    describe "##{opt}" do
+      its(opt) { should eq [] }
 
-  describe '#confirmed_by' do
-    its(:confirmed_by) { should eq [] }
+      context 'when supplied in the #new' do
+        let(:opts) { { opt => 'test' } }
+
+        its(opt) { should eq 'test' }
+      end
+    end
   end
 
   describe '#parse_finding_options' do

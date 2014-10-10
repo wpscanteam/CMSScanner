@@ -4,7 +4,8 @@ describe CMSScanner::InterestingFile do
 
   it_behaves_like CMSScanner::Finders::Finding
 
-  subject(:file) { described_class.new(url) }
+  subject(:file) { described_class.new(url, opts) }
+  let(:opts)     { {} }
   let(:url)      { 'http://example.com/' }
   let(:fixtures) { File.join(FIXTURES, 'interesting_files') }
 
@@ -31,10 +32,6 @@ describe CMSScanner::InterestingFile do
         @expected = []
       end
     end
-  end
-
-  describe '#interesting_entries' do
-    its(:interesting_entries) { should eq [] }
   end
 
   describe '#==' do
