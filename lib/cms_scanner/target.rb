@@ -5,6 +5,7 @@ require 'cms_scanner/target/server'
 module CMSScanner
   # Target to Scan
   class Target < WebSite
+    include Server::Generic
     # @note Subdomains are considered out of scope (maybe consider them in ?)
     #       Also, // are handled by Addressable::URI, but worngly :/
     #       e.g: Addressable::URI.parse('//file').host => file

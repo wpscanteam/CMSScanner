@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+# TODO: put this as a shared example for the Target
 describe CMSScanner::Target::Server::Generic do
   subject(:target) { CMSScanner::Target.new(url).extend(CMSScanner::Target::Server::Generic) }
   let(:url)        { 'http://ex.lo' }
