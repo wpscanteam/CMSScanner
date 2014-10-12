@@ -7,7 +7,7 @@ module CMSScanner
         FPD_PATTERN       = /Fatal error:.+? in (.+?) on/
 
         # @param [ String ] path
-        # @param [ Hash ] prams The request params
+        # @param [ Hash ] params The request params
         #
         # @return [ Boolean ] true if  url(path) is a debug log, false otherwise
         def debug_log?(path = nil, params = {})
@@ -17,7 +17,7 @@ module CMSScanner
         end
 
         # @param [ String ] path
-        # @param [ Hash ] prams The request params
+        # @param [ Hash ] params The request params
         #
         # @return [ Boolean ] true if url(path) contains a FPD, false otherwise
         def full_path_disclosure?(path = nil, params = {})
@@ -25,7 +25,7 @@ module CMSScanner
         end
 
         # @param [ String ] path
-        # @param [ Hash ] prams The request params
+        # @param [ Hash ] params The request params
         #
         # @return [ Array<String> ] The FPD found, or an empty array if none
         def full_path_disclosure_entries(path = nil, params = {})

@@ -4,7 +4,7 @@ module CMSScanner
       # Some IIS specific implementation
       module IIS
         # @param [ String ] path
-        # @param [ Hash ] prams The request params
+        # @param [ Hash ] params The request params
         #
         # @return [ Boolean ] true if url(path) has the directory
         #                          listing enabled, false otherwise
@@ -15,7 +15,7 @@ module CMSScanner
         end
 
         # @param [ String ] path
-        # @param [ Hash ] prams The request params
+        # @param [ Hash ] params The request params
         #
         # @return [ Array<String> ] The first level of directories/files listed,
         #                           or an empty array if none
