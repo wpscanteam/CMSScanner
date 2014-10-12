@@ -8,7 +8,7 @@ module CMSScanner
         #
         # @return [ Boolean ] true if url(path) has the directory
         #                          listing enabled, false otherwise
-        def directory_listing?(path, params = {})
+        def directory_listing?(path = nil, params = {})
           res = NS::Browser.get(url(path), params)
 
           res.code == 200 && res.body =~ /<H1>#{uri.host} - \// ? true : false
@@ -19,7 +19,7 @@ module CMSScanner
         #
         # @return [ Array<String> ] The first level of directories/files listed,
         #                           or an empty array if none
-        def directory_listing_entries(path, params = {})
+        def directory_listing_entries(path = nil, params = {})
           return [] unless directory_listing?(path, params)
 
           doc   = Nokogiri::HTML(NS::Browser.get(url(path), params).body)

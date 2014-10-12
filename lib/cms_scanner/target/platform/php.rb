@@ -10,7 +10,7 @@ module CMSScanner
         # @param [ Hash ] prams The request params
         #
         # @return [ Boolean ] true if  url(path) is a debug log, false otherwise
-        def debug_log?(path, params = {})
+        def debug_log?(path = nil, params = {})
           res = NS::Browser.get(url(path), params.merge(headers: { 'range' => 'bytes=0-700' }))
 
           res.body =~ DEBUG_LOG_PATTERN ? true : false
@@ -20,7 +20,7 @@ module CMSScanner
         # @param [ Hash ] prams The request params
         #
         # @return [ Boolean ] true if url(path) contains a FPD, false otherwise
-        def full_path_disclosure?(path, params = {})
+        def full_path_disclosure?(path = nil, params = {})
           !full_path_disclosure_entries(path, params).empty?
         end
 
@@ -28,7 +28,7 @@ module CMSScanner
         # @param [ Hash ] prams The request params
         #
         # @return [ Array<String> ] The FPD found, or an empty array if none
-        def full_path_disclosure_entries(path, params = {})
+        def full_path_disclosure_entries(path = nil, params = {})
           res = NS::Browser.get(url(path), params)
 
           res.body.scan(FPD_PATTERN).flatten
