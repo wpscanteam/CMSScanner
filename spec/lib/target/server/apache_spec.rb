@@ -5,9 +5,12 @@ describe CMSScanner::Target::Server::Apache do
   let(:url)        { 'http://ex.lo' }
   let(:fixtures)   { File.join(FIXTURES, 'target', 'server', 'apache') }
 
-  before { stub_request(:get, target.url(path)).to_return(body: body, status: status) }
+  describe '#server' do
+    its(:server) { should eq :apache }
+  end
 
   describe '#directory_listing?, #directory_listing_entries' do
+    before     { stub_request(:get, target.url(path)).to_return(body: body, status: status) }
     let(:path) { 'somedir' }
 
     context 'when not a 200' do

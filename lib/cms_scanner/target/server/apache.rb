@@ -6,6 +6,14 @@ module CMSScanner
         # @param [ String ] path
         # @param [ Hash ] params The request params
         #
+        # @return [ Symbol ] :apache
+        def server(_path = nil, _params = {})
+          :apache
+        end
+
+        # @param [ String ] path
+        # @param [ Hash ] params The request params
+        #
         # @return [ Boolean ] true if url(path) has the directory
         #                          listing enabled, false otherwise
         def directory_listing?(path = nil, params = {})

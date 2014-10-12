@@ -22,8 +22,8 @@ module CMSScanner
     # @param [ String ] path Optional path to merge with the uri
     #
     # @return [ String ]
-    def url(path = '')
-      @uri.join(path).to_s
+    def url(path = nil)
+      @uri.join(path || '').to_s
     end
 
     # Checks if the remote website is up.
