@@ -8,7 +8,7 @@ module CMSScanner
         #
         # @return [ Symbol ] :apache
         def server(_path = nil, _params = {})
-          :apache
+          :Apache
         end
 
         # @param [ String ] path

@@ -8,7 +8,7 @@ module CMSScanner
         #
         # @return [ Symbol ] :iis
         def server(_path = nil, _params = {})
-          :iis
+          :IIS
         end
 
         # @param [ String ] path

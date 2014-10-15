@@ -6,7 +6,7 @@ describe CMSScanner::Target::Server::IIS do
   let(:fixtures)   { File.join(FIXTURES, 'target', 'server', 'iis') }
 
   describe '#server' do
-    its(:server) { should eq :iis }
+    its(:server) { should eq :IIS }
   end
 
   describe '#directory_listing?, #directory_listing_entries' do

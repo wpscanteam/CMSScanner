@@ -6,7 +6,7 @@ describe CMSScanner::Target::Server::Apache do
   let(:fixtures)   { File.join(FIXTURES, 'target', 'server', 'apache') }
 
   describe '#server' do
-    its(:server) { should eq :apache }
+    its(:server) { should eq :Apache }
   end
 
   describe '#directory_listing?, #directory_listing_entries' do
