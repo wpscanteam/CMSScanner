@@ -13,7 +13,7 @@ describe CMSScanner::Target::Server::Generic do
       %w(basic.txt).each do |file|
         let(:fixture) { File.join(fixtures, 'server', 'apache', file) }
 
-        its(:server) { should eq :apache }
+        its(:server) { should eq :Apache }
       end
     end
 
@@ -21,7 +21,7 @@ describe CMSScanner::Target::Server::Generic do
       %w(basic.txt).each do |file|
         let(:fixture) { File.join(fixtures, 'server', 'iis', file) }
 
-        its(:server) { should eq :iis }
+        its(:server) { should eq :IIS }
       end
     end
 

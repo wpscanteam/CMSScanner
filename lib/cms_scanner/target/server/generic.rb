@@ -6,7 +6,7 @@ module CMSScanner
         # @param [ String ] path
         # @param [ Hash ] params The request params
         #
-        # @return [ Symbol ] The detected remote server (:apache, :iis)
+        # @return [ Symbol ] The detected remote server (:Apache, :IIS)
         def server(path = nil, params = {})
           headers = headers(path, params)
 
@@ -14,9 +14,9 @@ module CMSScanner
 
           case headers[:server]
           when /\Aapache/i
-            :apache
+            :Apache
           when /\AMicrosoft-IIS/i
-            :iis
+            :IIS
           end
         end
 
