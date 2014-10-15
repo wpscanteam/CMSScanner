@@ -13,7 +13,7 @@ module CMSScanner
                          "Available formats: #{formats.join(', ')}"], choices: formats),
           OptChoice.new(['--detection-mode MODE', 'Modes: mixed (default), passive, aggressive'],
                         choices: %w(mixed passive aggressive),
-                        to_sym: true,
+                        normalize: :to_sym,
                         default: :mixed)
         ] + cli_browser_options
       end
