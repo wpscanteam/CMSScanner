@@ -22,7 +22,7 @@ describe CMSScanner::Controller::Core do
     end
 
     context 'when cache_dir' do
-      let(:parsed_options) { { url: target_url, cache_dir: CACHE } }
+      let(:parsed_options) { super().merge(cache_dir: CACHE) }
       let(:cache)          { Typhoeus::Config.cache }
       let(:storage) { File.join(parsed_options[:cache_dir], Digest::MD5.hexdigest(target_url)) }
 
@@ -69,9 +69,7 @@ describe CMSScanner::Controller::Core do
         context 'when valid' do
           before { stub_request(:get, 'http://user:pass@example.com') }
 
-          let(:parsed_options) do
-            { url: target_url,  http_auth: { username: 'user', password: 'pass' } }
-          end
+          let(:parsed_options) { super().merge(http_auth: { username: 'user', password: 'pass' }) }
 
           it 'does not raise any error' do
             expect { core.before_scan }.to_not raise_error
@@ -81,9 +79,7 @@ describe CMSScanner::Controller::Core do
         context 'when invalid' do
           before { stub_request(:get, 'http://user:p@ss@example.com').to_return(status: 401) }
 
-          let(:parsed_options) do
-            { url: target_url,  http_auth: { username: 'user', password: 'p@ss' } }
-          end
+          let(:parsed_options) { super().merge(http_auth: { username: 'user', password: 'p@ss' }) }
 
           it 'raises an error' do
             expect { core.before_scan }.to raise_error(CMSScanner::HTTPAuthRequiredError)
@@ -102,9 +98,7 @@ describe CMSScanner::Controller::Core do
       end
 
       context 'when invalid credentials' do
-        let(:parsed_options) do
-          { url: target_url,  proxy_auth: { username: 'user', password: 'p@ss' } }
-        end
+        let(:parsed_options) { super().merge(proxy_auth: { username: 'user', password: 'p@ss' }) }
 
         it 'raises an error' do
           expect(CMSScanner::Browser.instance.proxy_auth).to eq(parsed_options[:proxy_auth])
@@ -116,9 +110,7 @@ describe CMSScanner::Controller::Core do
       context 'when valid credentials' do
         before { stub_request(:get, target_url) }
 
-        let(:parsed_options) do
-          { url: target_url,  proxy_auth: { username: 'user', password: 'pass' } }
-        end
+        let(:parsed_options) { super().merge(proxy_auth: { username: 'user', password: 'pass' }) }
 
         it 'raises an error' do
           expect(CMSScanner::Browser.instance.proxy_auth).to eq(parsed_options[:proxy_auth])

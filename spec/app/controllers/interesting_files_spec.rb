@@ -24,7 +24,7 @@ describe CMSScanner::Controller::InterestingFiles do
 
     [:mixed, :passive, :aggressive].each do |mode|
       context "when #{mode} mode" do
-        let(:parsed_options) { { url: target_url, detection_mode: mode } }
+        let(:parsed_options) { super().merge(detection_mode: mode) }
 
         context 'when no findings' do
           let(:stubbed) { [] }
