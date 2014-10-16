@@ -17,6 +17,27 @@ shared_examples 'WordPress::CustomDirectories' do
     end
   end
 
+  describe '#content_dir=, #plugins_dir=' do
+    ['wp-content' 'wp-custom'].each do |dir|
+      context "when content_dir = #{dir} and no plugins_dir" do
+        before { target.content_dir = dir }
+
+        its(:content_dir) { should eq dir.chomp('/') }
+        its(:plugins_dir) { should eq dir.chomp('/') + '/plugins' }
+      end
+
+      context "when content_dir = #{dir} and plugins_dir = #{dir}" do
+        before do
+          target.content_dir = dir
+          target.plugins_dir = dir
+        end
+
+        its(:content_dir) { should eq dir.chomp('/') }
+        its(:plugins_dir) { should eq dir.chomp('/') }
+      end
+    end
+  end
+
   describe '#content_uri, #content_url, #plugins_uri, #plugins_url' do
     before { target.content_dir = 'wp-content' }
 

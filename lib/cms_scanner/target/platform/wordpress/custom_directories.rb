@@ -3,7 +3,13 @@ module CMSScanner
     module Platform
       # wp-content & plugins directory implementation
       module WordPress
-        attr_writer :content_dir, :plugins_dir
+        def content_dir=(dir)
+          @content_dir = dir.chomp('/')
+        end
+
+        def plugins_dir=(dir)
+          @plugins_dir = dir.chomp('/')
+        end
 
         # @return [ String ] The wp-content directory
         def content_dir
