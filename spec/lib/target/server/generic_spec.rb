@@ -11,17 +11,21 @@ describe CMSScanner::Target::Server::Generic do
 
     context 'when apache headers' do
       %w(basic.txt).each do |file|
-        let(:fixture) { File.join(fixtures, 'server', 'apache', file) }
+        context "when #{file} headers" do
+          let(:fixture) { File.join(fixtures, 'server', 'apache', file) }
 
-        its(:server) { should eq :Apache }
+          its(:server) { should eq :Apache }
+        end
       end
     end
 
     context 'when iis headers' do
       %w(basic.txt).each do |file|
-        let(:fixture) { File.join(fixtures, 'server', 'iis', file) }
+        context "when #{file} headers" do
+          let(:fixture) { File.join(fixtures, 'server', 'iis', file) }
 
-        its(:server) { should eq :IIS }
+          its(:server) { should eq :IIS }
+        end
       end
     end
 

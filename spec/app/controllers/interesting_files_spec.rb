@@ -23,23 +23,25 @@ describe CMSScanner::Controller::InterestingFiles do
     after { controller.run }
 
     [:mixed, :passive, :aggressive].each do |mode|
-      let(:parsed_options) { { url: target_url, detection_mode: mode } }
+      context "when #{mode} mode" do
+        let(:parsed_options) { { url: target_url, detection_mode: mode } }
 
-      context 'when no findings' do
-        let(:stubbed) { [] }
+        context 'when no findings' do
+          let(:stubbed) { [] }
 
-        it 'does not call the formatter' do
-          expect(controller.formatter).to_not receive(:output)
+          it 'does not call the formatter' do
+            expect(controller.formatter).to_not receive(:output)
+          end
         end
-      end
 
-      # TODO: Test the output with a dummy finding ?
-      context 'when findings' do
-        let(:stubbed) { ['yolo'] }
+        # TODO: Test the output with a dummy finding ?
+        context 'when findings' do
+          let(:stubbed) { ['yolo'] }
 
-        it 'calls the formatter with the correct parameter' do
-          expect(controller.formatter).to receive(:output)
-            .with('findings', hash_including(findings: stubbed), 'interesting_files')
+          it 'calls the formatter with the correct parameter' do
+            expect(controller.formatter).to receive(:output)
+              .with('findings', hash_including(findings: stubbed), 'interesting_files')
+          end
         end
       end
     end

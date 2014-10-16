@@ -27,11 +27,13 @@ describe CMSScanner::Target::Server::IIS do
       let(:status) { 200 }
 
       %w(with_parent.html no_parent.html).each do |file|
-        let(:body)   { File.read(File.join(fixtures, 'directory_listing', file)) }
+        context "when #{file} body" do
+          let(:body)   { File.read(File.join(fixtures, 'directory_listing', file)) }
 
-        it 'returns true and the expected array' do
-          expect(target.directory_listing?(path)).to be true
-          expect(target.directory_listing_entries(path)).to eq %w(sub-dir web.config)
+          it 'returns true and the expected array' do
+            expect(target.directory_listing?(path)).to be true
+            expect(target.directory_listing_entries(path)).to eq %w(sub-dir web.config)
+          end
         end
       end
     end
