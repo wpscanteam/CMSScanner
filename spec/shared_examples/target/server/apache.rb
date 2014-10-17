@@ -1,9 +1,6 @@
 require 'spec_helper'
 
-describe CMSScanner::Target::Server::Apache do
-  subject(:target) { CMSScanner::Target.new(url).extend(CMSScanner::Target::Server::Apache) }
-  let(:url)        { 'http://ex.lo' }
-  let(:fixtures)   { File.join(FIXTURES, 'target', 'server', 'apache') }
+shared_examples CMSScanner::Target::Server::Apache do
 
   describe '#server' do
     its(:server) { should eq :Apache }

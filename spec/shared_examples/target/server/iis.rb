@@ -1,9 +1,6 @@
 require 'spec_helper'
 
-describe CMSScanner::Target::Server::IIS do
-  subject(:target) { CMSScanner::Target.new(url).extend(CMSScanner::Target::Server::IIS) }
-  let(:url)        { 'http://ex.lo' }
-  let(:fixtures)   { File.join(FIXTURES, 'target', 'server', 'iis') }
+shared_examples CMSScanner::Target::Server::IIS do
 
   describe '#server' do
     its(:server) { should eq :IIS }

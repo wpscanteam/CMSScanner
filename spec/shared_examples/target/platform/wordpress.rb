@@ -1,4 +1,4 @@
-require 'shared_examples/wordpress/custom_directories'
+require_relative 'wordpress/custom_directories'
 
 shared_examples CMSScanner::Target::Platform::WordPress do
 

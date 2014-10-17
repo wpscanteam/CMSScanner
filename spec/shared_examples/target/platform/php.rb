@@ -1,9 +1,5 @@
-require 'spec_helper'
 
-describe CMSScanner::Target::Platform::PHP do
-  subject(:target) { CMSScanner::Target.new(url).extend(CMSScanner::Target::Platform::PHP) }
-  let(:url)        { 'http://ex.lo' }
-  let(:fixtures)   { File.join(FIXTURES, 'target', 'platform', 'php') }
+shared_examples CMSScanner::Target::Platform::PHP do
 
   before { stub_request(:get, target.url(path)).to_return(body: body) }
 

@@ -1,10 +1,6 @@
 require 'spec_helper'
 
-# TODO: put this as a shared example for the Target
-describe CMSScanner::Target::Server::Generic do
-  subject(:target) { CMSScanner::Target.new(url).extend(CMSScanner::Target::Server::Generic) }
-  let(:url)        { 'http://ex.lo' }
-  let(:fixtures)   { File.join(FIXTURES, 'target', 'server', 'generic') }
+shared_examples CMSScanner::Target::Server::Generic do
 
   describe '#server' do
     before { stub_request(:head, target.url).to_return(headers: parse_headers_file(fixture)) }
