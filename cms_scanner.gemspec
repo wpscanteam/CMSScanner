@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.test_files            = s.files.grep(/^(test|spec|features)\//)
   s.require_path         = 'lib'
 
-  s.add_dependency 'opt_parse_validator', '~> 0.0.2'
+  s.add_dependency 'opt_parse_validator', '~> 0.0.3'
   s.add_dependency 'typhoeus', '~> 0.6.9'
   s.add_dependency 'nokogiri', '~> 1.6.3'
   s.add_dependency 'addressable', '~> 2.3.6'

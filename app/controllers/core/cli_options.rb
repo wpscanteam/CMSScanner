@@ -6,7 +6,7 @@ module CMSScanner
         formats = NS::Formatter.availables
 
         [
-          OptURL.new(['-u', '--url URL'], required: true),
+          OptURL.new(['-u', '--url URL'], required: true, default_protocol: 'http'),
           OptBoolean.new(%w(-v --verbose)),
           OptFilePath.new(['-o', '--output FILE', 'Output to FILE'], writable: true, exists: false),
           OptChoice.new(['-f', '--format FORMAT',
