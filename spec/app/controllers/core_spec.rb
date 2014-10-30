@@ -135,7 +135,7 @@ describe CMSScanner::Controller::Core do
   describe '#after_scan' do
     let(:keys) { [:verbose, :start_time, :stop_time, :start_memory, :elapsed, :used_memory] }
 
-    it 'calles the formatter with the correct parameters' do
+    it 'calls the formatter with the correct parameters' do
       # Call the #run once to ensure that @start_time & @start_memory are set
       expect(core).to receive(:output).with('started', url: target_url)
       core.run
