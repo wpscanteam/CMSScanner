@@ -7,7 +7,7 @@ describe 'App::Views' do
 
   # CliNoColour is used to test the CLI output to avoid the painful colours
   # in the expected output.
-  [:CliNoColour].each do |formatter|
+  [:JSON, :CliNoColour].each do |formatter|
     context "when #{formatter}" do
 
       it_behaves_like 'App::Views::Core'
@@ -29,6 +29,7 @@ describe 'App::Views' do
         expect($stdout).to receive(:puts).with(output)
 
         controller.output(view, @tpl_vars)
+        controller.formatter.beautify # Mandatory to be able to test formatter such as JSON
       end
     end
   end

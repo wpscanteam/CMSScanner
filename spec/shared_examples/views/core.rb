@@ -8,7 +8,7 @@ shared_examples 'App::Views::Core' do
     let(:view) { 'started' }
 
     it 'outputs the expected string' do
-      @tpl_vars = tpl_vars
+      @tpl_vars = tpl_vars.merge(start_memory: 10)
     end
   end
 
