@@ -33,8 +33,7 @@ shared_examples CMSScanner::Target::Platform::PHP do
     context 'when the body matches a FPD' do
       {
         'wp_rss_functions.php' => %w(/short-path/rss-f.php)
-      }
-      .each do |file, expected|
+      }.each do |file, expected|
         context "when #{file} body" do
           let(:body) { File.read(File.join(fixtures, 'fpd', file)) }
 

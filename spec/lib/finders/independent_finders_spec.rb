@@ -17,8 +17,9 @@ describe CMSScanner::Finders::IndependentFinders do
     end
 
     before do
-      finders << CMSScanner::Finders::DummyFinder.new(target) <<
-                 CMSScanner::Finders::NoAggressiveResult.new(target)
+      finders <<
+        CMSScanner::Finders::DummyFinder.new(target) <<
+        CMSScanner::Finders::NoAggressiveResult.new(target)
 
       @found = finders.run(mode: mode)
 

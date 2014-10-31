@@ -10,7 +10,9 @@ shared_examples 'App::Views::InterestingFiles' do
     let(:opts) { { confidence: 10, found_by: 'Spec' } }
 
     it 'outputs the expected string' do
-      findings = CMSScanner::Finders::Findings.new <<
+      findings = CMSScanner::Finders::Findings.new
+
+      findings <<
         interesting_file.new('F1', opts) <<
         interesting_file.new('F2', opts.merge(references: %w(R1), interesting_entries: %w(IE1))) <<
         interesting_file.new('F2', opts.merge(found_by: 'Spec2')) <<

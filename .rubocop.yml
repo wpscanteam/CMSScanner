@@ -4,3 +4,5 @@ ClassVars:
   Enabled: false
 MethodLength:
   Max: 15
+Metrics/AbcSize:
+  Max: 20
