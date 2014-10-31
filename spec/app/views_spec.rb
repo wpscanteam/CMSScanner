@@ -11,6 +11,7 @@ describe 'App::Views' do
     context "when #{formatter}" do
 
       it_behaves_like 'App::Views::Core'
+      it_behaves_like 'App::Views::InterestingFiles'
 
       let(:parsed_options) { { url: target_url, format: formatter.to_s.underscore.dasherize } }
 

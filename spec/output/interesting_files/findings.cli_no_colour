@@ -1,0 +1,25 @@
+Interesting Findings: 3
+
+[+] F1
+ | Confidence: 10%
+ | Found By: Spec
+
+[+] F2
+ | Confidence: 10%
+ | Found By: Spec
+ | Confirmed By: Spec2, 10% confidence
+ | Reference: R1
+ | Interesting Entry: IE1
+
+[+] F3
+ | Confidence: 10%
+ | Found By: Spec
+ | Confirmed By:
+ |  - Spec2, 10% confidence
+ |  - Spec3, 10% confidence
+ | References:
+ |  - R1
+ |  - R2
+ | Interesting Entries:
+ |  - IE1
+ |  - IE2

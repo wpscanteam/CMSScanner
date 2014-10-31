@@ -1,19 +1,19 @@
 Interesting Findings: <%= @findings.size %>
-
 <% @findings.each do |finding| -%>
+
 [+] <%= finding.url %>
  | Confidence: <%= finding.confidence %>%
  | Found By: <%= finding.found_by %>
 <% unless (confirmed = finding.confirmed_by).empty? -%>
+<% if confirmed.size == 1 -%>
+ | Confirmed By: <%= confirmed.first.found_by %>, <%= confirmed.first.confidence %>% confidence
+<% else -%>
  | Confirmed By:
 <% confirmed.each do |c| -%>
  |  - <%= c.found_by %>, <%= c.confidence %>% confidence
 <% end -%>
 <% end -%>
-<% unless (entries = finding.interesting_entries).empty? -%>
- | Interesting Entries:
-<% entries.each do |entry| -%>
- |  - <%= entry %>
 <% end -%>
-<% end %>
-<% end %>
+<%= render('_array', a: finding.references, s: 'Reference', p: 'References') -%>
+<%= render('_array', a: finding.interesting_entries, s: 'Interesting Entry', p: 'Interesting Entries') -%>
+<% end -%>
