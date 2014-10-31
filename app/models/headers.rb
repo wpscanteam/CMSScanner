@@ -15,7 +15,7 @@ module CMSScanner
       entries.each do |header, value|
         next if known_headers.include?(header.downcase)
 
-        results << "#{header}: #{value}"
+        results << "#{header}: #{[*value].join(', ')}"
       end
       results
     end

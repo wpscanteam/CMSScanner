@@ -39,7 +39,7 @@ describe CMSScanner::Headers do
       let(:headers) { parse_headers_file(fixture) }
 
       it 'returns an array with the headers' do
-        @expected = ['Server: nginx/1.1.19', 'X-Article-Id: 12']
+        @expected = ['Server: nginx/1.1.19', 'X-Powered-By: ASP.NET, PHP', 'X-Article-Id: 12']
       end
     end
 
