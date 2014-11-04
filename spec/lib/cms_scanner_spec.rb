@@ -22,8 +22,8 @@ describe CMSScanner::Scan do
 
   describe '#run' do
     it 'runs the controlllers and calls the formatter#beautify' do
-      expect(scanner.controllers).to receive(:run)
-      expect(scanner.formatter).to receive(:beautify)
+      expect(scanner.controllers).to receive(:run).ordered
+      expect(scanner.formatter).to receive(:beautify).ordered
       scanner.run
     end
 

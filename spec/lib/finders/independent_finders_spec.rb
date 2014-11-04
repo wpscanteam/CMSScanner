@@ -20,46 +20,76 @@ describe CMSScanner::Finders::IndependentFinders do
       finders <<
         CMSScanner::Finders::DummyFinder.new(target) <<
         CMSScanner::Finders::NoAggressiveResult.new(target)
-
-      @found = finders.run(mode: mode)
-
-      expect(@found).to be_a(CMSScanner::Finders::Findings)
-
-      @found.each { |f| expect(f).to be_a finding }
     end
 
-    context 'when :passive mode' do
-      let(:mode) { :passive }
+    describe 'method call orders' do
+      after { finders.run(mode: mode) }
 
-      it 'returns 2 results' do
-        expect(@found.size).to eq 2
-        expect(@found.first).to eql expected_passive.first
-        expect(@found.last).to eql expected_passive.last
+      [:passive, :aggressive].each do |current_mode|
+        context "when #{current_mode} mode" do
+          let(:mode) { current_mode }
+
+          it "calls the #{current_mode} method on each finder" do
+            finders.each { |f| expect(f).to receive(current_mode).ordered }
+          end
+        end
+      end
+
+      context 'when :mixed mode' do
+        let(:mode) { :mixed }
+
+        it 'calls :passive then :aggressive on each finder' do
+          finders.each do |finder|
+            [:passive, :aggressive].each do |method|
+              expect(finder).to receive(method).ordered
+            end
+          end
+        end
       end
     end
 
-    context 'when :aggressive mode' do
-      let(:mode) { :aggressive }
+    describe 'returned results' do
+      before do
+        @found = finders.run(mode: mode)
 
-      it 'returns 1 result' do
-        expect(@found.size).to eq 1
-        expect(@found.first).to eql expected_aggressive
+        expect(@found).to be_a(CMSScanner::Finders::Findings)
+
+        @found.each { |f| expect(f).to be_a finding }
       end
-    end
 
-    context 'when :mixed mode' do
-      let(:mode) { :mixed }
+      context 'when :passive mode' do
+        let(:mode) { :passive }
 
-      it 'returns 2 results' do
-        expect(@found.size).to eq 2
-        expect(@found.first).to eql expected_passive.first
-        expect(@found.first.confirmed_by).to eql [expected_aggressive]
-        expect(@found.last).to eql expected_passive.last
+        it 'returns 2 results' do
+          expect(@found.size).to eq 2
+          expect(@found.first).to eql expected_passive.first
+          expect(@found.last).to eql expected_passive.last
+        end
       end
-    end
 
-    context 'when multiple results returned' do
+      context 'when :aggressive mode' do
+        let(:mode) { :aggressive }
 
+        it 'returns 1 result' do
+          expect(@found.size).to eq 1
+          expect(@found.first).to eql expected_aggressive
+        end
+      end
+
+      context 'when :mixed mode' do
+        let(:mode) { :mixed }
+
+        it 'returns 2 results' do
+          expect(@found.size).to eq 2
+          expect(@found.first).to eql expected_passive.first
+          expect(@found.first.confirmed_by).to eql [expected_aggressive]
+          expect(@found.last).to eql expected_passive.last
+        end
+      end
+
+      context 'when multiple results returned' do
+        xit
+      end
     end
   end
 

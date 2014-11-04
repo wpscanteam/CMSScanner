@@ -37,14 +37,12 @@ describe CMSScanner::Controllers do
       spec = controller_mod::Spec.new
       base = controller_mod::Base.new
 
-      controllers << spec << base
+      controllers << base << spec
 
-      # TODO: Any way to test the orders ? (after_scan should reverse the order)
-      [base, spec].each do |c|
-        expect(c).to receive(:before_scan)
-        expect(c).to receive(:run)
-        expect(c).to receive(:after_scan)
-      end
+      [base, spec].each { |c| expect(c).to receive(:before_scan).ordered }
+      [base, spec].each { |c| expect(c).to receive(:run).ordered }
+      [spec, base].each { |c| expect(c).to receive(:after_scan).ordered }
+
       controllers.run
     end
   end
