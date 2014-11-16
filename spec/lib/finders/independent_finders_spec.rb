@@ -80,8 +80,13 @@ describe CMSScanner::Finders::IndependentFinders do
         let(:mode) { :mixed }
 
         it 'returns 2 results' do
+          # As the first passive is confirmed by the expected_aggressive, the confidence
+          # increases and should be 100% due to the expected_aggressive.confidence
+          first_passive = expected_passive.first.dup
+          first_passive.confidence = 100
+
           expect(@found.size).to eq 2
-          expect(@found.first).to eql expected_passive.first
+          expect(@found.first).to eql first_passive
           expect(@found.first.confirmed_by).to eql [expected_aggressive]
           expect(@found.last).to eql expected_passive.last
         end

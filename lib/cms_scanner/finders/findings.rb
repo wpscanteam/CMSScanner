@@ -8,7 +8,12 @@ module CMSScanner
           next unless found == other
 
           found.confirmed_by << other
-          # TODO: Increase confidence (e.g: (found + other) / 1.5 ?)
+
+          confidence = (found.confidence + other.confidence) / 1.5
+          confidence = 100 if confidence > 100 || other.confidence == 100
+
+          found.confidence = confidence.floor unless found.confidence == 100
+
           return self
         end
 

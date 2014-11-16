@@ -22,6 +22,11 @@ module CMSScanner
         @interesting_entries ||= []
       end
 
+      # @return [ Integer ]
+      def confidence
+        @confidence ||= 0
+      end
+
       # @param [ Hash ] opts
       # TODO: Maybe use instance_variable_set ?
       def parse_finding_options(opts = {})

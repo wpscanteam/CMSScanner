@@ -13,6 +13,16 @@ shared_examples CMSScanner::Finders::Finding do
     end
   end
 
+  describe '#confidence' do
+    its(:confidence) { should eql 0 }
+
+    context 'when already set' do
+      before { subject.confidence = 10 }
+
+      its(:confidence) { should eql 10 }
+    end
+  end
+
   describe '#parse_finding_options' do
     xit
   end
