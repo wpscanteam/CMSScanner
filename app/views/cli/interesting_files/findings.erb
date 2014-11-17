@@ -2,15 +2,17 @@ Interesting Findings: <%= @findings.size %>
 <% @findings.each do |finding| -%>
 
 [+] <%= finding.url %>
+<% if finding.confidence > 0 -%>
  | Confidence: <%= finding.confidence %>%
+<% end -%>
  | Found By: <%= finding.found_by %>
 <% unless (confirmed = finding.confirmed_by).empty? -%>
 <% if confirmed.size == 1 -%>
- | Confirmed By: <%= confirmed.first.found_by %>, <%= confirmed.first.confidence %>% confidence
+ | Confirmed By: <%= confirmed.first.found_by %><% if confirmed.first.confidence > 0 %>, <%= confirmed.first.confidence %>% confidence<% end %>
 <% else -%>
  | Confirmed By:
 <% confirmed.each do |c| -%>
- |  - <%= c.found_by %>, <%= c.confidence %>% confidence
+ |  - <%= c.found_by %><% if c.confidence > 0 %>, <%= c.confidence %>% confidence<% end %>
 <% end -%>
 <% end -%>
 <% end -%>

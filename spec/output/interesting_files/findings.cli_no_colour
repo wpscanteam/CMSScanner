@@ -1,4 +1,4 @@
-Interesting Findings: 3
+Interesting Findings: 4
 
 [+] F1
  | Confidence: 10%
@@ -23,3 +23,7 @@ Interesting Findings: 3
  | Interesting Entries:
  |  - IE1
  |  - IE2
+
+[+] F4
+ | Found By: Spec
+ | Confirmed By: Spec2
