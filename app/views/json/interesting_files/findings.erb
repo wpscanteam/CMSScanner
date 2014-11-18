@@ -1,1 +1,16 @@
-"interesting_files": "Not yet done",
+"interesting_files": [
+<% unless @findings.empty? -%>
+  {
+  <% last_index = @findings.size - 1 %>
+  <% @findings.each.with_index do |finding, index| -%>
+    <%= finding.url.to_json %>: {
+      "foun_by": <%= finding.found_by.to_json %>,
+      "confidence": <%= finding.confidence.to_json %>,
+      "confirmed_by": ["TODO"],
+      "references": <%= finding.references.to_json %>,
+      "interesting_entries": <%= finding.interesting_entries.to_json %>
+    }<% unless index == last_index %>,<% end %>
+  <% end -%>
+  }
+<% end -%>
+],

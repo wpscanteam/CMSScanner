@@ -11,21 +11,52 @@
       "F2": {
         "found_by": "Spec",
         "confidence": 13,
-        "confirmed_by": [{"Spec2": { "confidence": 10 }}],
-        "references": ["R1"],
-        "interesting_entries": ["IE1"]
+        "confirmed_by": [
+          {
+            "Spec2": {
+              "confidence": 10
+            }
+          }
+        ],
+        "references": [
+          "R1"
+        ],
+        "interesting_entries": [
+          "IE1"
+        ]
       },
       "F3": {
         "found_by": "Spec",
         "confidence": 100,
-        "confirmed_by": [{"Spec2": { "confidence": 100 }, "Spec3": { "confidence": 10 }}],
-        "references": ["R1", "R2"],
-        "interesting_entries": ["IE1", "IE2"]
+        "confirmed_by": [
+          {
+            "Spec2": {
+              "confidence": 100
+            },
+            "Spec3": {
+              "confidence": 10
+            }
+          }
+        ],
+        "references": [
+          "R1",
+          "R2"
+        ],
+        "interesting_entries": [
+          "IE1",
+          "IE2"
+        ]
       },
       "F4": {
         "found_by": "Spec",
         "confidence": 0,
-        "confirmed_by": [{"Spec2": { "confidence": 0 }}],
+        "confirmed_by": [
+          {
+            "Spec2": {
+              "confidence": 0
+            }
+          }
+        ],
         "references": [],
         "interesting_entries": []
       }
