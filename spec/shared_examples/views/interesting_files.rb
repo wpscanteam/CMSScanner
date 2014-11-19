@@ -9,6 +9,14 @@ shared_examples 'App::Views::InterestingFiles' do
     let(:view) { 'findings' }
     let(:opts) { { confidence: 10, found_by: 'Spec' } }
 
+    context 'when empty results' do
+      let(:expected_view) { 'empty' }
+
+      it 'outputs the expected string' do
+        @tpl_vars = tpl_vars.merge(findings: [])
+      end
+    end
+
     it 'outputs the expected string' do
       findings = CMSScanner::Finders::Findings.new
 

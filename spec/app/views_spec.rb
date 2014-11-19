@@ -22,11 +22,12 @@ describe 'App::Views' do
       end
 
       after do
-        view_filename  = "#{view}.#{formatter.to_s.underscore.downcase}"
-        controller_dir = controller.class.to_s.demodulize.underscore.downcase
-        output         = File.read(File.join(fixtures, controller_dir, view_filename))
+        view_filename   = defined?(expected_view) ? expected_view : view
+        view_filename   = "#{view_filename}.#{formatter.to_s.underscore.downcase}"
+        controller_dir  = controller.class.to_s.demodulize.underscore.downcase
+        expected_output = File.read(File.join(fixtures, controller_dir, view_filename))
 
-        expect($stdout).to receive(:puts).with(output)
+        expect($stdout).to receive(:puts).with(expected_output)
 
         controller.output(view, @tpl_vars)
         controller.formatter.beautify # Mandatory to be able to test formatter such as JSON
