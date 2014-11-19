@@ -4,9 +4,15 @@
       "F1": {
         "found_by": "Spec",
         "confidence": 10,
-        "confirmed_by": [],
-        "references": [],
-        "interesting_entries": []
+        "confirmed_by": [
+
+        ],
+        "references": [
+
+        ],
+        "interesting_entries": [
+
+        ]
       },
       "F2": {
         "found_by": "Spec",
@@ -57,8 +63,12 @@
             }
           }
         ],
-        "references": [],
-        "interesting_entries": []
+        "references": [
+
+        ],
+        "interesting_entries": [
+
+        ]
       }
     }
   ]
