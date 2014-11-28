@@ -14,11 +14,10 @@ module CMSScanner
         # @return [ String ] The wp-content directory
         def content_dir
           unless @content_dir
-            page        = Nokogiri::HTML(Browser.get(url).body)
             escaped_url = Regexp.escape(url).gsub(/https?/i, 'https?')
             pattern     = %r{#{escaped_url}(.+?)\/(?:themes|plugins|uploads)\/}i
 
-            page.css('link,script,style,img').each do |tag|
+            NS::Browser.get(url).html.css('link,script,style,img').each do |tag|
               %w(href src).each do |attribute|
                 attr_value = tag.attribute(attribute).to_s
 

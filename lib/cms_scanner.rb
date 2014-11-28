@@ -10,6 +10,7 @@ require 'fileutils'
 require 'pathname'
 # Custom Libs
 require 'helper'
+require 'cms_scanner/typhoeus/response'
 require 'cms_scanner/errors/auth_errors'
 require 'cms_scanner/cache/typhoeus'
 require 'cms_scanner/target'

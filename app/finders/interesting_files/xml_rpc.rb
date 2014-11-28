@@ -25,9 +25,7 @@ module CMSScanner
 
         # @return [ XMLRPC ]
         def passive_body(_opts = {})
-          page = Nokogiri::HTML(NS::Browser.get(target.url).body)
-
-          page.css('link[rel="pingback"]').each do |tag|
+          NS::Browser.get(target.url).html.css('link[rel="pingback"]').each do |tag|
             url = tag.attribute('href').to_s
 
             next unless target.in_scope?(url)

@@ -30,10 +30,11 @@ module CMSScanner
         def directory_listing_entries(path = nil, params = {})
           return [] unless directory_listing?(path, params)
 
-          doc   = Nokogiri::HTML(NS::Browser.get(url(path), params).body)
           found = []
 
-          doc.css('td a').each { |node| found << node.text.to_s }
+          NS::Browser.get(url(path), params).html.css('td a').each do |node|
+            found << node.text.to_s
+          end
 
           found[1..-1] # returns the array w/o the first element 'Parent Directory'
         end

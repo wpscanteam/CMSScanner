@@ -12,9 +12,7 @@ module CMSScanner
         WORDPRESS_PATTERN = %r{/(?:(?:wp-content/(?:themes|plugins|uploads))|wp-includes)/}i
 
         def wordpress?
-          page = Nokogiri::HTML(Browser.get(url).body)
-
-          page.css('script, link').each do |tag|
+          NS::Browser.get(url).html.css('script, link').each do |tag|
             tag_url = tag.attribute('href').to_s
 
             next unless in_scope?(tag_url)

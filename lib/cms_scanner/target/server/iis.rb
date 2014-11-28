@@ -30,10 +30,9 @@ module CMSScanner
         def directory_listing_entries(path = nil, params = {})
           return [] unless directory_listing?(path, params)
 
-          doc   = Nokogiri::HTML(NS::Browser.get(url(path), params).body)
           found = []
 
-          doc.css('pre a').each do |node|
+          NS::Browser.get(url(path), params).html.css('pre a').each do |node|
             entry = node.text.to_s
 
             next if entry == '[To Parent Directory]'
