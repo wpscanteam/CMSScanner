@@ -9,7 +9,7 @@ module CMSScanner
       module WordPress
         include PHP
 
-        WORDPRESS_PATTERN = %r{/(?:(?:wp-content/(?:themes|plugins|plugins))|wp-includes)/}i
+        WORDPRESS_PATTERN = %r{/(?:(?:wp-content/(?:themes|plugins|uploads))|wp-includes)/}i
 
         def wordpress?
           page = Nokogiri::HTML(Browser.get(url).body)
