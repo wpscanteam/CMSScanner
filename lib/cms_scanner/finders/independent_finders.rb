@@ -2,7 +2,7 @@ module CMSScanner
   module Finders
     # Independent Finders container
     # This class is designed to handle independent results
-    # which are not related with others
+    # which are not related with each others
     # e.g: interesting files
     class IndependentFinders < Array
       # @return [ Findings ]
