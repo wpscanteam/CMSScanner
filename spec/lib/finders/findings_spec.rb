@@ -1,8 +1,7 @@
 require 'spec_helper'
-require 'dummy_finders'
+require 'dummy_finding'
 
 describe CMSScanner::Finders::Findings do
-
   subject(:findings) { described_class.new }
   let(:dummy)        { CMSScanner::DummyFinding }
 
@@ -45,5 +44,4 @@ describe CMSScanner::Finders::Findings do
       @expected = %w(test1 test2)
     end
   end
-
 end

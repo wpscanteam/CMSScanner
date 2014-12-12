@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe CMSScanner::Controller do
-
   subject(:controller) { described_class::Base.new }
 
   context 'when parsed_options' do
@@ -20,5 +19,4 @@ describe CMSScanner::Controller do
       end
     end
   end
-
 end

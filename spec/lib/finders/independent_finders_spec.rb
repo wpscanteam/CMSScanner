@@ -1,8 +1,7 @@
 require 'spec_helper'
-require 'dummy_finders'
+require 'dummy_independent_finders'
 
 describe CMSScanner::Finders::IndependentFinders do
-
   subject(:finders) { described_class.new }
 
   describe '#run' do
@@ -18,11 +17,11 @@ describe CMSScanner::Finders::IndependentFinders do
 
     before do
       finders <<
-        CMSScanner::Finders::DummyFinder.new(target) <<
-        CMSScanner::Finders::NoAggressiveResult.new(target)
+        CMSScanner::Finders::Independent::DummyFinder.new(target) <<
+        CMSScanner::Finders::Independent::NoAggressiveResult.new(target)
     end
 
-    describe 'method call orders' do
+    describe 'method calls order' do
       after { finders.run(mode: mode) }
 
       [:passive, :aggressive].each do |current_mode|
@@ -130,5 +129,4 @@ describe CMSScanner::Finders::IndependentFinders do
       expect(finders.findings).to be_a CMSScanner::Finders::Findings
     end
   end
-
 end
