@@ -1,6 +1,5 @@
 
 shared_examples CMSScanner::Finders::IndependentFinder do
-
   describe '::find' do
     it 'creates a new object and call finders#find' do
       created = described_class.new(target)
@@ -20,7 +19,7 @@ shared_examples CMSScanner::Finders::IndependentFinder do
   end
 
   describe '#finders' do
-    its(:finders) { should be_a CMSScanner::Finders::IndependentFinders }
+    its(:finders) { should be_a expected_finders_class }
 
     it 'returns the correct finders' do
       finders = subject.finders
@@ -29,5 +28,4 @@ shared_examples CMSScanner::Finders::IndependentFinder do
       expect(finders.map { |f| f.class.to_s.demodulize }).to eq expected_finders
     end
   end
-
 end

@@ -2,7 +2,7 @@ module CMSScanner
   module Finders
     # Unique Finder
     module UniqueFinder
-      include IndependentFinder
+      include IndependentFinder # Doesn't work :/
 
       # @return [ Array ]
       def finders

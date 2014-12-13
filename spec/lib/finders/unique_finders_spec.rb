@@ -4,70 +4,129 @@ require 'dummy_unique_finders'
 describe CMSScanner::Finders::UniqueFinders do
   subject(:finders) { described_class.new }
 
-  let(:finding)     { CMSScanner::DummyFinding }
-  let(:opts)        { {} }
-
   describe '#run' do
-    let(:target) { 'target' }
+    let(:target)         { 'target' }
+    let(:finding)        { CMSScanner::DummyFinding }
+    let(:unique_finders) { CMSScanner::Finders::Unique }
+    let(:opts)           { {} }
 
     before do
       finders <<
-        CMSScanner::Finders::Unique::Dummy.new(target) <<
-        CMSScanner::Finders::Unique::NoAggressive.new(target) <<
-        CMSScanner::Finders::Unique::Dummy2.new(target)
+        unique_finders::Dummy.new(target) <<
+        unique_finders::NoAggressive.new(target) <<
+        unique_finders::Dummy2.new(target)
     end
 
-    describe 'calls order' do
-      after { finders.run(opts) }
+    after do
+      result = finders.run(opts)
 
-      context 'when :check_all' do
-        [:passive, :aggressive].each do |current_mode|
-          context "when #{current_mode} mode" do
-            let(:opts) { super().merge(mode: current_mode) }
+      expect(result).to be_a finding
+      expect(result).to eql @expected
+    end
 
-            it "calls the #{current_mode} method on all finders" do
-              finders.each { |f| expect(f).to receive(current_mode).ordered }
-            end
-          end
+    # Used to be able to test the calls order and returned result at the same time
+    let(:dummy_passive)     { unique_finders::Dummy.new(target).passive(opts) }
+    let(:dummy_aggresssive) { unique_finders::Dummy.new(target).aggressive(opts) }
+    let(:noaggressive)      { unique_finders::NoAggressive.new(target).passive(opts) }
+    let(:dummy2_aggressive) { unique_finders::Dummy2.new(target).aggressive }
+
+    context 'when :confidence_threshold <= 0' do
+      let(:opts) { super().merge(confidence_threshold: 0) }
+
+      context 'when :mixed mode' do
+        let(:opts) { super().merge(mode: :mixed) }
+
+        it 'calls all #passive then #aggressive on finders and returns the best result' do
+          # Maybe there is a way to factorise this
+          expect(finders[0]).to receive(:passive).ordered.and_return(dummy_passive)
+          expect(finders[1]).to receive(:passive).ordered.and_return(noaggressive)
+          expect(finders[2]).to receive(:passive).ordered
+          expect(finders[0]).to receive(:aggressive).ordered.and_return(dummy_aggresssive)
+          expect(finders[1]).to receive(:aggressive).ordered
+          expect(finders[2]).to receive(:aggressive).ordered.and_return(dummy2_aggressive)
+
+          @expected = finding.new('v1', confidence: 100, found_by: 'Dummy (passive detection)')
+          @expected.confirmed_by << finding.new('v1', confidence: 100, found_by: 'override')
+          @expected.confirmed_by << finding.new('v1', confidence: 90)
         end
+      end
 
-        context 'when :mixed mode' do
-          let(:opts) { super().merge(mode: :mixed) }
+      context 'when :passive mode' do
+        let(:opts) { super().merge(mode: :passive) }
 
-          it '' do
-            [:passive, :aggressive].each do |method|
-              finders.each do |finder|
-                expect(finder).to receive(method).ordered
-              end
-            end
-          end
+        it 'calls #passive on all finders and returns the best result' do
+          expect(finders[0]).to receive(:passive).ordered.and_return(dummy_passive)
+          expect(finders[1]).to receive(:passive).ordered.and_return(noaggressive)
+          expect(finders[2]).to receive(:passive).ordered
+
+          finders.each { |f| expect(f).to_not receive(:aggressive) }
+
+          @expected = finding.new('v2', confidence: 10,
+                                        found_by: 'NoAggressive (passive detection)')
+        end
+      end
+
+      context 'when :aggressive mode' do
+        let(:opts) { super().merge(mode: :aggressive) }
+
+        it 'calls #aggressive on all finders and returns the best result' do
+          finders.each { |f| expect(f).to_not receive(:passive) }
+
+          expect(finders[0]).to receive(:aggressive).ordered.and_return(dummy_aggresssive)
+          expect(finders[1]).to receive(:aggressive).ordered
+          expect(finders[2]).to receive(:aggressive).ordered.and_return(dummy2_aggressive)
+
+          @expected = finding.new('v1', confidence: 100, found_by: 'override')
+          @expected.confirmed_by << finding.new('v1', confidence: 90)
         end
       end
     end
 
-    describe 'returned result' do
-      after do
-        result = finders.run(opts)
+    context 'when :confidence_threshold = 100 (default)' do
+      context 'when :mixed mode' do
+        let(:opts) { super().merge(mode: :mixed) }
 
-        expect(result).to be_a finding
-        expect(result).to eql @expected
-      end
+        it 'calls all #passive then #aggressive methods on finders and returns the '\
+           'result which reaches 100% confidence during the process' do
+          expect(finders[0]).to receive(:passive).ordered.and_return(dummy_passive)
+          expect(finders[1]).to receive(:passive).ordered.and_return(noaggressive)
+          expect(finders[2]).to receive(:passive).ordered
+          expect(finders[0]).to receive(:aggressive).ordered.and_return(dummy_aggresssive)
+          expect(finders[1]).to_not receive(:aggressive)
+          expect(finders[2]).to_not receive(:aggressive)
 
-      context 'when :check_all' do
-        let(:opts) { { check_all: true } }
-
-        context 'when :mixed mode' do
-          let(:opts) { super().merge(mode: :mixed) }
-
-          it 'returns the expected result' do
-            @expected = finding.new('test', confidence: 100, found_by: 'Dummy (passive detection)')
-            @expected.confirmed_by << finding.new('test', confidence: 100, found_by: 'override')
-          end
+          @expected = finding.new('v1', confidence: 100, found_by: 'Dummy (passive detection)')
+          @expected.confirmed_by << finding.new('v1', confidence: 100, found_by: 'override')
         end
       end
 
-      context 'when no :check_all' do
-        # TODO
+      context 'when :passive mode' do
+        let(:opts) { super().merge(mode: :passive) }
+
+        it 'calls all #passive and returns the best result' do
+          expect(finders[0]).to receive(:passive).ordered.and_return(dummy_passive)
+          expect(finders[1]).to receive(:passive).ordered.and_return(noaggressive)
+          expect(finders[2]).to receive(:passive).ordered
+
+          finders.each { |f| expect(f).to_not receive(:aggressive) }
+
+          @expected = finding.new('v2', confidence: 10,
+                                        found_by: 'NoAggressive (passive detection)')
+        end
+      end
+
+      context 'when :aggressive mode' do
+        let(:opts) { super().merge(mode: :aggressive) }
+
+        it 'calls all #aggressive and returns the result which reaches 100% confidence' do
+          finders.each { |f| expect(f).to_not receive(:passive) }
+
+          expect(finders[0]).to receive(:aggressive).ordered.and_return(dummy_aggresssive)
+          expect(finders[1]).to_not receive(:aggressive)
+          expect(finders[2]).to_not receive(:aggressive)
+
+          @expected = finding.new('v1', confidence: 100, found_by: 'override')
+        end
       end
     end
   end
