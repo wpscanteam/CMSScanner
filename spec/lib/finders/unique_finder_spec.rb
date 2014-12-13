@@ -18,7 +18,7 @@ describe CMSScanner::Finders::VersionFinderSpec do
     let(:expected_finders_class) { CMSScanner::Finders::UniqueFinders }
   end
 
-  subject(:files) { described_class.new(target) }
-  let(:target)    { CMSScanner::Target.new(url) }
-  let(:url)       { 'http://example.com/' }
+  subject(:version) { described_class.new(target) }
+  let(:target)      { CMSScanner::Target.new(url) }
+  let(:url)         { 'http://example.com/' }
 end
