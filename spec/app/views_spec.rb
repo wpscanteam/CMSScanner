@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe 'App::Views' do
-
   let(:target_url) { 'http://ex.lo/' }
   let(:fixtures)   { File.join(SPECS, 'output') }
 
@@ -9,7 +8,6 @@ describe 'App::Views' do
   # in the expected output.
   [:JSON, :CliNoColour].each do |formatter|
     context "when #{formatter}" do
-
       it_behaves_like 'App::Views::Core'
       it_behaves_like 'App::Views::InterestingFiles'
 

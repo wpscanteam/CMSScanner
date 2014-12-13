@@ -12,7 +12,6 @@ module CMSScanner
 end
 
 describe CMSScanner::Scan do
-
   subject(:scanner) { described_class.new }
   let(:controller)  { CMSScanner::Controller }
 

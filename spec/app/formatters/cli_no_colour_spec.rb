@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe CMSScanner::Formatter::CliNoColour do
-
   subject(:formatter) { described_class.new }
 
   describe '#format' do
@@ -13,5 +12,4 @@ describe CMSScanner::Formatter::CliNoColour do
       expect(formatter.red('Text')).to eq 'Text'
     end
   end
-
 end

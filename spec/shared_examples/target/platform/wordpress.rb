@@ -1,7 +1,6 @@
 require_relative 'wordpress/custom_directories'
 
 shared_examples CMSScanner::Target::Platform::WordPress do
-
   it_behaves_like 'WordPress::CustomDirectories'
 
   describe '#wordpress?' do
@@ -37,5 +36,4 @@ shared_examples CMSScanner::Target::Platform::WordPress do
       its(:wordpress_hosted?) { should be true }
     end
   end
-
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe CMSScanner::Finders::InterestingFile::XMLRPC do
-
   subject(:finder)  { described_class.new(target) }
   let(:target)      { CMSScanner::Target.new(url) }
   let(:url)         { 'http://ex.lo/' }
@@ -134,5 +133,4 @@ describe CMSScanner::Finders::InterestingFile::XMLRPC do
       end
     end
   end
-
 end

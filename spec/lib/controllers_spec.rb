@@ -8,7 +8,6 @@ module CMSScanner
 end
 
 describe CMSScanner::Controllers do
-
   subject(:controllers)  { described_class.new }
   let(:controller_mod) { CMSScanner::Controller }
 
@@ -46,5 +45,4 @@ describe CMSScanner::Controllers do
       controllers.run
     end
   end
-
 end

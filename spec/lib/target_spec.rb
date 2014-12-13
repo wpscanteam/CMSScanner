@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe CMSScanner::Target do
-
   subject(:target) { described_class.new(url) }
   let(:url)        { 'http://ex.lo' }
 
@@ -46,5 +45,4 @@ describe CMSScanner::Target do
       end
     end
   end
-
 end

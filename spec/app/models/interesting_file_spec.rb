@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe CMSScanner::InterestingFile do
-
   it_behaves_like CMSScanner::Finders::Finding
 
   subject(:file) { described_class.new(url, opts) }
@@ -47,5 +46,4 @@ describe CMSScanner::InterestingFile do
       end
     end
   end
-
 end

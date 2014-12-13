@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe CMSScanner::XMLRPC do
-
   subject(:xml_rpc) { described_class.new(url) }
   let(:url)      { 'http://example.com/xmlrpc' }
 

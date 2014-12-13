@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe CMSScanner::Controller::InterestingFiles do
-
   subject(:controller) { described_class.new }
   let(:target_url)     { 'http://example.com/' }
   let(:parsed_options) { { url: target_url } }
@@ -46,5 +45,4 @@ describe CMSScanner::Controller::InterestingFiles do
       end
     end
   end
-
 end

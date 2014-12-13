@@ -1,6 +1,5 @@
 
 shared_examples 'App::Views::Core' do
-
   let(:controller) { CMSScanner::Controller::Core.new }
   let(:start)      { Time.at(1_414_670_521).in_time_zone('Europe/London') }
   let(:tpl_vars)   { { url: target_url, start_time: start } }

@@ -1,6 +1,5 @@
 
 shared_examples CMSScanner::Finders::Finding do
-
   [:references, :confirmed_by, :interesting_entries].each do |opt|
     describe "##{opt}" do
       its(opt) { should eq [] }
@@ -26,5 +25,4 @@ shared_examples CMSScanner::Finders::Finding do
   describe '#parse_finding_options' do
     xit
   end
-
 end

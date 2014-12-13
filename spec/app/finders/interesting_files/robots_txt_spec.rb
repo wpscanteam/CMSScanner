@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe CMSScanner::Finders::InterestingFile::RobotsTxt do
-
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
@@ -52,5 +51,4 @@ describe CMSScanner::Finders::InterestingFile::RobotsTxt do
       end
     end
   end
-
 end

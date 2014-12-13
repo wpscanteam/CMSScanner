@@ -1,13 +1,11 @@
 require 'spec_helper'
 
 describe CMSScanner::WebSite do
-
   subject(:web_site) { described_class.new(url) }
   let(:url)          { 'http://ex.lo' }
 
   describe '#url=' do
     context 'when the url is incorrect' do
-
       after do
         expect { web_site.url = @url }.to raise_error Addressable::URI::InvalidURIError
       end
@@ -120,5 +118,4 @@ describe CMSScanner::WebSite do
       end
     end
   end
-
 end

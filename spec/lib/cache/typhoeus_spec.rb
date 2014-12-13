@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe CMSScanner::Cache::Typhoeus do
-
   subject(:cache) { described_class.new(cache_dir) }
 
   let(:cache_dir) { File.join(CACHE, 'typhoeus_cache') }
@@ -26,5 +25,4 @@ describe CMSScanner::Cache::Typhoeus do
       cache.set(request, response)
     end
   end
-
 end

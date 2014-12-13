@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe CMSScanner::Formatter::Cli do
-
   subject(:formatter) { described_class.new }
 
   describe '#format' do
@@ -17,5 +16,4 @@ describe CMSScanner::Formatter::Cli do
       expect(formatter.green('Another Text')).to eq "\e[32mAnother Text\e[0m"
     end
   end
-
 end

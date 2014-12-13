@@ -1,6 +1,5 @@
 
 shared_examples 'App::Views::InterestingFiles' do
-
   let(:controller)       { CMSScanner::Controller::InterestingFiles.new }
   let(:tpl_vars)         { { url: target_url } }
   let(:interesting_file) { CMSScanner::InterestingFile }

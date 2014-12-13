@@ -1,6 +1,5 @@
 
 shared_examples CMSScanner::Browser::Actions do
-
   let(:url)     { 'http://example.com/file.txt' }
   let(:browser) { CMSScanner::Browser }
 
@@ -28,5 +27,4 @@ shared_examples CMSScanner::Browser::Actions do
       # expect(response.body).to eq 'Got me'
     end
   end
-
 end

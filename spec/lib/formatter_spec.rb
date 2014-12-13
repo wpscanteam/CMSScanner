@@ -27,7 +27,6 @@ module CMSScanner
 end
 
 describe CMSScanner::Formatter::Base do
-
   subject(:formatter) { described_class.new }
 
   describe '#format' do
@@ -114,7 +113,6 @@ describe CMSScanner::Formatter::Base do
         @tpl      = 'local'
       end
     end
-
   end
 
   describe '#views_directories' do
@@ -132,5 +130,4 @@ describe CMSScanner::Formatter::Base do
       end
     end
   end
-
 end

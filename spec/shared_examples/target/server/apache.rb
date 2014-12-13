@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 shared_examples CMSScanner::Target::Server::Apache do
-
   describe '#server' do
     its(:server) { should eq :Apache }
   end

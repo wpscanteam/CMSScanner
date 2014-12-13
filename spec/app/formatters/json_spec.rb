@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe CMSScanner::Formatter::Json do
-
   it_behaves_like CMSScanner::Formatter::Buffer
 
   subject(:formatter) { described_class.new }
@@ -29,5 +28,4 @@ describe CMSScanner::Formatter::Json do
       formatter.beautify
     end
   end
-
 end
