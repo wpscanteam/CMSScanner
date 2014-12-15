@@ -13,9 +13,5 @@ module CMSScanner
     def ==(other)
       number == other.number
     end
-
-    def eql?(other)
-      self == other && confidence == other.confidence && found_by == other.found_by
-    end
   end
 end

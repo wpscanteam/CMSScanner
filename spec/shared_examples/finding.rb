@@ -25,4 +25,26 @@ shared_examples CMSScanner::Finders::Finding do
   describe '#parse_finding_options' do
     xit
   end
+
+  describe '#eql?' do
+    before do
+      subject.confidence = 10
+      subject.found_by = 'test'
+    end
+
+    context 'when eql' do
+      it 'returns true' do
+        expect(subject).to eql subject
+      end
+    end
+
+    context 'when not eql' do
+      it 'returns false' do
+        other = subject.dup
+        other.confidence = 20
+
+        expect(subject).to_not eql other
+      end
+    end
+  end
 end

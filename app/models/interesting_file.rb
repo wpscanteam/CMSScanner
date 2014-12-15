@@ -22,9 +22,5 @@ module CMSScanner
     def ==(other)
       url == other.url
     end
-
-    def eql?(other)
-      url == other.url && confidence == other.confidence && found_by == other.found_by
-    end
   end
 end

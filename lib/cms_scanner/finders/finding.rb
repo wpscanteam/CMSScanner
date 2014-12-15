@@ -32,6 +32,10 @@ module CMSScanner
       def parse_finding_options(opts = {})
         FINDING_OPTS.each { |opt| send("#{opt}=", opts[opt]) if opts.key?(opt) }
       end
+
+      def eql?(other)
+        self == other && confidence == other.confidence && found_by == other.found_by
+      end
     end
   end
 end
