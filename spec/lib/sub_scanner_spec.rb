@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-# Module included the CMSScanner to test its correct inclusion
+# Module including the CMSScanner to test its correct inclusion
 module SubScanner
   include CMSScanner
 
@@ -11,17 +11,35 @@ module SubScanner
       'working'
     end
   end
+
+  # Custom method for all formatters
+  module Formatter
+    include CMSScanner::Formatter
+
+    # Implements a #custom method which should be available in all formatters
+    module InstanceMethods
+      def custom
+        'It Works!'
+      end
+    end
+  end
 end
 
 describe SubScanner::Scan do
-  subject(:scanner) { described_class.new }
-  let(:controller)  { SubScanner::Controller }
+  subject(:scanner)     { described_class.new }
+  let(:formatter_class) { SubScanner::Formatter }
 
   it 'loads the overrided Target class' do
     target = scanner.controllers.first.target
 
     expect(target).to be_a SubScanner::Target
-    expect(target.respond_to?(:new_method)).to eq true
+    expect(target).to respond_to(:new_method)
     expect(target.new_method).to eq 'working'
+  end
+
+  it 'adds the #custom method for all formatters' do
+    formatter_class.availables.each do |format|
+      expect(formatter_class.load(format).custom).to eql 'It Works!'
+    end
   end
 end

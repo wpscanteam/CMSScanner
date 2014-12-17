@@ -37,9 +37,21 @@ module CMSScanner
       base.extend(ClassMethods)
     end
 
+    # This module should be implemented in the code which uses this Framework to
+    # be able to override/implements instance methods for all the Formatters
+    # w/o having to include/write the methods in each formatters.
+    #
+    # Example: to override the #views_directories (see the wpscan-v3/lib/wpscan/formatter.rb)
+    module InstanceMethods
+    end
+
     # Base Formatter
     class Base
       attr_reader :controller_name
+
+      def initialize
+        extend NS::Formatter::InstanceMethods
+      end
 
       # @return [ String ] The underscored name of the class
       def format
