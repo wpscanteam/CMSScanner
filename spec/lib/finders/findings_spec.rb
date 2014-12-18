@@ -3,45 +3,34 @@ require 'dummy_finding'
 
 describe CMSScanner::Finders::Findings do
   subject(:findings) { described_class.new }
-  let(:dummy)        { CMSScanner::DummyFinding }
+  let(:finding)      { CMSScanner::DummyFinding }
 
   describe '#<<' do
     after { expect(findings).to eq @expected }
 
-    context 'when empty array' do
+    context 'when no findings already in' do
       it 'adds it' do
-        findings << 'empty-test'
-        @expected = %w(empty-test)
+        findings << finding.new('empty-test')
+        @expected = [finding.new('empty-test')]
       end
     end
 
-    context 'when not empty' do
-      let(:confirmed) { dummy.new('confirmed') }
+    context 'when findings already in' do
+      let(:confirmed) { finding.new('confirmed') }
 
-      before { findings << dummy.new('test') << confirmed }
+      before { findings << finding.new('test') << confirmed }
 
       it 'adds a confirmed result correctly' do
         confirmed_dup = confirmed.dup
         confirmed_dup.confidence = 100
 
-        findings << dummy.new('test2')
+        findings << finding.new('test2')
         findings << confirmed_dup
 
         confirmed.confirmed_by = confirmed_dup
 
-        @expected = [] << dummy.new('test') << confirmed << dummy.new('test2')
+        @expected = [] << finding.new('test') << confirmed << finding.new('test2')
       end
-    end
-  end
-
-  describe '#+' do
-    after { expect(findings).to eq @expected }
-
-    it 'adds it/them' do
-      # Dummy assignement to avoid the 'Operator used in void context'
-      _ = findings + %w(test1 test2)
-
-      @expected = %w(test1 test2)
     end
   end
 end
