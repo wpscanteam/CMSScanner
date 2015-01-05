@@ -10,8 +10,8 @@ describe CMSScanner::Finders::IndependentFinders do
     let(:expected_aggressive) { finding.new('test', found_by: 'override', confidence: 100) }
     let(:expected_passive) do
       [
-        finding.new('test', found_by: 'DummyFinder (passive detection)'),
-        finding.new('spotted', found_by: 'NoAggressiveResult (passive detection)', confidence: 10)
+        finding.new('test', found_by: 'Dummy Finder (Passive Detection)'),
+        finding.new('spotted', found_by: 'No Aggressive Result (Passive Detection)', confidence: 10)
       ]
     end
 

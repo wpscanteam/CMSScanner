@@ -44,7 +44,7 @@ describe CMSScanner::Finders::InterestingFile::SearchReplaceDB2 do
           @expected = CMSScanner::InterestingFile.new(
             file,
             confidence: 100,
-            found_by: 'SearchReplaceDB2 (aggressive detection)'
+            found_by: 'Search Replace Db2 (Aggressive Detection)'
           )
         end
       end

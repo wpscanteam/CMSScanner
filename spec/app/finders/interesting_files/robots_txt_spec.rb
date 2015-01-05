@@ -46,7 +46,7 @@ describe CMSScanner::Finders::InterestingFile::RobotsTxt do
         it 'returns the InterestingFile result' do
           @expected = CMSScanner::RobotsTxt.new(robots_txt,
                                                 confidence: 100,
-                                                found_by: 'RobotsTxt (aggressive detection)')
+                                                found_by: 'Robots Txt (Aggressive Detection)')
         end
       end
     end

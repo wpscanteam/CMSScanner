@@ -20,7 +20,8 @@ module CMSScanner
       end
 
       def found_by
-        "#{self.class.to_s.demodulize} (#{caller_locations(1, 1)[0].label} detection)"
+        "#{self.class.to_s.demodulize.underscore.titleize} " \
+        "(#{caller_locations(1, 1)[0].label.capitalize} Detection)"
       end
     end
   end

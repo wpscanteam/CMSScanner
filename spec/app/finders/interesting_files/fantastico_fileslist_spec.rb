@@ -57,7 +57,7 @@ describe CMSScanner::Finders::InterestingFile::FantasticoFileslist do
           @expected = CMSScanner::FantasticoFileslist.new(
             file,
             confidence: 100,
-            found_by: 'FantasticoFileslist (aggressive detection)'
+            found_by: 'Fantastico Fileslist (Aggressive Detection)'
           )
         end
       end

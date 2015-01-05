@@ -45,7 +45,7 @@ describe CMSScanner::Finders::UniqueFinders do
           expect(finders[1]).to receive(:aggressive).ordered
           expect(finders[2]).to receive(:aggressive).ordered.and_return(dummy2_aggressive)
 
-          @expected = finding.new('v1', confidence: 100, found_by: 'Dummy (passive detection)')
+          @expected = finding.new('v1', confidence: 100, found_by: 'Dummy (Passive Detection)')
           @expected.confirmed_by << finding.new('v1', confidence: 100, found_by: 'override')
           @expected.confirmed_by << finding.new('v1', confidence: 90)
         end
@@ -62,7 +62,7 @@ describe CMSScanner::Finders::UniqueFinders do
           finders.each { |f| expect(f).to_not receive(:aggressive) }
 
           @expected = finding.new('v2', confidence: 10,
-                                        found_by: 'NoAggressive (passive detection)')
+                                        found_by: 'No Aggressive (Passive Detection)')
         end
       end
 
@@ -95,7 +95,7 @@ describe CMSScanner::Finders::UniqueFinders do
           expect(finders[1]).to_not receive(:aggressive)
           expect(finders[2]).to_not receive(:aggressive)
 
-          @expected = finding.new('v1', confidence: 100, found_by: 'Dummy (passive detection)')
+          @expected = finding.new('v1', confidence: 100, found_by: 'Dummy (Passive Detection)')
           @expected.confirmed_by << finding.new('v1', confidence: 100, found_by: 'override')
         end
       end
@@ -111,7 +111,7 @@ describe CMSScanner::Finders::UniqueFinders do
           finders.each { |f| expect(f).to_not receive(:aggressive) }
 
           @expected = finding.new('v2', confidence: 10,
-                                        found_by: 'NoAggressive (passive detection)')
+                                        found_by: 'No Aggressive (Passive Detection)')
         end
       end
 

@@ -28,7 +28,7 @@ describe CMSScanner::Finders::InterestingFile::Headers do
 
     context 'when headers' do
       it 'returns the result' do
-        opts      = { confidence: 100, found_by: 'Headers (passive detection)' }
+        opts      = { confidence: 100, found_by: 'Headers (Passive Detection)' }
         @expected = CMSScanner::Headers.new(url, opts)
       end
     end
