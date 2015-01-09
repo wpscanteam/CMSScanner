@@ -10,11 +10,7 @@ module CMSScanner
           next unless found == finding
 
           found.confirmed_by << finding
-
-          confidence = (found.confidence + finding.confidence) / 1.5
-          confidence = 100 if confidence > 100 || finding.confidence == 100
-
-          found.confidence = confidence.floor unless found.confidence == 100
+          found.confidence += finding.confidence
 
           return self
         end

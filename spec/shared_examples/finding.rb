@@ -12,7 +12,7 @@ shared_examples CMSScanner::Finders::Finding do
     end
   end
 
-  describe '#confidence' do
+  describe '#confidence, #confidence=' do
     its(:confidence) { should eql 0 }
 
     context 'when already set' do
