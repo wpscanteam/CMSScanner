@@ -27,9 +27,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'addressable', '~> 2.3.6'
   s.add_dependency 'activesupport', '~> 4.1'
 
-  s.add_development_dependency 'rake'
+  s.add_development_dependency 'rake', '~> 10.4'
   s.add_development_dependency 'rspec', '~> 3.1'
-  s.add_development_dependency 'rspec-its'
+  s.add_development_dependency 'rspec-its', '~> 1.1'
   s.add_development_dependency 'bundler', '~> 1.6'
   s.add_development_dependency 'rubocop', '~> 0.28'
   s.add_development_dependency 'webmock', '>= 1.18'
