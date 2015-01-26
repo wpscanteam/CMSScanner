@@ -1,9 +1,11 @@
+require 'cms_scanner/finders/finder/smart_url_checker'
+
 module CMSScanner
   module Finders
     # Finder
     class Finder
       # Constants for common found_by
-      DIRECT_ACCESS = 'Direct Access (aggressive detection)'
+      DIRECT_ACCESS = 'Direct Access (Aggressive Detection)'
 
       attr_accessor :target
 
