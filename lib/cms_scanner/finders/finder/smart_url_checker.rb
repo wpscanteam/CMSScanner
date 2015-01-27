@@ -49,9 +49,11 @@ module CMSScanner
         #
         # @return [ Array<Finding> ]
         def aggressive(opts = {})
-          # TODO: if mode = :mixed, the URLs to process should be aggressive - passive
-          # to avoid scanning the same twice
-          process_urls(aggressive_urls(opts), opts)
+          # To avoid scanning the same twice
+          urls = aggressive_urls(opts)
+          urls -= passive_urls(opts) if opts[:mode] == :mixed
+
+          process_urls(urls, opts)
         end
 
         # @param [ Hash ] opts
