@@ -55,6 +55,23 @@ module CMSScanner
         def plugins_url
           plugins_uri.to_s
         end
+
+        # Override of the WebSite#url to consider the custom WP directories
+        #
+        # @param [ String ] path Optional path to merge with the uri
+        #
+        # @return [ String ]
+        def url(path = nil)
+          return @uri.to_s unless path
+
+          if path =~ /wp\-content\/plugins/i
+            path.gsub!('wp-content/plugins', plugins_dir)
+          elsif path =~ /wp\-content/i
+            path.gsub!('wp-content', content_dir)
+          end
+
+          super(path)
+        end
       end
     end
   end

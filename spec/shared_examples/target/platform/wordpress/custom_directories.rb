@@ -46,4 +46,91 @@ shared_examples 'WordPress::CustomDirectories' do
     its(:plugins_uri) { should eq Addressable::URI.parse("#{url}/wp-content/plugins/") }
     its(:plugins_url) { should eq "#{url}/wp-content/plugins/" }
   end
+
+  describe '#url' do
+    after { expect(target.url(@path)).to eql @expected }
+
+    context 'when no path supplied' do
+      it 'returns the target url' do
+        @path     = nil
+        @expected = "#{url}/"
+      end
+    end
+
+    context 'when default directories' do
+      before { target.content_dir = 'wp-content' }
+
+      it 'does not replace the wp-content' do
+        @path    = 'wp-content/themes/something'
+        @expected = "#{url}/#{@path}"
+      end
+    end
+
+    context 'when custom directories' do
+      after { expect(target.url('not-wp-dir/spec.html')).to eql "#{url}/not-wp-dir/spec.html" }
+
+      context 'when custom plugins dir' do
+        before do
+          target.content_dir = 'wp-content'
+          target.plugins_dir = 'custom-plugins'
+        end
+
+        it 'replaces wp-content/plugins' do
+          @path     = 'wp-content/plugins/p1/file.txt'
+          @expected = "#{url}/custom-plugins/p1/file.txt"
+        end
+
+        it 'does not replace wp-content' do
+          @path     = 'wp-content/themes/t1'
+          @expected = "#{url}/wp-content/themes/t1"
+        end
+      end
+
+      context 'when custom content dir' do
+        before { target.content_dir = 'custom-content' }
+
+        it 'replaces wp-content' do
+          @path     = 'wp-content/plugins/p1'
+          @expected = "#{url}/custom-content/plugins/p1"
+        end
+      end
+
+      # Special case when for example, custom directories are
+      # supplied by the user: the plugin dir can the default one,
+      # but the content dir could be a custom (very rare case)
+      context 'when custom content and default plugins directories' do
+        before do
+          target.content_dir = 'custom-content'
+          target.plugins_dir = 'wp-content/plugins'
+        end
+
+        it 'does not replace wp-content/plugins ' do
+          @path     = 'wp-content/plugins/p1/spec.html'
+          @expected = "#{url}/#{@path}"
+        end
+
+        it 'replaces wp-content' do
+          @path     = 'wp-content/themes/t1'
+          @expected = "#{url}/custom-content/themes/t1"
+        end
+      end
+
+      context 'when custom content and plugins directories' do
+        before do
+          target.content_dir = 'custom-content'
+          target.plugins_dir = 'custom-plugins'
+        end
+
+        it 'replaces wp-content/plugins' do
+          @path     = 'wp-content/plugins/p1/file.txt'
+          @expected = "#{url}/custom-plugins/p1/file.txt"
+        end
+
+        it 'replaces wp-content' do
+          @path     = 'wp-content/themes/t1'
+          @expected = "#{url}/custom-content/themes/t1"
+        end
+      end
+    end
+  end
 end
