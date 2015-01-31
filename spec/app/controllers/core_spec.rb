@@ -46,8 +46,9 @@ describe CMSScanner::Controller::Core do
     it 'raises an error when the site redirects' do
       redirection = 'http://somewhere.com'
 
+      expect(core.target).to receive(:redirection).and_return(redirection)
+
       stub_request(:get, target_url).to_return(status: 301, headers: { location: redirection })
-      stub_request(:get, redirection).to_return(status: 200)
 
       expect { core.before_scan }
         .to raise_error("The url supplied redirects to #{redirection}")

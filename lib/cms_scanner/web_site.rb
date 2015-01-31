@@ -43,33 +43,18 @@ module CMSScanner
       NS::Browser.get(url).code == 407
     end
 
-    # See if the remote url returns 30x redirect
-    # This method is recursive
-    #
     # @param [ String ] url
     #
     # @return [ String ] The redirection url or nil
+    #
+    # As webmock does not allow mocking of redirects, coverage is ignored
+    # :nocov:
     def redirection(url = nil)
-      url    ||= @uri.to_s
-      response = NS::Browser.get(url)
+      url ||= @uri.to_s
+      res   = NS::Browser.get(url, followlocation: true)
 
-      if response.code == 301 || response.code == 302
-        redirection = response.headers_hash['location']
-
-        if redirection[0] == '/'
-          redirected_uri = URI.parse(url)
-          redirection    = "#{redirected_uri.scheme}://#{redirected_uri.host}#{redirection}"
-        end
-
-        return redirection if url == redirection # prevents infinite loop
-
-        # Let's check if there is a redirection in the redirection
-        if (other_redirection = redirection(redirection))
-          redirection = other_redirection
-        end
-      end
-
-      redirection
+      res.effective_url == url ? nil : res.effective_url
     end
+    # :nocov:
   end
 end
