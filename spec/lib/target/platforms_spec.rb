@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-[:WordPress, :PHP].each do |platform|
+[:PHP].each do |platform|
   describe CMSScanner::Target do
     subject(:target) do
       described_class.new(url).extend(described_class::Platform.const_get(platform))
