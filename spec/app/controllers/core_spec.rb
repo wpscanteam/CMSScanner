@@ -36,6 +36,12 @@ describe CMSScanner::Controller::Core do
   end
 
   describe '#before_scan' do
+    it 'does not raise an error when everything is fine' do
+      stub_request(:get, target_url).to_return(status: 200)
+
+      expect { core.before_scan }.to_not raise_error
+    end
+
     it 'raise an error when the site is down' do
       stub_request(:get, target_url).to_return(status: 0)
 
@@ -52,6 +58,14 @@ describe CMSScanner::Controller::Core do
 
       expect { core.before_scan }
         .to raise_error("The url supplied redirects to #{redirection}")
+    end
+
+    context 'when access is forbidden' do
+      before { stub_request(:get, target_url).to_return(status: 403) }
+
+      it 'raises an error' do
+        expect { core.before_scan }.to raise_error(CMSScanner::AccessForbiddenError)
+      end
     end
 
     # This is quite a mess (as Webmock doesn't issue itself another 401

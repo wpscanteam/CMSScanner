@@ -49,35 +49,40 @@ describe CMSScanner::WebSite do
     end
   end
 
-  describe '#online?' do
-    context 'when online' do
-      before { stub_request(:get, url).to_return(status: 200) }
+  describe '#online?, #http_auth?, #access_forbidden?, #proxy_auth?' do
+    before { stub_request(:get, url).to_return(status: status) }
+
+    context 'when response status is a 200' do
+      let(:status) { 200 }
 
       it { should be_online }
+      it { should_not be_http_auth }
+      it { should_not be_access_forbidden }
+      it { should_not be_proxy_auth }
     end
 
     context 'when offline' do
-      before { stub_request(:get, url).to_return(status: 0) }
+      let(:status) { 0 }
 
       it { should_not be_online }
     end
-  end
 
-  describe '#http_auth?' do
-    context 'when http auth' do
-      before { stub_request(:get, url).to_return(status: 401) }
+    context 'when http auth required' do
+      let(:status) { 401 }
 
       it { should be_http_auth }
     end
 
-    context 'when no http auth' do
-      before { stub_request(:get, url).to_return(status: 200) }
+    context 'when access is forbidden' do
+      let(:status) { 403 }
 
-      it { should_not be_http_auth }
+      it { should be_access_forbidden }
     end
-  end
 
-  describe '#proxy_auth?' do
-    # Handled in app/controllers/core_spec
+    context 'when proxy auth required' do
+      let(:status) { 407 }
+
+      it { should be_proxy_auth }
+    end
   end
 end

@@ -39,6 +39,11 @@ module CMSScanner
     end
 
     # @return [ Boolean ]
+    def access_forbidden?
+      NS::Browser.get(url).code == 403
+    end
+
+    # @return [ Boolean ]
     def proxy_auth?
       NS::Browser.get(url).code == 407
     end
@@ -47,7 +52,7 @@ module CMSScanner
     #
     # @return [ String ] The redirection url or nil
     #
-    # As webmock does not allow mocking of redirects, coverage is ignored
+    # As webmock does not support redirects mocking, coverage is ignored
     # :nocov:
     def redirection(url = nil)
       url ||= @uri.to_s

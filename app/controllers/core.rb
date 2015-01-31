@@ -18,6 +18,7 @@ module CMSScanner
 
         fail "The url supplied '#{target.url}' seems to be down" unless target.online?
 
+        fail AccessForbiddenError if target.access_forbidden?
         fail HTTPAuthRequiredError if target.http_auth?
         fail ProxyAuthRequiredError if target.proxy_auth?
 
