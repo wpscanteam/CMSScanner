@@ -101,6 +101,19 @@ describe CMSScanner::WebSite do
       end
     end
 
+    context 'when relative URI in Location' do
+      it 'returns the absolute URI' do
+        relative_location = '/blog/'
+        absolute_location = web_site.uri.join(relative_location).to_s
+
+        stub_request(:get, web_site.url)
+          .to_return(status: 301, headers: { location: relative_location })
+        stub_request(:get, absolute_location)
+
+        expect(web_site.redirection).to eql absolute_location
+      end
+    end
+
     context 'when multiple redirections' do
       it 'returns the last redirection' do
         first_redirection = 'www.redirection.com'

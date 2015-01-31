@@ -56,6 +56,13 @@ module CMSScanner
       if response.code == 301 || response.code == 302
         redirection = response.headers_hash['location']
 
+        if redirection[0] == '/'
+          redirected_uri = URI.parse(url)
+          redirection    = "#{redirected_uri.scheme}://#{redirected_uri.host}#{redirection}"
+        end
+
+        return redirection if url == redirection # prevents infinite loop
+
         # Let's check if there is a redirection in the redirection
         if (other_redirection = redirection(redirection))
           redirection = other_redirection
