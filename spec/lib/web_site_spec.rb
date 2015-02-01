@@ -50,39 +50,55 @@ describe CMSScanner::WebSite do
   end
 
   describe '#online?, #http_auth?, #access_forbidden?, #proxy_auth?' do
-    before { stub_request(:get, url).to_return(status: status) }
+    before { stub_request(:get, web_site.url(path)).to_return(status: status) }
 
-    context 'when response status is a 200' do
-      let(:status) { 200 }
+    [nil, 'file-path.txt'].each do |p|
+      context "when path = #{p}" do
+        let(:path) { p }
 
-      it { should be_online }
-      it { should_not be_http_auth }
-      it { should_not be_access_forbidden }
-      it { should_not be_proxy_auth }
-    end
+        context 'when response status is a 200' do
+          let(:status) { 200 }
 
-    context 'when offline' do
-      let(:status) { 0 }
+          it 'is considered fine' do
+            expect(web_site.online?(path)).to be true
+            expect(web_site.http_auth?(path)).to be false
+            expect(web_site.access_forbidden?(path)).to be false
+            expect(web_site.proxy_auth?(path)).to be false
+          end
+        end
 
-      it { should_not be_online }
-    end
+        context 'when offline' do
+          let(:status) { 0 }
 
-    context 'when http auth required' do
-      let(:status) { 401 }
+          it 'returns false' do
+            expect(web_site.online?(path)).to be false
+          end
+        end
 
-      it { should be_http_auth }
-    end
+        context 'when http auth required' do
+          let(:status) { 401 }
 
-    context 'when access is forbidden' do
-      let(:status) { 403 }
+          it 'returns true' do
+            expect(web_site.http_auth?(path)).to be true
+          end
+        end
 
-      it { should be_access_forbidden }
-    end
+        context 'when access is forbidden' do
+          let(:status) { 403 }
 
-    context 'when proxy auth required' do
-      let(:status) { 407 }
+          it 'return true' do
+            expect(web_site.access_forbidden?(path)).to be true
+          end
+        end
 
-      it { should be_proxy_auth }
+        context 'when proxy auth required' do
+          let(:status) { 407 }
+
+          it 'returns true' do
+            expect(web_site.proxy_auth?(path)).to be true
+          end
+        end
+      end
     end
   end
 end

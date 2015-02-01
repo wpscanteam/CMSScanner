@@ -28,24 +28,32 @@ module CMSScanner
 
     # Checks if the remote website is up.
     #
+    # @param [ String ] path
+    #
     # @return [ Boolean ]
-    def online?
-      NS::Browser.get(url).code != 0
+    def online?(path = nil)
+      NS::Browser.get(url(path)).code != 0
     end
 
+    # @param [ String ] path
+    #
     # @return [ Boolean ]
-    def http_auth?
-      NS::Browser.get(url).code == 401
+    def http_auth?(path = nil)
+      NS::Browser.get(url(path)).code == 401
     end
 
+    # @param [ String ] path
+    #
     # @return [ Boolean ]
-    def access_forbidden?
-      NS::Browser.get(url).code == 403
+    def access_forbidden?(path = nil)
+      NS::Browser.get(url(path)).code == 403
     end
 
+    # @param [ String ] path
+    #
     # @return [ Boolean ]
-    def proxy_auth?
-      NS::Browser.get(url).code == 407
+    def proxy_auth?(path = nil)
+      NS::Browser.get(url(path)).code == 407
     end
 
     # @param [ String ] url
