@@ -1,10 +1,13 @@
 module CMSScanner
   # WebSite Implementation
   class WebSite
-    attr_reader :uri
+    attr_reader :uri, :opts
 
-    def initialize(site_url)
+    # @param [ String ] site_url
+    # @param [ Hash ] opts
+    def initialize(site_url, opts = {})
       self.url = site_url.dup
+      @opts    = opts
     end
 
     def url=(site_url)

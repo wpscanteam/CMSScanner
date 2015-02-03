@@ -5,7 +5,7 @@ require 'spec_helper'
     subject(:target) do
       described_class.new(url).extend(described_class::Server.const_get(server))
     end
-    let(:url)      { 'http://ex.lo' }
+    let(:url)      { 'http://e.org' }
     let(:fixtures) { File.join(FIXTURES, 'target', 'server', server.to_s.downcase) }
 
     it_behaves_like described_class::Server.const_get(server)

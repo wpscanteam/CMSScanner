@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe CMSScanner::WebSite do
-  subject(:web_site) { described_class.new(url) }
-  let(:url)          { 'http://ex.lo' }
+  subject(:web_site) { described_class.new(url, opts) }
+  let(:url)          { 'http://e.org' }
+  let(:opts)         { {} }
 
   describe '#url=' do
     context 'when the url is incorrect' do
@@ -31,7 +32,7 @@ describe CMSScanner::WebSite do
 
   describe '#url' do
     context 'when no path argument' do
-      its(:url) { should eql 'http://ex.lo/' }
+      its(:url) { should eql 'http://e.org/' }
     end
 
     context 'when a path argument' do
@@ -40,12 +41,22 @@ describe CMSScanner::WebSite do
       end
 
       context 'when relative path' do
-        let(:url) { 'http://ex.lo/dir/' }
+        let(:url) { 'http://e.org/dir/' }
 
         it 'appends it from the host/domain' do
-          expect(web_site.url('/sub/file.txt')).to eql 'http://ex.lo/sub/file.txt'
+          expect(web_site.url('/sub/file.txt')).to eql 'http://e.org/sub/file.txt'
         end
       end
+    end
+  end
+
+  describe '#opts' do
+    its(:opts) { should eql({}) }
+
+    context 'when opts' do
+      let(:opts) { { test: 'mm' } }
+
+      its(:opts) { should eql opts }
     end
   end
 

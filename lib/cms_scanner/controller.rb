@@ -19,7 +19,7 @@ module CMSScanner
 
       # @return [ Target ]
       def target
-        @@target ||= NS::Target.new(parsed_options[:url])
+        @@target ||= NS::Target.new(parsed_options[:url], parsed_options)
       end
 
       # Set the parsed options and initialize the browser

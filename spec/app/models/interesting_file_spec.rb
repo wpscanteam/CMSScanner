@@ -42,7 +42,7 @@ describe CMSScanner::InterestingFile do
 
     context 'when not the same URL' do
       it 'returns false' do
-        expect(file == described_class.new('http://ex.lo')).to be false
+        expect(file == described_class.new('http://e.org')).to be false
       end
     end
   end

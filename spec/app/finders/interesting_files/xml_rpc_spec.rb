@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CMSScanner::Finders::InterestingFile::XMLRPC do
   subject(:finder)  { described_class.new(target) }
   let(:target)      { CMSScanner::Target.new(url) }
-  let(:url)         { 'http://ex.lo/' }
+  let(:url)         { 'http://e.org/' }
   let(:xml_rpc_url) { url + 'xmlrpc.php' }
   let(:fixtures)    { File.join(FIXTURES, 'interesting_files', 'xml_rpc') }
 
@@ -85,7 +85,7 @@ describe CMSScanner::Finders::InterestingFile::XMLRPC do
 
       context 'when URL is in scope' do
         let(:body)         { File.new(File.join(fixtures, 'homepage_in_scope_pingback.html')).read }
-        let(:expected_url) { 'http://ex.lo/wp/xmlrpc.php' }
+        let(:expected_url) { 'http://e.org/wp/xmlrpc.php' }
 
         it 'adds the URL to the #potential_urls and returns the XMLRPC' do
           result = finder.passive_body

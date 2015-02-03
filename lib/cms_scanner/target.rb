@@ -7,17 +7,42 @@ module CMSScanner
   class Target < WebSite
     include Server::Generic
 
-    # @note Subdomains are considered out of scope (maybe consider them in ?)
-    #       Also, // are handled by Addressable::URI, but worngly :/
-    #       e.g: Addressable::URI.parse('//file').host => file
+    # @param [ String ] url
+    # @param [ Hash ] opts
+    # @option opts [ Array<PublicSuffix::Domain, String> ] :scope
+    def initialize(url, opts = {})
+      super(url, opts)
+
+      scope << domain
+      [*opts[:scope]].each { |s| scope << s }
+    end
+
+    def domain
+      @domain ||= PublicSuffix.parse(uri.host)
+    end
+
+    # @return [ Array<PublicSuffix::Domain, String> ]
+    def scope
+      @scope ||= []
+    end
+
+    # // are handled by Addressable::URI, but worngly :/
+    # e.g: Addressable::URI.parse('//file').host => file
+    #
+    # Idea: parse the // with PublicSuffix to see if a valid
+    #       domain is used
     #
     # @param [ String ] url
     #
-    # @return [ Boolean ] true if the url given belongs to the target
+    # @return [ Boolean ] true if the url given is in scope
     def in_scope?(url)
       return true if url[0, 1] == '/' && url[1, 1] != '/'
 
-      Addressable::URI.parse(url).host == uri.host
+      url_domain = PublicSuffix.parse(Addressable::URI.parse(url).host)
+
+      scope.each { |pattern| return true if url_domain.match(pattern) }
+
+      false
     rescue
       false
     end

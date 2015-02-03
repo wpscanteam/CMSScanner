@@ -14,7 +14,10 @@ module CMSScanner
           OptChoice.new(['--detection-mode MODE', 'Modes: mixed (default), passive, aggressive'],
                         choices: %w(mixed passive aggressive),
                         normalize: :to_sym,
-                        default: :mixed)
+                        default: :mixed),
+          OptScope.new(['--scope DOMAINS',
+                        'Coma separated (sub-)domains to consider in scope. ' \
+                        'Wildcard(s) allowed in the trd, e.g: *.target.tld'])
         ] + cli_browser_options
       end
 

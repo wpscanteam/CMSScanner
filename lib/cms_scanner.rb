@@ -4,13 +4,17 @@ require 'typhoeus'
 require 'nokogiri'
 require 'active_support/inflector'
 require 'addressable/uri'
+require 'public_suffix'
 # Standard Libs
 require 'erb'
 require 'fileutils'
 require 'pathname'
-# Custom Libs
+# Helpers
 require 'helper'
+# Monkey Patches
 require 'cms_scanner/typhoeus/response'
+require 'cms_scanner/public_suffix/domain'
+# Custom Libs
 require 'cms_scanner/errors/auth_errors'
 require 'cms_scanner/cache/typhoeus'
 require 'cms_scanner/target'

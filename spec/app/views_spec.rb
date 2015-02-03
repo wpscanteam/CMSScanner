@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'App::Views' do
-  let(:target_url) { 'http://ex.lo/' }
+  let(:target_url) { 'http://e.org/' }
   let(:fixtures)   { File.join(SPECS, 'output') }
 
   # CliNoColour is used to test the CLI output to avoid the painful colours
