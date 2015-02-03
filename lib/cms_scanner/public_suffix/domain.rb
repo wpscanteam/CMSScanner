@@ -1,10 +1,8 @@
 module PublicSuffix
   # Monkey Patch to include a == and match logic
   class Domain
-    def ==(other)
-      name == other.name
-    end
-
+    # TODO: better code for this method
+    # rubocop:disable all
     def match(pattern)
       pattern = PublicSuffix.parse(pattern) unless pattern.is_a?(PublicSuffix::Domain)
 
@@ -25,5 +23,6 @@ module PublicSuffix
         name == pattern.name
       end
     end
+    # rubocop:enable all
   end
 end
