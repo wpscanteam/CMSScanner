@@ -1,5 +1,5 @@
 module PublicSuffix
-  # Monkey Patch to include a == and match logic
+  # Monkey Patch to include the match logic
   class Domain
     # TODO: better code for this method
     # rubocop:disable all

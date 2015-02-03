@@ -8,10 +8,10 @@ describe CMSScanner::Controller do
 
     let(:parsed_options) { { url: 'http://example.com/' } }
 
-    its(:parsed_options) { should eq(parsed_options) }
-    its(:formatter)      { should be_a CMSScanner::Formatter::Cli }
-    its(:target)         { should be_a CMSScanner::Target }
-    its('target.scope')  { should eq [PublicSuffix.parse('example.com')] }
+    its(:parsed_options)        { should eq(parsed_options) }
+    its(:formatter)             { should be_a CMSScanner::Formatter::Cli }
+    its(:target)                { should be_a CMSScanner::Target }
+    its('target.scope.domains') { should eq [PublicSuffix.parse('example.com')] }
 
     describe '#render' do
       it 'calls the formatter#render' do

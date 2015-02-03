@@ -5,21 +5,26 @@ describe CMSScanner::Target do
   let(:url)        { 'http://e.org' }
   let(:opts)       { { scope: nil } }
 
-  describe '#domain' do
-    its(:domain) { should eq PublicSuffix.parse('e.org') }
-  end
-
   describe '#scope' do
-    let(:default_scope) { [PublicSuffix.parse('e.org')] }
+    let(:default_domains) { [PublicSuffix.parse('e.org')] }
 
     context 'when none supplied' do
-      its(:scope) { should eq default_scope }
+      its('scope.domains') { should eq default_domains }
     end
 
     context 'when scope provided' do
-      let(:opts) { super().merge(scope: [PublicSuffix.parse('*.e.org')]) }
+      let(:opts) { super().merge(scope: ['*.e.org']) }
 
-      its(:scope) { should eq default_scope << opts[:scope].first }
+      its('scope.domains') { should eq default_domains << PublicSuffix.parse(opts[:scope].first) }
+
+      context 'when invalid domains provided' do
+        let(:opts) { super().merge(scope: ['wp-lamp', '192.168.1.12']) }
+
+        it 'adds them in the invalid_domains attribute' do
+          expect(target.scope.domains).to eq default_domains
+          expect(target.scope.invalid_domains).to eq opts[:scope]
+        end
+      end
     end
   end
 
