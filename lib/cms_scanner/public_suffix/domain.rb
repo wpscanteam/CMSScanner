@@ -1,6 +1,11 @@
 module PublicSuffix
   # Monkey Patch to include the match logic
   class Domain
+    # For Sanity
+    def ==(other)
+      name == other.name
+    end
+
     # TODO: better code for this method
     # rubocop:disable all
     def match(pattern)
