@@ -21,18 +21,18 @@ Gem::Specification.new do |s|
   s.test_files            = s.files.grep(/^(test|spec|features)\//)
   s.require_path         = 'lib'
 
-  s.add_dependency 'opt_parse_validator', '~> 0.0.5'
+  s.add_dependency 'opt_parse_validator', '~> 0.0.6'
   s.add_dependency 'typhoeus', '~> 0.7'
-  s.add_dependency 'nokogiri', '~> 1.6.3'
-  s.add_dependency 'addressable', '~> 2.3.6'
-  s.add_dependency 'activesupport', '~> 4.1'
+  s.add_dependency 'nokogiri', '~> 1.6'
+  s.add_dependency 'addressable', '~> 2.3'
+  s.add_dependency 'activesupport', '~> 4.2'
   s.add_dependency 'public_suffix', '~> 1.4'
 
   s.add_development_dependency 'rake', '~> 10.4'
-  s.add_development_dependency 'rspec', '~> 3.1'
+  s.add_development_dependency 'rspec', '~> 3.2'
   s.add_development_dependency 'rspec-its', '~> 1.1'
-  s.add_development_dependency 'bundler', '~> 1.6'
+  s.add_development_dependency 'bundler', '~> 1.7'
   s.add_development_dependency 'rubocop', '~> 0.28'
-  s.add_development_dependency 'webmock', '>= 1.18'
+  s.add_development_dependency 'webmock', '~> 1.20'
   s.add_development_dependency 'simplecov', '~> 0.9'
 end
