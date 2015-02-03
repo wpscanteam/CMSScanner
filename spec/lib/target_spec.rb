@@ -44,15 +44,15 @@ describe CMSScanner::Target do
     end
 
     context 'when custom scope' do
-      let(:opts) { { scope: ['*.e.org'] } }
+      let(:opts) { { scope: ['*.e.org', '192.168.1.12'] } }
 
-      [nil, '', 'http://out-of-scope.com', '//jquery.com/j.js'].each do |url|
+      [nil, '', 'http://out-of-scope.com', '//jquery.com/j.js', 'http://192.168.1.2/'].each do |url|
         it "returns false for #{url}" do
           expect(target.in_scope?(url)).to eql false
         end
       end
 
-      %w(https://cdn.e.org/file.txt http://www.e.org/).each do |url|
+      %w(https://cdn.e.org/file.txt http://www.e.org/ https://192.168.1.12/home).each do |url|
         it "returns true for #{url}" do
           expect(target.in_scope?(url)).to eql true
         end
