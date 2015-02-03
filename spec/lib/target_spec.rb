@@ -24,20 +24,16 @@ describe CMSScanner::Target do
   end
 
   describe '#in_scope?' do
-    after { expect(target.in_scope?(@url)).to eq @expected }
-
     context 'when default scope (target domain)' do
       [nil, '', 'http://out-of-scope.com', '//jquery.com/j.js'].each do |url|
         it "returns false for #{url}" do
-          @url      = url
-          @expected = false
+          expect(target.in_scope?(url)).to eql false
         end
       end
 
       %w(https://e.org/file.txt http://e.org/ /relative).each do |url|
         it "returns true for #{url}" do
-          @url      = url
-          @expected = true
+          expect(target.in_scope?(url)).to eql true
         end
       end
     end
@@ -47,15 +43,13 @@ describe CMSScanner::Target do
 
       [nil, '', 'http://out-of-scope.com', '//jquery.com/j.js'].each do |url|
         it "returns false for #{url}" do
-          @url      = url
-          @expected = false
+          expect(target.in_scope?(url)).to eql false
         end
       end
 
       %w(https://cdn.e.org/file.txt http://www.e.org/).each do |url|
         it "returns true for #{url}" do
-          @url      = url
-          @expected = true
+          expect(target.in_scope?(url)).to eql true
         end
       end
     end
