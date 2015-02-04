@@ -36,6 +36,7 @@ module CMSScanner
           attr_value = tag.attribute(attribute).to_s
 
           next if attr_value.nil? || attr_value.empty?
+          attr_value = url(attr_value) unless attr_value =~ /\Ahttps?:/i # Relative URL case
           next unless in_scope?(attr_value)
 
           found << attr_value
