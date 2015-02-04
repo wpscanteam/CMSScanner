@@ -62,22 +62,29 @@ describe CMSScanner::Target do
   end
 
   describe '#in_scope_urls' do
-    after do
-      res = Typhoeus::Response.new(body: File.open(File.join(fixtures, 'index.html')))
-      expect(target.in_scope_urls(res)).to eql @expected
-    end
+    let(:res) { Typhoeus::Response.new(body: File.open(File.join(fixtures, 'index.html'))) }
 
-    context 'when default scope' do
-      it 'returns the expected array' do
-        @expected = %w(http://e.org/f.txt)
+    context 'when block given' do
+      it 'yield the url' do
+        expect { |b| target.in_scope_urls(res, &b) }.to yield_with_args 'http://e.org/f.txt'
       end
     end
 
-    context 'when supplied scope' do
-      let(:opts) { super().merge(scope: ['*.e.org', 'wp-lamp']) }
+    context 'when no block given' do
+      after { expect(target.in_scope_urls(res)).to eql @expected }
 
-      it 'returns the expected array' do
-        @expected = %w(http://e.org/f.txt https://cdn.e.org/f2.js http://wp-lamp/robots.txt)
+      context 'when default scope' do
+        it 'returns the expected array' do
+          @expected = %w(http://e.org/f.txt)
+        end
+      end
+
+      context 'when supplied scope' do
+        let(:opts) { super().merge(scope: ['*.e.org', 'wp-lamp']) }
+
+        it 'returns the expected array' do
+          @expected = %w(http://e.org/f.txt https://cdn.e.org/f2.js http://wp-lamp/robots.txt)
+        end
       end
     end
   end
