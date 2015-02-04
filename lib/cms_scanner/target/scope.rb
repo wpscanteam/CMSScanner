@@ -23,20 +23,24 @@ module CMSScanner
       false
     end
 
-    # @param [ Typhoeus::Response ] response
-    # @param [ String ] css_selector
+    # @param [ Typhoeus::Response ] res
+    # @param [ String ] xpath
     # @param [ Array<String> ] attributes
     #
     # @return [ Array<String> ] The in scope URLs detected in the response's body
-    def in_scope_urls(response, css_selector = 'link,script,style,img,a', attributes = %w(href src))
+    def in_scope_urls(res, xpath = '//link|//script|//style|//img|//a', attributes = %w(href src))
       found = []
 
-      response.html.css(css_selector).each do |tag|
+      res.html.xpath(xpath).each do |tag|
         attributes.each do |attribute|
-          attr_value = tag.attribute(attribute).to_s
+          attr_value = tag[attribute]
 
           next if attr_value.nil? || attr_value.empty?
-          attr_value = url(attr_value) unless attr_value =~ /\Ahttps?:/i # Relative URL case
+
+          attr_value.strip!
+          # Relative URL case
+          attr_value = url(attr_value) unless attr_value =~ /\Ahttps?:/i
+
           next unless in_scope?(attr_value)
 
           found << attr_value
