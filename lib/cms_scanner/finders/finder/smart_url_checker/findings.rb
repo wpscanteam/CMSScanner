@@ -20,7 +20,7 @@ module CMSScanner
               return self
             end
 
-            super(finding) # if finding # prevent nil values to be added
+            super(finding)
           end
         end
       end
