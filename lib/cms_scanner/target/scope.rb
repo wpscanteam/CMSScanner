@@ -43,12 +43,12 @@ module CMSScanner
 
           next unless in_scope?(attr_value)
 
+          yield attr_value if block_given? && !found.include?(attr_value)
           found << attr_value
-          yield attr_value if block_given?
         end
       end
 
-      found
+      found.uniq
     end
 
     # Scope Implementation

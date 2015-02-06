@@ -13,6 +13,11 @@ module CMSScanner
         @target = target
       end
 
+      # @return [ String ] The titleize name of the finder
+      def titleize
+        self.class.to_s.demodulize.underscore.titleize
+      end
+
       # @param [ Hash ] _opts
       def passive(_opts = {})
       end
@@ -22,8 +27,13 @@ module CMSScanner
       end
 
       def found_by
-        "#{self.class.to_s.demodulize.underscore.titleize} " \
-        "(#{caller_locations(1, 1)[0].label.capitalize} Detection)"
+        caller_locations.each do |call|
+          label = call.label
+
+          next unless label == 'aggressive' || label == 'passive'
+
+          return "#{titleize} (#{label.capitalize} Detection)"
+        end
       end
     end
   end

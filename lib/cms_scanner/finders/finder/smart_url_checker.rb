@@ -24,20 +24,7 @@ module CMSScanner
         #
         # @return [ Array<String> ]
         def passive_urls(_opts = {})
-          urls     = []
-          homepage = NS::Browser.get_and_follow_location(target.url).html
-
-          homepage.xpath(passive_urls_xpath).each do |node|
-            url = node['href'].strip
-            # case of relative URLs
-            url = target.url(url) unless url =~ /\Ahttps?:/i
-
-            next unless target.in_scope?(url)
-
-            urls << url
-          end
-
-          urls.uniq
+          target.in_scope_urls(NS::Browser.get_and_follow_location(target.url), passive_urls_xpath)
         end
 
         # @return [ String ]
@@ -61,12 +48,6 @@ module CMSScanner
         # @return [ Array<String> ]
         def aggressive_urls(_opts = {})
           fail NotImplementedError
-        end
-
-        # @return [ String ]
-        def found_by
-          "#{self.class.to_s.demodulize.underscore.titleize} " \
-          "(#{caller_locations[7].label.capitalize} Detection)"
         end
       end
     end

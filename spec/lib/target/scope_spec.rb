@@ -67,7 +67,15 @@ describe CMSScanner::Target do
     context 'when block given' do
       it 'yield the url' do
         expect { |b| target.in_scope_urls(res, &b) }
-          .to yield_successive_args('http://e.org/f.txt', 'http://e.org/script/s.js')
+          .to yield_successive_args('http://e.org/f.txt', 'http://e.org/script/s.js', 'http://e.org/feed')
+      end
+    end
+
+    context 'when xpath argument given' do
+      it 'returns the expected array' do
+        xpath = '//link[@rel="alternate" and @type="application/rss+xml"]'
+
+        expect(target.in_scope_urls(res, xpath)).to eql(%w(http://e.org/feed))
       end
     end
 
@@ -76,7 +84,7 @@ describe CMSScanner::Target do
 
       context 'when default scope' do
         it 'returns the expected array' do
-          @expected = %w(http://e.org/f.txt http://e.org/script/s.js)
+          @expected = %w(http://e.org/f.txt http://e.org/script/s.js http://e.org/feed)
         end
       end
 
@@ -84,8 +92,8 @@ describe CMSScanner::Target do
         let(:opts) { super().merge(scope: ['*.e.org', 'wp-lamp']) }
 
         it 'returns the expected array' do
-          @expected = %w(http://e.org/f.txt https://cdn.e.org/f2.js
-                         http://e.org/script/s.js http://wp-lamp/robots.txt)
+          @expected = %w(http://e.org/f.txt https://cdn.e.org/f2.js http://e.org/script/s.js
+                         http://wp-lamp/robots.txt http://e.org/feed)
         end
       end
     end
