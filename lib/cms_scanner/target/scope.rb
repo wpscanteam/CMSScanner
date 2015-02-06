@@ -16,6 +16,8 @@ module CMSScanner
     #
     # @return [ Boolean ] true if the url given is in scope
     def in_scope?(url)
+      url.strip!
+
       return true if url[0, 1] == '/' && url[1, 1] != '/'
 
       scope.include?(Addressable::URI.parse(url).host)
@@ -33,15 +35,11 @@ module CMSScanner
 
       res.html.xpath(xpath).each do |tag|
         attributes.each do |attribute|
-          attr_value = tag[attribute]
+          next unless in_scope?(tag[attribute])
 
-          next if attr_value.nil? || attr_value.empty?
+          attr_value = tag[attribute].strip
 
-          attr_value.strip!
-
-          next unless in_scope?(attr_value)
-
-          # Relative URL case (The // case is ignored by in_scope? currently)
+          # Relative URL case (The // case is currently ignored by in_scope?)
           attr_value = uri.join(attr_value).to_s unless attr_value =~ /\Ahttps?/i
 
           yield attr_value if block_given? && !found.include?(attr_value)
