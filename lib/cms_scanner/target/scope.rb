@@ -38,10 +38,11 @@ module CMSScanner
           next if attr_value.nil? || attr_value.empty?
 
           attr_value.strip!
-          # Relative URL case
-          attr_value = url(attr_value) unless attr_value =~ /\Ahttps?:/i
 
           next unless in_scope?(attr_value)
+
+          # Relative URL case (The // case is ignored by in_scope? currently)
+          attr_value = uri.join(attr_value).to_s unless attr_value =~ /\Ahttps?/i
 
           yield attr_value if block_given? && !found.include?(attr_value)
           found << attr_value
