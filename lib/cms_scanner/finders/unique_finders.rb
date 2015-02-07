@@ -7,7 +7,7 @@ module CMSScanner
     # returned the best finding
     class UniqueFinders < IndependentFinders
       # @param [ Hash ] opts
-      # @option opts [ Symbol ] mode :mixed, :passive or :aggressive
+      # @option opts [ Symbol ] :mode :mixed, :passive or :aggressive
       # @option opts [ Int ] :confidence_threshold  If a finding's confidence reaches this value,
       #                                             it will be returned as the best finding.
       #                                             Default is 100.
@@ -19,20 +19,19 @@ module CMSScanner
 
         symbols_from_mode(opts[:mode]).each do |symbol|
           each do |finder|
-            [*finder.send(symbol, opts)].each do |found|
-              findings << found
-            end
+            [*finder.send(symbol, opts)].each { |found| findings << found }
 
             next if opts[:confidence_threshold] <= 0
 
-            findings.each do |f|
-              return f if f.confidence >= opts[:confidence_threshold]
-            end
+            findings.each { |f| return f if f.confidence >= opts[:confidence_threshold] }
           end
         end
 
         # results are sorted by confidence ASC
-        findings.sort_by(&:confidence).last
+        findings.sort_by!(&:confidence)
+
+        # If all findings have the same confidence, nil is returned
+        findings.size > 1 && findings[0].confidence == findings[1].confidence ? nil : findings.last
       end
     end
   end

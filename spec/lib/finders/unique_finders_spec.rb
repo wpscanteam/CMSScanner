@@ -20,7 +20,7 @@ describe CMSScanner::Finders::UniqueFinders do
     after do
       result = finders.run(opts)
 
-      expect(result).to be_a finding
+      expect(result).to be_a finding if @expected
       expect(result).to eql @expected
     end
 
@@ -127,6 +127,23 @@ describe CMSScanner::Finders::UniqueFinders do
 
           @expected = finding.new('v1', confidence: 100, found_by: 'override')
         end
+      end
+    end
+
+    context 'when all findings have the same confidence after all finders have been ran' do
+      let(:opts) { super().merge(mode: :passive) } # To avoid having to modify all finders below
+
+      it 'returns nil' do
+        dummy_passive.confidence = 50
+        noaggressive.confidence  = 50
+
+        expect(finders[0]).to receive(:passive).ordered.and_return(dummy_passive)
+        expect(finders[1]).to receive(:passive).ordered.and_return(noaggressive)
+        expect(finders[2]).to receive(:passive).ordered
+
+        finders.each { |f| expect(f).to_not receive(:aggressive) }
+
+        @expected = nil
       end
     end
   end
