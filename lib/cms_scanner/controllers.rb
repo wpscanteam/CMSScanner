@@ -3,7 +3,7 @@ module CMSScanner
   class Controllers < Array
     attr_reader :option_parser
 
-    def initialize(option_parser = OptParseValidator::OptParser.new)
+    def initialize(option_parser = OptParseValidator::OptParser.new(nil, 40))
       @option_parser = option_parser
     end
 
