@@ -13,7 +13,7 @@ module CMSScanner
       #                                             Default is 100.
       #                                             If <= 0, all finders will be ran.
       #
-      # @return [ Object ]
+      # @return [ Object ] The best finding
       def run(opts = {})
         opts[:confidence_threshold] ||= 100
 
@@ -30,9 +30,9 @@ module CMSScanner
         best_finding(findings)
       end
 
-      # @param [ Array<Object> ]
+      # @param [ Array<Object> ] findings
       #
-      # @return [ Object ]
+      # @return [ Object ] The best finding
       def best_finding(findings)
         # results are sorted by confidence ASC
         findings.sort_by!(&:confidence)
