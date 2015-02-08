@@ -27,11 +27,20 @@ module CMSScanner
           end
         end
 
+        best_finding(findings)
+      end
+
+      # @param [ Array<Object> ]
+      #
+      # @return [ Object ]
+      def best_finding(findings)
         # results are sorted by confidence ASC
         findings.sort_by!(&:confidence)
 
         # If all findings have the same confidence, nil is returned
-        findings.size > 1 && findings[0].confidence == findings[1].confidence ? nil : findings.last
+        return if findings.size > 1 && findings.first.confidence == findings.last.confidence
+
+        findings.last
       end
     end
   end

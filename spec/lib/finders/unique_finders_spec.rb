@@ -2,13 +2,57 @@ require 'spec_helper'
 require 'dummy_unique_finders'
 
 describe CMSScanner::Finders::UniqueFinders do
-  subject(:finders) { described_class.new }
+  subject(:finders)    { described_class.new }
+  let(:unique_finders) { CMSScanner::Finders::Unique }
+
+  describe '#best_finding' do
+    let(:findings) { [] }
+
+    after { expect(finders.best_finding(findings)).to eql @expected }
+
+    context 'when no findings' do
+      it 'returns nil' do
+        @expected = nil
+      end
+    end
+
+    context 'when one finding' do
+      let(:findings) { [CMSScanner::DummyFinding.new('one', confidence: 40)] }
+
+      it 'returns it' do
+        @expected = findings[0]
+      end
+    end
+
+    context 'when multiple findings' do
+      let(:findings) do
+        (1..5).reduce([]) { |a, e| a << CMSScanner::DummyFinding.new(e, confidence: 20) }
+      end
+
+      context 'when they have the same confidence' do
+        it 'returns nil' do
+          @expected = nil
+        end
+      end
+
+      context 'when there is a best confidence' do
+        (0..4).each do |position|
+          context "when at [#{position}]" do
+            it 'returns it' do
+              findings[position].confidence = 100
+
+              @expected = findings[position]
+            end
+          end
+        end
+      end
+    end
+  end
 
   describe '#run' do
-    let(:target)         { 'target' }
-    let(:finding)        { CMSScanner::DummyFinding }
-    let(:unique_finders) { CMSScanner::Finders::Unique }
-    let(:opts)           { {} }
+    let(:target)  { 'target' }
+    let(:finding) { CMSScanner::DummyFinding }
+    let(:opts)    { {} }
 
     before do
       finders <<
@@ -127,23 +171,6 @@ describe CMSScanner::Finders::UniqueFinders do
 
           @expected = finding.new('v1', confidence: 100, found_by: 'override')
         end
-      end
-    end
-
-    context 'when all findings have the same confidence after all finders have been ran' do
-      let(:opts) { super().merge(mode: :passive) } # To avoid having to modify all finders below
-
-      it 'returns nil' do
-        dummy_passive.confidence = 50
-        noaggressive.confidence  = 50
-
-        expect(finders[0]).to receive(:passive).ordered.and_return(dummy_passive)
-        expect(finders[1]).to receive(:passive).ordered.and_return(noaggressive)
-        expect(finders[2]).to receive(:passive).ordered
-
-        finders.each { |f| expect(f).to_not receive(:aggressive) }
-
-        @expected = nil
       end
     end
   end

@@ -5,6 +5,6 @@ ClassVars:
 MethodLength:
   Max: 15
 Metrics/AbcSize:
-  Max: 35
+  Max: 20
 Metrics/CyclomaticComplexity:
   Max: 10
