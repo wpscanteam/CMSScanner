@@ -6,7 +6,7 @@ module CMSScanner
     attr_reader :number
 
     def initialize(number, opts = {})
-      @number = number
+      @number = number.to_s
       parse_finding_options(opts)
     end
 
