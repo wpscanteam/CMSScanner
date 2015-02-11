@@ -19,7 +19,7 @@ module CMSScanner
 
         symbols_from_mode(opts[:mode]).each do |symbol|
           each do |finder|
-            [*finder.send(symbol, opts)].each { |found| findings << found }
+            [*finder.send(symbol, opts)].compact.each { |found| findings << found }
 
             next if opts[:confidence_threshold] <= 0
 

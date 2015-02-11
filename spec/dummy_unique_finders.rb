@@ -6,7 +6,8 @@ module CMSScanner
       # Dummy Test Finder
       class Dummy < Finder
         def passive(_opts = {})
-          DummyFinding.new('v1', found_by: found_by)
+          # the nil is there to ensure such value is ignored
+          [DummyFinding.new('v1', found_by: found_by), nil]
         end
 
         def aggressive(_opts = {})
