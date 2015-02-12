@@ -37,7 +37,7 @@ describe CMSScanner::Target do
         end
       end
 
-      %w(https://e.org/file.txt http://e.org/ /relative).each do |url|
+      %w(https://e.org/file.txt http://e.org/ //e.org).each do |url|
         it "returns true for #{url}" do
           expect(target.in_scope?(url)).to eql true
         end
@@ -53,7 +53,7 @@ describe CMSScanner::Target do
         end
       end
 
-      %w(https://cdn.e.org/file.txt http://www.e.org/ https://192.168.1.12/home).each do |url|
+      %w(http://e.org //cdn.e.org/f.txt http://s.e.org/ https://192.168.1.12/h).each do |url|
         it "returns true for #{url}" do
           expect(target.in_scope?(url)).to eql true
         end

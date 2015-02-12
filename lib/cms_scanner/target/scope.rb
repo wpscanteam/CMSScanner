@@ -6,21 +6,11 @@ module CMSScanner
       @scope ||= Scope.new
     end
 
-    # // are handled by Addressable::URI, but worngly :/
-    # e.g: Addressable::URI.parse('//file').host => file
-    #
-    # Idea: parse the // with PublicSuffix to see if a valid
-    #       domain is used
-    #
-    # @param [ String ] url
+    # @param [ String ] url An absolute URL
     #
     # @return [ Boolean ] true if the url given is in scope
     def in_scope?(url)
-      url.strip!
-
-      return true if url[0, 1] == '/' && url[1, 1] != '/'
-
-      scope.include?(Addressable::URI.parse(url).host)
+      scope.include?(Addressable::URI.parse(url.strip).host)
     rescue
       false
     end
@@ -35,15 +25,16 @@ module CMSScanner
 
       res.html.xpath(xpath).each do |tag|
         attributes.each do |attribute|
-          next unless in_scope?(tag[attribute])
+          attr_value = tag[attribute]
 
-          attr_value = tag[attribute].strip
+          next unless attr_value && !attr_value.empty?
 
-          # Relative URL case (The // case is currently ignored by in_scope?)
-          attr_value = uri.join(attr_value).to_s unless attr_value =~ /\Ahttps?/i
+          url = uri.join(attr_value.strip).to_s
 
-          yield attr_value if block_given? && !found.include?(attr_value)
-          found << attr_value
+          next unless in_scope?(url)
+
+          yield url if block_given? && !found.include?(url)
+          found << url
         end
       end
 
