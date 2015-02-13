@@ -23,6 +23,7 @@ require 'cms_scanner/controller'
 require 'cms_scanner/controllers'
 require 'cms_scanner/formatter'
 require 'cms_scanner/finders'
+require 'cms_scanner/vulnerability'
 
 # Module
 module CMSScanner
