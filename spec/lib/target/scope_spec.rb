@@ -31,7 +31,9 @@ describe CMSScanner::Target do
 
   describe '#in_scope?' do
     context 'when default scope (target domain)' do
-      [nil, '', 'http://out-of-scope.com', '//jquery.com/j.js'].each do |url|
+      [nil, '', 'http://out-of-scope.com', '//jquery.com/j.js',
+       'javascript:alert(3)', 'mailto:p@g.com'
+      ].each do |url|
         it "returns false for #{url}" do
           expect(target.in_scope?(url)).to eql false
         end
