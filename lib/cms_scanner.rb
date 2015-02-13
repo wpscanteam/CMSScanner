@@ -9,12 +9,11 @@ require 'public_suffix'
 require 'erb'
 require 'fileutils'
 require 'pathname'
-# Helpers
-require 'helper'
 # Monkey Patches
 require 'cms_scanner/typhoeus/response'
 require 'cms_scanner/public_suffix/domain'
 # Custom Libs
+require 'cms_scanner/helper'
 require 'cms_scanner/errors/auth_errors'
 require 'cms_scanner/cache/typhoeus'
 require 'cms_scanner/target'
