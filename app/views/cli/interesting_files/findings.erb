@@ -1,7 +1,7 @@
 Interesting Findings: <%= @findings.size %>
 <% @findings.each do |finding| -%>
 
-[+] <%= finding.url %>
+<%= green('[+]') %> <%= finding.url %>
 <% if finding.confidence > 0 -%>
  | Confidence: <%= finding.confidence %>%
 <% end -%>
