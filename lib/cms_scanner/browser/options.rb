@@ -1,12 +1,3 @@
-module Typhoeus
-  # Hack to have a setter for the :max_concurrency
-  # Which will be officially added in the next version
-  # See: https://github.com/typhoeus/typhoeus/issues/366
-  class Hydra
-    attr_accessor :max_concurrency
-  end
-end
-
 module CMSScanner
   # Options available in the Browser
   class Browser
