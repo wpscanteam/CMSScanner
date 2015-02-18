@@ -26,7 +26,8 @@ module CMSScanner
         [
           OptString.new(['--user-agent VALUE', '--ua']),
           OptCredentials.new(['--http-auth login:password']),
-          OptPositiveInteger.new(['--max-threads VALUE', '-t', 'The max threads to use']),
+          OptPositiveInteger.new(['--max-threads VALUE', '-t', 'The max threads to use'],
+                                 default: 5),
           OptPositiveInteger.new(['--request-timeout SECONDS', 'The request timeout in seconds']),
           OptPositiveInteger.new(['--connect-timeout SECONDS',
                                   'The connection timeout in seconds'])
