@@ -37,7 +37,7 @@ module CMSScanner
     end
 
     def to_s
-      number.to_s
+      number
     end
   end
 end
