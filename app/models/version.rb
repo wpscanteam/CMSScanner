@@ -35,5 +35,9 @@ module CMSScanner
     rescue
       false
     end
+
+    def to_s
+      number.to_s
+    end
   end
 end

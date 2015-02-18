@@ -7,6 +7,8 @@ describe CMSScanner::Version do
   let(:opts)        { {} }
   let(:number)      { '1.0' }
 
+  its(:to_s)        { should eql '1.0' }
+
   describe '#number' do
     its(:number) { should eql '1.0' }
 
@@ -14,6 +16,7 @@ describe CMSScanner::Version do
       let(:number) { 2.0 }
 
       its(:number) { should eql '2.0' }
+      its(:to_s)   { should eql '2.0' }
     end
 
     context 'when starting with a dot' do
