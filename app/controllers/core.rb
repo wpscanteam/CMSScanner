@@ -14,6 +14,8 @@ module CMSScanner
       end
 
       def before_scan
+        output('banner')
+
         setup_cache
 
         fail "The url supplied '#{target.url}' seems to be down" unless target.online?

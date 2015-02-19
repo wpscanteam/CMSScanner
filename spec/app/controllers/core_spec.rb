@@ -36,6 +36,8 @@ describe CMSScanner::Controller::Core do
   end
 
   describe '#before_scan' do
+    before { expect(core.formatter).to receive(:output) }
+
     it 'does not raise an error when everything is fine' do
       stub_request(:get, target_url).to_return(status: 200)
 
