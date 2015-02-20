@@ -14,13 +14,13 @@ module CMSScanner
 
     # @return [ String ] The hash of the homepage
     def homepage_hash
-      @homepage_hash ||= Target.page_hash(url)
+      @homepage_hash ||= self.class.page_hash(url)
     end
 
     # @note This is used to detect potential custom 404 responding with a 200
     # @return [ String ] The hash of a 404
     def error_404_hash
-      @error_404_hash ||= Target.page_hash(non_existant_page_url)
+      @error_404_hash ||= self.class.page_hash(non_existant_page_url)
     end
 
     # @return [ String ] The URL of an unlikely existant page
@@ -31,7 +31,7 @@ module CMSScanner
     # @param [ Typhoeus::Response, String ] page
     # @return [ Boolean ] Wether or not the page is a the homepage or a 404 based on its md5sum
     def homepage_or_404?(page)
-      md5sum = Target.page_hash(page)
+      md5sum = self.class.page_hash(page)
 
       md5sum == homepage_hash || md5sum == error_404_hash
     end
