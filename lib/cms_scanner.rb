@@ -57,6 +57,10 @@ module CMSScanner
                        trace: e.backtrace,
                        verbose: controllers.first.parsed_options[:verbose])
     ensure
+      # Ensures a clean abort of Hydra
+      Browser.instance.hydra.abort
+      Browser.instance.hydra.run
+
       formatter.beautify
     end
 
