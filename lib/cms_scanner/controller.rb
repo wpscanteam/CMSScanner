@@ -61,6 +61,11 @@ module CMSScanner
         formatter.render(*tpl_params(tpl, vars))
       end
 
+      # @return [ Boolean ]
+      def user_interaction?
+        formatter.user_interaction? && !parsed_options[:output]
+      end
+
       protected
 
       # @param [ String ] tpl

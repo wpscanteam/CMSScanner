@@ -58,6 +58,11 @@ module CMSScanner
         self.class.name.demodulize.underscore
       end
 
+      # @return [ Boolean ]
+      def user_interaction?
+        format == 'cli'
+      end
+
       # @return [ String ] The underscored format to use as a base
       def base_format; end
 

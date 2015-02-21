@@ -8,9 +8,8 @@ describe CMSScanner::Formatter::Json do
 
   before { formatter.views_directories << FIXTURES_VIEWS }
 
-  describe '#format' do
-    its(:format) { should eq 'json' }
-  end
+  its(:format)            { should eq 'json' }
+  its(:user_interaction?) { should be false }
 
   describe '#output' do
     it 'puts the rendered text in the buffer' do

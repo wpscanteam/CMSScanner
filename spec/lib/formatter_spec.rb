@@ -33,6 +33,18 @@ describe CMSScanner::Formatter::Base do
     its(:format) { should eq 'base' }
   end
 
+  describe '#user_interaction?' do
+    context 'when not a cli format' do
+      its(:user_interaction?) { should be false }
+    end
+
+    context 'when a cli format' do
+      before { expect(formatter).to receive(:format).and_return('cli') }
+
+      its(:user_interaction?) { should be true }
+    end
+  end
+
   describe '#render, output' do
     before { formatter.views_directories << FIXTURES_VIEWS }
 
