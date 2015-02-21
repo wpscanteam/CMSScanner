@@ -5,6 +5,7 @@ require 'nokogiri'
 require 'active_support/inflector'
 require 'addressable/uri'
 require 'public_suffix'
+require 'ruby-progressbar'
 # Standard Libs
 require 'erb'
 require 'fileutils'
