@@ -29,7 +29,9 @@ describe CMSScanner::Finders::IndependentFinders do
           let(:mode) { current_mode }
 
           it "calls the #{current_mode} method on each finder" do
-            finders.each { |f| expect(f).to receive(current_mode).ordered }
+            finders.each do |f|
+              expect(f).to receive(current_mode).with(hash_including(found: [])).ordered
+            end
           end
         end
       end
@@ -40,7 +42,7 @@ describe CMSScanner::Finders::IndependentFinders do
         it 'calls :passive then :aggressive on each finder' do
           finders.each do |finder|
             [:passive, :aggressive].each do |method|
-              expect(finder).to receive(method).ordered
+              expect(finder).to receive(method).with(hash_including(found: [])).ordered
             end
           end
         end

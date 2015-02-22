@@ -32,10 +32,21 @@ describe CMSScanner::Finders::SameTypeFinders do
       let(:opts) { super().merge(mode: :mixed) }
 
       it 'calls all #passive then #aggressive on finders and returns the best result' do
-        expect(finders[0]).to receive(:passive).ordered.and_return(dummy_passive)
-        expect(finders[1]).to receive(:passive).ordered.and_return(noaggressive)
-        expect(finders[0]).to receive(:aggressive).ordered.and_return(dummy_aggresssive)
-        expect(finders[1]).to receive(:aggressive).ordered
+        expect(finders[0]).to receive(:passive)
+          .with(hash_including(found: [])).ordered
+          .and_return(dummy_passive)
+
+        expect(finders[1]).to receive(:passive)
+          .with(hash_including(found: [dummy_passive.first])).ordered
+          .and_return(noaggressive)
+
+        expect(finders[0]).to receive(:aggressive)
+          .with(hash_including(found: [dummy_passive.first, noaggressive])).ordered
+          .and_return(dummy_aggresssive)
+
+        expect(finders[1]).to receive(:aggressive)
+          .with(hash_including(:found))
+          .ordered
 
         @expected = []
 
@@ -53,8 +64,13 @@ describe CMSScanner::Finders::SameTypeFinders do
       let(:opts) { super().merge(mode: :passive) }
 
       it 'calls #passive on all finders and returns the best result' do
-        expect(finders[0]).to receive(:passive).ordered.and_return(dummy_passive)
-        expect(finders[1]).to receive(:passive).ordered.and_return(noaggressive)
+        expect(finders[0]).to receive(:passive)
+          .with(hash_including(found: [])).ordered
+          .and_return(dummy_passive)
+
+        expect(finders[1]).to receive(:passive)
+          .with(hash_including(found: [dummy_passive.first])).ordered
+          .and_return(noaggressive)
 
         finders.each { |f| expect(f).to_not receive(:aggressive) }
 
@@ -71,8 +87,12 @@ describe CMSScanner::Finders::SameTypeFinders do
       it 'calls #aggressive on all finders and returns the best result' do
         finders.each { |f| expect(f).to_not receive(:passive) }
 
-        expect(finders[0]).to receive(:aggressive).ordered.and_return(dummy_aggresssive)
-        expect(finders[1]).to receive(:aggressive).ordered
+        expect(finders[0]).to receive(:aggressive)
+          .with(hash_including(found: [])).ordered
+          .and_return(dummy_aggresssive)
+
+        expect(finders[1]).to receive(:aggressive)
+          .with(hash_including(found: [dummy_aggresssive])).ordered
 
         @expected = [finding.new('test', confidence: 100, found_by: 'override')]
       end
