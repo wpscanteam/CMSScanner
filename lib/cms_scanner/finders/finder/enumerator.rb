@@ -55,7 +55,7 @@ module CMSScanner
         #
         # @return [ String ]
         def progress_bar_title
-          ' ' # Used to craete a left margin
+          ' ' # Used to create a left margin
         end
 
         # @return [ CMSScanner::Browser ]
