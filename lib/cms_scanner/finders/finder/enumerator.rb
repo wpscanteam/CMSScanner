@@ -44,11 +44,19 @@ module CMSScanner
         def progress_bar(total)
           ProgressBar.create(
             format: '%t %a <%B> (%c / %C) %P%% %e',
-            title: ' ', # Used to craete a left margin
+            title: progress_bar_title,
             total: total
           )
         end
         # :nocov:
+
+        # Progress Bar title to use, allow instance using this module
+        # to display a custom title if needed
+        #
+        # @return [ String ]
+        def progress_bar_title
+          ' ' # Used to craete a left margin
+        end
 
         # @return [ CMSScanner::Browser ]
         def browser
