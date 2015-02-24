@@ -12,7 +12,7 @@ describe CMSScanner::Finders::UniqueFinders do
 
     context 'when no findings' do
       it 'returns nil' do
-        @expected = nil
+        @expected = false
       end
     end
 
@@ -31,7 +31,7 @@ describe CMSScanner::Finders::UniqueFinders do
 
       context 'when they have the same confidence' do
         it 'returns nil' do
-          @expected = nil
+          @expected = false
         end
       end
 
