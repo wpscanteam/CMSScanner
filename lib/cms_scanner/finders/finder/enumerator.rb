@@ -10,7 +10,7 @@ module CMSScanner
         # @yield [ Typhoeus::Response, String ]
         def enumerate(opts = {})
           targets = target_urls(opts)
-          bar     = progress_bar(targets.size) if opts[:show_progression]
+          bar     = progress_bar(targets.size, progress_bar_title) if opts[:show_progression]
 
           targets.each do |url, id|
             request = browser.forge_request(url, request_params)
@@ -36,19 +36,6 @@ module CMSScanner
         def target_urls(_opts = {})
           fail NotImplementedError
         end
-
-        # @param [ Integer ] total
-        #
-        # @return [ ProgressBar ]
-        # :nocov:
-        def progress_bar(total)
-          ProgressBar.create(
-            format: '%t %a <%B> (%c / %C) %P%% %e',
-            title: progress_bar_title,
-            total: total
-          )
-        end
-        # :nocov:
 
         # Progress Bar title to use, allow instance using this module
         # to display a custom title if needed

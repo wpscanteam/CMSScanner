@@ -15,9 +15,9 @@ describe CMSScanner::Finders::Finder::Enumerator do
     end
   end
 
-  describe '#progress_bar' do
-    it 'returns a ProgressBar' do
-      expect(finder.progress_bar(2)).to be_a ProgressBar::Base
+  describe '#progress_bar_title' do
+    it 'returns a space' do
+      expect(finder.progress_bar_title).to eql ' '
     end
   end
 
