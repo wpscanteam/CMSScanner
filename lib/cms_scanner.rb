@@ -8,6 +8,7 @@ require 'public_suffix'
 require 'ruby-progressbar'
 # Standard Libs
 require 'erb'
+require 'uri'
 require 'fileutils'
 require 'pathname'
 # Monkey Patches

@@ -22,11 +22,18 @@ module CMSScanner
 
     # Used for convenience
     #
+    # URI.encode is preferered over Addressable::URI.encode as it will encode
+    # leading # character:
+    # URI.encode('#t#') => %23t%23
+    # Addressable::URI.encode('#t#') => #t%23
+    #
     # @param [ String ] path Optional path to merge with the uri
     #
     # @return [ String ]
     def url(path = nil)
-      @uri.join(path || '').to_s
+      return @uri.to_s unless path
+
+      @uri.join(URI.encode(path)).to_s
     end
 
     # Checks if the remote website is up.

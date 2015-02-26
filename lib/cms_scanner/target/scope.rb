@@ -19,7 +19,7 @@ module CMSScanner
     # @param [ String ] xpath
     # @param [ Array<String> ] attributes
     #
-    # @return [ Array<String> ] The in scope URLs detected in the response's body
+    # @return [ Array<String> ] The in scope absolute URLs detected in the response's body
     def in_scope_urls(res, xpath = '//link|//script|//style|//img|//a', attributes = %w(href src))
       found = []
 
