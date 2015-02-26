@@ -1,6 +1,6 @@
 module CMSScanner
   module Finders
-    module InterestingFile
+    module InterestingFiles
       # FantasticoFileslist finder
       class FantasticoFileslist < Finder
         # @return [ String ] The url of the fantastico_fileslist.txt file

@@ -1,6 +1,6 @@
 module CMSScanner
   module Finders
-    module InterestingFile
+    module InterestingFiles
       # XML RPC finder
       class XMLRPC < Finder
         # @return [ Array<String> ] The potential urls to the XMl RPC file

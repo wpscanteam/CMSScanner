@@ -6,7 +6,7 @@ describe CMSScanner::Target do
 
   describe '#interesting_files' do
     before do
-      expect(CMSScanner::Finders::InterestingFiles).to receive(:find).and_return(stubbed)
+      expect(CMSScanner::Finders::InterestingFiles::Base).to receive(:find).and_return(stubbed)
     end
 
     context 'when no findings' do

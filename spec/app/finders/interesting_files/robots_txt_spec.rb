@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe CMSScanner::Finders::InterestingFile::RobotsTxt do
+describe CMSScanner::Finders::InterestingFiles::RobotsTxt do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
   let(:robots_txt) { url + 'robots.txt' }
-  let(:fixtures)   { File.join(FIXTURES, 'interesting_files', 'robots_txt') }
+  let(:fixtures)   { File.join(FIXTURES_FINDERS, 'interesting_files', 'robots_txt') }
 
   describe '#url' do
     its(:url) { should eq robots_txt }

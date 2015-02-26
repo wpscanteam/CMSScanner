@@ -35,8 +35,9 @@ end
 require 'cms_scanner'
 require 'shared_examples'
 
-SPECS          = Pathname.new(__FILE__).dirname.to_s
-CACHE          = File.join(SPECS, 'cache')
-FIXTURES       = File.join(SPECS, 'fixtures')
-FIXTURES_VIEWS = File.join(FIXTURES, 'views')
-APP_VIEWS      = File.join(CMSScanner::APP_DIR, 'views')
+SPECS            = Pathname.new(__FILE__).dirname.to_s
+CACHE            = File.join(SPECS, 'cache')
+FIXTURES         = File.join(SPECS, 'fixtures')
+FIXTURES_VIEWS   = File.join(FIXTURES, 'views')
+FIXTURES_FINDERS = File.join(FIXTURES, 'finders')
+APP_VIEWS        = File.join(CMSScanner::APP_DIR, 'views')

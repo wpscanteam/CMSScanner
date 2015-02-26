@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe CMSScanner::Finders::InterestingFile::FantasticoFileslist do
+describe CMSScanner::Finders::InterestingFiles::FantasticoFileslist do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
   let(:file)       { url + 'fantastico_fileslist.txt' }
-  let(:fixtures)   { File.join(FIXTURES, 'interesting_files', 'fantastico_fileslist') }
+  let(:fixtures)   { File.join(FIXTURES_FINDERS, 'interesting_files', 'fantastico_fileslist') }
 
   describe '#url' do
     its(:url) { should eq file }

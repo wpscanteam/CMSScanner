@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CMSScanner::FantasticoFileslist do
   subject(:file) { described_class.new(url) }
   let(:url)      { 'http://example.com/robots.txt' }
-  let(:fixtures) { File.join(FIXTURES, 'interesting_files', 'fantastico_fileslist') }
+  let(:fixtures) { File.join(FIXTURES_FINDERS, 'interesting_files', 'fantastico_fileslist') }
 
   describe '#interesting_entries' do
     let(:headers) { { 'Content-Type' => 'text/plain; charset=utf-8' } }

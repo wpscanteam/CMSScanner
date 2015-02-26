@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe CMSScanner::Finders::InterestingFile::Headers do
+describe CMSScanner::Finders::InterestingFiles::Headers do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
-  let(:fixtures)   { File.join(FIXTURES, 'interesting_files', 'headers') }
+  let(:fixtures)   { File.join(FIXTURES_FINDERS, 'interesting_files', 'headers') }
   let(:fixture)    { File.join(fixtures, 'interesting.txt') }
   let(:headers)    { parse_headers_file(fixture) }
 

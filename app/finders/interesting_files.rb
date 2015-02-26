@@ -6,14 +6,16 @@ require_relative 'interesting_files/xml_rpc'
 
 module CMSScanner
   module Finders
-    # Interesting Files Finder
-    class InterestingFiles
-      include IndependentFinder
+    module InterestingFiles
+      # Interesting Files Finder
+      class Base
+        include IndependentFinder
 
-      # @param [ CMSScanner::Target ] target
-      def initialize(target)
-        %w(Headers RobotsTxt FantasticoFileslist SearchReplaceDB2 XMLRPC).each do |f|
-          finders << NS.const_get("Finders::InterestingFile::#{f}").new(target)
+        # @param [ CMSScanner::Target ] target
+        def initialize(target)
+          %w(Headers RobotsTxt FantasticoFileslist SearchReplaceDB2 XMLRPC).each do |f|
+            finders << NS.const_get("Finders::InterestingFiles::#{f}").new(target)
+          end
         end
       end
     end

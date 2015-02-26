@@ -6,7 +6,7 @@ describe CMSScanner::InterestingFile do
   subject(:file) { described_class.new(url, opts) }
   let(:opts)     { {} }
   let(:url)      { 'http://example.com/' }
-  let(:fixtures) { File.join(FIXTURES, 'interesting_files') }
+  let(:fixtures) { File.join(FIXTURES_FINDERS, 'interesting_files') }
 
   describe '#entries' do
     after do

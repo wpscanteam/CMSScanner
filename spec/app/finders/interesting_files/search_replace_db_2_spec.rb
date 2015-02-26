@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe CMSScanner::Finders::InterestingFile::SearchReplaceDB2 do
+describe CMSScanner::Finders::InterestingFiles::SearchReplaceDB2 do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
   let(:file)       { url + 'searchreplacedb2.php' }
-  let(:fixtures)   { File.join(FIXTURES, 'interesting_files', 'search_replace_db_2') }
+  let(:fixtures)   { File.join(FIXTURES_FINDERS, 'interesting_files', 'search_replace_db_2') }
 
   describe '#url' do
     its(:url) { should eq file }

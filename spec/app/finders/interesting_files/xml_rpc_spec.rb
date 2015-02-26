@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe CMSScanner::Finders::InterestingFile::XMLRPC do
+describe CMSScanner::Finders::InterestingFiles::XMLRPC do
   subject(:finder)  { described_class.new(target) }
   let(:target)      { CMSScanner::Target.new(url) }
   let(:url)         { 'http://e.org/' }
   let(:xml_rpc_url) { url + 'xmlrpc.php' }
-  let(:fixtures)    { File.join(FIXTURES, 'interesting_files', 'xml_rpc') }
+  let(:fixtures)    { File.join(FIXTURES_FINDERS, 'interesting_files', 'xml_rpc') }
 
   describe '#potential_urls' do
     its(:potential_urls) { should be_empty }

@@ -1,6 +1,6 @@
 module CMSScanner
   module Finders
-    module InterestingFile
+    module InterestingFiles
       # Interesting Headers finder
       class Headers < Finder
         # @return [ InterestingFile ]

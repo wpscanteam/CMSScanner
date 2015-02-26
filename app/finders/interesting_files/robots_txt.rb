@@ -1,6 +1,6 @@
 module CMSScanner
   module Finders
-    module InterestingFile
+    module InterestingFiles
       # Robots.txt finder
       class RobotsTxt < Finder
         # @return [ String ] The url of the robots.txt file

@@ -1,6 +1,6 @@
 module CMSScanner
   module Finders
-    module InterestingFile
+    module InterestingFiles
       # SearchReplaceDB2 finder
       class SearchReplaceDB2 < Finder
         # @return [ String ] The url to the searchreplacedb2 PHP file
