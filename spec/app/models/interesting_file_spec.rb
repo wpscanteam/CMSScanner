@@ -46,4 +46,24 @@ describe CMSScanner::InterestingFile do
       end
     end
   end
+
+  describe '#<=>' do
+    context 'when same URL' do
+      it 'returns 0' do
+        expect(file <=> described_class.new(url)).to eql 0
+      end
+    end
+
+    context 'when the other URL <= current one' do
+      it 'returns 1' do
+        expect(file <=> described_class.new('http://e.org')).to eql 1
+      end
+    end
+
+    context 'when the other URL >= current one' do
+      it 'returns -1' do
+        expect(file <=> described_class.new('http://exi.org/')).to eql(-1)
+      end
+    end
+  end
 end

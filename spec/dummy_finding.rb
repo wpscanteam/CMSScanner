@@ -17,5 +17,9 @@ module CMSScanner
     def eql?(other)
       r == other.r && confidence == other.confidence && found_by == other.found_by
     end
+
+    def to_s
+      r
+    end
   end
 end

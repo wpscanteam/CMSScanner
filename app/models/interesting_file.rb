@@ -19,6 +19,10 @@ module CMSScanner
       res.body.split("\n").reject { |s| s.strip.empty? }
     end
 
+    def to_s
+      url
+    end
+
     def ==(other)
       url == other.url
     end

@@ -31,7 +31,7 @@ describe CMSScanner::Finders::SameTypeFinders do
     context 'when :mixed mode' do
       let(:opts) { super().merge(mode: :mixed) }
 
-      it 'calls all #passive then #aggressive on finders and returns the best result' do
+      it 'calls all #passive then #aggressive on finders and returns the results' do
         expect(finders[0]).to receive(:passive)
           .with(hash_including(found: [])).ordered
           .and_return(dummy_passive)
@@ -63,7 +63,7 @@ describe CMSScanner::Finders::SameTypeFinders do
     context 'when :passive mode' do
       let(:opts) { super().merge(mode: :passive) }
 
-      it 'calls #passive on all finders and returns the best result' do
+      before do
         expect(finders[0]).to receive(:passive)
           .with(hash_including(found: [])).ordered
           .and_return(dummy_passive)
@@ -73,18 +73,43 @@ describe CMSScanner::Finders::SameTypeFinders do
           .and_return(noaggressive)
 
         finders.each { |f| expect(f).to_not receive(:aggressive) }
+      end
 
+      it 'calls #passive on all finders and returns the results' do
         @expected = []
         @expected << finding.new('test', found_by: 'Dummy Finder (Passive Detection)')
         @expected << finding.new('spotted', confidence: 10,
                                             found_by: 'No Aggressive Result (Passive Detection)')
       end
+
+      context 'when :sort used' do
+        let(:opts) { super().merge(sort: true) }
+
+        it 'returns the sorted results' do
+          @expected = []
+          @expected << finding.new('spotted', confidence: 10,
+                                              found_by: 'No Aggressive Result (Passive Detection)')
+          @expected << finding.new('test', found_by: 'Dummy Finder (Passive Detection)')
+        end
+      end
+
+      # TODO: make this work
+      # context 'when :vulnerable used' do
+      # let(:opts) { super().merge(vulnerable: true) }
+
+      # it 'returns the vulnerable results' do
+      # expect(dummy_passive).to receive(:vulnerable?).and_return(true)
+      # expect(noaggressive).to receive(:vulnerable?)
+
+      # @expected = [finding.new('test', found_by: 'Dummy Finder (Passive Detection)')]
+      #  end
+      # end
     end
 
     context 'when :aggressive mode' do
       let(:opts) { super().merge(mode: :aggressive) }
 
-      it 'calls #aggressive on all finders and returns the best result' do
+      it 'calls #aggressive on all finders and returns the results' do
         finders.each { |f| expect(f).to_not receive(:passive) }
 
         expect(finders[0]).to receive(:aggressive)

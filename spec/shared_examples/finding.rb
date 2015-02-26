@@ -47,4 +47,8 @@ shared_examples CMSScanner::Finders::Finding do
       end
     end
   end
+
+  describe '#<=>' do
+    # Handled in spc/app/models/interesting_files_spec
+  end
 end

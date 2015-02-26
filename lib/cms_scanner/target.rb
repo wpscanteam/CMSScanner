@@ -19,8 +19,6 @@ module CMSScanner
       [*opts[:scope]].each { |s| scope << s }
     end
 
-    # TODO: add a force option to re-call the #find rather than return the @interesting_files ?
-    #
     # @param [ Hash ] opts
     #
     # @return [ Findings ]
