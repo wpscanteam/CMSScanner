@@ -25,5 +25,25 @@ module CMSScanner
     def interesting_files(opts = {})
       @interesting_files ||= NS::Finders::InterestingFiles::Base.find(self, opts)
     end
+
+    # @param [ Typhoeus::Response, String ] page
+    # @param [ Regexp ] pattern
+    #
+    # @return [ Array<MatchData> ]
+    # @yield [ MatchData ]
+    def comments_from_page(page, pattern)
+      page    = NS::Browser.get(url(page)) unless page.is_a?(Typhoeus::Response)
+      matches = []
+
+      page.html.xpath('//comment()').each do |node|
+        next unless node.text.to_s.strip =~ pattern
+
+        yield Regexp.last_match if block_given?
+
+        matches << Regexp.last_match
+      end
+
+      matches
+    end
   end
 end

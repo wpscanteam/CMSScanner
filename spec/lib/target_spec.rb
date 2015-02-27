@@ -27,4 +27,40 @@ describe CMSScanner::Target do
       end
     end
   end
+
+  describe '#comments_from_page' do
+    let(:fixture) { File.join(FIXTURES, 'target', 'comments.html') }
+    let(:page) { Typhoeus::Response.new(body: File.read(fixture)) }
+
+    context 'when the pattern does not match anything' do
+      it 'returns an empty array' do
+        expect(target.comments_from_page(page, /none/)).to eql([])
+      end
+    end
+
+    context 'when the pattern matches' do
+      let(:pattern) { /all in one seo pack/i }
+
+      let(:matches) do
+        [
+          'All in One SEO Pack 2.2.5.1 by Michael Torbert of Semper Fi Web Design'.match(pattern),
+          '/all in one seo pack'.match(pattern)
+        ]
+      end
+
+      context 'when no block given' do
+        it 'returns the expected matches' do
+          expect(target.comments_from_page(page, pattern)).to eql matches
+        end
+      end
+
+      # The below doesn't work, dunno why
+      context 'when block given' do
+        it 'yield the MatchData' do
+          expect { |b| target.comments_from_page(page, pattern, &b) }
+            .to yield_successive_args(*matches)
+        end
+      end
+    end
+  end
 end
