@@ -24,6 +24,7 @@ module CMSScanner
     end
 
     def ==(other)
+      return false unless self.class == other.class
       url == other.url
     end
   end
