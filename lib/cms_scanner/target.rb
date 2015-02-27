@@ -26,12 +26,12 @@ module CMSScanner
       @interesting_files ||= NS::Finders::InterestingFiles::Base.find(self, opts)
     end
 
-    # @param [ Typhoeus::Response, String ] page
     # @param [ Regexp ] pattern
+    # @param [ Typhoeus::Response, String ] page
     #
     # @return [ Array<Array<MatchData, Nokogiri::XML::Comment>> ]
     # @yield [ MatchData, Nokogiri::XML::Comment ]
-    def comments_from_page(page, pattern)
+    def comments_from_page(pattern, page = nil)
       page    = NS::Browser.get(url(page)) unless page.is_a?(Typhoeus::Response)
       matches = []
 

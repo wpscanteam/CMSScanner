@@ -34,7 +34,7 @@ describe CMSScanner::Target do
 
     context 'when the pattern does not match anything' do
       it 'returns an empty array' do
-        expect(target.comments_from_page(page, /none/)).to eql([])
+        expect(target.comments_from_page(/none/, page)).to eql([])
       end
     end
 
@@ -45,7 +45,7 @@ describe CMSScanner::Target do
 
       context 'when no block given' do
         it 'returns the expected matches' do
-          results = target.comments_from_page(page, pattern)
+          results = target.comments_from_page(pattern, page)
 
           [s1, s2].each_with_index do |s, i|
             expect(results[i].first).to eql s.match(pattern)
@@ -57,7 +57,7 @@ describe CMSScanner::Target do
       # The below doesn't work, dunno why
       context 'when block given' do
         it 'yield the MatchData' do
-          expect { |b| target.comments_from_page(page, pattern, &b) }
+          expect { |b| target.comments_from_page(pattern, page, &b) }
             .to yield_successive_args(
               [MatchData, Nokogiri::XML::Comment],
               [MatchData, Nokogiri::XML::Comment]
