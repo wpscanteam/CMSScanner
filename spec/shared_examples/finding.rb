@@ -49,6 +49,6 @@ shared_examples CMSScanner::Finders::Finding do
   end
 
   describe '#<=>' do
-    # Handled in spc/app/models/interesting_files_spec
+    # Handled in spec/app/models/interesting_files_spec
   end
 end

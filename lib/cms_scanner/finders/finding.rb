@@ -45,7 +45,7 @@ module CMSScanner
       end
 
       def <=>(other)
-        to_s <=> other.to_s
+        to_s.downcase <=> other.to_s.downcase
       end
     end
   end

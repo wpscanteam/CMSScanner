@@ -65,5 +65,11 @@ describe CMSScanner::InterestingFile do
         expect(file <=> described_class.new('http://exi.org/')).to eql(-1)
       end
     end
+
+    context 'when using capitals' do
+      it 'returns ' do
+        expect(file <=> described_class.new('Sftp://a.org')).to eql(-1)
+      end
+    end
   end
 end
