@@ -1,7 +1,7 @@
 module CMSScanner
   # Robots.txt
   class RobotsTxt < InterestingFile
-    # @todo Better detection, currently everythinh not empty or / is returned
+    # @todo Better detection, currently everything not empty or / is returned
     #
     # @return [ Array<String> ] The interesting Allow/Disallow rules detected
     def interesting_entries
