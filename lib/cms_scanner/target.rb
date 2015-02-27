@@ -29,8 +29,8 @@ module CMSScanner
     # @param [ Typhoeus::Response, String ] page
     # @param [ Regexp ] pattern
     #
-    # @return [ Array<MatchData> ]
-    # @yield [ MatchData ]
+    # @return [ Array<Array<MatchData, Nokogiri::XML::Comment>> ]
+    # @yield [ MatchData, Nokogiri::XML::Comment ]
     def comments_from_page(page, pattern)
       page    = NS::Browser.get(url(page)) unless page.is_a?(Typhoeus::Response)
       matches = []
@@ -38,9 +38,9 @@ module CMSScanner
       page.html.xpath('//comment()').each do |node|
         next unless node.text.to_s.strip =~ pattern
 
-        yield Regexp.last_match if block_given?
+        yield Regexp.last_match, node if block_given?
 
-        matches << Regexp.last_match
+        matches << [Regexp.last_match, node]
       end
 
       matches

@@ -40,17 +40,17 @@ describe CMSScanner::Target do
 
     context 'when the pattern matches' do
       let(:pattern) { /all in one seo pack/i }
-
-      let(:matches) do
-        [
-          'All in One SEO Pack 2.2.5.1 by Michael Torbert of Semper Fi Web Design'.match(pattern),
-          '/all in one seo pack'.match(pattern)
-        ]
-      end
+      let(:s1) { 'All in One SEO Pack 2.2.5.1 by Michael Torbert of Semper Fi Web Design' }
+      let(:s2) { '/all in one seo pack' }
 
       context 'when no block given' do
         it 'returns the expected matches' do
-          expect(target.comments_from_page(page, pattern)).to eql matches
+          results = target.comments_from_page(page, pattern)
+
+          [s1, s2].each_with_index do |s, i|
+            expect(results[i].first).to eql s.match(pattern)
+            expect(results[i].last.to_s).to eql "<!-- #{s} -->"
+          end
         end
       end
 
@@ -58,7 +58,10 @@ describe CMSScanner::Target do
       context 'when block given' do
         it 'yield the MatchData' do
           expect { |b| target.comments_from_page(page, pattern, &b) }
-            .to yield_successive_args(*matches)
+            .to yield_successive_args(
+              [MatchData, Nokogiri::XML::Comment],
+              [MatchData, Nokogiri::XML::Comment]
+            )
         end
       end
     end
