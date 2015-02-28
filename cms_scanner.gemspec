@@ -16,10 +16,20 @@ Gem::Specification.new do |s|
   s.homepage              = 'https://github.com/wpscanteam/CMSScanner'
   s.license               = 'MIT'
 
-  s.files                 = `git ls-files -z`.split("\x0")
+  s.files                 = `git ls-files -z`.split("\x0").reject do |file|
+    file =~ /^(?:
+      spec\/.*
+      |Gemfile
+      |Rakefile
+      |\.rspec
+      |\.gitignore
+      |\.rubocop.yml
+      |\.travis.yml
+      )$/x
+  end
+  s.test_files            = []
   s.executables           = s.files.grep(/^bin\//) { |f| File.basename(f) }
-  s.test_files            = s.files.grep(/^(test|spec|features)\//)
-  s.require_path         = 'lib'
+  s.require_path          = 'lib'
 
   s.add_dependency 'opt_parse_validator', '~> 0.0.9'
   s.add_dependency 'typhoeus', '~> 0.7'
