@@ -69,7 +69,11 @@ describe CMSScanner::Target do
     context 'when block given' do
       it 'yield the url' do
         expect { |b| target.in_scope_urls(res, &b) }
-          .to yield_successive_args('http://e.org/f.txt', 'http://e.org/script/s.js', 'http://e.org/feed')
+          .to yield_successive_args(
+            ['http://e.org/f.txt', Nokogiri::XML::Element],
+            ['http://e.org/script/s.js', Nokogiri::XML::Element],
+            ['http://e.org/feed', Nokogiri::XML::Element]
+          )
       end
     end
 
