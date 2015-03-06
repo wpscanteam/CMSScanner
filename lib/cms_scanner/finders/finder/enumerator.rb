@@ -3,16 +3,16 @@ module CMSScanner
     class Finder
       # Module to provide an easy way to enumerate items such as plugins, themes etc
       module Enumerator
+        # @param [ Hash ] The target urls
         # @param [ Hash ] opts
         # @option opts [ Boolean ] :show_progression Wether or not to display the progress bar
         # @option opts [ Regexp ] :exclude_content
         #
         # @yield [ Typhoeus::Response, String ]
-        def enumerate(opts = {})
-          targets = target_urls(opts)
-          bar     = progress_bar(total: targets.size) if opts[:show_progression]
+        def enumerate(target_urls, opts = {})
+          bar = progress_bar(total: target_urls.size) if opts[:show_progression]
 
-          targets.each do |url, id|
+          target_urls.each do |url, id|
             request = browser.forge_request(url, request_params)
 
             request.on_complete do |res|
@@ -28,13 +28,6 @@ module CMSScanner
           end
 
           hydra.run
-        end
-
-        # @param [ Hash ] opts
-        #
-        # @return [ Hash ]
-        def target_urls(_opts = {})
-          fail NotImplementedError
         end
 
         # @return [ CMSScanner::Browser ]
