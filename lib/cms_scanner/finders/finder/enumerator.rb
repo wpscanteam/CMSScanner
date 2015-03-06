@@ -42,6 +42,7 @@ module CMSScanner
           @browser ||= NS::Browser.instance
         end
 
+        # @return [ Hash ]
         def request_params
           # disabling the cache, as it causes a 'stack level too deep' exception
           # with a large number of requests :/

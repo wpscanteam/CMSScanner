@@ -1,5 +1,6 @@
 require 'cms_scanner/finders/finder/smart_url_checker'
 require 'cms_scanner/finders/finder/enumerator'
+require 'cms_scanner/finders/finder/fingerprinter'
 
 module CMSScanner
   module Finders

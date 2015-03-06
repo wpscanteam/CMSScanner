@@ -21,7 +21,7 @@ describe CMSScanner::Finders::Finder::Enumerator do
 
   its(:hydra) { should be_a Typhoeus::Hydra }
 
-  describe '#aggressive' do
+  describe '#enumerate' do
     before do
       expect(finder).to receive(:target_urls).and_return(target_urls)
       target_urls.each { |url, _| stub_request(:get, url).to_return(status: 200, body: 'rspec') }
