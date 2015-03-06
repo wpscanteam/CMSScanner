@@ -10,7 +10,7 @@ module CMSScanner
         # @yield [ Typhoeus::Response, String ]
         def enumerate(opts = {})
           targets = target_urls(opts)
-          bar     = progress_bar(targets.size, progress_bar_title) if opts[:show_progression]
+          bar     = progress_bar(total: targets.size) if opts[:show_progression]
 
           targets.each do |url, id|
             request = browser.forge_request(url, request_params)
@@ -35,14 +35,6 @@ module CMSScanner
         # @return [ Hash ]
         def target_urls(_opts = {})
           fail NotImplementedError
-        end
-
-        # Progress Bar title to use, allow instance using this module
-        # to display a custom title if needed
-        #
-        # @return [ String ]
-        def progress_bar_title
-          ' ' # Used to create a left margin
         end
 
         # @return [ CMSScanner::Browser ]

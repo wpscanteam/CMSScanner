@@ -27,13 +27,11 @@ module CMSScanner
       def aggressive(_opts = {})
       end
 
-      # @param [ Integer ] total
-      # @param [ String ] title
-      # @param [ String ] format See https://github.com/jfelchner/ruby-progressbar/wiki/Formatting
+      # @param [ Hash ] opts See https://github.com/jfelchner/ruby-progressbar/wiki/Options
       #
-      # @return [ ProgressBar ]
-      def progress_bar(total, title = '', format = '%t %a <%B> (%c / %C) %P%% %e')
-        ProgressBar.create(total: total, title: title, format: format)
+      # @return [ ProgressBar::Base ]
+      def progress_bar(opts = {})
+        ProgressBar.create({ format: '%t %a <%B> (%c / %C) %P%% %e' }.merge(opts))
       end
 
       def found_by

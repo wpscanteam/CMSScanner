@@ -15,12 +15,6 @@ describe CMSScanner::Finders::Finder::Enumerator do
     end
   end
 
-  describe '#progress_bar_title' do
-    it 'returns a space' do
-      expect(finder.progress_bar_title).to eql ' '
-    end
-  end
-
   its(:browser) { should be_a CMSScanner::Browser }
 
   its(:request_params) { should eql(cache_ttl: 0) }
