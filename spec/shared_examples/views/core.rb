@@ -19,7 +19,8 @@ shared_examples 'App::Views::Core' do
       @tpl_vars = tpl_vars.merge(
         stop_time: Time.at(1_414_670_523).in_time_zone('Europe/London'),
         used_memory: 100,
-        elapsed: 2
+        elapsed: 2,
+        requests_done: 10
       )
     end
   end
