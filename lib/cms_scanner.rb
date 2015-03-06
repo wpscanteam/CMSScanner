@@ -13,6 +13,7 @@ require 'fileutils'
 require 'pathname'
 # Monkey Patches
 require 'cms_scanner/typhoeus/response'
+require 'cms_scanner/typhoeus/hydra'
 require 'cms_scanner/public_suffix/domain'
 # Custom Libs
 require 'cms_scanner/helper'
@@ -72,9 +73,7 @@ module CMSScanner
                        trace: e.backtrace,
                        verbose: controllers.first.parsed_options[:verbose])
     ensure
-      # Ensures a clean abort of Hydra
       Browser.instance.hydra.abort
-      Browser.instance.hydra.run
 
       formatter.beautify
     end
