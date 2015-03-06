@@ -10,7 +10,7 @@ module CMSScanner
         def server(path = nil, params = {})
           headers = headers(path, params)
 
-          return nil unless headers
+          return unless headers
 
           case headers[:server]
           when /\Aapache/i
