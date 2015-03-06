@@ -9,11 +9,7 @@ describe CMSScanner::Finders::Finder::Fingerprinter do
   subject(:finder) { DummyFingerprinterFinder.new(target) }
   let(:target)     { CMSScanner::Target.new('http://e.org/') }
 
-  its(:browser) { should be_a CMSScanner::Browser }
-
   its(:request_params) { should eql({}) }
-
-  its(:hydra) { should be_a Typhoeus::Hydra }
 
   describe '#fingerprint' do
     let(:fingerprints) do

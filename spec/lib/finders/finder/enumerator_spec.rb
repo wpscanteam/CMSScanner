@@ -9,11 +9,7 @@ describe CMSScanner::Finders::Finder::Enumerator do
   subject(:finder) { DummyEnumeratorFinder.new(target) }
   let(:target)     { CMSScanner::Target.new('http://e.org') }
 
-  its(:browser) { should be_a CMSScanner::Browser }
-
   its(:request_params) { should eql(cache_ttl: 0) }
-
-  its(:hydra) { should be_a Typhoeus::Hydra }
 
   describe '#enumerate' do
     before do

@@ -35,6 +35,16 @@ module CMSScanner
         ProgressBar.create({ format: '%t %a <%B> (%c / %C) %P%% %e' }.merge(opts))
       end
 
+      # @return [ Browser ]
+      def browser
+        @browser ||= NS::Browser.instance
+      end
+
+      # @return [ Typhoeus::Hydra ]
+      def hydra
+        @hydra ||= browser.hydra
+      end
+
       def found_by
         caller_locations.each do |call|
           label = call.label

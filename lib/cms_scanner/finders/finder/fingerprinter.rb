@@ -45,19 +45,9 @@ module CMSScanner
           hydra.run
         end
 
-        # @return [ CMSScanner::Browser ]
-        def browser
-          @browser ||= NS::Browser.instance
-        end
-
         # @return [ Hash ]
         def request_params
           {}
-        end
-
-        # @return [ Typhoeus::Hydra ]
-        def hydra
-          @hydra ||= browser.hydra
         end
 
         # @return [ String ] The hashed value for the given body

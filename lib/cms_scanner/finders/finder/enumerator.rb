@@ -30,22 +30,12 @@ module CMSScanner
           hydra.run
         end
 
-        # @return [ CMSScanner::Browser ]
-        def browser
-          @browser ||= NS::Browser.instance
-        end
-
         # @return [ Hash ]
         def request_params
           # disabling the cache, as it causes a 'stack level too deep' exception
           # with a large number of requests :/
           # See https://github.com/typhoeus/typhoeus/issues/408
           { cache_ttl: 0 }
-        end
-
-        # @return [ Typhoeus::Hydra ]
-        def hydra
-          @hydra ||= browser.hydra
         end
       end
     end
