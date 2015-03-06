@@ -39,16 +39,17 @@ module CMSScanner
   end
 
   # Number of requests performed to display at the end of the scan
-  #
-  # TODO: Find a better way to do this :/
-  #
-  # rubocop:disable all
-  $total_requests_done = 0
-
   Typhoeus.on_complete do |response|
-    $total_requests_done += 1 unless response.cached?
+    self.total_requests += 1 unless response.cached?
   end
-  # rubocop:enable all
+
+  def self.total_requests
+    @@total_requests ||= 0
+  end
+
+  def self.total_requests=(value)
+    @@total_requests = value
+  end
 
   # Scan
   class Scan

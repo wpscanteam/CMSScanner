@@ -41,9 +41,7 @@ module CMSScanner
         @stop_time     = Time.now
         @elapsed       = @stop_time - @start_time
         @used_memory   = memory_usage - @start_memory
-        # rubocop:disable all
-        @requests_done = $total_requests_done
-        # rubocop:enable all
+        @requests_done = CMSScanner.total_requests
 
         output('finished')
       end
