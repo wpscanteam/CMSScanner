@@ -14,7 +14,7 @@ module CMSScanner
         @target = target
       end
 
-      # @return [ String ] The titleize name of the finder
+      # @return [ String ] The titleized name of the finder
       def titleize
         self.class.to_s.demodulize.underscore.titleize
       end
