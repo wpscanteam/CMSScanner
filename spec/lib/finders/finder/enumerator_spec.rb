@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe CMSScanner::Finders::Finder::Enumerator do
   # Dummy class to test the module
-  class DummyFinder < CMSScanner::Finders::Finder
+  class DummyEnumeratorFinder < CMSScanner::Finders::Finder
     include CMSScanner::Finders::Finder::Enumerator
   end
 
-  subject(:finder) { DummyFinder.new(target) }
+  subject(:finder) { DummyEnumeratorFinder.new(target) }
   let(:target)     { CMSScanner::Target.new('http://e.org') }
 
   context 'when #target_urls not implemented' do
