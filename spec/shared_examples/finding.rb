@@ -20,6 +20,18 @@ shared_examples CMSScanner::Finders::Finding do
 
       its(:confidence) { should eql 10 }
     end
+
+    context 'when another confidence added' do
+      it 'adds it the the actual' do
+        subject.confidence += 30
+        expect(subject.confidence).to eql 30
+      end
+
+      it 'sets it to 100 if >= 100' do
+        subject.confidence += 120
+        expect(subject.confidence).to eql 100
+      end
+    end
   end
 
   describe '#parse_finding_options' do

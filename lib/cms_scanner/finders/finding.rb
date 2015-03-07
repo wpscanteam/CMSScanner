@@ -1,5 +1,3 @@
-require 'cms_scanner/finders/confidence'
-
 module CMSScanner
   module Finders
     # Finding
@@ -24,14 +22,14 @@ module CMSScanner
         @interesting_entries ||= []
       end
 
-      # @return [ Confidence ]
+      # @return [ Integer ]
       def confidence
-        @confidence ||= Confidence.new(0)
+        @confidence ||= 0
       end
 
-      # @param [ Integer, Confidence ] value
+      # @param [ Integer ] value
       def confidence=(value)
-        @confidence = value.is_a?(Confidence) ? value : Confidence.new(value)
+        @confidence = value >= 100 ? 100 : value
       end
 
       # @param [ Hash ] opts

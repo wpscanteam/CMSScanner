@@ -15,7 +15,7 @@ module CMSScanner
           return unless res && res.code == 200 && res.body.length > 0
           return unless res.headers && res.headers['Content-Type'] =~ /\Atext\/plain/
 
-          NS::FantasticoFileslist.new(url, confidence: 100, found_by: found_by)
+          NS::FantasticoFileslist.new(url, confidence: 70, found_by: found_by)
         end
       end
     end
