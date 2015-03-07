@@ -26,6 +26,30 @@ shared_examples CMSScanner::Target::Platform::PHP do
     end
   end
 
+  describe '#error_log?' do
+    let(:path) { 'error.log' }
+
+    context 'when the body matches' do
+      %w(error.log).each do |file|
+        context "when #{file} body" do
+          let(:body) { File.read(File.join(fixtures, 'error_log', file)) }
+
+          it 'returns true' do
+            expect(target.error_log?(path)).to be true
+          end
+        end
+      end
+    end
+
+    context 'when the body does not match' do
+      let(:body) { '' }
+
+      it 'returns false' do
+        expect(target.error_log?(path)).to be false
+      end
+    end
+  end
+
   describe '#full_path_disclosure?, #full_path_disclosure_entries' do
     let(:path) { 'p.php' }
 

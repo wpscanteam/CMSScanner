@@ -1,0 +1,5 @@
+[13-Jan-2009 01:53:25] PHP Fatal error:  Class 'Log' not found in /home/****/public_html/lab/wp-content/plugins/fbconnect/Log/null.php on line 19
+[13-Jan-2009 01:55:58] PHP Fatal error:  Class 'Log' not found in /home/****/public_html/lab/wp-content/plugins/fbconnect/Log/file.php on line 20
+[13-Jan-2009 02:13:34] PHP Fatal error:  Class 'Log' not found in /home/****/public_html/lab/wp-content/plugins/fbconnect/Log/error_log.php on line 19
+[15-Feb-2009 10:47:54] PHP Fatal error:  Class 'Log' not found in /home/****/public_html/lab/wp-content/plugins/fbconnect/Log/error_log.php on line 19
+[15-Feb-2009 11:36:15] PHP Fatal error:  Class 'Log' not found in /home/****/public_html/lab/wp-content/plugins/fbconnect/Log/null.php on line 19
