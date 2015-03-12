@@ -37,9 +37,9 @@ module CMSScanner
     # @return [ Hash ]
     def default_request_params
       params = {
-        ssl_verifypeer: false, # Disable SSL-Certificate checks
-        ssl_verifyhost: 2, # Disable SSL-Certificate checks
-        headers: { 'User-Agent' => user_agent }
+        ssl_verifypeer: false, ssl_verifyhost: 2, # Disable SSL-Certificate checks
+        headers: { 'User-Agent' => user_agent },
+        method: :get
       }
 
       { connecttimeout: :connect_timeout, cache_ttl: :cache_ttl,

@@ -9,7 +9,8 @@ describe CMSScanner::Browser do
   let(:default) do
     {
       ssl_verifypeer: false, ssl_verifyhost: 2,
-      headers: { 'User-Agent' => "CMSScanner v#{CMSScanner::VERSION}" }
+      headers: { 'User-Agent' => "CMSScanner v#{CMSScanner::VERSION}" },
+      method: :get
     }
   end
 
