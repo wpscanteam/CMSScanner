@@ -1,4 +1,5 @@
-Interesting Findings: <%= @findings.size %>
+<% unless @findings.empty? -%>
+Interesting Finding(s):
 <% @findings.each do |finding| -%>
 
 <%= green('[+]') %> <%= finding %>
@@ -18,4 +19,5 @@ Interesting Findings: <%= @findings.size %>
 <% end -%>
 <%= render('_array', a: finding.references, s: 'Reference', p: 'References') -%>
 <%= render('_array', a: finding.interesting_entries, s: 'Interesting Entry', p: 'Interesting Entries') -%>
+<% end -%>
 <% end %>
