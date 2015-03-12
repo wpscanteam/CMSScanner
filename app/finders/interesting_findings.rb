@@ -14,7 +14,7 @@ module CMSScanner
         # @param [ CMSScanner::Target ] target
         def initialize(target)
           %w(Headers RobotsTxt FantasticoFileslist SearchReplaceDB2 XMLRPC).each do |f|
-            finders << NS.const_get("Finders::InterestingFindings::#{f}").new(target)
+            finders << NS::Finders::InterestingFindings.const_get(f).new(target)
           end
         end
       end
