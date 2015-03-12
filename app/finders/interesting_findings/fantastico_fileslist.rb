@@ -1,6 +1,6 @@
 module CMSScanner
   module Finders
-    module InterestingFiles
+    module InterestingFindings
       # FantasticoFileslist finder
       class FantasticoFileslist < Finder
         # @return [ String ] The url of the fantastico_fileslist.txt file
@@ -8,7 +8,7 @@ module CMSScanner
           target.url('fantastico_fileslist.txt')
         end
 
-        # @return [ InterestingFile ]
+        # @return [ InterestingFinding ]
         def aggressive(_opts = {})
           res = NS::Browser.get(url)
 

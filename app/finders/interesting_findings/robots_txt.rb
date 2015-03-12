@@ -1,6 +1,6 @@
 module CMSScanner
   module Finders
-    module InterestingFiles
+    module InterestingFindings
       # Robots.txt finder
       class RobotsTxt < Finder
         # @return [ String ] The url of the robots.txt file
@@ -8,7 +8,7 @@ module CMSScanner
           target.url('robots.txt')
         end
 
-        # @return [ InterestingFile ]
+        # @return [ InterestingFinding ]
         def aggressive(_opts = {})
           res = NS::Browser.get(url)
 

@@ -1,8 +1,8 @@
 
-shared_examples 'App::Views::InterestingFiles' do
-  let(:controller)       { CMSScanner::Controller::InterestingFiles.new }
+shared_examples 'App::Views::InterestingFindings' do
+  let(:controller)       { CMSScanner::Controller::InterestingFindings.new }
   let(:tpl_vars)         { { url: target_url } }
-  let(:interesting_file) { CMSScanner::InterestingFile }
+  let(:interesting_file) { CMSScanner::InterestingFinding }
 
   describe 'findings' do
     let(:view) { 'findings' }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CMSScanner::Controller::InterestingFiles do
+describe CMSScanner::Controller::InterestingFindings do
   subject(:controller) { described_class.new }
   let(:target_url)     { 'http://example.com/' }
   let(:parsed_options) { { url: target_url } }
@@ -18,15 +18,15 @@ describe CMSScanner::Controller::InterestingFiles do
     its(:cli_options) { should be_a Array }
 
     it 'contains to correct options' do
-      expect(controller.cli_options.map(&:to_sym)).to eq [:interesting_files_detection]
+      expect(controller.cli_options.map(&:to_sym)).to eq [:interesting_findings_detection]
     end
   end
 
   describe '#run' do
     before do
-      expect(controller.target).to receive(:interesting_files)
+      expect(controller.target).to receive(:interesting_findings)
         .with(
-          mode: parsed_options[:interesting_files_detection] || parsed_options[:detection_mode]
+          mode: parsed_options[:interesting_findings_detection] || parsed_options[:detection_mode]
         ).and_return(stubbed)
     end
 
@@ -47,7 +47,7 @@ describe CMSScanner::Controller::InterestingFiles do
 
           context 'when --interesting-files-detection mode supplied' do
             let(:parsed_options) do
-              super().merge(interesting_files_detection: :passive)
+              super().merge(interesting_findings_detection: :passive)
             end
 
             it 'gives the correct detection paramter' do
@@ -61,7 +61,7 @@ describe CMSScanner::Controller::InterestingFiles do
 
           it 'calls the formatter with the correct parameter' do
             expect(controller.formatter).to receive(:output)
-              .with('findings', hash_including(findings: stubbed), 'interesting_files')
+              .with('findings', hash_including(findings: stubbed), 'interesting_findings')
           end
         end
       end

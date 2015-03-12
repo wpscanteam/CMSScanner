@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CMSScanner::Finders::InterestingFiles::SearchReplaceDB2 do
+describe CMSScanner::Finders::InterestingFindings::SearchReplaceDB2 do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
@@ -40,8 +40,8 @@ describe CMSScanner::Finders::InterestingFiles::SearchReplaceDB2 do
       context 'when the body matches' do
         let(:body) { File.new(File.join(fixtures, 'searchreplacedb2.php')).read }
 
-        it 'returns the InterestingFile result' do
-          @expected = CMSScanner::InterestingFile.new(
+        it 'returns the InterestingFinding result' do
+          @expected = CMSScanner::InterestingFinding.new(
             file,
             confidence: 100,
             found_by: 'Search Replace Db2 (Aggressive Detection)'

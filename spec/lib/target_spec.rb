@@ -4,26 +4,26 @@ describe CMSScanner::Target do
   subject(:target) { described_class.new(url) }
   let(:url)        { 'http://e.org' }
 
-  describe '#interesting_files' do
+  describe '#interesting_findings' do
     before do
-      expect(CMSScanner::Finders::InterestingFiles::Base).to receive(:find).and_return(stubbed)
+      expect(CMSScanner::Finders::InterestingFindings::Base).to receive(:find).and_return(stubbed)
     end
 
     context 'when no findings' do
       let(:stubbed) { [] }
 
-      its(:interesting_files) { should eq stubbed }
+      its(:interesting_findings) { should eq stubbed }
     end
 
     context 'when findings' do
       let(:stubbed) { ['yolo'] }
 
       it 'allows findings to be added with <<' do
-        expect(target.interesting_files).to eq stubbed
+        expect(target.interesting_findings).to eq stubbed
 
-        target.interesting_files << 'other-finding'
+        target.interesting_findings << 'other-finding'
 
-        expect(target.interesting_files).to eq(stubbed << 'other-finding')
+        expect(target.interesting_findings).to eq(stubbed << 'other-finding')
       end
     end
   end

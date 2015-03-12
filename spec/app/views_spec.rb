@@ -9,7 +9,7 @@ describe 'App::Views' do
   [:JSON, :CliNoColour].each do |formatter|
     context "when #{formatter}" do
       it_behaves_like 'App::Views::Core'
-      it_behaves_like 'App::Views::InterestingFiles'
+      it_behaves_like 'App::Views::InterestingFindings'
 
       let(:parsed_options) { { url: target_url, format: formatter.to_s.underscore.dasherize } }
 

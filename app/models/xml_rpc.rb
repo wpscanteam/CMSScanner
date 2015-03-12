@@ -1,6 +1,6 @@
 module CMSScanner
   # XML RPC
-  class XMLRPC < InterestingFile
+  class XMLRPC < InterestingFinding
     # @param [ String ] method
     # @param [ Array ] params
     # @param [ Hash ] request_params

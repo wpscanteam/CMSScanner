@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CMSScanner::Finders::InterestingFiles::RobotsTxt do
+describe CMSScanner::Finders::InterestingFindings::RobotsTxt do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
@@ -43,7 +43,7 @@ describe CMSScanner::Finders::InterestingFiles::RobotsTxt do
       context 'when the body matches a robots.txt' do
         let(:body) { File.new(File.join(fixtures, 'robots.txt')).read }
 
-        it 'returns the InterestingFile result' do
+        it 'returns the InterestingFinding result' do
           @expected = CMSScanner::RobotsTxt.new(robots_txt,
                                                 confidence: 100,
                                                 found_by: 'Robots Txt (Aggressive Detection)')

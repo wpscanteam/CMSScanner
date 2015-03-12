@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CMSScanner::Finders::InterestingFiles::Headers do
+describe CMSScanner::Finders::InterestingFindings::Headers do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }

@@ -22,8 +22,8 @@ module CMSScanner
     # @param [ Hash ] opts
     #
     # @return [ Findings ]
-    def interesting_files(opts = {})
-      @interesting_files ||= NS::Finders::InterestingFiles::Base.find(self, opts)
+    def interesting_findings(opts = {})
+      @interesting_findings ||= NS::Finders::InterestingFindings::Base.find(self, opts)
     end
 
     # @param [ Regexp ] pattern

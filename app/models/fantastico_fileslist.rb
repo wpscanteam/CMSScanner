@@ -1,6 +1,6 @@
 module CMSScanner
   # FantasticoFileslist
-  class FantasticoFileslist < InterestingFile
+  class FantasticoFileslist < InterestingFinding
     # @return [ Array<String> ] The interesting files/dirs detected
     def interesting_entries
       results = []

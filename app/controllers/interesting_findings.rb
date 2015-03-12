@@ -1,12 +1,12 @@
 module CMSScanner
   module Controller
-    # InterestingFiles Controller
-    class InterestingFiles < Base
+    # InterestingFindings Controller
+    class InterestingFindings < Base
       def cli_options
         [
           OptChoice.new(
-            ['--interesting-files-detection MODE',
-             'Use the supplied mode for the interesting files detection. ' \
+            ['--interesting-findings-detection MODE',
+             'Use the supplied mode for the interesting findings detection. ' \
              'Modes: mixed, passive, aggressive'
             ],
             choices: %w(mixed passive aggressive),
@@ -15,8 +15,8 @@ module CMSScanner
       end
 
       def run
-        mode     = parsed_options[:interesting_files_detection] || parsed_options[:detection_mode]
-        findings = target.interesting_files(mode: mode)
+        mode = parsed_options[:interesting_findings_detection] || parsed_options[:detection_mode]
+        findings = target.interesting_findings(mode: mode)
 
         output('findings', findings: findings) unless findings.empty?
       end

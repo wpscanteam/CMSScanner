@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CMSScanner::Finders::InterestingFiles::XMLRPC do
+describe CMSScanner::Finders::InterestingFindings::XMLRPC do
   subject(:finder)  { described_class.new(target) }
   let(:target)      { CMSScanner::Target.new(url) }
   let(:url)         { 'http://e.org/' }
@@ -124,7 +124,7 @@ describe CMSScanner::Finders::InterestingFiles::XMLRPC do
     context 'when the body matches' do
       let(:body) { File.new(File.join(fixtures, 'xmlrpc.php')).read }
 
-      it 'returns the InterestingFile result' do
+      it 'returns the InterestingFinding result' do
         @expected = CMSScanner::XMLRPC.new(
           xml_rpc_url,
           confidence: 100,

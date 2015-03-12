@@ -1,6 +1,6 @@
 module CMSScanner
   # Robots.txt
-  class RobotsTxt < InterestingFile
+  class RobotsTxt < InterestingFinding
     # @todo Better detection, currently everything not empty or / is returned
     #
     # @return [ Array<String> ] The interesting Allow/Disallow rules detected

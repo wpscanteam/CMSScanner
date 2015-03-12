@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CMSScanner::Finders::InterestingFiles::FantasticoFileslist do
+describe CMSScanner::Finders::InterestingFindings::FantasticoFileslist do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
@@ -53,7 +53,7 @@ describe CMSScanner::Finders::InterestingFiles::FantasticoFileslist do
         let(:body)    { File.new(File.join(fixtures, 'fantastico_fileslist.txt')).read }
         let(:headers) { { 'Content-Type' => 'text/plain' } }
 
-        it 'returns the InterestingFile result' do
+        it 'returns the InterestingFinding result' do
           @expected = CMSScanner::FantasticoFileslist.new(
             file,
             confidence: 70,

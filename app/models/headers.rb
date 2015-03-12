@@ -1,6 +1,6 @@
 module CMSScanner
-  # Not really an interesting file, but will use this class for convenience
-  class Headers < InterestingFile
+  # Interesting Headers
+  class Headers < InterestingFinding
     # @return [ Hash ] The headers
     def entries
       res = NS::Browser.get(url)

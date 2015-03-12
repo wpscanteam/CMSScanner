@@ -1,9 +1,9 @@
 module CMSScanner
   module Finders
-    module InterestingFiles
+    module InterestingFindings
       # Interesting Headers finder
       class Headers < Finder
-        # @return [ InterestingFile ]
+        # @return [ InterestingFinding ]
         def passive(_opts = {})
           r = NS::Headers.new(target.url, confidence: 100, found_by: found_by)
 
