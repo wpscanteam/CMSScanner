@@ -5,7 +5,7 @@ describe CMSScanner::Finders::InterestingFindings::SearchReplaceDB2 do
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
   let(:file)       { url + 'searchreplacedb2.php' }
-  let(:fixtures)   { File.join(FIXTURES_FINDERS, 'interesting_files', 'search_replace_db_2') }
+  let(:fixtures)   { File.join(FIXTURES_FINDERS, 'interesting_findings', 'search_replace_db_2') }
 
   describe '#url' do
     its(:url) { should eq file }

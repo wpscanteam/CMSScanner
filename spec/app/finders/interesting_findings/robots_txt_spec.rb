@@ -5,7 +5,7 @@ describe CMSScanner::Finders::InterestingFindings::RobotsTxt do
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
   let(:robots_txt) { url + 'robots.txt' }
-  let(:fixtures)   { File.join(FIXTURES_FINDERS, 'interesting_files', 'robots_txt') }
+  let(:fixtures)   { File.join(FIXTURES_FINDERS, 'interesting_findings', 'robots_txt') }
 
   describe '#url' do
     its(:url) { should eq robots_txt }

@@ -5,7 +5,7 @@ describe CMSScanner::Finders::InterestingFindings::XMLRPC do
   let(:target)      { CMSScanner::Target.new(url) }
   let(:url)         { 'http://e.org/' }
   let(:xml_rpc_url) { url + 'xmlrpc.php' }
-  let(:fixtures)    { File.join(FIXTURES_FINDERS, 'interesting_files', 'xml_rpc') }
+  let(:fixtures)    { File.join(FIXTURES_FINDERS, 'interesting_findings', 'xml_rpc') }
 
   describe '#potential_urls' do
     its(:potential_urls) { should be_empty }

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CMSScanner::Headers do
   subject(:file) { described_class.new(url) }
   let(:url)      { 'http://example.com/' }
-  let(:fixtures) { File.join(FIXTURES_FINDERS, 'interesting_files', 'headers') }
+  let(:fixtures) { File.join(FIXTURES_FINDERS, 'interesting_findings', 'headers') }
   let(:fixture)  { File.join(fixtures, 'interesting.txt') }
   let(:headers)  { {} }
 

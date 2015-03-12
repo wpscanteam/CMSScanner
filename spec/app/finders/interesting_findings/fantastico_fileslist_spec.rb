@@ -5,7 +5,7 @@ describe CMSScanner::Finders::InterestingFindings::FantasticoFileslist do
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
   let(:file)       { url + 'fantastico_fileslist.txt' }
-  let(:fixtures)   { File.join(FIXTURES_FINDERS, 'interesting_files', 'fantastico_fileslist') }
+  let(:fixtures)   { File.join(FIXTURES_FINDERS, 'interesting_findings', 'fantastico_fileslist') }
 
   describe '#url' do
     its(:url) { should eq file }

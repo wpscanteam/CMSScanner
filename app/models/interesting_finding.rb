@@ -4,9 +4,16 @@ module CMSScanner
     include NS::Finders::Finding
 
     attr_reader :url
+    attr_writer :to_s
 
+    # @param [ String ] url
+    # @param [ Hash ] opts
+    #   :to_s (override the to_s method)
+    #   See Finders::Finding for other available options
     def initialize(url, opts = {})
-      @url = url
+      @url  = url
+      @to_s = opts[:to_s]
+
       parse_finding_options(opts)
     end
 
@@ -20,7 +27,7 @@ module CMSScanner
     end
 
     def to_s
-      url
+      @to_s || url
     end
 
     def ==(other)
