@@ -63,8 +63,16 @@ describe CMSScanner::InterestingFinding do
 
   describe '#==' do
     context 'when same URL' do
-      it 'returns true' do
-        expect(finding == described_class.new(url)).to be true
+      context 'when the same #to_s' do
+        it 'returns true' do
+          expect(finding == described_class.new(url)).to be true
+        end
+      end
+
+      context 'when different #to_s' do
+        it 'returns false' do
+          expect(finding == described_class.new(url, to_s: 'another')).to be false
+        end
       end
     end
 

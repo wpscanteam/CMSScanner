@@ -32,7 +32,7 @@ module CMSScanner
 
     def ==(other)
       return false unless self.class == other.class
-      url == other.url
+      to_s == other.to_s
     end
   end
 end
