@@ -24,6 +24,16 @@ shared_examples CMSScanner::Target::Server::Generic do
       end
     end
 
+    context 'when nginx headers' do
+      %w(basic.txt).each do |file|
+        context "when #{file} headers" do
+          let(:fixture) { File.join(fixtures, 'server', 'nginx', file) }
+
+          its(:server) { should eq :Nginx }
+        end
+      end
+    end
+
     context 'not detected' do
       let(:fixture) { File.join(fixtures, 'server', 'not_detected.txt') }
 

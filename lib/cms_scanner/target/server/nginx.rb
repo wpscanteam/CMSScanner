@@ -1,16 +1,19 @@
 module CMSScanner
   class Target < WebSite
     module Server
-      # Some IIS specific implementation
-      module IIS
+      # Some Nginx specific implementation
+      module Nginx
         # @param [ String ] path
         # @param [ Hash ] params The request params
         #
-        # @return [ Symbol ] :IIS
+        # @return [ Symbol ] :Nginx
         def server(_path = nil, _params = {})
-          :IIS
+          :Nginx
         end
 
+        # TODO: put this one in the Target / Website class
+        # as it's common to Apache & Nginx
+        #
         # @param [ String ] path
         # @param [ Hash ] params The request params
         #
@@ -19,7 +22,7 @@ module CMSScanner
         def directory_listing?(path = nil, params = {})
           res = NS::Browser.get(url(path), params)
 
-          res.code == 200 && res.body =~ /<H1>#{uri.host} - \// ? true : false
+          res.code == 200 && res.body =~ /<h1>Index of/ ? true : false
         end
 
         # @param [ String ] path
@@ -33,13 +36,10 @@ module CMSScanner
           found = []
 
           NS::Browser.get(url(path), params).html.css('pre a').each do |node|
-            entry = node.text.to_s
-
-            next if entry == '[To Parent Directory]'
-            found << entry
+            found << node.text.to_s
           end
 
-          found
+          found[1..-1] # returns the array w/o the first element '..'
         end
       end
     end

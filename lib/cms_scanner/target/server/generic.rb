@@ -1,7 +1,7 @@
 module CMSScanner
   class Target < WebSite
     module Server
-      # Some Apche specific implementation
+      # Generic Server methods
       module Generic
         # @param [ String ] path
         # @param [ Hash ] params The request params
@@ -17,6 +17,8 @@ module CMSScanner
             :Apache
           when /\AMicrosoft-IIS/i
             :IIS
+          when /nginx/
+            :Nginx
           end
         end
 

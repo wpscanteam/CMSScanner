@@ -6,7 +6,7 @@ module CMSScanner
         # @param [ String ] path
         # @param [ Hash ] params The request params
         #
-        # @return [ Symbol ] :apache
+        # @return [ Symbol ] :Apache
         def server(_path = nil, _params = {})
           :Apache
         end
