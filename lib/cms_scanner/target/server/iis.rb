@@ -21,26 +21,6 @@ module CMSScanner
 
           res.code == 200 && res.body =~ /<H1>#{uri.host} - \// ? true : false
         end
-
-        # @param [ String ] path
-        # @param [ Hash ] params The request params
-        #
-        # @return [ Array<String> ] The first level of directories/files listed,
-        #                           or an empty array if none
-        def directory_listing_entries(path = nil, params = {})
-          return [] unless directory_listing?(path, params)
-
-          found = []
-
-          NS::Browser.get(url(path), params).html.css('pre a').each do |node|
-            entry = node.text.to_s
-
-            next if entry == '[To Parent Directory]'
-            found << entry
-          end
-
-          found
-        end
       end
     end
   end

@@ -6,7 +6,7 @@ module CMSScanner
         # @param [ String ] path
         # @param [ Hash ] params The request params
         #
-        # @return [ Symbol ] The detected remote server (:Apache, :IIS)
+        # @return [ Symbol ] The detected remote server (:Apache, :IIS, :Nginx)
         def server(path = nil, params = {})
           headers = headers(path, params)
 
@@ -17,7 +17,7 @@ module CMSScanner
             :Apache
           when /\AMicrosoft-IIS/i
             :IIS
-          when /nginx/
+          when /\Anginx/
             :Nginx
           end
         end
@@ -40,6 +40,31 @@ module CMSScanner
           res = NS::Browser.get(url(path), params)
 
           res.code == 200 && res.body =~ /<h1>Index of/ ? true : false
+        end
+
+        # @param [ String ] path
+        # @param [ Hash ] params The request params
+        # @param [ String ] selector
+        # @param [ Regexp ] ignore
+        #
+        # @return [ Array<String> ] The first level of directories/files listed,
+        #                           or an empty array if none
+        def directory_listing_entries(
+          path = nil, params = {},
+          selector = 'pre a', ignore = /parent directory/i
+        )
+          return [] unless directory_listing?(path, params)
+
+          found = []
+
+          NS::Browser.get(url(path), params).html.css(selector).each do |node|
+            entry = node.text.to_s
+
+            next if entry =~ ignore
+            found << entry
+          end
+
+          found
         end
       end
     end

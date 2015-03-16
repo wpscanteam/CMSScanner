@@ -28,5 +28,15 @@ shared_examples CMSScanner::Target::Server::Apache do
         expect(target.directory_listing_entries(path)).to eq %w(backup.php database-empty.php)
       end
     end
+
+    context 'when no files nor folders' do
+      let(:status) { 200 }
+      let(:body)   { File.read(File.join(fixtures, 'directory_listing', 'empty.html')) }
+
+      it 'returns true and the an empty array' do
+        expect(target.directory_listing?(path)).to be true
+        expect(target.directory_listing_entries(path)).to eql []
+      end
+    end
   end
 end

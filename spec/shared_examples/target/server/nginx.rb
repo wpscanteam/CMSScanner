@@ -25,7 +25,17 @@ shared_examples CMSScanner::Target::Server::Nginx do
 
       it 'returns true and the expected array' do
         expect(target.directory_listing?(path)).to be true
-        expect(target.directory_listing_entries(path)).to eq %w(1931/ 720/ down)
+        expect(target.directory_listing_entries(path)).to eql %w(1931/ 720/ down)
+      end
+    end
+
+    context 'when no files nor folders' do
+      let(:status) { 200 }
+      let(:body)   { File.read(File.join(fixtures, 'directory_listing', 'empty.html')) }
+
+      it 'returns true and the an empty array' do
+        expect(target.directory_listing?(path)).to be true
+        expect(target.directory_listing_entries(path)).to eql []
       end
     end
   end
