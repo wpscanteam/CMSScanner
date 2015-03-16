@@ -40,4 +40,8 @@ shared_examples CMSScanner::Target::Server::Generic do
       its(:server) { should be nil }
     end
   end
+
+  describe '#directory_listing?' do
+    # Handled in shared_examples/target/server/apache & nginx
+  end
 end

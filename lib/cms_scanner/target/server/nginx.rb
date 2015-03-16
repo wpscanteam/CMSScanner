@@ -11,20 +11,6 @@ module CMSScanner
           :Nginx
         end
 
-        # TODO: put this one in the Target / Website class
-        # as it's common to Apache & Nginx
-        #
-        # @param [ String ] path
-        # @param [ Hash ] params The request params
-        #
-        # @return [ Boolean ] true if url(path) has the directory
-        #                          listing enabled, false otherwise
-        def directory_listing?(path = nil, params = {})
-          res = NS::Browser.get(url(path), params)
-
-          res.code == 200 && res.body =~ /<h1>Index of/ ? true : false
-        end
-
         # @param [ String ] path
         # @param [ Hash ] params The request params
         #

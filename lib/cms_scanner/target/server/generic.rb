@@ -30,6 +30,17 @@ module CMSScanner
           # The HEAD method might be rejected by some servers ... maybe switch to GET ?
           NS::Browser.head(url(path), params).headers
         end
+
+        # @param [ String ] path
+        # @param [ Hash ] params The request params
+        #
+        # @return [ Boolean ] true if url(path) has the directory
+        #                          listing enabled, false otherwise
+        def directory_listing?(path = nil, params = {})
+          res = NS::Browser.get(url(path), params)
+
+          res.code == 200 && res.body =~ /<h1>Index of/ ? true : false
+        end
       end
     end
   end
