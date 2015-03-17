@@ -72,7 +72,12 @@ describe CMSScanner::Browser do
     context 'when no options' do
       it 'does not load anything' do
         described_class::OPTIONS.each do |sym|
-          expected = sym == :user_agent ? "CMSScanner v#{CMSScanner::VERSION}" : nil
+          expected = case sym
+                     when :user_agent
+                       described_class::DEFAULT_USER_AGENT
+                     when :user_agents_list
+                       File.join(CMSScanner::APP_DIR, 'user_agents.txt')
+                     end
 
           expect(browser.send(sym)).to eq expected
         end
@@ -89,7 +94,7 @@ describe CMSScanner::Browser do
 
       let(:options) do
         { cache_ttl: 200, max_threads: 10, test: 'should not be set',
-          user_agent: 'UA', proxy: false }
+          user_agent: 'UA', proxy: false, user_agents_list: 'test.txt' }
       end
 
       it 'merges the browser options only' do
@@ -137,5 +142,37 @@ describe CMSScanner::Browser do
         @expected = @threads
       end
     end
+  end
+
+  describe '#user_agent' do
+    context 'when no --random-user-agent' do
+      context 'when no --user-agent' do
+        its(:user_agent) { should eql described_class::DEFAULT_USER_AGENT }
+      end
+
+      context 'when --user-agent' do
+        let(:options) { super().merge(user_agent: 'Test UA') }
+
+        its(:user_agent) { should eql 'Test UA' }
+      end
+    end
+
+    context 'when --random-user-agent' do
+      let(:options) { super().merge(random_user_agent: true) }
+
+      it 'select a random UA each time' do
+        ua_1 = browser.user_agent
+        ua_2 = browser.user_agent
+        ua_3 = browser.user_agent
+
+        expect(ua_1 == ua_2 && ua_1 == ua_3).to be false
+      end
+    end
+  end
+
+  describe '#user_agents' do
+    let(:options) { { user_agents_list: File.join(FIXTURES, 'user_agents.txt') } }
+
+    its(:user_agents) { should eql %w(UA-1 UA-2) }
   end
 end

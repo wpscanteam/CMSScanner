@@ -25,6 +25,10 @@ module CMSScanner
       def cli_browser_options
         [
           OptString.new(['--user-agent VALUE', '--ua']),
+          OptBoolean.new(['--random-user-agent', '--rua',
+                          'Use a random user-agent for each request']),
+          OptFilePath.new(['--user-agents-list FILE-PATH',
+                           'List of agents to use with --random-user-agent'], exists: true),
           OptCredentials.new(['--http-auth login:password']),
           OptPositiveInteger.new(['--max-threads VALUE', '-t', 'The max threads to use'],
                                  default: 5),
