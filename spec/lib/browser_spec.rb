@@ -162,6 +162,8 @@ describe CMSScanner::Browser do
 
       it 'select a random UA in the user_agents' do
         expect(browser.user_agent).to_not eql browser.default_user_agent
+        # Should not pick up a random one each time
+        expect(browser.user_agent).to eql browser.user_agent
       end
     end
   end
