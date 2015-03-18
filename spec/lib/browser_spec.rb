@@ -74,7 +74,7 @@ describe CMSScanner::Browser do
         described_class::OPTIONS.each do |sym|
           expected = case sym
                      when :user_agent
-                       described_class::DEFAULT_USER_AGENT
+                       browser.default_user_agent
                      when :user_agents_list
                        File.join(CMSScanner::APP_DIR, 'user_agents.txt')
                      end
@@ -147,7 +147,7 @@ describe CMSScanner::Browser do
   describe '#user_agent' do
     context 'when no --random-user-agent' do
       context 'when no --user-agent' do
-        its(:user_agent) { should eql described_class::DEFAULT_USER_AGENT }
+        its(:user_agent) { should eql browser.default_user_agent }
       end
 
       context 'when --user-agent' do

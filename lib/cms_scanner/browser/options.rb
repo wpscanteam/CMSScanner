@@ -18,8 +18,6 @@ module CMSScanner
 
     attr_accessor(*OPTIONS)
 
-    DEFAULT_USER_AGENT = "CMSScanner v#{VERSION}"
-
     # @param [ Hash ] options
     def load_options(options = {})
       OPTIONS.each do |sym|
@@ -59,11 +57,16 @@ module CMSScanner
       @user_agents
     end
 
+    # @return [ String ]
+    def default_user_agent
+      "CMSScanner v#{VERSION}"
+    end
+
     # @return [ String ] The user agent
     def user_agent
       return user_agents.sample if random_user_agent
 
-      @user_agent ||= DEFAULT_USER_AGENT
+      @user_agent ||= default_user_agent
     end
   end
 end
