@@ -26,7 +26,7 @@ module CMSScanner
         [
           OptString.new(['--user-agent VALUE', '--ua']),
           OptBoolean.new(['--random-user-agent', '--rua',
-                          'Use a random user-agent for each request']),
+                          'Use a random user-agent for each scan']),
           OptFilePath.new(['--user-agents-list FILE-PATH',
                            'List of agents to use with --random-user-agent'], exists: true),
           OptCredentials.new(['--http-auth login:password']),

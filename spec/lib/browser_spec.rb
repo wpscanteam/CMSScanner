@@ -160,12 +160,8 @@ describe CMSScanner::Browser do
     context 'when --random-user-agent' do
       let(:options) { super().merge(random_user_agent: true) }
 
-      it 'select a random UA each time' do
-        ua_1 = browser.user_agent
-        ua_2 = browser.user_agent
-        ua_3 = browser.user_agent
-
-        expect(ua_1 == ua_2 && ua_1 == ua_3).to be false
+      it 'select a random UA in the user_agents' do
+        expect(browser.user_agent).to_not eql browser.default_user_agent
       end
     end
   end

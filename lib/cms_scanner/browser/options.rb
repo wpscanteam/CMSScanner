@@ -64,9 +64,7 @@ module CMSScanner
 
     # @return [ String ] The user agent
     def user_agent
-      return user_agents.sample if random_user_agent
-
-      @user_agent ||= default_user_agent
+      @user_agent ||= random_user_agent ? user_agents.sample : default_user_agent
     end
   end
 end
