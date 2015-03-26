@@ -6,6 +6,8 @@ module CMSScanner
       #
       # @param [ Finding ] finding
       def <<(finding)
+        return self unless finding
+
         each do |found|
           next unless found == finding
 

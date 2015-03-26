@@ -5,6 +5,8 @@ module CMSScanner
         # Findings
         class Findings < Array
           def <<(finding)
+            return self unless finding
+
             each do |f|
               next unless f == finding && f.found_by == finding.found_by
 

@@ -19,9 +19,9 @@ describe CMSScanner::Finders::Finder::SmartURLChecker::Findings do
       let(:confirmed) { finding.new('confirmed', interesting_entries: entries) }
       let(:entries)   { %w(e1 e2) }
 
-      before { findings << finding.new('test') << confirmed }
+      before { findings << nil << nil << finding.new('test') << confirmed }
 
-      it 'adds a confirmed result correctly' do
+      it 'adds a confirmed result correctly and ignore nil values' do
         confirmed_dup = confirmed.dup
         confirmed_dup.confidence = 100
         confirmed_dup.interesting_entries = %w(e2 e3)

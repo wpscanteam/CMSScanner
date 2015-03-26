@@ -18,9 +18,9 @@ describe CMSScanner::Finders::Findings do
     context 'when findings already in' do
       let(:confirmed) { finding.new('confirmed') }
 
-      before { findings << finding.new('test') << confirmed }
+      before { findings << nil << nil << finding.new('test') << confirmed }
 
-      it 'adds a confirmed result correctly' do
+      it 'adds a confirmed result correctly and ignore the nil values' do
         confirmed_dup = confirmed.dup
         confirmed_dup.confidence = 100
 
