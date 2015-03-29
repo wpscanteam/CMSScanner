@@ -7,8 +7,6 @@ module CMSScanner
     class SameTypeFinders < IndependentFinders
       # @param [ Hash ] opts
       # @option opts [ Symbol ] :mode :mixed, :passive or :aggressive
-      # @option opts [ Boolean ] :vulnerable Only return vulnerable findings
-      #                                     (which must respond to :vulnerable?)
       # @option opts [ Boolean ] :sort Wether or not to sort the findings
       #
       # @return [ Findings ]
@@ -21,8 +19,7 @@ module CMSScanner
           end
         end
 
-        findings.select!(&:vulnerable?) if opts[:vulnerable]
-        findings.sort!                  if opts[:sort]
+        findings.sort! if opts[:sort]
 
         findings
       end
