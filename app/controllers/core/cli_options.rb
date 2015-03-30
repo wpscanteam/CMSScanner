@@ -32,9 +32,10 @@ module CMSScanner
           OptCredentials.new(['--http-auth login:password']),
           OptPositiveInteger.new(['--max-threads VALUE', '-t', 'The max threads to use'],
                                  default: 5),
-          OptPositiveInteger.new(['--request-timeout SECONDS', 'The request timeout in seconds']),
-          OptPositiveInteger.new(['--connect-timeout SECONDS',
-                                  'The connection timeout in seconds'])
+          OptPositiveInteger.new(['--request-timeout SECONDS', 'The request timeout in seconds'],
+                                 default: 4),
+          OptPositiveInteger.new(['--connect-timeout SECONDS', 'The connection timeout in seconds'],
+                                 default: 2)
         ] + cli_browser_proxy_options + cli_browser_cookies_options + cli_browser_cache_options
       end
 
