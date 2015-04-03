@@ -33,9 +33,9 @@ module CMSScanner
           OptPositiveInteger.new(['--max-threads VALUE', '-t', 'The max threads to use'],
                                  default: 5),
           OptPositiveInteger.new(['--request-timeout SECONDS', 'The request timeout in seconds'],
-                                 default: 4),
+                                 default: 60),
           OptPositiveInteger.new(['--connect-timeout SECONDS', 'The connection timeout in seconds'],
-                                 default: 2)
+                                 default: 5)
         ] + cli_browser_proxy_options + cli_browser_cookies_options + cli_browser_cache_options
       end
 
