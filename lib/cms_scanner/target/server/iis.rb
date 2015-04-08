@@ -19,7 +19,7 @@ module CMSScanner
         def directory_listing?(path = nil, params = {})
           res = NS::Browser.get(url(path), params)
 
-          res.code == 200 && res.body =~ /<H1>#{uri.host} - \// ? true : false
+          res.code == 200 && res.body =~ %r{<H1>#{uri.host} - /} ? true : false
         end
       end
     end

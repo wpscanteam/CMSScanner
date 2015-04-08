@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.license               = 'MIT'
 
   s.files                 = `git ls-files -z`.split("\x0").reject do |file|
-    file =~ /^(?:
+    file =~ %r{^(?:
       spec\/.*
       |Gemfile
       |Rakefile
@@ -25,10 +25,10 @@ Gem::Specification.new do |s|
       |\.gitignore
       |\.rubocop.yml
       |\.travis.yml
-      )$/x
+      )$}x
   end
   s.test_files            = []
-  s.executables           = s.files.grep(/^bin\//) { |f| File.basename(f) }
+  s.executables           = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.require_path          = 'lib'
 
   s.add_dependency 'opt_parse_validator', '~> 0.0.9'
@@ -36,14 +36,14 @@ Gem::Specification.new do |s|
   s.add_dependency 'nokogiri', '~> 1.6'
   s.add_dependency 'addressable', '~> 2.3'
   s.add_dependency 'activesupport', '~> 4.2'
-  s.add_dependency 'public_suffix', '~> 1.4'
-  s.add_dependency 'ruby-progressbar', '~> 1.7.1'
+  s.add_dependency 'public_suffix', '~> 1.5'
+  s.add_dependency 'ruby-progressbar', '~> 1.7'
 
   s.add_development_dependency 'rake', '~> 10.4'
   s.add_development_dependency 'rspec', '~> 3.2'
   s.add_development_dependency 'rspec-its', '~> 1.2'
   s.add_development_dependency 'bundler', '~> 1.6'
-  s.add_development_dependency 'rubocop', '~> 0.29'
-  s.add_development_dependency 'webmock', '~> 1.20'
+  s.add_development_dependency 'rubocop', '~> 0.30'
+  s.add_development_dependency 'webmock', '~> 1.21'
   s.add_development_dependency 'simplecov', '~> 0.9'
 end

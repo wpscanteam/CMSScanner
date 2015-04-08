@@ -11,7 +11,7 @@ module CMSScanner
       #
       # @return [ Formatter::Base ]
       def load(format = nil, custom_views = nil)
-        format       ||= 'cli'
+        format ||= 'cli'
         custom_views ||= []
 
         f = const_get(format.gsub(/-/, '_').camelize).new
@@ -113,9 +113,9 @@ module CMSScanner
           tpl = "#{controller_name}/#{tpl}"
         end
 
-        fail "Wrong tpl format: '#{tpl}'" unless tpl =~ /\A[\w\/_]+\z/
+        fail "Wrong tpl format: '#{tpl}'" unless tpl =~ %r{\A[\w/_]+\z}
 
-        views_directories.reverse.each do |dir|
+        views_directories.reverse_each do |dir|
           formats.each do |format|
             potential_file = File.join(dir, format, "#{tpl}.erb")
 

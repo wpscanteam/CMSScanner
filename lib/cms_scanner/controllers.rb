@@ -28,7 +28,7 @@ module CMSScanner
 
       each(&:before_scan)
       each(&:run)
-      reverse.each(&:after_scan)
+      reverse_each(&:after_scan)
     end
   end
 end
