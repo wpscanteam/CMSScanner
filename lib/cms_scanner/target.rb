@@ -36,7 +36,7 @@ module CMSScanner
       matches = []
 
       page.html.xpath('//comment()').each do |node|
-        next unless node.text.to_s.strip =~ pattern
+        next unless node.text.strip =~ pattern
 
         yield Regexp.last_match, node if block_given?
 

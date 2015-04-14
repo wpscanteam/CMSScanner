@@ -64,7 +64,7 @@ describe CMSScanner::Target do
   end
 
   describe '#in_scope_urls' do
-    let(:res) { Typhoeus::Response.new(body: File.open(File.join(fixtures, 'index.html'))) }
+    let(:res) { Typhoeus::Response.new(body: File.read(File.join(fixtures, 'index.html'))) }
 
     context 'when block given' do
       it 'yield the url' do

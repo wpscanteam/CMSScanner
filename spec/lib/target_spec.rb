@@ -65,5 +65,13 @@ describe CMSScanner::Target do
         end
       end
     end
+
+    context 'when invalid byte sequence' do
+      let(:page) { Typhoeus::Response.new(body: "<!-- \xEB -->") }
+
+      it 'does not raise an error' do
+        expect { target.comments_from_page(/none/, page) }.to_not raise_error
+      end
+    end
   end
 end
