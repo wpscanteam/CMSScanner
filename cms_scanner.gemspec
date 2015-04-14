@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.name                  = 'cms_scanner'
   s.version               = CMSScanner::VERSION
   s.platform              = Gem::Platform::RUBY
-  s.required_ruby_version = '>= 2.0.0'
+  s.required_ruby_version = '>= 2.1.0'
   s.authors               = ['WPScanTeam - Erwan Le Rousseau']
   s.email                 = ['erwan.lr@gmail.com']
   s.summary               = 'Experimental CMSScanner'
