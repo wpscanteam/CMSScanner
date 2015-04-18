@@ -17,7 +17,7 @@ module CMSScanner
       # Use the validator to ensure the site_url has a correct format
       OptParseValidator::OptURL.new([]).validate(site_url)
 
-      @uri = Addressable::URI.parse(site_url)
+      @uri = Addressable::URI.parse(site_url).normalize
     end
 
     # Used for convenience

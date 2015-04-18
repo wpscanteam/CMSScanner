@@ -28,6 +28,14 @@ describe CMSScanner::WebSite do
         expect(web_site.uri).to be_a Addressable::URI
       end
     end
+
+    context 'when non ascii chars' do
+      it 'normalize it' do
+        web_site.url = 'http://пример.испытание/'
+
+        expect(web_site.url).to eql 'http://xn--e1afmkfd.xn--80akhbyknj4f/'
+      end
+    end
   end
 
   describe '#url' do
