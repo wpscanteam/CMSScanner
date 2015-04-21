@@ -35,7 +35,7 @@ module CMSScanner
           OptPositiveInteger.new(['--request-timeout SECONDS', 'The request timeout in seconds'],
                                  default: 60),
           OptPositiveInteger.new(['--connect-timeout SECONDS', 'The connection timeout in seconds'],
-                                 default: 5)
+                                 default: 30)
         ] + cli_browser_proxy_options + cli_browser_cookies_options + cli_browser_cache_options
       end
 
