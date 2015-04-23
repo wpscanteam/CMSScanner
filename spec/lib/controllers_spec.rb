@@ -38,6 +38,10 @@ describe CMSScanner::Controllers do
 
       controllers << base << spec
 
+      # Needed otherwise the default_argv is taken from rspec
+      # (@default_argv=["--pattern", "spec/**{,/*/**}/*_spec.rb"]>)
+      expect(controllers.option_parser).to receive(:results).and_return({})
+
       [base, spec].each { |c| expect(c).to receive(:before_scan).ordered }
       [base, spec].each { |c| expect(c).to receive(:run).ordered }
       [spec, base].each { |c| expect(c).to receive(:after_scan).ordered }

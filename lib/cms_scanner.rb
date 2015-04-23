@@ -67,6 +67,8 @@ module CMSScanner
 
     def run
       controllers.run
+    rescue OptParseValidator::NoRequiredOption => e
+      formatter.output('@usage', msg: e.message)
     rescue => e
       formatter.output('@scan_aborted',
                        reason: e.message,

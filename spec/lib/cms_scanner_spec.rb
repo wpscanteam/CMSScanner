@@ -34,32 +34,45 @@ describe CMSScanner do
 end
 
 describe CMSScanner::Scan do
-  subject(:scanner) { described_class.new }
-  let(:controller)  { CMSScanner::Controller }
+  subject(:scanner)    { described_class.new }
+  let(:controller)     { CMSScanner::Controller }
 
   describe '#new, #controllers' do
     its(:controllers) { should eq([controller::Core.new]) }
   end
 
   describe '#run' do
+    after { scanner.run }
+
     it 'runs the controlllers and calls the formatter#beautify' do
       hydra = CMSScanner::Browser.instance.hydra
 
       expect(scanner.controllers).to receive(:run).ordered
       expect(hydra).to receive(:abort).ordered
       expect(scanner.formatter).to receive(:beautify).ordered
+    end
 
-      scanner.run
+    # Maybe there is a way to give the parser the raw ARGV to parse, instead
+    # of use the expect on the results
+    context 'when no required option supplied' do
+      it 'calls the formatter to display the usage view' do
+        expect(scanner.controllers.option_parser)
+          .to receive(:results)
+          .and_raise(OptParseValidator::NoRequiredOption, 'The option url is required')
+
+        expect(scanner.formatter).to receive(:output)
+          .with('@usage', msg: 'The option url is required')
+      end
     end
 
     context 'when an error is raised during the #run' do
       it 'aborts the scan with the associated output' do
         scanner.controllers[0] = controller::SpecFailure.new
 
+        expect(scanner.controllers.option_parser).to receive(:results)
+
         expect(scanner.formatter).to receive(:output)
           .with('@scan_aborted', hash_including(:reason, :trace, :verbose))
-
-        scanner.run
       end
     end
   end

@@ -31,7 +31,7 @@ Gem::Specification.new do |s|
   s.executables           = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.require_path          = 'lib'
 
-  s.add_dependency 'opt_parse_validator', '~> 0.0.10'
+  s.add_dependency 'opt_parse_validator', '~> 0.0.11'
   s.add_dependency 'typhoeus', '~> 0.7'
   s.add_dependency 'nokogiri', '~> 1.6'
   s.add_dependency 'addressable', '~> 2.3'
