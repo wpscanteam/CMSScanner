@@ -53,6 +53,7 @@ module CMSScanner
 
           return "#{titleize} (#{label.capitalize} Detection)"
         end
+        nil
       end
     end
   end
