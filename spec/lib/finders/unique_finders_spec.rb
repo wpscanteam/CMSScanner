@@ -68,7 +68,6 @@ describe CMSScanner::Finders::UniqueFinders do
       expect(result).to eql @expected
     end
 
-    # Used to be able to test the calls order and returned result at the same time
     let(:dummy_passive)     { unique_finders::Dummy.new(target).passive(opts) }
     let(:dummy_aggresssive) { unique_finders::Dummy.new(target).aggressive(opts) }
     let(:noaggressive)      { unique_finders::NoAggressive.new(target).passive(opts) }
@@ -83,22 +82,20 @@ describe CMSScanner::Finders::UniqueFinders do
         it 'calls all #passive then #aggressive on finders and returns the best result' do
           # Maybe there is a way to factorise this
           expect(finders[0]).to receive(:passive)
-            .with(hash_including(found: [])).ordered
-            .and_return(dummy_passive)
+            .with(hash_including(found: [])).ordered.and_call_original
 
           expect(finders[1]).to receive(:passive)
-            .with(hash_including(found: [dummy_passive.first])).ordered
-            .and_return(noaggressive)
+            .with(hash_including(found: [dummy_passive.first])).ordered.and_call_original
 
           expect(finders[2]).to receive(:passive)
             .with(hash_including(found: [dummy_passive.first, noaggressive])).ordered
 
           expect(finders[0]).to receive(:aggressive).with(hash_including(:found)).ordered
-            .and_return(dummy_aggresssive)
+            .and_call_original
 
           expect(finders[1]).to receive(:aggressive).with(hash_including(:found)).ordered
           expect(finders[2]).to receive(:aggressive).with(hash_including(:found)).ordered
-            .and_return(dummy2_aggressive)
+            .and_call_original
 
           @expected = finding.new('v1', confidence: 100, found_by: 'Dummy (Passive Detection)')
           @expected.confirmed_by << finding.new('v1', confidence: 100, found_by: 'override')
@@ -111,12 +108,10 @@ describe CMSScanner::Finders::UniqueFinders do
 
         it 'calls #passive on all finders and returns the best result' do
           expect(finders[0]).to receive(:passive)
-            .with(hash_including(found: [])).ordered
-            .and_return(dummy_passive)
+            .with(hash_including(found: [])).ordered.and_call_original
 
           expect(finders[1]).to receive(:passive)
-            .with(hash_including(found: [dummy_passive.first])).ordered
-            .and_return(noaggressive)
+            .with(hash_including(found: [dummy_passive.first])).ordered.and_call_original
 
           expect(finders[2]).to receive(:passive)
             .with(hash_including(found: [dummy_passive.first, noaggressive])).ordered
@@ -135,15 +130,13 @@ describe CMSScanner::Finders::UniqueFinders do
           finders.each { |f| expect(f).to_not receive(:passive) }
 
           expect(finders[0]).to receive(:aggressive)
-            .with(hash_including(found: [])).ordered
-            .and_return(dummy_aggresssive)
+            .with(hash_including(found: [])).ordered.and_call_original
 
           expect(finders[1]).to receive(:aggressive)
             .with(hash_including(found: [dummy_aggresssive])).ordered
 
           expect(finders[2]).to receive(:aggressive)
-            .with(hash_including(:found)).ordered
-            .and_return(dummy2_aggressive)
+            .with(hash_including(:found)).ordered.and_call_original
 
           @expected = finding.new('v1', confidence: 100, found_by: 'override')
           @expected.confirmed_by << finding.new('v1', confidence: 90)
@@ -158,18 +151,16 @@ describe CMSScanner::Finders::UniqueFinders do
         it 'calls all #passive then #aggressive methods on finders and returns the '\
            'result which reaches 100% confidence during the process' do
           expect(finders[0]).to receive(:passive)
-            .with(hash_including(found: [])).ordered
-            .and_return(dummy_passive)
+            .with(hash_including(found: [])).ordered.and_call_original
 
           expect(finders[1]).to receive(:passive)
-            .with(hash_including(found: [dummy_passive.first])).ordered
-            .and_return(noaggressive)
+            .with(hash_including(found: [dummy_passive.first])).ordered.and_call_original
 
           expect(finders[2]).to receive(:passive)
             .with(hash_including(found: [dummy_passive.first, noaggressive])).ordered
 
           expect(finders[0]).to receive(:aggressive).with(hash_including(:found)).ordered
-            .and_return(dummy_aggresssive)
+            .and_call_original
 
           expect(finders[1]).to_not receive(:aggressive)
           expect(finders[2]).to_not receive(:aggressive)
@@ -184,12 +175,10 @@ describe CMSScanner::Finders::UniqueFinders do
 
         it 'calls all #passive and returns the best result' do
           expect(finders[0]).to receive(:passive)
-            .with(hash_including(found: [])).ordered
-            .and_return(dummy_passive)
+            .with(hash_including(found: [])).ordered.and_call_original
 
           expect(finders[1]).to receive(:passive)
-            .with(hash_including(found: [dummy_passive.first])).ordered
-            .and_return(noaggressive)
+            .with(hash_including(found: [dummy_passive.first])).ordered.and_call_original
 
           expect(finders[2]).to receive(:passive)
             .with(hash_including(found: [dummy_passive.first, noaggressive])).ordered
@@ -208,8 +197,7 @@ describe CMSScanner::Finders::UniqueFinders do
           finders.each { |f| expect(f).to_not receive(:passive) }
 
           expect(finders[0]).to receive(:aggressive)
-            .with(hash_including(found: [])).ordered
-            .and_return(dummy_aggresssive)
+            .with(hash_including(found: [])).ordered.and_call_original
 
           expect(finders[1]).to_not receive(:aggressive)
           expect(finders[2]).to_not receive(:aggressive)

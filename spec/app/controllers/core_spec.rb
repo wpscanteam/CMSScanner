@@ -70,7 +70,7 @@ describe CMSScanner::Controller::Core do
         stub_request(:get, target_url).to_return(status: 301, headers: { location: redirection })
 
         expect { core.before_scan }.to raise_error(
-          CMSScanner::HttpRedirectError, "The URL supplied redirects to #{redirection}"
+          CMSScanner::HTTPRedirectError, "The URL supplied redirects to #{redirection}"
         )
       end
 

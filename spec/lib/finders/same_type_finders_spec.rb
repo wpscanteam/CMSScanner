@@ -23,7 +23,6 @@ describe CMSScanner::Finders::SameTypeFinders do
       expect(result).to eql @expected
     end
 
-    # Used to be able to test the calls order and returned result at the same time
     let(:dummy_passive)     { independent_finders::DummyFinder.new(target).passive(opts) }
     let(:dummy_aggresssive) { independent_finders::DummyFinder.new(target).aggressive(opts) }
     let(:noaggressive)      { independent_finders::NoAggressiveResult.new(target).passive(opts) }
@@ -33,16 +32,14 @@ describe CMSScanner::Finders::SameTypeFinders do
 
       it 'calls all #passive then #aggressive on finders and returns the results' do
         expect(finders[0]).to receive(:passive)
-          .with(hash_including(found: [])).ordered
-          .and_return(dummy_passive)
+          .with(hash_including(found: [])).ordered.and_call_original
 
         expect(finders[1]).to receive(:passive)
-          .with(hash_including(found: [dummy_passive.first])).ordered
-          .and_return(noaggressive)
+          .with(hash_including(found: [dummy_passive.first])).ordered.and_call_original
 
         expect(finders[0]).to receive(:aggressive)
-          .with(hash_including(found: [dummy_passive.first, noaggressive])).ordered
-          .and_return(dummy_aggresssive)
+          .with(hash_including(found: [dummy_passive.first, noaggressive]))
+          .ordered.and_call_original
 
         expect(finders[1]).to receive(:aggressive)
           .with(hash_including(:found))
@@ -65,12 +62,10 @@ describe CMSScanner::Finders::SameTypeFinders do
 
       before do
         expect(finders[0]).to receive(:passive)
-          .with(hash_including(found: [])).ordered
-          .and_return(dummy_passive)
+          .with(hash_including(found: [])).ordered.and_call_original
 
         expect(finders[1]).to receive(:passive)
-          .with(hash_including(found: [dummy_passive.first])).ordered
-          .and_return(noaggressive)
+          .with(hash_including(found: [dummy_passive.first])).ordered.and_call_original
 
         finders.each { |f| expect(f).to_not receive(:aggressive) }
       end
@@ -113,8 +108,7 @@ describe CMSScanner::Finders::SameTypeFinders do
         finders.each { |f| expect(f).to_not receive(:passive) }
 
         expect(finders[0]).to receive(:aggressive)
-          .with(hash_including(found: [])).ordered
-          .and_return(dummy_aggresssive)
+          .with(hash_including(found: [])).ordered.and_call_original
 
         expect(finders[1]).to receive(:aggressive)
           .with(hash_including(found: [dummy_aggresssive])).ordered

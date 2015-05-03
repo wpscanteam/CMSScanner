@@ -21,8 +21,8 @@ module CMSScanner
     end
   end
 
-  # HttpRedirect Error
-  class HttpRedirectError < StandardError
+  # HTTP Redirect Error
+  class HTTPRedirectError < StandardError
     attr_reader :redirect_uri
 
     # @param [ String ] url
