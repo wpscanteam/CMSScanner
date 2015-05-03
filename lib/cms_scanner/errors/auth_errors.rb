@@ -16,8 +16,8 @@ module CMSScanner
   # Access Forbidden Error
   class AccessForbiddenError < StandardError
     def message
-      # TODO: add a --random-agent option
-      'The target is responding with a 403, this might be due to a WAF'
+      'The target is responding with a 403, this might be due to a WAF. ' \
+      'Please re-try with --random-user-agent'
     end
   end
 end
