@@ -63,14 +63,15 @@ describe CMSScanner::Controller::Core do
       end
 
       it 'raises an error when the site redirects' do
-        redirection = 'http://somewhere.com'
+        redirection = 'http://somewhere.com/'
 
         expect(core.target).to receive(:redirection).and_return(redirection)
 
         stub_request(:get, target_url).to_return(status: 301, headers: { location: redirection })
 
-        expect { core.before_scan }
-          .to raise_error("The url supplied redirects to #{redirection}")
+        expect { core.before_scan }.to raise_error(
+          CMSScanner::HttpRedirectError, "The URL supplied redirects to #{redirection}"
+        )
       end
 
       context 'when access is forbidden' do

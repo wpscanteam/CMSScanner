@@ -20,4 +20,18 @@ module CMSScanner
       'Please re-try with --random-user-agent'
     end
   end
+
+  # HttpRedirect Error
+  class HttpRedirectError < StandardError
+    attr_reader :redirect_uri
+
+    # @param [ String ] url
+    def initialize(url)
+      @redirect_uri = Addressable::URI.parse(url).normalize
+    end
+
+    def to_s
+      "The URL supplied redirects to #{redirect_uri}"
+    end
+  end
 end

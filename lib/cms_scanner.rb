@@ -17,7 +17,7 @@ require 'cms_scanner/typhoeus/hydra'
 require 'cms_scanner/public_suffix/domain'
 # Custom Libs
 require 'cms_scanner/helper'
-require 'cms_scanner/errors/auth_errors'
+require 'cms_scanner/errors/http'
 require 'cms_scanner/cache/typhoeus'
 require 'cms_scanner/target'
 require 'cms_scanner/browser'

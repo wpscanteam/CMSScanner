@@ -24,10 +24,8 @@ module CMSScanner
         fail HTTPAuthRequiredError if target.http_auth?
         fail ProxyAuthRequiredError if target.proxy_auth?
 
-        # TODO: ask if the redirection should be followed
-        # if user_interaction? is allowed (if followed, the Cache#storage_path should be updated)
         redirection = target.redirection
-        fail "The url supplied redirects to #{redirection}" if redirection
+        fail HttpRedirectError, redirection if redirection
       end
 
       def run
