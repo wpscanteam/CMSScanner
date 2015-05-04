@@ -20,7 +20,7 @@ module CMSScanner
           return unless target.in_scope?(url)
           potential_urls << url
 
-          NS::XMLRPC.new(url, confidence: 30, found_by: 'Headers (passive detection)')
+          NS::XMLRPC.new(url, confidence: 30, found_by: 'Headers (Passive Detection)')
         end
 
         # @return [ XMLRPC ]
@@ -32,7 +32,7 @@ module CMSScanner
             potential_urls << url
 
             return NS::XMLRPC.new(url, confidence: 30,
-                                       found_by: 'Link Tag (passive detection)')
+                                       found_by: 'Link Tag (Passive Detection)')
           end
           nil
         end

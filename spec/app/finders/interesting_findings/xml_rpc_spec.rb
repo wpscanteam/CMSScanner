@@ -60,7 +60,7 @@ describe CMSScanner::Finders::InterestingFindings::XMLRPC do
           expect(result).to eql CMSScanner::XMLRPC.new(
             xml_rpc_url,
             confidence: 30,
-            found_by: 'Headers (passive detection)'
+            found_by: 'Headers (Passive Detection)'
           )
         end
       end
@@ -96,7 +96,7 @@ describe CMSScanner::Finders::InterestingFindings::XMLRPC do
           expect(result).to eql CMSScanner::XMLRPC.new(
             expected_url,
             confidence: 30,
-            found_by: 'Link Tag (passive detection)'
+            found_by: 'Link Tag (Passive Detection)'
           )
         end
       end
