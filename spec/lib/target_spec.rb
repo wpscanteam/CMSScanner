@@ -3,6 +3,7 @@ require 'spec_helper'
 describe CMSScanner::Target do
   subject(:target) { described_class.new(url) }
   let(:url)        { 'http://e.org' }
+  let(:fixtures)   { File.join(FIXTURES, 'target') }
 
   describe '#interesting_findings' do
     before do
@@ -29,8 +30,8 @@ describe CMSScanner::Target do
   end
 
   describe '#comments_from_page' do
-    let(:fixture) { File.join(FIXTURES, 'target', 'comments.html') }
-    let(:page) { Typhoeus::Response.new(body: File.read(fixture)) }
+    let(:fixture) { File.join(fixtures, 'comments.html') }
+    let(:page)    { Typhoeus::Response.new(body: File.read(fixture)) }
 
     context 'when the pattern does not match anything' do
       it 'returns an empty array' do
@@ -71,6 +72,42 @@ describe CMSScanner::Target do
 
       it 'does not raise an error' do
         expect { target.comments_from_page(/none/, page) }.to_not raise_error
+      end
+    end
+  end
+
+  describe '#urls_from_page' do
+    let(:page)    { Typhoeus::Response.new(body: File.read(File.join(fixtures, 'urls_from_page.html'))) }
+
+    context 'when block given' do
+      it 'yield the url' do
+        expect { |b| target.urls_from_page(page, &b) }
+          .to yield_successive_args(
+            ['http://e.org/f.txt', Nokogiri::XML::Element],
+            ['https://cdn.e.org/f2.js', Nokogiri::XML::Element],
+            ['http://e.org/script/s.js', Nokogiri::XML::Element],
+            ['http://wp-lamp/feed.xml', Nokogiri::XML::Element],
+            ['http://g.com/img.jpg', Nokogiri::XML::Element]
+          )
+      end
+    end
+
+    context 'when no block given' do
+      it 'returns the expected array' do
+        expect(target.urls_from_page(page)).to eql(
+          %w(
+            http://e.org/f.txt https://cdn.e.org/f2.js http://e.org/script/s.js
+            http://wp-lamp/feed.xml http://g.com/img.jpg
+          )
+        )
+      end
+
+      context 'when xpath argument given' do
+        it 'returns the expected array' do
+          xpath = '//link[@rel="alternate" and @type="application/rss+xml"]'
+
+          expect(target.urls_from_page(page, xpath)).to eql(%w(http://wp-lamp/feed.xml))
+        end
       end
     end
   end

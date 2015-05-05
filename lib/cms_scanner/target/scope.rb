@@ -25,23 +25,15 @@ module CMSScanner
     def in_scope_urls(res, xpath = '//link|//script|//style|//img|//a', attributes = %w(href src))
       found = []
 
-      res.html.xpath(xpath).each do |tag|
-        attributes.each do |attribute|
-          attr_value = tag[attribute]
+      urls_from_page(res, xpath, attributes) do |url, tag|
+        next unless in_scope?(url)
 
-          next unless attr_value && !attr_value.empty?
+        yield url, tag if block_given?
 
-          url = uri.join(attr_value.strip).to_s
-
-          next unless in_scope?(url)
-
-          yield url, tag if block_given? && !found.include?(url)
-
-          found << url
-        end
+        found << url
       end
 
-      found.uniq
+      found
     end
 
     # Scope Implementation

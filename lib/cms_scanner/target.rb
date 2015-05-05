@@ -45,5 +45,35 @@ module CMSScanner
 
       matches
     end
+
+    # @param [ Typhoeus::Response, String ] page
+    # @param [ String ] xpath
+    # @param [ Array<String> ] attributes
+    #
+    # @yield [ String, Nokogiri::XML::Element ] The url and its associated tag
+    #
+    # @return [ Array<String> ] The absolute URLs detected in the response's body from the HTML tags
+    def urls_from_page(page = nil, xpath = '//link|//script|//style|//img|//a', attributes = %w(href src))
+      page    = NS::Browser.get(url(page)) unless page.is_a?(Typhoeus::Response)
+      found   = []
+
+      page.html.xpath(xpath).each do |tag|
+        attributes.each do |attribute|
+          attr_value = tag[attribute]
+
+          next unless attr_value && !attr_value.empty?
+
+          tag_uri = uri.join(attr_value.strip) rescue next
+
+          next unless tag_uri.host
+
+          yield tag_uri.to_s, tag if block_given? && !found.include?(tag_uri.to_s)
+
+          found << tag_uri.to_s
+        end
+      end
+
+      found.uniq
+    end
   end
 end

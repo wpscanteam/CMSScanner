@@ -1,6 +1,8 @@
 LineLength:
-  Max: 100
+  Max: 120
 ClassVars:
+  Enabled: false
+Style/RescueModifier:
   Enabled: false
 MethodLength:
   Max: 15
@@ -8,3 +10,5 @@ Metrics/AbcSize:
   Max: 25
 Metrics/CyclomaticComplexity:
   Max: 10
+Metrics/PerceivedComplexity:
+  Max: 9
