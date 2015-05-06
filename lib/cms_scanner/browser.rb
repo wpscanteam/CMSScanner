@@ -38,7 +38,7 @@ module CMSScanner
     def default_request_params
       params = {
         ssl_verifypeer: false, ssl_verifyhost: 2, # Disable SSL-Certificate checks
-        headers: { 'User-Agent' => user_agent },
+        headers: { 'Accept-Encoding' => 'gzip, deflate', 'User-Agent' => user_agent },
         method: :get
       }
 
