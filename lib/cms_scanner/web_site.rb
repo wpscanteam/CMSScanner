@@ -74,6 +74,9 @@ module CMSScanner
     # :nocov:
     def redirection(url = nil)
       url ||= @uri.to_s
+
+      return unless [301, 302].include?(NS::Browser.get(url).code)
+
       res   = NS::Browser.get(url, followlocation: true)
 
       res.effective_url == url ? nil : res.effective_url
