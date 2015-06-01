@@ -16,7 +16,7 @@ module CMSScanner
                         normalize: :to_sym,
                         default: :mixed),
           OptArray.new(['--scope DOMAINS',
-                        'Coma separated (sub-)domains to consider in scope. ' \
+                        'Comma separated (sub-)domains to consider in scope. ' \
                         'Wildcard(s) allowed in the trd of valid domains, e.g: *.target.tld'])
         ] + cli_browser_options
       end
