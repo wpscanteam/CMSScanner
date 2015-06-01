@@ -9,10 +9,8 @@ describe CMSScanner::Browser do
   let(:default) do
     {
       ssl_verifypeer: false, ssl_verifyhost: 2,
-      headers: {
-        'Accept-Encoding' => 'gzip, deflate',
-        'User-Agent' => "CMSScanner v#{CMSScanner::VERSION}"
-      },
+      headers: { 'User-Agent' => "CMSScanner v#{CMSScanner::VERSION}" },
+      accept_encoding: 'gzip, deflate',
       method: :get
     }
   end

@@ -35,17 +35,23 @@ module CMSScanner
     end
 
     # @return [ Hash ]
-    def default_request_params
-      params = {
-        ssl_verifypeer: false, ssl_verifyhost: 2, # Disable SSL-Certificate checks
-        headers: { 'Accept-Encoding' => 'gzip, deflate', 'User-Agent' => user_agent },
-        method: :get
-      }
-
+    def typhoeus_to_browser_opts
       { connecttimeout: :connect_timeout, cache_ttl: :cache_ttl,
         proxy: :proxy, timeout: :request_timeout, cookiejar: :cookie_jar,
         cookiefile: :cookie_jar, cookie: :cookie_string
-      }.each do |typhoeus_opt, browser_opt|
+      }
+    end
+
+    # @return [ Hash ]
+    def default_request_params
+      params = {
+        ssl_verifypeer: false, ssl_verifyhost: 2, # Disable SSL-Certificate checks
+        headers: { 'User-Agent' => user_agent },
+        accept_encoding: 'gzip, deflate',
+        method: :get
+      }
+
+      typhoeus_to_browser_opts.each do |typhoeus_opt, browser_opt|
         attr_value = public_send(browser_opt)
         params[typhoeus_opt] = attr_value unless attr_value.nil?
       end
