@@ -7,9 +7,11 @@ module CMSScanner
           include IndependentFinder
 
           # @return [ Array ]
+          # rubocop:disable Lint/NestedMethodDefinition
           def finders
             @finders ||= NS::Finders::SameTypeFinders.new
           end
+          # rubocop:enable all
         end
       end
     end
