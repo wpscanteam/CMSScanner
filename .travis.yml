@@ -11,6 +11,8 @@ rvm:
   - 2.2.1
   - 2.2.2
   - ruby-head
+before_install:
+  - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
 matrix:
   allow_failures:
     - rvm: ruby-head
