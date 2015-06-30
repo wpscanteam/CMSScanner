@@ -57,7 +57,7 @@ module CMSScanner
           OptFilePath.new(['--cookie-jar FILE-PATH', 'File to read and write cookies'],
                           writable: true,
                           exists: false,
-                          default: '/tmp/cms_scanner/cookie_jar.txt')
+                          default: File.join(tmp_directory, 'cookie_jar.txt'))
         ]
       end
 
@@ -69,7 +69,7 @@ module CMSScanner
           OptDirectoryPath.new(['--cache-dir PATH'],
                                readable: true,
                                writable: true,
-                               default: '/tmp/cms_scanner/cache/')
+                               default: File.join(tmp_directory, 'cache'))
         ]
       end
     end

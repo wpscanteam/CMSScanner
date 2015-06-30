@@ -11,6 +11,7 @@ describe CMSScanner::Controller do
     its(:parsed_options)        { should eq(parsed_options) }
     its(:formatter)             { should be_a CMSScanner::Formatter::Cli }
     its(:user_interaction?)     { should be true }
+    its(:tmp_directory)         { should eql '/tmp/cms_scanner' }
     its(:target)                { should be_a CMSScanner::Target }
     its('target.scope.domains') { should eq [PublicSuffix.parse('example.com')] }
 

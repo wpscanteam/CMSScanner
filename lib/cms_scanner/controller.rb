@@ -73,6 +73,11 @@ module CMSScanner
         formatter.user_interaction? && !parsed_options[:output]
       end
 
+      # @return [ String ]
+      def tmp_directory
+        File.join('/tmp', NS.to_s.underscore)
+      end
+
       protected
 
       # @param [ String ] tpl

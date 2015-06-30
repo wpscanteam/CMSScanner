@@ -44,10 +44,12 @@ module CMSScanner
     self.total_requests += 1 unless response.cached?
   end
 
+  # @return [ Integer ]
   def self.total_requests
     @@total_requests ||= 0
   end
 
+  # @param [ Integer ]
   def self.total_requests=(value)
     @@total_requests = value
   end

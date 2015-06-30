@@ -59,7 +59,7 @@ module CMSScanner
 
     # @return [ String ]
     def default_user_agent
-      "CMSScanner v#{VERSION}"
+      "#{NS} v#{NS::VERSION}"
     end
 
     # @return [ String ] The user agent
