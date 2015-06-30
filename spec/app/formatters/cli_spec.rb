@@ -27,4 +27,17 @@ describe CMSScanner::Formatter::Cli do
       expect(formatter.blue('Text')).to eq "\e[34mText\e[0m"
     end
   end
+
+  describe '#*_icon' do
+    {
+      info: "\e[32m[+]\e[0m",
+      notice: "\e[34m[i]\e[0m",
+      warning: "\e[33m[!]\e[0m",
+      critical: "\e[31m[!]\e[0m"
+    }.each do |icon_type, expected|
+      it "returns the correct #{icon_type} icon" do
+        expect(formatter.send("#{icon_type}_icon")).to eql expected
+      end
+    end
+  end
 end

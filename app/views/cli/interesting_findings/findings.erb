@@ -2,7 +2,7 @@
 Interesting Finding(s):
 <% @findings.each do |finding| -%>
 
-<%= green('[+]') %> <%= finding %>
+<%= info_icon %> <%= finding %>
 <%= render('_array', a: finding.interesting_entries, s: 'Interesting Entry', p: 'Interesting Entries') -%>
  | Found By: <%= finding.found_by %>
 <% if finding.confidence > 0 -%>
