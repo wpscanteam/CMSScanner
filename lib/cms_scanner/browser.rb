@@ -57,7 +57,9 @@ module CMSScanner
       end
 
       params[:proxyauth] = "#{proxy_auth[:username]}:#{proxy_auth[:password]}" if proxy_auth
-      params[:userpwd] = "#{http_auth[:username]}:#{http_auth[:password]}" if http_auth
+      params[:userpwd]   = "#{http_auth[:username]}:#{http_auth[:password]}" if http_auth
+
+      params[:headers].merge!('Host': vhost) if vhost
 
       params
     end

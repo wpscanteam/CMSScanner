@@ -29,7 +29,8 @@ describe CMSScanner::Browser do
         {
           cache_ttl: 200, connect_timeout: 10,
           http_auth: { username: 'log', password: 'pwd' },
-          cookie_jar: '/tmp/cookie_jar.txt'
+          cookie_jar: '/tmp/cookie_jar.txt',
+          vhost: 'testing'
         }
       end
 
@@ -37,7 +38,7 @@ describe CMSScanner::Browser do
         default.merge(
           cache_ttl: 200, connecttimeout: 10, userpwd: 'log:pwd',
           cookiejar: options[:cookie_jar], cookiefile: options[:cookie_jar]
-        )
+        ).merge(headers: default[:headers].merge('Host': 'testing'))
       end
 
       its(:default_request_params) { should eq expected }

@@ -26,6 +26,7 @@ module CMSScanner
       def cli_browser_options
         [
           OptString.new(['--user-agent VALUE', '--ua']),
+          OptString.new(['--vhost VALUE', 'The virtual host (Host header) to use in requests']),
           OptBoolean.new(['--random-user-agent', '--rua',
                           'Use a random user-agent for each scan']),
           OptFilePath.new(['--user-agents-list FILE-PATH',

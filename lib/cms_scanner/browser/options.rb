@@ -8,12 +8,13 @@ module CMSScanner
       :connect_timeout,
       :http_auth,
       :max_threads,
-      :user_agent,
-      :user_agents_list,
       :proxy,
       :proxy_auth,
       :random_user_agent,
-      :request_timeout
+      :request_timeout,
+      :user_agent,
+      :user_agents_list,
+      :vhost
     ]
 
     attr_accessor(*OPTIONS)
