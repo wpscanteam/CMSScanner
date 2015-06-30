@@ -31,7 +31,8 @@ module CMSScanner
     end
 
     def to_s
-      "The URL supplied redirects to #{redirect_uri}"
+      "The URL supplied redirects to #{redirect_uri}. Use the --ignore-main-redirect "\
+      'option to ignore the redirection and scan the target.'
     end
   end
 end
