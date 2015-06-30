@@ -7,6 +7,7 @@ module CMSScanner
 
         [
           OptURL.new(['-u', '--url URL'], required: true, default_protocol: 'http'),
+          OptBoolean.new(['--ignore-main-redirect', 'Ignore the main redirect if any and scan the target url']),
           OptBoolean.new(%w(-v --verbose)),
           OptFilePath.new(['-o', '--output FILE', 'Output to FILE'], writable: true, exists: false),
           OptChoice.new(['-f', '--format FORMAT',

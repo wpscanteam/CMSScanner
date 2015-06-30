@@ -62,16 +62,30 @@ describe CMSScanner::Controller::Core do
           .to raise_error("The url supplied '#{target_url}' seems to be down")
       end
 
-      it 'raises an error when the site redirects' do
-        redirection = 'http://somewhere.com/'
+      context 'when it redirects' do
+        let(:redirection) { 'http://somewhere.com/' }
 
-        expect(core.target).to receive(:redirection).and_return(redirection)
+        before do
+          expect(core.target).to receive(:redirection).and_return(redirection)
+          stub_request(:get, target_url).to_return(status: 301, headers: { location: redirection })
+        end
 
-        stub_request(:get, target_url).to_return(status: 301, headers: { location: redirection })
+        context 'when the --ignore-main-redirect is not supplied' do
+          it 'raises an error' do
+            expect { core.before_scan }.to raise_error(
+              CMSScanner::HTTPRedirectError, CMSScanner::HTTPRedirectError.new(redirection).to_s
+            )
+          end
+        end
 
-        expect { core.before_scan }.to raise_error(
-          CMSScanner::HTTPRedirectError, CMSScanner::HTTPRedirectError.new(redirection).to_s
-        )
+        context 'when the --ignore-main-redirect is supplied' do
+          let(:parsed_options) { super().merge(ignore_main_redirect: true) }
+
+          it 'does not raise any error and does not follow the redirection' do
+            expect { core.before_scan }.to_not raise_error
+            expect(core.target.url).to eql target_url
+          end
+        end
       end
 
       context 'when access is forbidden' do

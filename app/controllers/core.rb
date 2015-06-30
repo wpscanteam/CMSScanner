@@ -25,7 +25,7 @@ module CMSScanner
         fail ProxyAuthRequiredError if target.proxy_auth?
 
         redirection = target.redirection
-        fail HTTPRedirectError, redirection if redirection
+        fail HTTPRedirectError, redirection if redirection && !parsed_options[:ignore_main_redirect]
       end
 
       def run
