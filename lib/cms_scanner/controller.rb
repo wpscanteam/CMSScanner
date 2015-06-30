@@ -17,11 +17,13 @@ module CMSScanner
         self.class == other.class
       end
 
-      # Reset the @@target and @@parsed_options
+      # Reset all the class attibutes
       # Currently only used in specs
       def self.reset
         @@target         = nil
         @@parsed_options = nil
+        @@datastore      = nil
+        @@formatter      = nil
       end
 
       # @return [ Target ]

@@ -7,6 +7,7 @@ describe 'SubScanner' do
       include CMSScanner
 
       VERSION = '1.0-Spec'
+      APP_DIR = '/tmp/sub_scanner/spec'
 
       # This Target class should be called in the CMSScanner::Controller::Base
       # instead of the CMSScanner::Target
@@ -29,7 +30,7 @@ describe 'SubScanner' do
       end
     end
 
-    CMSScanner::Controller::Base.reset # reset the @@target and @@parsed_options
+    CMSScanner::Controller::Base.reset
     CMSScanner::Browser.reset
   end
 
@@ -70,10 +71,20 @@ describe 'SubScanner' do
     end
   end
 
-  describe 'Formatter.load' do
-    it 'adds the #custom method for all formatters' do
-      formatter_class.availables.each do |format|
-        expect(formatter_class.load(format).custom).to eql 'It Works!'
+  describe 'Formatter' do
+    describe '.load' do
+      it 'adds the #custom method for all formatters' do
+        formatter_class.availables.each do |format|
+          expect(formatter_class.load(format).custom).to eql 'It Works!'
+        end
+      end
+    end
+
+    describe '#views_directories' do
+      it 'returns the expected paths' do
+        expect(scanner.formatter.views_directories).to eql(
+          [CMSScanner::APP_DIR, SubScanner::APP_DIR].reduce([]) { |a, e| a << File.join(e, 'views') }
+        )
       end
     end
   end

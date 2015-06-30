@@ -128,7 +128,7 @@ module CMSScanner
 
       # @return [ Array<String> ] The directories to look into for views
       def views_directories
-        @views_directories ||= [Pathname.new(APP_DIR).join('views').to_s]
+        @views_directories ||= [APP_DIR, NS::APP_DIR].uniq.reduce([]) { |a, e| a << Pathname.new(e).join('views').to_s }
       end
     end
   end
