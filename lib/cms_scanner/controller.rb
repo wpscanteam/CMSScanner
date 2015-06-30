@@ -17,6 +17,13 @@ module CMSScanner
         self.class == other.class
       end
 
+      # Reset the @@target and @@parsed_options
+      # Currently only used in specs
+      def self.reset
+        @@target         = nil
+        @@parsed_options = nil
+      end
+
       # @return [ Target ]
       def target
         @@target ||= NS::Target.new(parsed_options[:url], parsed_options)
