@@ -26,6 +26,15 @@ module CMSScanner
       @interesting_findings ||= NS::Finders::InterestingFindings::Base.find(self, opts)
     end
 
+    # Weteher or not vulnerabilities have been found.
+    # Used to set the exit code of the script
+    # and it should be overriden in the implementation
+    #
+    # @return [ Boolean ]
+    def vulnerable?
+      false
+    end
+
     # @param [ Regexp ] pattern
     # @param [ Typhoeus::Response, String ] page
     #
