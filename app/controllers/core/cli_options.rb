@@ -6,18 +6,18 @@ module CMSScanner
         formats = NS::Formatter.availables
 
         [
-          OptURL.new(['-u', '--url URL'], required: true, default_protocol: 'http'),
+          OptURL.new(['-u', '--url URL', 'The URL to scan'], required: true, default_protocol: 'http'),
           OptBoolean.new(['--ignore-main-redirect', 'Ignore the main redirect if any and scan the target url']),
           OptBoolean.new(%w(-v --verbose)),
           OptFilePath.new(['-o', '--output FILE', 'Output to FILE'], writable: true, exists: false),
           OptChoice.new(['-f', '--format FORMAT',
-                         "Available formats: #{formats.join(', ')}"], choices: formats),
-          OptChoice.new(['--detection-mode MODE', 'Modes: mixed (default), passive, aggressive'],
+                         'Output results in the format supplied'], choices: formats),
+          OptChoice.new(['--detection-mode MODE'],
                         choices: %w(mixed passive aggressive),
                         normalize: :to_sym,
                         default: :mixed),
           OptArray.new(['--scope DOMAINS',
-                        'Comma separated (sub-)domains to consider in scope. ' \
+                        'Comma separated (sub-)domains to consider in scope. ',
                         'Wildcard(s) allowed in the trd of valid domains, e.g: *.target.tld'])
         ] + cli_browser_options
       end
@@ -66,7 +66,7 @@ module CMSScanner
       # @return [ Array<OptParseValidator::OptBase> ]
       def cli_browser_cache_options
         [
-          OptInteger.new(['--cache-ttl TIME_TO_LIVE'], default: 600),
+          OptInteger.new(['--cache-ttl TIME_TO_LIVE', 'The cache time to live in seconds'], default: 600),
           OptBoolean.new(['--clear-cache', 'Clear the cache before the scan']),
           OptDirectoryPath.new(['--cache-dir PATH'],
                                readable: true,
