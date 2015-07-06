@@ -42,7 +42,14 @@ describe CMSScanner::Scan do
   end
 
   describe '#run' do
-    after { scanner.run }
+    after do
+      scanner.run
+
+      if defined?(run_error)
+        expect(scanner.run_error).to be_a run_error.class
+        expect(scanner.run_error.message).to eql run_error.message
+      end
+    end
 
     it 'runs the controlllers and calls the formatter#beautify' do
       hydra = CMSScanner::Browser.instance.hydra
@@ -55,29 +62,38 @@ describe CMSScanner::Scan do
     # Maybe there is a way to give the parser the raw ARGV to parse, instead
     # of use the expect on the results
     context 'when no required option supplied' do
+      let(:run_error) { OptParseValidator::NoRequiredOption.new('The option url is required') }
+
       it 'calls the formatter to display the usage view' do
         expect(scanner.controllers.option_parser)
           .to receive(:results)
-          .and_raise(OptParseValidator::NoRequiredOption, 'The option url is required')
+          .and_raise(run_error.class, run_error.message)
 
         expect(scanner.formatter).to receive(:output)
-          .with('@usage', msg: 'The option url is required')
+          .with('@usage', msg: run_error.message)
       end
     end
 
     context 'when an error is raised during the #run' do
+      let(:run_error) { RuntimeError.new('error spotted') }
+
       it 'aborts the scan with the associated output' do
         scanner.controllers[0] = controller::SpecFailure.new
 
-        expect(scanner.controllers.option_parser).to receive(:results)
+        expect(scanner.controllers.option_parser).to receive(:results).and_return({})
 
         expect(scanner.formatter).to receive(:output)
-          .with('@scan_aborted', hash_including(:reason, :trace, :verbose))
+          .with('@scan_aborted', hash_including(reason: run_error.message, trace: anything, verbose: nil))
       end
     end
   end
 
   describe '#datastore' do
     its(:datastore) { should eq({}) }
+  end
+
+  describe '#exit_hook' do
+    # No idea how to test that, maybe with another at_exit hook ? oO
+    xit
   end
 end

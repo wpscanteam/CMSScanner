@@ -106,20 +106,18 @@ module CMSScanner
     # depending on the findings / errors
     def exit_hook
       at_exit do
-        p 'exit_hooked'
-        p run_error
-
         if run_error
           exit(NS::ExitCode::CLI_OPTION_ERROR) if run_error.is_a?(OptParseValidator::Error) ||
                                                   run_error.is_a?(OptionParser::ParseError)
-          exit(NS::ExitCode::INTERRUPTED) if run_error.is_a?(Interrupt)
 
+          exit(NS::ExitCode::INTERRUPTED) if run_error.is_a?(Interrupt)
           exit(NS::ExitCode::ERROR)
         end
 
-        # Will have to find a way to clear that. rescue is used otherwise rpsec errors are output
-        # exit(NS::ExitCode::VULNERABLE) if controllers.first.target.vulnerable? rescue next
+        controller = controllers.first
 
+        # The parsed_option[:url] must be checked to avoid raising erros when only -h/-v are given
+        exit(NS::ExitCode::VULNERABLE) if controller.parsed_options[:url] && controller.target.vulnerable?
         exit(NS::ExitCode::OK)
       end
     end

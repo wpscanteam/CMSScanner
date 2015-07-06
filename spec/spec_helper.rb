@@ -20,6 +20,11 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.before(:each) do
+    # Needed for rspec to run w/o error due to the at_exit hook calling the controller#target
+    CMSScanner::Controller::Core.parsed_options = { url: 'http://ex.lo' }
+  end
 end
 
 def count_files_in_dir(absolute_dir_path, files_pattern = '*')
