@@ -73,7 +73,9 @@ describe CMSScanner::Controller::Core do
         context 'when the --ignore-main-redirect is not supplied' do
           it 'raises an error' do
             expect { core.before_scan }.to raise_error(
-              CMSScanner::HTTPRedirectError, CMSScanner::HTTPRedirectError.new(redirection).to_s
+              CMSScanner::HTTPRedirectError,
+              "The URL supplied redirects to #{redirection}." \
+              ' Use the --ignore-main-redirect option to ignore the redirection and scan the target.'
             )
           end
         end
@@ -92,9 +94,7 @@ describe CMSScanner::Controller::Core do
         before { stub_request(:get, target_url).to_return(status: 403) }
 
         it 'raises an error' do
-          expect { core.before_scan }.to raise_error(
-            CMSScanner::AccessForbiddenError, CMSScanner::AccessForbiddenError.new.to_s
-          )
+          expect { core.before_scan }.to raise_error(CMSScanner::AccessForbiddenError)
         end
       end
 
@@ -105,9 +105,7 @@ describe CMSScanner::Controller::Core do
           before { stub_request(:get, target_url).to_return(status: 401) }
 
           it 'raises an error' do
-            expect { core.before_scan }.to raise_error(
-              CMSScanner::HTTPAuthRequiredError, CMSScanner::HTTPAuthRequiredError.new.to_s
-            )
+            expect { core.before_scan }.to raise_error(CMSScanner::HTTPAuthRequiredError)
           end
         end
 
@@ -132,9 +130,7 @@ describe CMSScanner::Controller::Core do
             end
 
             it 'raises an error' do
-              expect { core.before_scan }.to raise_error(
-                CMSScanner::HTTPAuthRequiredError, CMSScanner::HTTPAuthRequiredError.new.to_s
-              )
+              expect { core.before_scan }.to raise_error(CMSScanner::HTTPAuthRequiredError)
             end
           end
         end
@@ -145,9 +141,7 @@ describe CMSScanner::Controller::Core do
 
         context 'when no credentials' do
           it 'raises an error' do
-            expect { core.before_scan }.to raise_error(
-              CMSScanner::ProxyAuthRequiredError, CMSScanner::ProxyAuthRequiredError.new.to_s
-            )
+            expect { core.before_scan }.to raise_error(CMSScanner::ProxyAuthRequiredError)
           end
         end
 
@@ -157,9 +151,7 @@ describe CMSScanner::Controller::Core do
           it 'raises an error' do
             expect(CMSScanner::Browser.instance.proxy_auth).to eq(parsed_options[:proxy_auth])
 
-            expect { core.before_scan }.to raise_error(
-              CMSScanner::ProxyAuthRequiredError, CMSScanner::ProxyAuthRequiredError.new.to_s
-            )
+            expect { core.before_scan }.to raise_error(CMSScanner::ProxyAuthRequiredError)
           end
         end
 
