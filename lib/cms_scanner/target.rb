@@ -63,13 +63,14 @@ module CMSScanner
 
           next unless attr_value && !attr_value.empty?
 
-          tag_uri = uri.join(attr_value.strip) rescue next
+          tag_uri        = uri.join(attr_value.strip) rescue next
+          tag_uri_string = tag_uri.to_s
 
           next unless tag_uri.host
 
-          yield tag_uri.to_s, tag if block_given? && !found.include?(tag_uri.to_s)
+          yield tag_uri_string, tag if block_given? && !found.include?(tag_uri_string)
 
-          found << tag_uri.to_s
+          found << tag_uri_string
         end
       end
 
