@@ -13,9 +13,7 @@ module CMSScanner
       def run(opts = {})
         symbols_from_mode(opts[:mode]).each do |symbol|
           each do |finder|
-            [*finder.send(symbol, opts.merge(found: findings))].compact.each do |found|
-              findings << found
-            end
+            run_finder(finder, symbol, opts)
           end
         end
 

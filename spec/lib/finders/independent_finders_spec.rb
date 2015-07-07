@@ -100,7 +100,7 @@ describe CMSScanner::Finders::IndependentFinders do
   end
 
   describe '#symbols_from_mode' do
-    after { expect(finders.symbols_from_mode(@mode)).to eq @expected }
+    after { expect(finders.send(:symbols_from_mode, @mode)).to eq @expected }
 
     context 'when :mixed' do
       it 'returns [:passive, :aggressive]' do

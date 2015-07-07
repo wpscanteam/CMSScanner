@@ -19,9 +19,7 @@ module CMSScanner
 
         symbols_from_mode(opts[:mode]).each do |symbol|
           each do |finder|
-            [*finder.send(symbol, opts.merge(found: findings))].compact.each do |found|
-              findings << found
-            end
+            run_finder(finder, symbol, opts)
 
             next if opts[:confidence_threshold] <= 0
 
@@ -31,6 +29,8 @@ module CMSScanner
 
         best_finding(findings)
       end
+
+      protected
 
       # @param [ Array<Object> ] findings
       #

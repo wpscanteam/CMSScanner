@@ -8,7 +8,7 @@ describe CMSScanner::Finders::UniqueFinders do
   describe '#best_finding' do
     let(:findings) { [] }
 
-    after { expect(finders.best_finding(findings)).to eql @expected }
+    after { expect(finders.send(:best_finding, findings)).to eql @expected }
 
     context 'when no findings' do
       it 'returns nil' do

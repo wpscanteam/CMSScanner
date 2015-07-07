@@ -19,14 +19,14 @@ module CMSScanner
 
         each do |finder|
           methods.each do |symbol|
-            [*finder.send(symbol, opts.merge(found: findings))].compact.each do |found|
-              findings << found
-            end
+            run_finder(finder, symbol, opts)
           end
         end
 
         findings
       end
+
+      protected
 
       # @param [ Symbol ] mode :mixed, :passive or :aggressive
       # @return [ Array<Symbol> ] The symbols to call for the mode
@@ -35,6 +35,15 @@ module CMSScanner
 
         return symbols if mode.nil? || mode == :mixed
         symbols.include?(mode) ? [*mode] : []
+      end
+
+      # @param [ CMSScanner::Finders::Finder ] finder
+      # @param [ Symbol ] symbol See return values of #symbols_from_mode
+      # @param [ Hash ] opts
+      def run_finder(finder, symbol, opts)
+        [*finder.send(symbol, opts.merge(found: findings))].compact.each do |found|
+          findings << found
+        end
       end
     end
   end
