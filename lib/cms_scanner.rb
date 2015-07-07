@@ -106,13 +106,7 @@ module CMSScanner
     # depending on the findings / errors
     def exit_hook
       at_exit do
-        if run_error
-          exit(NS::ExitCode::CLI_OPTION_ERROR) if run_error.is_a?(OptParseValidator::Error) ||
-                                                  run_error.is_a?(OptionParser::ParseError)
-
-          exit(NS::ExitCode::INTERRUPTED) if run_error.is_a?(Interrupt)
-          exit(NS::ExitCode::ERROR)
-        end
+        exit(run_error_exit_code) if run_error
 
         controller = controllers.first
 
@@ -120,6 +114,16 @@ module CMSScanner
         exit(NS::ExitCode::VULNERABLE) if controller.parsed_options[:url] && controller.target.vulnerable?
         exit(NS::ExitCode::OK)
       end
+    end
+
+    # @return [ Integer ] The exit code related to the run_error
+    def run_error_exit_code
+      return NS::ExitCode::CLI_OPTION_ERROR if run_error.is_a?(OptParseValidator::Error) ||
+                                               run_error.is_a?(OptionParser::ParseError)
+
+      return NS::ExitCode::INTERRUPTED if run_error.is_a?(Interrupt)
+
+      NS::ExitCode::ERROR
     end
   end
 end
