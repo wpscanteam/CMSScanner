@@ -9,10 +9,10 @@ Gem::Specification.new do |s|
   s.version               = CMSScanner::VERSION
   s.platform              = Gem::Platform::RUBY
   s.required_ruby_version = '>= 2.1.0'
-  s.authors               = ['WPScanTeam - Erwan Le Rousseau']
-  s.email                 = ['erwan.lr@gmail.com']
-  s.summary               = 'Experimental CMSScanner'
-  s.description           = 'Experimental CMSScanner'
+  s.authors               = ['WPScanTeam ']
+  s.email                 = ['team@wpscan.org']
+  s.summary               = 'CMS Scanner Framework (experimental)'
+  s.description           = 'Framework to provide an easy way to implement CMS Scanners'
   s.homepage              = 'https://github.com/wpscanteam/CMSScanner'
   s.license               = 'MIT'
 
