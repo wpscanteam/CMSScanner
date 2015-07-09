@@ -45,7 +45,8 @@ module CMSScanner
     # @return [ Hash ]
     def default_request_params
       params = {
-        ssl_verifypeer: false, ssl_verifyhost: 2, # Disable SSL-Certificate checks
+        # Disable SSL-Certificate checks, see http://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html
+        ssl_verifypeer: false, ssl_verifyhost: 0,
         headers: { 'User-Agent' => user_agent },
         accept_encoding: 'gzip, deflate',
         method: :get
