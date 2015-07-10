@@ -5,10 +5,14 @@ describe CMSScanner::Finders::UniqueFinders do
   subject(:finders)    { described_class.new }
   let(:unique_finders) { CMSScanner::Finders::Unique }
 
-  describe '#best_finding' do
+  describe '#filter_finding' do
     let(:findings) { [] }
 
-    after { expect(finders.send(:best_finding, findings)).to eql @expected }
+    after do
+      finders.instance_variable_set(:@findings, findings)
+
+      expect(finders.send(:filter_findings)).to eql @expected
+    end
 
     context 'when no findings' do
       it 'returns nil' do

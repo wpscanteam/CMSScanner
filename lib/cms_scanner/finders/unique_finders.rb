@@ -27,15 +27,13 @@ module CMSScanner
           end
         end
 
-        best_finding(findings)
+        filter_findings
       end
 
       protected
 
-      # @param [ Array<Object> ] findings
-      #
       # @return [ Object, false ] The best finding or false if none
-      def best_finding(findings)
+      def filter_findings
         # results are sorted by confidence ASC
         findings.sort_by!(&:confidence)
 

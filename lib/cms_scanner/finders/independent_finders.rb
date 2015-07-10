@@ -23,7 +23,7 @@ module CMSScanner
           end
         end
 
-        findings
+        filter_findings
       end
 
       protected
@@ -44,6 +44,14 @@ module CMSScanner
         [*finder.send(symbol, opts.merge(found: findings))].compact.each do |found|
           findings << found
         end
+      end
+
+      # Allow child classes to filter the findings, such as return the best one
+      # or remove the low confidence ones.
+      #
+      # @return [ Findings ]
+      def filter_findings
+        findings
       end
     end
   end

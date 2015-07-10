@@ -19,7 +19,7 @@ module CMSScanner
 
         findings.sort! if opts[:sort]
 
-        findings
+        filter_findings
       end
     end
   end
