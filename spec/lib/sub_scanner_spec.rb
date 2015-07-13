@@ -22,7 +22,7 @@ describe 'SubScanner' do
         end
       end
 
-      # Testing the overroide of the register_options_files
+      # Testing the override of the register_options_files
       class Controllers < CMSScanner::Controllers
         def register_options_files
           option_parser.options_files << File.join(".#{SubScanner.app_name}", 'rspec.yml')
