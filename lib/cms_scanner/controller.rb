@@ -77,7 +77,7 @@ module CMSScanner
 
       # @return [ String ]
       def tmp_directory
-        File.join('/tmp', NS.to_s.underscore)
+        File.join('/tmp', NS.app_name)
       end
 
       protected

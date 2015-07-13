@@ -49,4 +49,21 @@ describe CMSScanner::Controllers do
       controllers.run
     end
   end
+
+  describe '#register_options_files' do
+    it 'register the correct files' do
+      expect(File).to receive(:exist?).exactly(4).times.and_return(true)
+
+      expected = []
+      option_parser = controllers.option_parser
+
+      [Dir.home, Dir.pwd].each do |dir|
+        option_parser.options_files.supported_extensions.each do |ext|
+          expected << File.join(dir, '.cms_scanner', "cli_options.#{ext}")
+        end
+      end
+
+      expect(option_parser.options_files.map(&:path)).to eql expected
+    end
+  end
 end

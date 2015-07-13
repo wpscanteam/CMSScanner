@@ -34,25 +34,42 @@ module CMSScanner
   APP_DIR = Pathname.new(__FILE__).dirname.join('..', 'app').expand_path
   NS      = self
 
-  def self.included(base)
-    remove_const(:NS)
-    const_set(:NS, base)
-    super(base)
-  end
-
   # Number of requests performed to display at the end of the scan
   Typhoeus.on_complete do |response|
     self.total_requests += 1 unless response.cached?
   end
 
-  # @return [ Integer ]
-  def self.total_requests
-    @@total_requests ||= 0
+  # Module to be able to use these class methods when the CMSScanner
+  # is included in another module
+  module ClassMethods
+    # @return [ Integer ]
+    def total_requests
+      @@total_requests ||= 0
+    end
+
+    # @param [ Integer ]
+    def total_requests=(value)
+      @@total_requests = value
+    end
+
+    # The lowercase name of the scanner
+    # Mainly used in directory paths like the default cookie-jar file and
+    # path to load the cli options from files
+    #
+    # @return [ String ]
+    def app_name
+      to_s.underscore
+    end
   end
 
-  # @param [ Integer ]
-  def self.total_requests=(value)
-    @@total_requests = value
+  extend ClassMethods
+
+  def self.included(base)
+    remove_const(:NS)
+    const_set(:NS, base)
+
+    base.extend(ClassMethods)
+    super(base)
   end
 
   # Scan

@@ -3,8 +3,20 @@ module CMSScanner
   class Controllers < Array
     attr_reader :option_parser
 
+    # @param [ OptParsevalidator::OptParser ] options_parser
     def initialize(option_parser = OptParseValidator::OptParser.new(nil, 40))
       @option_parser = option_parser
+
+      register_options_files
+    end
+
+    # Adds the potential option file paths to the option_parser
+    def register_options_files
+      [Dir.home, Dir.pwd].each do |dir|
+        option_parser.options_files.supported_extensions.each do |ext|
+          @option_parser.options_files << File.join(dir, ".#{NS.app_name}", "cli_options.#{ext}")
+        end
+      end
     end
 
     # @param [ Controller::Base ] controller

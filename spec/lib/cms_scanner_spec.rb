@@ -31,6 +31,12 @@ describe CMSScanner do
       expect(CMSScanner.total_requests).to eql 1
     end
   end
+
+  describe '#app_name' do
+    it 'returns the excpected string' do
+      expect(CMSScanner.app_name).to eql 'cms_scanner'
+    end
+  end
 end
 
 describe CMSScanner::Scan do
