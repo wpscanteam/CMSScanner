@@ -6,7 +6,7 @@ module CMSScanner
     module Finding
       # Fix for "Double/Dynamic Inclusion Problem"
       def self.included(base)
-        base.send(:include, NS::References)
+        base.send(:include, References)
       end
 
       FINDING_OPTS = [:confidence, :confirmed_by, :references, :found_by, :interesting_entries]
