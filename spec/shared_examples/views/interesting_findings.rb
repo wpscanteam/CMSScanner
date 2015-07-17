@@ -21,10 +21,10 @@ shared_examples 'App::Views::InterestingFindings' do
 
       findings <<
         interesting_file.new('F1', opts) <<
-        interesting_file.new('F2', opts.merge(references: %w(R1), interesting_entries: %w(IE1))) <<
+        interesting_file.new('F2', opts.merge(references: { url: %w(R1) }, interesting_entries: %w(IE1))) <<
         interesting_file.new('F2', opts.merge(found_by: 'Spec2')) <<
         interesting_file.new('F3',
-                             opts.merge(references: %w(R1 R2), interesting_entries: %w(IE1 IE2))) <<
+                             opts.merge(references: { url: %w(R1 R2) }, interesting_entries: %w(IE1 IE2))) <<
         interesting_file.new('F3', opts.merge(found_by: 'Spec2', confidence: 100)) <<
         interesting_file.new('F3', opts.merge(found_by: 'Spec3')) <<
         interesting_file.new('F4', opts.merge(confidence: 0)) <<

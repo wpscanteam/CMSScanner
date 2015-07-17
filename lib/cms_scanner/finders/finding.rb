@@ -1,14 +1,18 @@
+require 'cms_scanner/references'
+
 module CMSScanner
   module Finders
     # Finding
     module Finding
+      include References
+
       FINDING_OPTS = [:confidence, :confirmed_by, :references, :found_by, :interesting_entries]
 
       attr_accessor(*FINDING_OPTS)
 
-      # @return [ Array ]
+      # @return [ Hash ]
       def references
-        @references ||= []
+        @references ||= {}
       end
 
       # @return [ Array ]

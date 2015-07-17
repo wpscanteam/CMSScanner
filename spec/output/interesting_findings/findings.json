@@ -7,9 +7,8 @@
         "confirmed_by": [
 
         ],
-        "references": [
-
-        ],
+        "references": {
+        },
         "interesting_entries": [
 
         ]
@@ -24,9 +23,11 @@
             }
           }
         ],
-        "references": [
-          "R1"
-        ],
+        "references": {
+          "url": [
+            "R1"
+          ]
+        },
         "interesting_entries": [
           "IE1"
         ]
@@ -44,10 +45,12 @@
             }
           }
         ],
-        "references": [
-          "R1",
-          "R2"
-        ],
+        "references": {
+          "url": [
+            "R1",
+            "R2"
+          ]
+        },
         "interesting_entries": [
           "IE1",
           "IE2"
@@ -63,9 +66,8 @@
             }
           }
         ],
-        "references": [
-
-        ],
+        "references": {
+        },
         "interesting_entries": [
 
         ]

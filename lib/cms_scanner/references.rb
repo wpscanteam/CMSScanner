@@ -1,6 +1,6 @@
 module CMSScanner
-  # References related to the vulnerability
-  class Vulnerability
+  # References related to the issue
+  module References
     # @return [ Array<String> ] All the references URLs
     def references_urls
       cve_urls + secunia_urls + osvdb_urls + exploitdb_urls + urls + msf_urls +

@@ -1,11 +1,6 @@
-require 'spec_helper'
 
-describe CMSScanner::Vulnerability do
-  subject(:vuln)   { described_class.new(title, references) }
-  let(:title)      { 'Test Vuln' }
-  let(:references) { {} }
-
-  describe '#new' do
+shared_examples CMSScanner::References do
+  describe 'references' do
     context 'when no references' do
       [:cves, :secunia_ids, :osvdb_ids, :exploitdb_ids, :urls,
        :msf_modules, :packetstorm_ids, :securityfocus_ids

@@ -20,7 +20,7 @@ module CMSScanner
         end
 
         def references
-          %w(https://interconnectit.com/products/search-and-replace-for-wordpress-databases/)
+          { url: 'https://interconnectit.com/products/search-and-replace-for-wordpress-databases/' }
         end
       end
     end

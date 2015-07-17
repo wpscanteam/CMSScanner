@@ -1,6 +1,11 @@
 
 shared_examples CMSScanner::Finders::Finding do
-  [:references, :confirmed_by, :interesting_entries].each do |opt|
+  it_behaves_like CMSScanner::References do
+    let(:opts)       { { references: references } }
+    let(:references) { {} }
+  end
+
+  [:confirmed_by, :interesting_entries].each do |opt|
     describe "##{opt}" do
       its(opt) { should eq [] }
 
