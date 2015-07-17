@@ -37,9 +37,8 @@ module CMSScanner
       end
 
       # @param [ Hash ] opts
-      # TODO: Maybe use instance_variable_set ?
       def parse_finding_options(opts = {})
-        FINDING_OPTS.each { |opt| send("#{opt}=", opts[opt]) if opts.key?(opt) }
+        FINDING_OPTS.each { |opt| instance_variable_set(:"@#{opt}", opts[opt]) if opts.key?(opt) }
       end
 
       def eql?(other)
