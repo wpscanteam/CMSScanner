@@ -1,6 +1,25 @@
 module CMSScanner
   # References related to the issue
   module References
+    # @return [ Array<Symbol> ]
+    def references_keys
+      [:cve, :secunia, :osvdb, :exploitdb, :url, :metasploit, :packetstorm, :securityfocus]
+    end
+
+    # @param [ Hash ] refs
+    def references=(refs)
+      @references = {}
+
+      references_keys.each do |key|
+        @references[key] = [*refs[key]].map(&:to_s) if refs.key?(key)
+      end
+    end
+
+    # @return [ Hash ]
+    def references
+      @references ||= {}
+    end
+
     # @return [ Array<String> ] All the references URLs
     def references_urls
       cve_urls + secunia_urls + osvdb_urls + exploitdb_urls + urls + msf_urls +
@@ -9,7 +28,7 @@ module CMSScanner
 
     # @return [ Array<String> ] The CVEs
     def cves
-      @cve ||= [*references[:cve]].map(&:to_s)
+      @cve ||= references[:cve] || []
     end
 
     # @return [ Array<String> ]
@@ -24,7 +43,7 @@ module CMSScanner
 
     # @return [ Array<String> ] The Secunia IDs
     def secunia_ids
-      @secunia_ids ||= [*references[:secunia]].map(&:to_s)
+      @secunia_ids ||= references[:secunia] || []
     end
 
     # @return [ Array<String> ]
@@ -39,7 +58,7 @@ module CMSScanner
 
     # @return [ Array<String> ] The OSVDB IDs
     def osvdb_ids
-      @osvdb_ids ||= [*references[:osvdb]].map(&:to_s)
+      @osvdb_ids ||= references[:osvdb] || []
     end
 
     # @return [ Array<String> ]
@@ -54,7 +73,7 @@ module CMSScanner
 
     # @return [ Array<String> ] The ExploitDB ID
     def exploitdb_ids
-      @exploitdb_ids ||= [*references[:exploitdb]].map(&:to_s)
+      @exploitdb_ids ||= references[:exploitdb] || []
     end
 
     # @return [ Array<String> ]
@@ -69,12 +88,12 @@ module CMSScanner
 
     # @return [ String<Array> ]
     def urls
-      @urls ||= [*references[:url]].map(&:to_s)
+      @urls ||= references[:url] || []
     end
 
     # @return [ Array<String> ] The metasploit modules
     def msf_modules
-      @msf_modules ||= [*references[:metasploit]].map(&:to_s)
+      @msf_modules ||= references[:metasploit] || []
     end
 
     # @return [ Array<String> ]
@@ -89,7 +108,7 @@ module CMSScanner
 
     # @return [ Array<String> ] The Packetstormsecurity IDs
     def packetstorm_ids
-      @packetstorm_ids ||= [*references[:packetstorm]].map(&:to_s)
+      @packetstorm_ids ||= references[:packetstorm] || []
     end
 
     # @return [ Array<String> ]
@@ -104,7 +123,7 @@ module CMSScanner
 
     # @return [ Array<String> ] The Security Focus IDs
     def securityfocus_ids
-      @securityfocus_ids ||= [*references[:securityfocus]].map(&:to_s)
+      @securityfocus_ids ||= references[:securityfocus] || []
     end
 
     # @return [ Array<String> ]

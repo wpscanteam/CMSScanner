@@ -4,16 +4,14 @@ module CMSScanner
   module Finders
     # Finding
     module Finding
-      include References
+      # Fix for "Double/Dynamic Inclusion Problem"
+      def self.included(base)
+        base.send(:include, NS::References)
+      end
 
       FINDING_OPTS = [:confidence, :confirmed_by, :references, :found_by, :interesting_entries]
 
       attr_accessor(*FINDING_OPTS)
-
-      # @return [ Hash ]
-      def references
-        @references ||= {}
-      end
 
       # @return [ Array ]
       def confirmed_by
@@ -38,7 +36,7 @@ module CMSScanner
 
       # @param [ Hash ] opts
       def parse_finding_options(opts = {})
-        FINDING_OPTS.each { |opt| instance_variable_set(:"@#{opt}", opts[opt]) if opts.key?(opt) }
+        FINDING_OPTS.each { |opt| send("#{opt}=", opts[opt]) if opts.key?(opt) }
       end
 
       def eql?(other)

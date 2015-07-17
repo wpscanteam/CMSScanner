@@ -17,6 +17,12 @@ shared_examples CMSScanner::References do
       its(:references_urls) { should eql([]) }
     end
 
+    context 'when an unknown reference key is provided' do
+      let(:references) { { cve: 1, unknown: 12 } }
+
+      its(:references) { should eql(cve: %w(1)) }
+    end
+
     context 'when references provided as string' do
       let(:references) do
         {
