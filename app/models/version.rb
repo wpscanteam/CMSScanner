@@ -1,7 +1,7 @@
 module CMSScanner
   # Version
   class Version
-    include NS::Finders::Finding
+    include Finders::Finding
 
     attr_reader :number
 

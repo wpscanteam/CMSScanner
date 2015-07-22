@@ -1,7 +1,7 @@
 module CMSScanner
   # Interesting Finding
   class InterestingFinding
-    include NS::Finders::Finding
+    include Finders::Finding
 
     attr_reader :url
     attr_writer :to_s

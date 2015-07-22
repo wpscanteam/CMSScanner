@@ -1,12 +1,11 @@
-require 'cms_scanner/references'
-
 module CMSScanner
   module Finders
     # Finding
     module Finding
       # Fix for "Double/Dynamic Inclusion Problem"
       def self.included(base)
-        base.send(:include, References)
+        base.include References
+        super(base)
       end
 
       FINDING_OPTS = [:confidence, :confirmed_by, :references, :found_by, :interesting_entries]

@@ -1,5 +1,12 @@
 
 shared_examples CMSScanner::References do
+  describe '#references_keys' do
+    it 'returns the expected array of symbols' do
+      expect(subject.class.references_keys)
+        .to eql [:cve, :secunia, :osvdb, :exploitdb, :url, :metasploit, :packetstorm, :securityfocus]
+    end
+  end
+
   describe 'references' do
     context 'when no references' do
       [:cves, :secunia_ids, :osvdb_ids, :exploitdb_ids, :urls,
