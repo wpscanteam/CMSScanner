@@ -2,11 +2,9 @@ module CMSScanner
   module Finders
     # Independent Finder
     module IndependentFinder
-      def self.included(base)
-        base.extend(ClassMethods)
-      end
+      extend ActiveSupport::Concern
 
-      # Hack to have the #find as a class method
+      # See ActiveSupport::Concern
       module ClassMethods
         def find(target, opts = {})
           new(target).find(opts)
