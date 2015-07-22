@@ -1,11 +1,9 @@
 module CMSScanner
   module Finders
-    # Unique Finders container
-    #
     # This class is designed to return a unique result such as a version
     # Note: Finders contained can return multiple results but the #run will only
     # returned the best finding
-    class UniqueFinders < IndependentFinders
+    class UniqueFinders < BaseFinders
       # @param [ Hash ] opts
       # @option opts [ Symbol ] :mode :mixed, :passive or :aggressive
       # @option opts [ Int ] :confidence_threshold  If a finding's confidence reaches this value,

@@ -1,10 +1,8 @@
 module CMSScanner
   module Finders
-    # Same Type Finders container
-    #
     # This class is designed to handle same type results, such as enumeration of plugins,
     # themes etc.
-    class SameTypeFinders < IndependentFinders
+    class SameTypeFinders < BaseFinders
       # @param [ Hash ] opts
       # @option opts [ Symbol ] :mode :mixed, :passive or :aggressive
       # @option opts [ Boolean ] :sort Wether or not to sort the findings
