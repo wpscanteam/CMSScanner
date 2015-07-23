@@ -14,7 +14,7 @@ module CMSScanner
     def register_options_files
       [Dir.home, Dir.pwd].each do |dir|
         option_parser.options_files.supported_extensions.each do |ext|
-          @option_parser.options_files << File.join(dir, ".#{NS.app_name}", "cli_options.#{ext}")
+          @option_parser.options_files << Pathname.new(dir).join(".#{NS.app_name}", "cli_options.#{ext}").to_s
         end
       end
     end

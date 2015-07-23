@@ -104,6 +104,10 @@ describe 'SubScanner' do
   end
 
   describe 'Formatter' do
+    it_behaves_like CMSScanner::Formatter::ClassMethods do
+      subject(:formatter) { formatter_class }
+    end
+
     describe '.load' do
       it 'adds the #custom method for all formatters' do
         formatter_class.availables.each do |format|
@@ -115,7 +119,12 @@ describe 'SubScanner' do
     describe '#views_directories' do
       it 'returns the expected paths' do
         expect(scanner.formatter.views_directories).to eql(
-          [CMSScanner::APP_DIR, SubScanner::APP_DIR].reduce([]) { |a, e| a << File.join(e, 'views') }
+          [
+            CMSScanner::APP_DIR, SubScanner::APP_DIR,
+            File.join(Dir.home, '.subscanner'), File.join(Dir.pwd, '.subscanner')
+          ].reduce([]) do |a, e|
+            a << File.join(e, 'views')
+          end
         )
       end
     end

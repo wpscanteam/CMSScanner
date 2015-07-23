@@ -1,18 +1,5 @@
 require 'spec_helper'
 
-# Test Module to check the correct inclusion of
-# the class methods
-module OtherFormatter
-  include CMSScanner::Formatter
-end
-
-[CMSScanner::Formatter, OtherFormatter].each do |f|
-  describe "#{f}" do
-    subject(:formatter) { f }
-    it_behaves_like CMSScanner::Formatter::ClassMethods
-  end
-end
-
 module CMSScanner
   module Formatter
     module Spec
@@ -128,7 +115,11 @@ describe CMSScanner::Formatter::Base do
   end
 
   describe '#views_directories' do
-    let(:default_directories) { [APP_VIEWS] }
+    let(:default_directories) do
+      [Dir.home, Dir.pwd].reduce([APP_VIEWS]) do |a, e|
+        a << Pathname.new(e).join(".#{CMSScanner.app_name}", 'views').to_s
+      end
+    end
 
     context 'when default directories' do
       its(:views_directories) { should eq(default_directories) }
