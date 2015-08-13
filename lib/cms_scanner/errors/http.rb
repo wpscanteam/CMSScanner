@@ -1,5 +1,18 @@
 module CMSScanner
-  class Error < RuntimeError
+  class Error < StandardError
+  end
+
+  # Target Down Error
+  class TargetDownError < Error
+    attr_reader :response
+
+    def initialize(response)
+      @response = response
+    end
+
+    def to_s
+      "The url supplied '#{response.request.url}' seems to be down (#{response.return_message})"
+    end
   end
 
   # HTTP Authentication Required Error

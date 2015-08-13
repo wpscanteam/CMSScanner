@@ -59,7 +59,10 @@ describe CMSScanner::Controller::Core do
         stub_request(:get, target_url).to_return(status: 0)
 
         expect { core.before_scan }
-          .to raise_error("The url supplied '#{target_url}' seems to be down")
+          .to raise_error(
+            CMSScanner::TargetDownError,
+            "The url supplied '#{target_url}' seems to be down ()"
+          )
       end
 
       context 'when it redirects' do
