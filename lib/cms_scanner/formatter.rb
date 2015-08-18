@@ -14,7 +14,7 @@ module CMSScanner
         format ||= 'cli'
         custom_views ||= []
 
-        f = const_get(format.gsub(/-/, '_').camelize).new
+        f = const_get(format.tr('-', '_').camelize).new
         custom_views.each { |v| f.views_directories << v }
         f
       end

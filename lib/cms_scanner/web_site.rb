@@ -77,7 +77,7 @@ module CMSScanner
 
       return unless [301, 302].include?(NS::Browser.get(url).code)
 
-      res   = NS::Browser.get(url, followlocation: true)
+      res = NS::Browser.get(url, followlocation: true)
 
       res.effective_url == url ? nil : res.effective_url
     end
