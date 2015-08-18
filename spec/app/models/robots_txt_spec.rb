@@ -19,7 +19,7 @@ describe CMSScanner::RobotsTxt do
     context 'when empty or / entries' do
       let(:fixture) { 'robots.txt' }
 
-      it 'ignores them and only returns the others' do
+      it 'ignores them and only returns the others w/o duplicate' do
         @expected = %w(/admin /public/home)
       end
     end

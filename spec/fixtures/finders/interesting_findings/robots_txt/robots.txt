@@ -8,3 +8,6 @@ Disallow:
 
 Disallow: /admin
 Allow: /public/home
+
+# Because why not :o
+Allow: /admin
