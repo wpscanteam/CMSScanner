@@ -1,12 +1,13 @@
 # Gems
-require 'opt_parse_validator'
 require 'typhoeus'
 require 'nokogiri'
-require 'active_support/inflector'
-require 'active_support/concern'
-require 'addressable/uri'
+require 'yajl/json_gem'
 require 'public_suffix'
+require 'addressable/uri'
 require 'ruby-progressbar'
+require 'opt_parse_validator'
+require 'active_support/concern'
+require 'active_support/inflector'
 # Standard Libs
 require 'erb'
 require 'uri'

@@ -31,13 +31,14 @@ Gem::Specification.new do |s|
   s.executables           = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.require_path          = 'lib'
 
-  s.add_dependency 'opt_parse_validator', '~> 0.0.13'
   s.add_dependency 'typhoeus', '~> 0.7'
   s.add_dependency 'nokogiri', '~> 1.6.6'
+  s.add_dependency 'yajl-ruby', '~> 1.2.1' # Better JSON parser regarding memory usage
   s.add_dependency 'addressable', '~> 2.3.8'
   s.add_dependency 'activesupport', '~> 4.2'
   s.add_dependency 'public_suffix', '~> 1.5'
   s.add_dependency 'ruby-progressbar', '~> 1.7.5'
+  s.add_dependency 'opt_parse_validator', '~> 0.0.13'
 
   s.add_development_dependency 'rake', '~> 10.4.2'
   s.add_development_dependency 'rspec', '~> 3.3'
