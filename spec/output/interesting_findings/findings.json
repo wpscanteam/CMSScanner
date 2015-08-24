@@ -1,79 +1,77 @@
 {
-  "interesting_findings": [
-    {
-      "F1": {
-        "found_by": "Spec",
-        "confidence": 10,
-        "confirmed_by": [
+  "interesting_findings": {
+    "F1": {
+      "found_by": "Spec",
+      "confidence": 10,
+      "confirmed_by": [
 
-        ],
-        "references": {
+      ],
+      "references": {
 
-        },
-        "interesting_entries": [
+      },
+      "interesting_entries": [
 
+      ]
+    },
+    "F2": {
+      "found_by": "Spec",
+      "confidence": 20,
+      "confirmed_by": [
+        {
+          "Spec2": {
+            "confidence": 10
+          }
+        }
+      ],
+      "references": {
+        "url": [
+          "R1"
         ]
       },
-      "F2": {
-        "found_by": "Spec",
-        "confidence": 20,
-        "confirmed_by": [
-          {
-            "Spec2": {
-              "confidence": 10
-            }
+      "interesting_entries": [
+        "IE1"
+      ]
+    },
+    "F3": {
+      "found_by": "Spec",
+      "confidence": 100,
+      "confirmed_by": [
+        {
+          "Spec2": {
+            "confidence": 100
+          },
+          "Spec3": {
+            "confidence": 10
           }
-        ],
-        "references": {
-          "url": [
-            "R1"
-          ]
-        },
-        "interesting_entries": [
-          "IE1"
+        }
+      ],
+      "references": {
+        "url": [
+          "R1",
+          "R2"
         ]
       },
-      "F3": {
-        "found_by": "Spec",
-        "confidence": 100,
-        "confirmed_by": [
-          {
-            "Spec2": {
-              "confidence": 100
-            },
-            "Spec3": {
-              "confidence": 10
-            }
+      "interesting_entries": [
+        "IE1",
+        "IE2"
+      ]
+    },
+    "F4": {
+      "found_by": "Spec",
+      "confidence": 0,
+      "confirmed_by": [
+        {
+          "Spec2": {
+            "confidence": 0
           }
-        ],
-        "references": {
-          "url": [
-            "R1",
-            "R2"
-          ]
-        },
-        "interesting_entries": [
-          "IE1",
-          "IE2"
-        ]
+        }
+      ],
+      "references": {
+
       },
-      "F4": {
-        "found_by": "Spec",
-        "confidence": 0,
-        "confirmed_by": [
-          {
-            "Spec2": {
-              "confidence": 0
-            }
-          }
-        ],
-        "references": {
+      "interesting_entries": [
 
-        },
-        "interesting_entries": [
-
-        ]
-      }
+      ]
     }
-  ]
+  }
 }

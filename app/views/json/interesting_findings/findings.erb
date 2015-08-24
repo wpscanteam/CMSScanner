@@ -1,6 +1,5 @@
-"interesting_findings": [
+"interesting_findings": {
 <% unless @findings.empty? -%>
-  {
   <% last_index = @findings.size - 1 %>
   <% @findings.each.with_index do |finding, index| -%>
     <%= finding.url.to_s.to_json %>: {
@@ -20,6 +19,5 @@
       "interesting_entries": <%= finding.interesting_entries.to_json %>
     }<% unless index == last_index %>,<% end %>
   <% end -%>
-  }
 <% end -%>
-],
+},
