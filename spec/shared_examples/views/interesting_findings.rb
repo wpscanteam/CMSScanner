@@ -20,7 +20,7 @@ shared_examples 'App::Views::InterestingFindings' do
       findings = CMSScanner::Finders::Findings.new
 
       findings <<
-        interesting_file.new('F1', opts) <<
+        interesting_file.new('F1', opts.merge(to_s: 'F1_to_s')) <<
         interesting_file.new('F2', opts.merge(references: { url: 'R1' }, interesting_entries: %w(IE1))) <<
         interesting_file.new('F2', opts.merge(found_by: 'Spec2')) <<
         interesting_file.new('F3',

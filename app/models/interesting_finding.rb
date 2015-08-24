@@ -26,13 +26,14 @@ module CMSScanner
       res.body.split("\n").reject { |s| s.strip.empty? }
     end
 
+    # @return [ String ]
     def to_s
       @to_s || url
     end
 
+    # @return [ Bollean ]
     def ==(other)
-      return false unless self.class == other.class
-      to_s == other.to_s
+      self.class == other.class && to_s == other.to_s
     end
   end
 end
