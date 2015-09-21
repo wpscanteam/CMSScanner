@@ -25,7 +25,7 @@ describe CMSScanner::Browser do
     its(:default_request_params) { should eq default }
 
     context 'when some attributes are set' do
-      let(:options)  do
+      let(:options) do
         {
           cache_ttl: 200, connect_timeout: 10,
           http_auth: { username: 'log', password: 'pwd' },

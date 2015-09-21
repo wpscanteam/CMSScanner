@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CMSScanner::XMLRPC do
   subject(:xml_rpc) { described_class.new(url) }
-  let(:url)      { 'http://example.com/xmlrpc' }
+  let(:url)         { 'http://example.com/xmlrpc' }
 
   describe '#request_body' do
     after { expect(xml_rpc.request_body(method, params)).to eq @expected }
