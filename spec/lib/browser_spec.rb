@@ -79,6 +79,8 @@ describe CMSScanner::Browser do
                        browser.default_user_agent
                      when :user_agents_list
                        File.join(CMSScanner::APP_DIR, 'user_agents.txt')
+                     when :throttle
+                       0.0
                      end
 
           expect(browser.send(sym)).to eq expected
@@ -95,8 +97,10 @@ describe CMSScanner::Browser do
       end
 
       let(:options) do
-        { cache_ttl: 200, max_threads: 10, test: 'should not be set',
-          user_agent: 'UA', proxy: false, user_agents_list: 'test.txt' }
+        {
+          cache_ttl: 200, max_threads: 10, test: 'should not be set', throttle: 0,
+          user_agent: 'UA', proxy: false, user_agents_list: 'test.txt'
+        }
       end
 
       it 'merges the browser options only' do
@@ -132,16 +136,65 @@ describe CMSScanner::Browser do
     end
 
     context 'when <= 0' do
-      it 'sets the @threads to 1' do
+      it 'sets max_threads to 1' do
         @threads  = -2
         @expected = 1
       end
     end
 
     context 'when > 0' do
-      it 'sets the @threads' do
+      it 'sets max_threads to 20' do
         @threads  = 20
         @expected = @threads
+      end
+    end
+
+    context 'when throttle is used' do
+      let(:options) { { throttle: 2000 } }
+
+      it 'sets max_threads to 1' do
+        @threads  = 20
+        @expected = 1
+      end
+    end
+  end
+
+  describe '#throttle=, #throttle' do
+    context 'when not used' do
+      let(:options) { { max_threads: 20 } }
+
+      its(:throttle) { should eql 0.0 }
+      its(:max_threads) { should eql 20 }
+    end
+
+    context 'when max_threads and throttle supplied as options' do
+      let(:options) { { max_threads: 20, throttle: 200 } }
+
+      its(:throttle) { should eql 0.2 }
+      its(:max_threads) { should eql 1 }
+    end
+
+    context 'when used' do
+      let(:options) { { max_threads: 10 } }
+
+      after do
+        browser.throttle = @throttle
+
+        expect(browser.throttle).to eql @throttle.to_i.abs / 1000.0 # This one is in seconds
+        expect(browser.max_threads).to eql 1
+        expect(browser.hydra.max_concurrency).to eql 1
+      end
+
+      context 'when a negative value is supplied' do
+        it 'uses the absolute value and set the max_threads to 1' do
+          @throttle = -100
+        end
+      end
+
+      context 'when a positive value is supplied' do
+        it 'sets and set the max_threads to 1' do
+          @throttle = 1000
+        end
       end
     end
   end

@@ -10,6 +10,8 @@ module CMSScanner
     #
     # @return [ Void ]
     def initialize(parsed_options = {})
+      self.throttle = 0
+
       load_options(parsed_options)
     end
 

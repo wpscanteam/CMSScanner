@@ -34,6 +34,8 @@ module CMSScanner
           OptCredentials.new(['--http-auth login:password']),
           OptPositiveInteger.new(['--max-threads VALUE', '-t', 'The max threads to use'],
                                  default: 5),
+          OptPositiveInteger.new(['--throttle MilliSeconds', 'Milliseconds to wait before doing another web request. ' \
+                                  'If used, the max threads will be set to 1.']),
           OptPositiveInteger.new(['--request-timeout SECONDS', 'The request timeout in seconds'],
                                  default: 60),
           OptPositiveInteger.new(['--connect-timeout SECONDS', 'The connection timeout in seconds'],

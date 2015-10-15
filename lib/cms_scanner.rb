@@ -39,7 +39,11 @@ module CMSScanner
 
   # Number of requests performed to display at the end of the scan
   Typhoeus.on_complete do |response|
-    self.total_requests += 1 unless response.cached?
+    next if response.cached?
+
+    self.total_requests += 1
+
+    NS::Browser.instance.trottle!
   end
 
   # Module to be able to use these class methods when the CMSScanner
