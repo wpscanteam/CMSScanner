@@ -14,7 +14,8 @@ module CMSScanner
 
         results << match
       end
-      results
+
+      results.uniq
     end
   end
 end

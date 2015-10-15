@@ -18,11 +18,25 @@ module CMSScanner
 
         setup_cache
 
-        fail "The url supplied '#{target.url}' seems to be down" unless target.online?
+        check_target_availability
+      end
 
-        fail AccessForbiddenError if target.access_forbidden?
-        fail HTTPAuthRequiredError if target.http_auth?
-        fail ProxyAuthRequiredError if target.proxy_auth?
+      # Checks that the target is accessible, raises related errors otherwise
+      #
+      # @return [ Void ]
+      def check_target_availability
+        res = NS::Browser.get(target.url)
+
+        case res.code
+        when 0
+          fail TargetDownError, res
+        when 401
+          fail HTTPAuthRequiredError
+        when 403
+          fail AccessForbiddenError
+        when 407
+          fail ProxyAuthRequiredError
+        end
 
         redirection = target.redirection
         fail HTTPRedirectError, redirection if redirection && !parsed_options[:ignore_main_redirect]

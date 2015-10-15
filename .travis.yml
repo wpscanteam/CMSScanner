@@ -12,6 +12,7 @@ rvm:
   - 2.2.0
   - 2.2.1
   - 2.2.2
+  - 2.2.3
   - ruby-head
 before_install:
   - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
