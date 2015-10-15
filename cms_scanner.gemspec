@@ -31,7 +31,7 @@ Gem::Specification.new do |s|
   s.executables           = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.require_path          = 'lib'
 
-  s.add_dependency 'typhoeus', '~> 0.7'
+  s.add_dependency 'typhoeus', '~> 0.8'
   s.add_dependency 'nokogiri', '~> 1.6.6'
   s.add_dependency 'yajl-ruby', '~> 1.2.1' # Better JSON parser regarding memory usage
   s.add_dependency 'addressable', '~> 2.3.8'
@@ -44,7 +44,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 3.3'
   s.add_development_dependency 'rspec-its', '~> 1.2'
   s.add_development_dependency 'bundler', '~> 1.6'
-  s.add_development_dependency 'rubocop', '~> 0.33'
-  s.add_development_dependency 'webmock', '~> 1.21'
+  s.add_development_dependency 'rubocop', '~> 0.34'
+  s.add_development_dependency 'webmock', '~> 1.22'
   s.add_development_dependency 'simplecov', '~> 0.10'
 end
