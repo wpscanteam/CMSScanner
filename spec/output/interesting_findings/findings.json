@@ -1,12 +1,13 @@
 {
-  "interesting_findings": {
-    "F1_to_s": {
+  "interesting_findings": [
+    {
       "url": "F1",
+      "to_s": "F1_to_s",
       "found_by": "Spec",
       "confidence": 10,
-      "confirmed_by": [
+      "confirmed_by": {
 
-      ],
+      },
       "references": {
 
       },
@@ -14,17 +15,16 @@
 
       ]
     },
-    "F2": {
+    {
       "url": "F2",
+      "to_s": "F2",
       "found_by": "Spec",
       "confidence": 20,
-      "confirmed_by": [
-        {
-          "Spec2": {
-            "confidence": 10
-          }
+      "confirmed_by": {
+        "Spec2": {
+          "confidence": 10
         }
-      ],
+      },
       "references": {
         "url": [
           "R1"
@@ -34,20 +34,19 @@
         "IE1"
       ]
     },
-    "F3": {
+    {
       "url": "F3",
+      "to_s": "F3",
       "found_by": "Spec",
       "confidence": 100,
-      "confirmed_by": [
-        {
-          "Spec2": {
-            "confidence": 100
-          },
-          "Spec3": {
-            "confidence": 10
-          }
+      "confirmed_by": {
+        "Spec2": {
+          "confidence": 100
+        },
+        "Spec3": {
+          "confidence": 10
         }
-      ],
+      },
       "references": {
         "url": [
           "R1",
@@ -59,17 +58,16 @@
         "IE2"
       ]
     },
-    "F4": {
+    {
       "url": "F4",
+      "to_s": "F4",
       "found_by": "Spec",
       "confidence": 0,
-      "confirmed_by": [
-        {
-          "Spec2": {
-            "confidence": 0
-          }
+      "confirmed_by": {
+        "Spec2": {
+          "confidence": 0
         }
-      ],
+      },
       "references": {
 
       },
@@ -77,5 +75,5 @@
 
       ]
     }
-  }
+  ]
 }
