@@ -31,20 +31,20 @@ Gem::Specification.new do |s|
   s.executables           = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.require_path          = 'lib'
 
-  s.add_dependency 'typhoeus', '~> 0.8'
+  s.add_dependency 'typhoeus', '~> 0.8.0'
   s.add_dependency 'nokogiri', '~> 1.6.6'
   s.add_dependency 'yajl-ruby', '~> 1.2.1' # Better JSON parser regarding memory usage
   s.add_dependency 'addressable', '~> 2.3.8'
-  s.add_dependency 'activesupport', '~> 4.2'
-  s.add_dependency 'public_suffix', '~> 1.5'
+  s.add_dependency 'activesupport', '~> 4.2.0'
+  s.add_dependency 'public_suffix', '~> 1.5.0'
   s.add_dependency 'ruby-progressbar', '~> 1.7.5'
-  s.add_dependency 'opt_parse_validator', '~> 0.0.13'
+  s.add_dependency 'opt_parse_validator', '~> 0.0.13.0'
 
   s.add_development_dependency 'rake', '~> 10.4.2'
-  s.add_development_dependency 'rspec', '~> 3.3'
-  s.add_development_dependency 'rspec-its', '~> 1.2'
+  s.add_development_dependency 'rspec', '~> 3.3.0'
+  s.add_development_dependency 'rspec-its', '~> 1.2.0'
   s.add_development_dependency 'bundler', '~> 1.6'
-  s.add_development_dependency 'rubocop', '~> 0.34'
-  s.add_development_dependency 'webmock', '~> 1.22'
-  s.add_development_dependency 'simplecov', '~> 0.10'
+  s.add_development_dependency 'rubocop', '~> 0.34.0'
+  s.add_development_dependency 'webmock', '~> 1.22.0'
+  s.add_development_dependency 'simplecov', '~> 0.10.0'
 end
