@@ -41,10 +41,10 @@ Gem::Specification.new do |s|
   s.add_dependency 'opt_parse_validator', '~> 0.0.13.0'
 
   s.add_development_dependency 'rake', '~> 10.4.2'
-  s.add_development_dependency 'rspec', '~> 3.3.0'
+  s.add_development_dependency 'rspec', '~> 3.4.0'
   s.add_development_dependency 'rspec-its', '~> 1.2.0'
   s.add_development_dependency 'bundler', '~> 1.6'
-  s.add_development_dependency 'rubocop', '~> 0.34.0'
+  s.add_development_dependency 'rubocop', '~> 0.35.1'
   s.add_development_dependency 'webmock', '~> 1.22.0'
   s.add_development_dependency 'simplecov', '~> 0.10.0'
 end
