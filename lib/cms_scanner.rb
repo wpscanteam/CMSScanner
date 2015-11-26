@@ -17,6 +17,7 @@ require 'pathname'
 require 'cms_scanner/typhoeus/response'
 require 'cms_scanner/typhoeus/hydra'
 require 'cms_scanner/public_suffix/domain'
+require 'cms_scanner/numeric'
 # Custom Libs
 require 'cms_scanner/helper'
 require 'cms_scanner/exit_code'
