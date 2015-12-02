@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.require_path          = 'lib'
 
   s.add_dependency 'typhoeus', '~> 0.8.0'
-  s.add_dependency 'nokogiri', '~> 1.6.6.4'
+  s.add_dependency 'nokogiri', '~> 1.6.7.0'
   s.add_dependency 'yajl-ruby', '~> 1.2.1' # Better JSON parser regarding memory usage
   s.add_dependency 'addressable', '~> 2.3.8'
   s.add_dependency 'activesupport', '~> 4.2.0'
@@ -46,5 +46,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'bundler', '~> 1.6'
   s.add_development_dependency 'rubocop', '~> 0.35.1'
   s.add_development_dependency 'webmock', '~> 1.22.0'
-  s.add_development_dependency 'simplecov', '~> 0.10.0'
+  s.add_development_dependency 'simplecov', '~> 0.11.0'
 end
