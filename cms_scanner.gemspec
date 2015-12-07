@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'typhoeus', '~> 0.8.0'
   s.add_dependency 'nokogiri', '~> 1.6.7.0'
   s.add_dependency 'yajl-ruby', '~> 1.2.1' # Better JSON parser regarding memory usage
-  s.add_dependency 'addressable', '~> 2.3.8'
+  s.add_dependency 'addressable', '~> 2.4.0'
   s.add_dependency 'activesupport', '~> 4.2.0'
   s.add_dependency 'public_suffix', '~> 1.5.0'
   s.add_dependency 'ruby-progressbar', '~> 1.7.5'
