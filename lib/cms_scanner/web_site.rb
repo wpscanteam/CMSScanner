@@ -36,6 +36,22 @@ module CMSScanner
       @uri.join(URI.encode(path)).to_s
     end
 
+    attr_writer :homepage_res
+
+    # @return [ Typhoeus::Response ]
+    #
+    # As webmock does not support redirects mocking, coverage is ignored
+    # :nocov:
+    def homepage_res
+      @homepage_res ||= NS::Browser.get_and_follow_location(url)
+    end
+    # :nocov:
+
+    # @return [ String ]
+    def homepage_url
+      @homepage_url ||= homepage_res.effective_url.to_s
+    end
+
     # Checks if the remote website is up.
     #
     # @param [ String ] path

@@ -66,29 +66,48 @@ describe CMSScanner::Controller::Core do
       end
 
       context 'when it redirects' do
-        let(:redirection) { 'http://somewhere.com/' }
-
         before do
-          expect(core.target).to receive(:redirection).and_return(redirection)
           stub_request(:get, target_url).to_return(status: 301, headers: { location: redirection })
+
+          expect(core.target).to receive(:homepage_res).and_return(Typhoeus::Response.new(effective_url: redirection))
         end
 
-        context 'when the --ignore-main-redirect is not supplied' do
-          it 'raises an error' do
-            expect { core.before_scan }.to raise_error(
-              CMSScanner::HTTPRedirectError,
-              "The URL supplied redirects to #{redirection}." \
-              ' Use the --ignore-main-redirect option to ignore the redirection and scan the target.'
-            )
+        context 'when out of scope' do
+          let(:redirection) { 'http://somewhere.com/' }
+
+          context 'when the --ignore-main-redirect is not supplied' do
+            it 'raises an error' do
+              expect { core.before_scan }.to raise_error(
+                CMSScanner::HTTPRedirectError,
+                "The URL supplied redirects to #{redirection}." \
+                ' Use the --ignore-main-redirect option to ignore the redirection and scan the target.'
+              )
+            end
+          end
+
+          context 'when the --ignore-main-redirect is supplied' do
+            let(:parsed_options) { super().merge(ignore_main_redirect: true) }
+
+            it 'does not raise any error' do
+              expect { core.before_scan }.to_not raise_error
+              expect(core.target.url).to eql target_url
+
+              expect(core.target).to receive(:homepage_res).and_call_original
+              # Thanks webmock for putting the port here :x
+              expect(core.target.homepage_url).to eql 'http://example.com:80/'
+            end
           end
         end
 
-        context 'when the --ignore-main-redirect is supplied' do
-          let(:parsed_options) { super().merge(ignore_main_redirect: true) }
+        context 'when in scope' do
+          let(:redirection) { "#{target_url}home" }
 
-          it 'does not raise any error and does not follow the redirection' do
+          it 'does not raise any error' do
             expect { core.before_scan }.to_not raise_error
             expect(core.target.url).to eql target_url
+
+            # expect(core.target).to receive(:homepage_res).and_call_original
+            # expect(core.target.homepage_url).to eql redirection # Doesn't work, no idea why :x
           end
         end
       end
@@ -189,7 +208,7 @@ describe CMSScanner::Controller::Core do
 
     it 'calls the formatter with the correct parameters' do
       # Call the #run once to ensure that @start_time & @start_memory are set
-      expect(core).to receive(:output).with('started', url: target_url)
+      expect(core).to receive(:output).with('started', hash_including(url: target_url))
       core.run
 
       RSpec::Mocks.space.proxy_for(core).reset # Must reset due to the above statements

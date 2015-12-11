@@ -7,8 +7,18 @@ shared_examples 'App::Views::Core' do
   describe 'started' do
     let(:view) { 'started' }
 
-    it 'outputs the expected string' do
-      @tpl_vars = tpl_vars.merge(start_memory: 10)
+    context 'when the target url and the effective_url are the same' do
+      it 'outputs the expected string' do
+        @tpl_vars = tpl_vars.merge(start_memory: 10, effective_url: target_url)
+      end
+    end
+
+    context 'when target url != effective_url' do
+      let(:expected_view) { 'started_effective_url' }
+
+      it 'outputs the expected string' do
+        @tpl_vars = tpl_vars.merge(start_memory: 10, effective_url: "#{target_url}home")
+      end
     end
   end
 

@@ -15,7 +15,7 @@ module CMSScanner
 
         # @return [ XMLRPC ]
         def passive_headers(_opts = {})
-          url = NS::Browser.get(target.url).headers['X-Pingback']
+          url = target.homepage_res.headers['X-Pingback']
 
           return unless target.in_scope?(url)
           potential_urls << url
@@ -25,7 +25,7 @@ module CMSScanner
 
         # @return [ XMLRPC ]
         def passive_body(_opts = {})
-          NS::Browser.get(target.url).html.css('link[rel="pingback"]').each do |tag|
+          target.homepage_res.html.css('link[rel="pingback"]').each do |tag|
             url = tag.attribute('href').to_s
 
             next unless target.in_scope?(url)

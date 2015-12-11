@@ -38,15 +38,22 @@ module CMSScanner
           fail ProxyAuthRequiredError
         end
 
-        redirection = target.redirection
-        fail HTTPRedirectError, redirection if redirection && !parsed_options[:ignore_main_redirect]
+        # Checks for redirects
+        # An out of scope redirect will raise an HTTPRedirectError
+        effective_url = target.homepage_res.effective_url.to_s
+
+        return if target.in_scope?(effective_url)
+
+        fail HTTPRedirectError, effective_url unless parsed_options[:ignore_main_redirect]
+
+        target.homepage_res = res
       end
 
       def run
         @start_time   = Time.now
         @start_memory = memory_usage
 
-        output('started', url: target.url)
+        output('started', url: target.url, effective_url: target.homepage_url)
       end
 
       def after_scan

@@ -24,7 +24,7 @@ module CMSScanner
         #
         # @return [ Array<String> ]
         def passive_urls(_opts = {})
-          target.in_scope_urls(NS::Browser.get(target.url), passive_urls_xpath)
+          target.in_scope_urls(target.homepage_res, passive_urls_xpath)
         end
 
         # @return [ String ]
