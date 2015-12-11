@@ -40,6 +40,44 @@ end
 require 'cms_scanner'
 require 'shared_examples'
 
+# TODO: remove when https://github.com/bblimke/webmock/issues/552 fixed
+# rubocop:disable all
+module WebMock
+  module HttpLibAdapters
+    class TyphoeusAdapter < HttpLibAdapter
+      def self.effective_url(effective_uri)
+        effective_uri.port = nil if effective_uri.scheme == 'http' && effective_uri.port == 80
+        effective_uri.port = nil if effective_uri.scheme == 'https' && effective_uri.port == 443
+
+        effective_uri.to_s
+      end
+
+      def self.generate_typhoeus_response(request_signature, webmock_response)
+        response = if webmock_response.should_timeout
+                     ::Typhoeus::Response.new(
+                       code: 0,
+                       status_message: '',
+                       body: '',
+                       headers: {},
+                       return_code: :operation_timedout
+                     )
+                   else
+                     ::Typhoeus::Response.new(
+                       code: webmock_response.status[0],
+                       status_message: webmock_response.status[1],
+                       body: webmock_response.body,
+                       headers: webmock_response.headers,
+                       effective_url: effective_url(request_signature.uri)
+                     )
+        end
+        response.mock = :webmock
+        response
+      end
+    end
+  end
+end
+# rubocop:enabled all
+
 SPECS            = Pathname.new(__FILE__).dirname.to_s
 CACHE            = File.join(SPECS, 'cache')
 FIXTURES         = File.join(SPECS, 'fixtures')

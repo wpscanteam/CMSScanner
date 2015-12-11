@@ -40,7 +40,7 @@ module CMSScanner
 
         # Checks for redirects
         # An out of scope redirect will raise an HTTPRedirectError
-        effective_url = target.homepage_res.effective_url.to_s
+        effective_url = target.homepage_res.effective_url
 
         return if target.in_scope?(effective_url)
 

@@ -49,7 +49,7 @@ module CMSScanner
 
     # @return [ String ]
     def homepage_url
-      @homepage_url ||= homepage_res.effective_url.to_s
+      @homepage_url ||= homepage_res.effective_url
     end
 
     # Checks if the remote website is up.

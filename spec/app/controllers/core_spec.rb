@@ -93,8 +93,7 @@ describe CMSScanner::Controller::Core do
               expect(core.target.url).to eql target_url
 
               expect(core.target).to receive(:homepage_res).and_call_original
-              # Thanks webmock for putting the port here :x
-              expect(core.target.homepage_url).to eql 'http://example.com:80/'
+              expect(core.target.homepage_url).to eql target_url
             end
           end
         end
