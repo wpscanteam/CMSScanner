@@ -23,14 +23,14 @@ module CMSScanner
         # @yield [ Mixed, String, String ] version/s, url, hash The version associated to the
         #                                                       fingerprint of the url
         def fingerprint(fingerprints, opts = {})
-          bar = progress_bar(total: fingerprints.size) if opts[:show_progression]
+          create_progress_bar(opts.merge(total: fingerprints.size)) # if opts[:show_progression]
 
           fingerprints.each do |path, f|
             url     = target.url(path.dup)
             request = browser.forge_request(url, request_params)
 
             request.on_complete do |res|
-              bar.progress += 1 if opts[:show_progression]
+              progress_bar.increment
 
               md5sum = hexdigest(res.body)
 

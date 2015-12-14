@@ -1,3 +1,4 @@
+require 'cms_scanner/mocked_progress_bar'
 require 'cms_scanner/finders/finder/smart_url_checker'
 require 'cms_scanner/finders/finder/enumerator'
 require 'cms_scanner/finders/finder/fingerprinter'
@@ -9,7 +10,7 @@ module CMSScanner
       # Constants for common found_by
       DIRECT_ACCESS = 'Direct Access (Aggressive Detection)'
 
-      attr_accessor :target
+      attr_accessor :target, :progress_bar
 
       def initialize(target)
         @target = target
@@ -29,10 +30,13 @@ module CMSScanner
       end
 
       # @param [ Hash ] opts See https://github.com/jfelchner/ruby-progressbar/wiki/Options
+      # @option opts [ Boolean ] :show_progression
       #
-      # @return [ ProgressBar::Base ]
-      def progress_bar(opts = {})
-        ProgressBar.create({ format: '%t %a <%B> (%c / %C) %P%% %e' }.merge(opts))
+      # @return [ ProgressBar::Base, CMSScanner::MockedProgressBar ]
+      def create_progress_bar(opts = {})
+        klass = opts[:show_progression] ? ProgressBar : MockedProgressBar
+
+        @progress_bar = klass.create({ format: '%t %a <%B> (%c / %C) %P%% %e' }.merge(opts))
       end
 
       # @return [ Browser ]

@@ -10,13 +10,13 @@ module CMSScanner
         #
         # @yield [ Typhoeus::Response, String ]
         def enumerate(target_urls, opts = {})
-          bar = progress_bar(total: target_urls.size) if opts[:show_progression]
+          create_progress_bar(opts.merge(total: target_urls.size)) # if opts[:show_progression]
 
           target_urls.each do |url, id|
             request = browser.forge_request(url, request_params)
 
             request.on_complete do |res|
-              bar.progress += 1 if opts[:show_progression]
+              progress_bar.increment
 
               next if target.homepage_or_404?(res)
               next if opts[:exclude_content] && res.body.match(opts[:exclude_content])
