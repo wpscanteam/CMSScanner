@@ -38,7 +38,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'activesupport', '~> 5.0.0.1'
   s.add_dependency 'public_suffix', '~> 1.5'
   s.add_dependency 'ruby-progressbar', '~> 1.8.1'
-  s.add_dependency 'opt_parse_validator', '~> 0.0.13.2'
+  s.add_dependency 'opt_parse_validator', '~> 0.0.13.3'
 
   s.add_development_dependency 'rake', '~> 11.3.0'
   s.add_development_dependency 'rspec', '~> 3.5.0'
