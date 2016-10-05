@@ -8,7 +8,8 @@ module CMSScanner
             ['--interesting-findings-detection MODE',
              'Use the supplied mode for the interesting findings detection. '],
             choices: %w(mixed passive aggressive),
-            normalize: :to_sym)
+            normalize: :to_sym
+          )
         ]
       end
 

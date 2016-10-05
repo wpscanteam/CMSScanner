@@ -58,7 +58,7 @@ module CMSScanner
     #
     # @return [ Boolean ]
     def online?(path = nil)
-      NS::Browser.get(url(path)).code != 0
+      NS::Browser.get(url(path)).code.nonzero? ? true : false
     end
 
     # @param [ String ] path

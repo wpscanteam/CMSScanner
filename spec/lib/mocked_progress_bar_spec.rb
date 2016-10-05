@@ -4,7 +4,7 @@ describe CMSScanner::MockedProgressBar do
   subject(:bar) { described_class.create }
 
   [:finish, :increment, :log, :total, :total=].each do |method|
-    describe "#{method}" do
+    describe method.to_s do
       it { should respond_to(:method) }
     end
   end

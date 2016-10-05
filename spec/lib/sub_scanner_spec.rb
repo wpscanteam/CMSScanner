@@ -11,8 +11,8 @@ describe 'SubScanner' do
         'subscanner'
       end
 
-      VERSION = '1.0-Spec'
-      APP_DIR = '/tmp/sub_scanner/spec'
+      VERSION = '1.0-Spec'.freeze
+      APP_DIR = '/tmp/sub_scanner/spec'.freeze
 
       # This Target class should be called in the CMSScanner::Controller::Base
       # instead of the CMSScanner::Target

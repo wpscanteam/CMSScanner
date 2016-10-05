@@ -10,14 +10,12 @@ shared_examples CMSScanner::References do
   describe 'references' do
     context 'when no references' do
       [:cves, :secunia_ids, :osvdb_ids, :exploitdb_ids, :urls,
-       :msf_modules, :packetstorm_ids, :securityfocus_ids
-      ].each do |attribute|
+       :msf_modules, :packetstorm_ids, :securityfocus_ids].each do |attribute|
         its(attribute) { should eql([]) }
       end
 
       [:cve_urls, :secunia_urls, :osvdb_urls, :exploitdb_urls, :msf_urls,
-       :packetstorm_urls, :secunia_urls
-      ].each do |attribute|
+       :packetstorm_urls, :secunia_urls].each do |attribute|
         its(attribute) { should eql([]) }
       end
 

@@ -14,7 +14,7 @@ module CMSScanner
 
     # @param [ Version, String ] other
     def ==(other)
-      (self <=> other) == 0
+      (self <=> other).zero?
     end
 
     # @param [ Version, String ] other

@@ -23,7 +23,7 @@ module CMSScanner
 
       body = '<?xml version="1.0"?><methodCall>'
       body << "<methodName>#{method}</methodName>"
-      body << "<params>#{p_body}</params>" unless p_body.length == 0
+      body << "<params>#{p_body}</params>" unless p_body.length.zero?
       body << '</methodCall>'
     end
 

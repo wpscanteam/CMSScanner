@@ -16,7 +16,7 @@ module CMSScanner
       :user_agent,
       :user_agents_list,
       :vhost
-    ]
+    ].freeze
 
     attr_accessor(*OPTIONS)
 
@@ -43,7 +43,7 @@ module CMSScanner
     #
     # @param [ Integer ] number
     def max_threads=(number)
-      @max_threads = number.to_i > 0 && throttle == 0 ? number.to_i : 1
+      @max_threads = number.to_i > 0 && throttle.zero? ? number.to_i : 1
 
       hydra.max_concurrency = @max_threads
     end

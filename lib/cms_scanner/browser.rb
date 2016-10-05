@@ -40,8 +40,7 @@ module CMSScanner
     def typhoeus_to_browser_opts
       { connecttimeout: :connect_timeout, cache_ttl: :cache_ttl,
         proxy: :proxy, timeout: :request_timeout, cookiejar: :cookie_jar,
-        cookiefile: :cookie_jar, cookie: :cookie_string
-      }
+        cookiefile: :cookie_jar, cookie: :cookie_string }
     end
 
     # @return [ Hash ]
@@ -62,7 +61,7 @@ module CMSScanner
       params[:proxyauth] = "#{proxy_auth[:username]}:#{proxy_auth[:password]}" if proxy_auth
       params[:userpwd]   = "#{http_auth[:username]}:#{http_auth[:password]}" if http_auth
 
-      params[:headers].merge!('Host' => vhost) if vhost
+      params[:headers]['Host'] = vhost if vhost
 
       params
     end

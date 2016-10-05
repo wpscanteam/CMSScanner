@@ -8,7 +8,7 @@ module CMSScanner
     # Finder
     class Finder
       # Constants for common found_by
-      DIRECT_ACCESS = 'Direct Access (Aggressive Detection)'
+      DIRECT_ACCESS = 'Direct Access (Aggressive Detection)'.freeze
 
       attr_accessor :target, :progress_bar
 

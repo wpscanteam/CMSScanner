@@ -12,7 +12,7 @@ module CMSScanner
         def aggressive(_opts = {})
           res = NS::Browser.get(url)
 
-          return unless res && res.code == 200 && res.body.length > 0
+          return unless res && res.code == 200 && !res.body.empty?
           return unless res.headers && res.headers['Content-Type'] =~ %r{\Atext/plain}
 
           NS::FantasticoFileslist.new(url, confidence: 70, found_by: found_by)
