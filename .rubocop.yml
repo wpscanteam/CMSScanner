@@ -4,6 +4,8 @@ ClassVars:
   Enabled: false
 Style/RescueModifier:
   Enabled: false
+Style/SignalException:
+  EnforcedStyle: semantic
 MethodLength:
   Max: 17
 Metrics/AbcSize:
