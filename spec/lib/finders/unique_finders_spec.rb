@@ -30,7 +30,7 @@ describe CMSScanner::Finders::UniqueFinders do
 
     context 'when multiple findings' do
       let(:findings) do
-        (1..5).reduce([]) { |a, e| a << CMSScanner::DummyFinding.new(e, confidence: 20) }
+        (1..5).reduce([]) { |acc, elem| acc << CMSScanner::DummyFinding.new(elem, confidence: 20) }
       end
 
       context 'when they have the same confidence' do

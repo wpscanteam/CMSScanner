@@ -19,7 +19,7 @@ describe CMSScanner::Target do
       its('scope.domains') { should eq default_domains << PublicSuffix.parse(opts[:scope].first) }
 
       context 'when invalid domains provided' do
-        let(:opts) { super().merge(scope: ['wp-lamp', '192.168.1.12']) }
+        let(:opts) { super().merge(scope: ['wp-lamp']) }
 
         it 'adds them in the invalid_domains attribute' do
           expect(target.scope.domains).to eq default_domains

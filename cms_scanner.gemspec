@@ -27,16 +27,17 @@ Gem::Specification.new do |s|
       |\.travis.yml
       )$}x
   end
+
   s.test_files            = []
   s.executables           = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.require_path          = 'lib'
 
   s.add_dependency 'typhoeus', '~> 1.1.0'
   s.add_dependency 'nokogiri', '~> 1.6.8.1'
-  s.add_dependency 'yajl-ruby', '~> 1.2.1' # Better JSON parser regarding memory usage
-  s.add_dependency 'addressable', '~> 2.4.0'
+  s.add_dependency 'yajl-ruby', '~> 1.3.0' # Better JSON parser regarding memory usage
+  s.add_dependency 'addressable', '~> 2.5.0'
   s.add_dependency 'activesupport', '~> 5.0.0.1'
-  s.add_dependency 'public_suffix', '~> 1.5'
+  s.add_dependency 'public_suffix', '~> 2.0.3' # Need to look at changes in the v2
   s.add_dependency 'ruby-progressbar', '~> 1.8.1'
   s.add_dependency 'opt_parse_validator', '~> 0.0.13.3'
 
@@ -44,7 +45,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 3.5.0'
   s.add_development_dependency 'rspec-its', '~> 1.2.0'
   s.add_development_dependency 'bundler', '~> 1.6'
-  s.add_development_dependency 'rubocop', '~> 0.43.0'
-  s.add_development_dependency 'webmock', '~> 1.22'
+  s.add_development_dependency 'rubocop', '~> 0.45.0'
+  s.add_development_dependency 'webmock', '~> 1.22.0'
   s.add_development_dependency 'simplecov', '~> 0.12.0'
 end

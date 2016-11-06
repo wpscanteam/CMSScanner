@@ -38,7 +38,7 @@ module CMSScanner
 
     # @return [ Array<String> ]
     def cve_urls
-      cves.reduce([]) { |a, e| a << cve_url(e) }
+      cves.reduce([]) { |acc, elem| acc << cve_url(elem) }
     end
 
     # @return [ String ] The URL to the CVE
@@ -53,7 +53,7 @@ module CMSScanner
 
     # @return [ Array<String> ]
     def secunia_urls
-      secunia_ids.reduce([]) { |a, e| a << secunia_url(e) }
+      secunia_ids.reduce([]) { |acc, elem| acc << secunia_url(elem) }
     end
 
     # @return [ String ] The URL to the Secunia advisory
@@ -68,7 +68,7 @@ module CMSScanner
 
     # @return [ Array<String> ]
     def osvdb_urls
-      osvdb_ids.reduce([]) { |a, e| a << osvdb_url(e) }
+      osvdb_ids.reduce([]) { |acc, elem| acc << osvdb_url(elem) }
     end
 
     # @return [ String ] The URL to the ExploitDB advisory
@@ -83,7 +83,7 @@ module CMSScanner
 
     # @return [ Array<String> ]
     def exploitdb_urls
-      exploitdb_ids.reduce([]) { |a, e| a << exploitdb_url(e) }
+      exploitdb_ids.reduce([]) { |acc, elem| acc << exploitdb_url(elem) }
     end
 
     # @return [ String ]
@@ -103,7 +103,7 @@ module CMSScanner
 
     # @return [ Array<String> ]
     def msf_urls
-      msf_modules.reduce([]) { |a, e| a << msf_url(e) }
+      msf_modules.reduce([]) { |acc, elem| acc << msf_url(elem) }
     end
 
     # @return [ String ] The URL to the metasploit module page
@@ -118,7 +118,7 @@ module CMSScanner
 
     # @return [ Array<String> ]
     def packetstorm_urls
-      packetstorm_ids.reduce([]) { |a, e| a << packetstorm_url(e) }
+      packetstorm_ids.reduce([]) { |acc, elem| acc << packetstorm_url(elem) }
     end
 
     # @return [ String ]
@@ -133,7 +133,7 @@ module CMSScanner
 
     # @return [ Array<String> ]
     def securityfocus_urls
-      securityfocus_ids.reduce([]) { |a, e| a << securityfocus_url(e) }
+      securityfocus_ids.reduce([]) { |acc, elem| acc << securityfocus_url(elem) }
     end
 
     # @return [ String ]

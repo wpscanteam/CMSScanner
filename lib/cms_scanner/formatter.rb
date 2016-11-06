@@ -131,7 +131,7 @@ module CMSScanner
         @views_directories ||= [
           APP_DIR, NS::APP_DIR,
           File.join(Dir.home, ".#{NS.app_name}"), File.join(Dir.pwd, ".#{NS.app_name}")
-        ].uniq.reduce([]) { |a, e| a << Pathname.new(e).join('views').to_s }
+        ].uniq.reduce([]) { |acc, elem| acc << Pathname.new(elem).join('views').to_s }
       end
     end
   end
