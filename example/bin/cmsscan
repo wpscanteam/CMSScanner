@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'cmsscan'
+
+CMSScan::Scan.new do |s|
+  s.controllers << CMSScan::Controller::Example.new
+
+  s.run
+end

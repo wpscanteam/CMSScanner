@@ -1,0 +1,12 @@
+LineLength:
+  Max: 120
+ClassVars:
+  Enabled: false
+MethodLength:
+  Max: 15
+Metrics/AbcSize:
+  Max: 25
+Metrics/CyclomaticComplexity:
+  Max: 8
+Metrics/ClassLength:
+  Max: 150

@@ -40,6 +40,8 @@ module CMSScanner
 
       each(&:before_scan)
       each(&:run)
+      # Reverse is used here as the app/controllers/core#after_scan finishes the output
+      # and must be the last one to be executed
       reverse_each(&:after_scan)
     end
   end
