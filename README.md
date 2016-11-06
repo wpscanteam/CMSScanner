@@ -9,6 +9,12 @@ The goal of this gem is to provide a quick and easy way to create a CMS/WebSite 
 
 ## /!\ This gem is currently Experimental /!\
 
+## A basic implementation example is available in the example folder.
+
+To start to play with it, copy all its files and folders into a new git repository and run ```bundle install && rake install`` inside it.
+It will create a ```cmsscan``` command that you can run against a target, ie ```cmsscan --url https://www.google.com```
+
+
 Install Dependencies: ```bundle install```
 
 ## Contributing
