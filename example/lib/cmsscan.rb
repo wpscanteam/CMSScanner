@@ -10,6 +10,7 @@ require 'readline'
 require 'securerandom'
 # Custom Libs
 require 'cmsscan/target'
+require 'cmsscan/version'
 require 'cmsscan/controller'
 
 Encoding.default_external = Encoding::UTF_8
