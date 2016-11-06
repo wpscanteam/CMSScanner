@@ -14,5 +14,11 @@ describe Numeric do
         expect(-114_974_72.bytes_to_human).to eql '10.965 MB'
       end
     end
+
+    context 'when zero' do
+      it 'returns zero' do
+        expect(0.bytes_to_human).to eql '0 B'
+      end
+    end
   end
 end
