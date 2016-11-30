@@ -46,6 +46,7 @@ describe CMSScanner::Version do
 
       expect(version < 'gg').to be false
       expect(version == '').to be false
+      expect(version == true).to be false
     end
   end
 end

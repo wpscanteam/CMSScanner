@@ -13,9 +13,11 @@ module CMSScanner
     end
 
     # @param [ Version, String ] other
+    # rubocop:disable Style/NumericPredicate
     def ==(other)
-      (self <=> other).zero?
+      (self <=> other) == 0
     end
+    # rubocop:enable all
 
     # @param [ Version, String ] other
     def <(other)
