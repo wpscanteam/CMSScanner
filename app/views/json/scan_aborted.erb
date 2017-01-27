@@ -1,4 +1,4 @@
-"scan_aborted": "<%= @reason %>",
+"scan_aborted": <%= @reason.to_json %>,
 <% if @verbose -%>
-"trace": <%= @trace %>,
+"trace": <%= @trace.to_json %>,
 <% end %>
