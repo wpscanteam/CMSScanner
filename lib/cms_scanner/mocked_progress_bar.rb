@@ -10,16 +10,14 @@ module CMSScanner
       new(opts)
     end
 
-    def initialize(_opts = {})
-    end
+    def initialize(_opts = {}); end
 
     # @return [ Integer ]
     def total
       0
     end
 
-    def total=(_total)
-    end
+    def total=(_total); end
 
     # @return [ Array<String> ]
     def logs

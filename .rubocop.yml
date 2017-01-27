@@ -19,3 +19,5 @@ Metrics/CyclomaticComplexity:
   Max: 10
 Metrics/PerceivedComplexity:
   Max: 9
+Metrics/BlockLength:
+  Enabled: false

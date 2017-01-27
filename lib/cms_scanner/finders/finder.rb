@@ -22,12 +22,10 @@ module CMSScanner
       end
 
       # @param [ Hash ] _opts
-      def passive(_opts = {})
-      end
+      def passive(_opts = {}); end
 
       # @param [ Hash ] _opts
-      def aggressive(_opts = {})
-      end
+      def aggressive(_opts = {}); end
 
       # @param [ Hash ] opts See https://github.com/jfelchner/ruby-progressbar/wiki/Options
       # @option opts [ Boolean ] :show_progression

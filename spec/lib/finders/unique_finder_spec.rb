@@ -6,8 +6,7 @@ module CMSScanner
     class VersionFinderSpec
       include UniqueFinder
 
-      def initialize(_target)
-      end
+      def initialize(_target); end
     end
   end
 end

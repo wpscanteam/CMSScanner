@@ -6,11 +6,16 @@ rvm:
   - 2.2.3
   - 2.2.4
   - 2.2.5
+  - 2.2.6
   - 2.3.0
   - 2.3.1
+  - 2.3.2
+  - 2.3.3
+  - 2.4.0
   - ruby-head
 before_install:
   - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
+  - "gem update --system"
 matrix:
   allow_failures:
     - rvm: ruby-head

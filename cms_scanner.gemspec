@@ -33,19 +33,19 @@ Gem::Specification.new do |s|
   s.require_path          = 'lib'
 
   s.add_dependency 'typhoeus', '~> 1.1.0'
-  s.add_dependency 'nokogiri', '~> 1.6.8.1'
+  s.add_dependency 'nokogiri', '~> 1.7.0.1'
   s.add_dependency 'yajl-ruby', '~> 1.3.0' # Better JSON parser regarding memory usage
   s.add_dependency 'addressable', '~> 2.5.0'
-  s.add_dependency 'activesupport', '~> 5.0.0.1'
+  s.add_dependency 'activesupport', '~> 5.0.1'
   s.add_dependency 'public_suffix', '~> 2.0.3'
   s.add_dependency 'ruby-progressbar', '~> 1.8.1'
-  s.add_dependency 'opt_parse_validator', '~> 0.0.13.3'
+  s.add_dependency 'opt_parse_validator', '~> 0.0.13.5'
 
-  s.add_development_dependency 'rake', '~> 11.3.0'
+  s.add_development_dependency 'rake', '~> 12.0'
   s.add_development_dependency 'rspec', '~> 3.5.0'
   s.add_development_dependency 'rspec-its', '~> 1.2.0'
   s.add_development_dependency 'bundler', '~> 1.6'
-  s.add_development_dependency 'rubocop', '~> 0.45.0'
+  s.add_development_dependency 'rubocop', '~> 0.47.1'
   s.add_development_dependency 'webmock', '~> 1.22.0'
-  s.add_development_dependency 'simplecov', '~> 0.12.0'
+  s.add_development_dependency 'simplecov', '~> 0.12.0' # Can't update to 0.13 as it breaks coveralls dep
 end

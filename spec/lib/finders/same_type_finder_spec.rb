@@ -6,8 +6,7 @@ module CMSScanner
     class PluginsFinderSpec
       include SameTypeFinder
 
-      def initialize(_target)
-      end
+      def initialize(_target); end
     end
   end
 end
