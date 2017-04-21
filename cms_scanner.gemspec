@@ -33,7 +33,7 @@ Gem::Specification.new do |s|
   s.require_path          = 'lib'
 
   s.add_dependency 'typhoeus', '~> 1.1.0'
-  s.add_dependency 'nokogiri', '~> 1.7.0.1'
+  s.add_dependency 'nokogiri', '~> 1.7.1'
   s.add_dependency 'yajl-ruby', '~> 1.3.0' # Better JSON parser regarding memory usage
   s.add_dependency 'addressable', '~> 2.5.0'
   s.add_dependency 'activesupport', '~> 5.0.1'
