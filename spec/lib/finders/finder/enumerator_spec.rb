@@ -13,7 +13,7 @@ describe CMSScanner::Finders::Finder::Enumerator do
 
   describe '#enumerate' do
     before do
-      target_urls.each { |url, _| stub_request(:get, url).to_return(status: 200, body: 'rspec') }
+      target_urls.each_key { |url| stub_request(:get, url).to_return(status: 200, body: 'rspec') }
     end
 
     let(:target_urls) do

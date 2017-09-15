@@ -21,3 +21,7 @@ Metrics/PerceivedComplexity:
   Max: 9
 Metrics/BlockLength:
   Enabled: false
+Lint/RescueWithoutErrorClass:
+  Enabled: false
+Lint/UriEscapeUnescape:
+  Enabled: false

@@ -32,10 +32,10 @@ Gem::Specification.new do |s|
   s.executables           = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.require_path          = 'lib'
 
-  s.add_dependency 'typhoeus', '~> 1.1.0'
-  s.add_dependency 'nokogiri', '~> 1.7.1'
+  s.add_dependency 'typhoeus', '~> 1.3.0'
+  s.add_dependency 'nokogiri', '~> 1.8.0'
   s.add_dependency 'yajl-ruby', '~> 1.3.0' # Better JSON parser regarding memory usage
-  s.add_dependency 'public_suffix', '~> 2.0.3'
+  s.add_dependency 'public_suffix', '~> 3.0.0'
   s.add_dependency 'ruby-progressbar', '~> 1.8.1'
   s.add_dependency 'opt_parse_validator', '~> 0.0.13.6'
 
@@ -48,7 +48,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 3.6.0'
   s.add_development_dependency 'rspec-its', '~> 1.2.0'
   s.add_development_dependency 'bundler', '~> 1.6'
-  s.add_development_dependency 'rubocop', '~> 0.49.0'
+  s.add_development_dependency 'rubocop', '~> 0.50.0'
   s.add_development_dependency 'webmock', '~> 1.22.0'
   s.add_development_dependency 'simplecov', '~> 0.14.0' # Can't update to 0.15 as it breaks coveralls dep
   s.add_development_dependency 'coveralls', '~> 0.8.0'
