@@ -20,7 +20,7 @@ describe CMSScanner::RobotsTxt do
       let(:fixture) { 'robots.txt' }
 
       it 'ignores them and only returns the others w/o duplicate' do
-        @expected = %w(/admin /public/home)
+        @expected = %w[/admin /public/home]
       end
     end
   end

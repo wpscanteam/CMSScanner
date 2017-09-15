@@ -51,7 +51,7 @@ module CMSScanner
         caller_locations.each do |call|
           label = call.label
 
-          next unless label == 'aggressive' || label == 'passive'
+          next unless %w[aggressive passive].include? label
 
           return "#{titleize} (#{label.capitalize} Detection)"
         end

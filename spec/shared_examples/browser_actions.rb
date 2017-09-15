@@ -4,7 +4,7 @@ shared_examples CMSScanner::Browser::Actions do
   let(:browser) { CMSScanner::Browser }
 
   describe '#get, #post, #head' do
-    [:get, :post, :head].each do |method|
+    %i[get post head].each do |method|
       it 'calls the method and returns a Typhoeus::Response' do
         stub_request(method, url)
 

@@ -18,8 +18,8 @@ describe CMSScanner::Finders::Finder::Fingerprinter do
           finder.hexdigest('f1_body') => 'v1'
         },
         target.url('f2.js') => {
-          finder.hexdigest('f2_body') => %w(v1 v2),
-          finder.hexdigest('f2_2_body') => %w(v3)
+          finder.hexdigest('f2_body') => %w[v1 v2],
+          finder.hexdigest('f2_2_body') => %w[v3]
         }
       }
     end
@@ -41,7 +41,7 @@ describe CMSScanner::Finders::Finder::Fingerprinter do
       it 'yields the expected arguments' do
         expect { |b| finder.fingerprint(fingerprints, &b) }.to yield_successive_args(
           ['v1', target.url('f1.css'), finder.hexdigest('f1_body')],
-          [%w(v1 v2), target.url('f2.js'), finder.hexdigest('f2_body')]
+          [%w[v1 v2], target.url('f2.js'), finder.hexdigest('f2_body')]
         )
       end
     end

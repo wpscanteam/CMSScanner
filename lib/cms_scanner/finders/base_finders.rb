@@ -15,7 +15,7 @@ module CMSScanner
       # @param [ Symbol ] mode :mixed, :passive or :aggressive
       # @return [ Array<Symbol> ] The symbols to call for the mode
       def symbols_from_mode(mode)
-        symbols = [:passive, :aggressive]
+        symbols = %i[passive aggressive]
 
         return symbols if mode.nil? || mode == :mixed
         symbols.include?(mode) ? [*mode] : []

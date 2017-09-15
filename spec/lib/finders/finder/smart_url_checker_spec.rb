@@ -20,7 +20,7 @@ describe CMSScanner::Finders::Finder::SmartURLChecker do
   end
 
   describe '#aggressive' do
-    before { expect(finder).to receive(:aggressive_urls).and_return(%w(u1 u2 u3)) }
+    before { expect(finder).to receive(:aggressive_urls).and_return(%w[u1 u2 u3]) }
 
     after do
       expect(finder).to receive(:process_urls).with(@expected_urls, mode: mode)
@@ -28,21 +28,21 @@ describe CMSScanner::Finders::Finder::SmartURLChecker do
     end
 
     context 'when :mode = :mixed' do
-      before { expect(finder).to receive(:passive_urls).and_return(%w(u2)) }
+      before { expect(finder).to receive(:passive_urls).and_return(%w[u2]) }
 
       let(:mode) { :mixed }
 
       it 'calls #process_urls with the correct argument' do
-        @expected_urls = %w(u1 u3)
+        @expected_urls = %w[u1 u3]
       end
     end
 
-    [:passive, :aggressive].each do |m|
+    %i[passive aggressive].each do |m|
       context "when :mode = #{m}" do
         let(:mode) { m }
 
         it 'calls #process_urls with the correct argument' do
-          @expected_urls = %w(u1 u2 u3)
+          @expected_urls = %w[u1 u2 u3]
         end
       end
     end

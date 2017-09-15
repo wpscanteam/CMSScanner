@@ -2,7 +2,7 @@
 class Numeric
   # @return [ String ] A human readable string of the value
   def bytes_to_human
-    units = %w(B KB MB GB TB)
+    units = %w[B KB MB GB TB]
     e     = abs.zero? ? abs : (Math.log(abs) / Math.log(1024)).floor
     s     = format('%.3f', (abs.to_f / 1024**e))
 

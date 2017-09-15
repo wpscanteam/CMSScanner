@@ -6,7 +6,7 @@ describe 'App::Views' do
 
   # CliNoColour is used to test the CLI output to avoid the painful colours
   # in the expected output.
-  [:JSON, :CliNoColour].each do |formatter|
+  %i[JSON CliNoColour].each do |formatter|
     context "when #{formatter}" do
       it_behaves_like 'App::Views::Core'
       it_behaves_like 'App::Views::InterestingFindings'

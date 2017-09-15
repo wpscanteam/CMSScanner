@@ -62,7 +62,7 @@ module CMSScanner
     # @yield [ String, Nokogiri::XML::Element ] The url and its associated tag
     #
     # @return [ Array<String> ] The absolute URLs detected in the response's body from the HTML tags
-    def urls_from_page(page = nil, xpath = '//link|//script|//style|//img|//a', attributes = %w(href src))
+    def urls_from_page(page = nil, xpath = '//link|//script|//style|//img|//a', attributes = %w[href src])
       page    = NS::Browser.get(url(page)) unless page.is_a?(Typhoeus::Response)
       found   = []
 

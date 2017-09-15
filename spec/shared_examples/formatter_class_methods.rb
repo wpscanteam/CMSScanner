@@ -12,7 +12,7 @@ shared_examples CMSScanner::Formatter::ClassMethods do
     end
 
     it 'adds the custom_views' do
-      formatter = subject.load(nil, %w(/path/views1 /path2/views))
+      formatter = subject.load(nil, %w[/path/views1 /path2/views])
 
       expect(formatter.views_directories).to include('/path/views1', '/path2/views')
     end
@@ -20,7 +20,7 @@ shared_examples CMSScanner::Formatter::ClassMethods do
 
   describe '#availables' do
     it 'returns the right list' do
-      expect(subject.availables).to match_array(%w(json cli-no-colour cli))
+      expect(subject.availables).to match_array(%w[json cli-no-colour cli])
     end
   end
 end

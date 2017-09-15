@@ -38,7 +38,7 @@ describe CMSScanner::Target do
         end
       end
 
-      %w(https://e.org/file.txt http://e.org/ //e.org).each do |url|
+      %w[https://e.org/file.txt http://e.org/ //e.org].each do |url|
         it "returns true for #{url}" do
           expect(target.in_scope?(url)).to eql true
         end
@@ -54,7 +54,7 @@ describe CMSScanner::Target do
         end
       end
 
-      %w(http://e.org //cdn.e.org/f.txt http://s.e.org/ https://192.168.1.12/h).each do |url|
+      %w[http://e.org //cdn.e.org/f.txt http://s.e.org/ https://192.168.1.12/h].each do |url|
         it "returns true for #{url}" do
           expect(target.in_scope?(url)).to eql true
         end
@@ -80,7 +80,7 @@ describe CMSScanner::Target do
       it 'returns the expected array' do
         xpath = '//link[@rel="alternate" and @type="application/rss+xml"]'
 
-        expect(target.in_scope_urls(res, xpath)).to eql(%w(http://e.org/feed))
+        expect(target.in_scope_urls(res, xpath)).to eql(%w[http://e.org/feed])
       end
     end
 
@@ -89,7 +89,7 @@ describe CMSScanner::Target do
 
       context 'when default scope' do
         it 'returns the expected array' do
-          @expected = %w(http://e.org/f.txt http://e.org/script/s.js http://e.org/feed)
+          @expected = %w[http://e.org/f.txt http://e.org/script/s.js http://e.org/feed]
         end
       end
 
@@ -97,8 +97,8 @@ describe CMSScanner::Target do
         let(:opts) { super().merge(scope: ['*.e.org', 'wp-lamp']) }
 
         it 'returns the expected array' do
-          @expected = %w(http://e.org/f.txt https://cdn.e.org/f2.js http://e.org/script/s.js
-                         http://wp-lamp/robots.txt http://e.org/feed)
+          @expected = %w[http://e.org/f.txt https://cdn.e.org/f2.js http://e.org/script/s.js
+                         http://wp-lamp/robots.txt http://e.org/feed]
         end
       end
     end

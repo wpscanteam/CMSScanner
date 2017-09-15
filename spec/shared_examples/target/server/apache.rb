@@ -25,7 +25,7 @@ shared_examples CMSScanner::Target::Server::Apache do
 
       it 'returns true and the expected array' do
         expect(target.directory_listing?(path)).to be true
-        expect(target.directory_listing_entries(path)).to eq %w(backup.php database-empty.php)
+        expect(target.directory_listing_entries(path)).to eq %w[backup.php database-empty.php]
       end
     end
 

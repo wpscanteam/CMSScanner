@@ -5,7 +5,7 @@ shared_examples CMSScanner::Target::Server::Generic do
     before { stub_request(:head, target.url).to_return(headers: parse_headers_file(fixture)) }
 
     context 'when apache headers' do
-      %w(basic.txt).each do |file|
+      %w[basic.txt].each do |file|
         context "when #{file} headers" do
           let(:fixture) { File.join(fixtures, 'server', 'apache', file) }
 
@@ -15,7 +15,7 @@ shared_examples CMSScanner::Target::Server::Generic do
     end
 
     context 'when iis headers' do
-      %w(basic.txt).each do |file|
+      %w[basic.txt].each do |file|
         context "when #{file} headers" do
           let(:fixture) { File.join(fixtures, 'server', 'iis', file) }
 
@@ -25,7 +25,7 @@ shared_examples CMSScanner::Target::Server::Generic do
     end
 
     context 'when nginx headers' do
-      %w(basic.txt).each do |file|
+      %w[basic.txt].each do |file|
         context "when #{file} headers" do
           let(:fixture) { File.join(fixtures, 'server', 'nginx', file) }
 

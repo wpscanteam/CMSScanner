@@ -20,7 +20,7 @@ describe CMSScanner::FantasticoFileslist do
       let(:fixture) { 'fantastico_fileslist.txt' }
 
       it 'ignores them and only returns the others' do
-        @expected = %w(data.sql admin.txt)
+        @expected = %w[data.sql admin.txt]
       end
     end
   end

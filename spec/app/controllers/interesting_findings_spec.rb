@@ -32,7 +32,7 @@ describe CMSScanner::Controller::InterestingFindings do
 
     after { controller.run }
 
-    [:mixed, :passive, :aggressive].each do |mode|
+    %i[mixed passive aggressive].each do |mode|
       context "when --detection-mode #{mode}" do
         let(:parsed_options) { super().merge(detection_mode: mode) }
 

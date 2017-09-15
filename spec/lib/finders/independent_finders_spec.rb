@@ -24,7 +24,7 @@ describe CMSScanner::Finders::IndependentFinders do
     describe 'method calls order' do
       after { finders.run(mode: mode) }
 
-      [:passive, :aggressive].each do |current_mode|
+      %i[passive aggressive].each do |current_mode|
         context "when #{current_mode} mode" do
           let(:mode) { current_mode }
 
@@ -41,7 +41,7 @@ describe CMSScanner::Finders::IndependentFinders do
 
         it 'calls :passive then :aggressive on each finder' do
           finders.each do |finder|
-            [:passive, :aggressive].each do |method|
+            %i[passive aggressive].each do |method|
               expect(finder).to receive(method).with(hash_including(found: [])).ordered
             end
           end

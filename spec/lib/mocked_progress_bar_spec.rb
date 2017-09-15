@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CMSScanner::MockedProgressBar do
   subject(:bar) { described_class.create }
 
-  [:finish, :increment, :log, :total, :total=].each do |method|
+  %i[finish increment log total total=].each do |method|
     describe method.to_s do
       it { should respond_to(:method) }
     end
@@ -20,7 +20,7 @@ describe CMSScanner::MockedProgressBar do
       bar.log('L1')
       bar.log('L2')
 
-      expect(bar.log).to eql %w(L1 L2)
+      expect(bar.log).to eql %w[L1 L2]
     end
   end
 end

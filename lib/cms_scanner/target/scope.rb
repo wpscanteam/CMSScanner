@@ -22,7 +22,7 @@ module CMSScanner
     # @yield [ String, Nokogiri::XML::Element ] The in scope url and its associated tag
     #
     # @return [ Array<String> ] The in scope absolute URLs detected in the response's body
-    def in_scope_urls(res, xpath = '//link|//script|//style|//img|//a', attributes = %w(href src))
+    def in_scope_urls(res, xpath = '//link|//script|//style|//img|//a', attributes = %w[href src])
       found = []
 
       urls_from_page(res, xpath, attributes) do |url, tag|

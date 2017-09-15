@@ -95,10 +95,10 @@ describe CMSScanner::Target do
     context 'when no block given' do
       it 'returns the expected array' do
         expect(target.urls_from_page(page)).to eql(
-          %w(
+          %w[
             http://e.org/f.txt https://cdn.e.org/f2.js http://e.org/script/s.js
             http://wp-lamp/feed.xml http://g.com/img.jpg
-          )
+          ]
         )
       end
 
@@ -106,7 +106,7 @@ describe CMSScanner::Target do
         it 'returns the expected array' do
           xpath = '//link[@rel="alternate" and @type="application/rss+xml"]'
 
-          expect(target.urls_from_page(page, xpath)).to eql(%w(http://wp-lamp/feed.xml))
+          expect(target.urls_from_page(page, xpath)).to eql(%w[http://wp-lamp/feed.xml])
         end
       end
     end

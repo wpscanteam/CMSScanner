@@ -8,7 +8,7 @@ module CMSScanner
         super(base)
       end
 
-      FINDING_OPTS = [:confidence, :confirmed_by, :references, :found_by, :interesting_entries].freeze
+      FINDING_OPTS = %i[confidence confirmed_by references found_by interesting_entries].freeze
 
       attr_accessor(*FINDING_OPTS)
 

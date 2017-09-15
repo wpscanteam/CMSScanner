@@ -10,12 +10,12 @@ describe CMSScanner::Finders::BaseFinders do
     context 'when :mixed' do
       it 'returns [:passive, :aggressive]' do
         @mode     = :mixed
-        @expected = [:passive, :aggressive]
+        @expected = %i[passive aggressive]
       end
     end
 
     context 'when :passive or :aggresssive' do
-      [:passive, :aggressive].each do |symbol|
+      %i[passive aggressive].each do |symbol|
         it 'returns it in an array' do
           @mode     = symbol
           @expected = [*symbol]

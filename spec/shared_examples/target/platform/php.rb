@@ -6,7 +6,7 @@ shared_examples CMSScanner::Target::Platform::PHP do
     let(:path) { 'd.log' }
 
     context 'when the body matches' do
-      %w(debug.log).each do |file|
+      %w[debug.log].each do |file|
         context "when #{file} body" do
           let(:body) { File.read(File.join(fixtures, 'debug_log', file)) }
 
@@ -30,7 +30,7 @@ shared_examples CMSScanner::Target::Platform::PHP do
     let(:path) { 'error.log' }
 
     context 'when the body matches' do
-      %w(error.log).each do |file|
+      %w[error.log].each do |file|
         context "when #{file} body" do
           let(:body) { File.read(File.join(fixtures, 'error_log', file)) }
 
@@ -55,7 +55,7 @@ shared_examples CMSScanner::Target::Platform::PHP do
 
     context 'when the body matches a FPD' do
       {
-        'wp_rss_functions.php' => %w(/short-path/rss-f.php)
+        'wp_rss_functions.php' => %w[/short-path/rss-f.php]
       }.each do |file, expected|
         context "when #{file} body" do
           let(:body) { File.read(File.join(fixtures, 'fpd', file)) }

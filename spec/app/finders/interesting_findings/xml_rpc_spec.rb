@@ -28,7 +28,7 @@ describe CMSScanner::Finders::InterestingFindings::XMLRPC do
       let(:headers_stub) { nil }
       let(:body_stub)    { 'test' }
 
-      its(:passive) { should eq %w(test) }
+      its(:passive) { should eq %w[test] }
     end
   end
 

@@ -7,7 +7,7 @@ module CMSScanner
     module ClassMethods
       # @return [ Array<Symbol> ]
       def references_keys
-        @references_keys ||= [:cve, :secunia, :osvdb, :exploitdb, :url, :metasploit, :packetstorm, :securityfocus]
+        @references_keys ||= %i[cve secunia osvdb exploitdb url metasploit packetstorm securityfocus]
       end
     end
 

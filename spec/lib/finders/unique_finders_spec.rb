@@ -95,11 +95,11 @@ describe CMSScanner::Finders::UniqueFinders do
             .with(hash_including(found: [dummy_passive.first, noaggressive])).ordered
 
           expect(finders[0]).to receive(:aggressive).with(hash_including(:found)).ordered
-            .and_call_original
+                                                    .and_call_original
 
           expect(finders[1]).to receive(:aggressive).with(hash_including(:found)).ordered
           expect(finders[2]).to receive(:aggressive).with(hash_including(:found)).ordered
-            .and_call_original
+                                                    .and_call_original
 
           @expected = finding.new('v1', confidence: 100, found_by: 'Dummy (Passive Detection)')
           @expected.confirmed_by << finding.new('v1', confidence: 100, found_by: 'override')
@@ -164,7 +164,7 @@ describe CMSScanner::Finders::UniqueFinders do
             .with(hash_including(found: [dummy_passive.first, noaggressive])).ordered
 
           expect(finders[0]).to receive(:aggressive).with(hash_including(:found)).ordered
-            .and_call_original
+                                                    .and_call_original
 
           expect(finders[1]).to_not receive(:aggressive)
           expect(finders[2]).to_not receive(:aggressive)

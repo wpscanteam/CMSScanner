@@ -226,6 +226,6 @@ describe CMSScanner::Browser do
   describe '#user_agents' do
     let(:options) { { user_agents_list: File.join(FIXTURES, 'user_agents.txt') } }
 
-    its(:user_agents) { should eql %w(UA-1 UA-2) }
+    its(:user_agents) { should eql %w[UA-1 UA-2] }
   end
 end

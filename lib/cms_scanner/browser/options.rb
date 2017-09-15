@@ -1,21 +1,21 @@
 module CMSScanner
   # Options available in the Browser
   class Browser
-    OPTIONS = [
-      :cache_ttl,
-      :cookie_jar,
-      :cookie_string,
-      :connect_timeout,
-      :http_auth,
-      :max_threads,
-      :proxy,
-      :proxy_auth,
-      :random_user_agent,
-      :request_timeout,
-      :throttle,
-      :user_agent,
-      :user_agents_list,
-      :vhost
+    OPTIONS = %i[
+      cache_ttl
+      cookie_jar
+      cookie_string
+      connect_timeout
+      http_auth
+      max_threads
+      proxy
+      proxy_auth
+      random_user_agent
+      request_timeout
+      throttle
+      user_agent
+      user_agents_list
+      vhost
     ].freeze
 
     attr_accessor(*OPTIONS)

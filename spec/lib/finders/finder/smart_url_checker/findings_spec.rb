@@ -17,14 +17,14 @@ describe CMSScanner::Finders::Finder::SmartURLChecker::Findings do
 
     context 'when findings already in' do
       let(:confirmed) { finding.new('confirmed', interesting_entries: entries) }
-      let(:entries)   { %w(e1 e2) }
+      let(:entries)   { %w[e1 e2] }
 
       before { findings << nil << nil << finding.new('test') << confirmed }
 
       it 'adds a confirmed result correctly and ignore nil values' do
         confirmed_dup = confirmed.dup
         confirmed_dup.confidence = 100
-        confirmed_dup.interesting_entries = %w(e2 e3)
+        confirmed_dup.interesting_entries = %w[e2 e3]
 
         findings << confirmed_dup
 
@@ -32,7 +32,7 @@ describe CMSScanner::Finders::Finder::SmartURLChecker::Findings do
 
         @expected = [] << finding.new('test') << confirmed
 
-        expect(findings[1].interesting_entries).to eql(%w(e1 e2 e3))
+        expect(findings[1].interesting_entries).to eql(%w[e1 e2 e3])
       end
     end
   end

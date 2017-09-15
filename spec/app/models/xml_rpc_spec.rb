@@ -19,7 +19,7 @@ describe CMSScanner::XMLRPC do
     end
 
     context 'when params' do
-      let(:params) { %w(p1 p2) }
+      let(:params) { %w[p1 p2] }
 
       it 'returns the correct body' do
         @expected = '<?xml version="1.0"?><methodCall>'
