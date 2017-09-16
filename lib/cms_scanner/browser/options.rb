@@ -6,6 +6,7 @@ module CMSScanner
       cookie_jar
       cookie_string
       connect_timeout
+      headers
       http_auth
       max_threads
       proxy

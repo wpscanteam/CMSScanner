@@ -1,4 +1,5 @@
 # coding: utf-8
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
@@ -33,9 +34,9 @@ Gem::Specification.new do |s|
   s.executables           = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.require_path          = 'lib'
 
-  s.add_dependency 'yajl-ruby', '~> 1.3.0' # Better JSON parser regarding memory usage
+  s.add_dependency 'yajl-ruby', '~> 1.3' # Better JSON parser regarding memory usage
   s.add_dependency 'cms_scanner', '~> 0.0.37.5'
-  s.add_dependency 'activesupport', '~> 5.0.0.1' # Not sure if needed there as already needed in the CMSScanner
+  s.add_dependency 'activesupport', '~> 5.0'
   # DB dependencies
   s.add_dependency 'dm-core', '~> 1.2.0'
   s.add_dependency 'dm-migrations', '~> 1.2.0'

@@ -48,7 +48,7 @@ module CMSScanner
       params = {
         # Disable SSL-Certificate checks, see http://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html
         ssl_verifypeer: false, ssl_verifyhost: 0,
-        headers: { 'User-Agent' => user_agent },
+        headers: { 'User-Agent' => user_agent }.merge(headers || {}),
         accept_encoding: 'gzip, deflate',
         method: :get
       }

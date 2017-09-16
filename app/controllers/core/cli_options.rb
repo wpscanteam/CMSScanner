@@ -24,9 +24,7 @@ module CMSScanner
 
       # @return [ Array<OptParseValidator::OptBase> ]
       def cli_browser_options
-        [
-          OptString.new(['--user-agent VALUE', '--ua']),
-          OptString.new(['--vhost VALUE', 'The virtual host (Host header) to use in requests']),
+        cli_browser_headers_options + [
           OptBoolean.new(['--random-user-agent', '--rua',
                           'Use a random user-agent for each scan']),
           OptFilePath.new(['--user-agents-list FILE-PATH',
@@ -41,6 +39,15 @@ module CMSScanner
           OptPositiveInteger.new(['--connect-timeout SECONDS', 'The connection timeout in seconds'],
                                  default: 30)
         ] + cli_browser_proxy_options + cli_browser_cookies_options + cli_browser_cache_options
+      end
+
+      # @return [ Array<OptParseValidator::OptBase> ]
+      def cli_browser_headers_options
+        [
+          OptString.new(['--user-agent VALUE', '--ua']),
+          OptHeaders.new(['--headers HEADERS', 'Additional headers to append in requests']),
+          OptString.new(['--vhost VALUE', 'The virtual host (Host header) to use in requests'])
+        ]
       end
 
       # @return [ Array<OptParseValidator::OptBase> ]

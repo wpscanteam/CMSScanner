@@ -30,7 +30,8 @@ describe CMSScanner::Browser do
           cache_ttl: 200, connect_timeout: 10,
           http_auth: { username: 'log', password: 'pwd' },
           cookie_jar: '/tmp/cookie_jar.txt',
-          vhost: 'testing'
+          vhost: 'testing',
+          headers: { 'Test' => 'aa' }
         }
       end
 
@@ -38,7 +39,7 @@ describe CMSScanner::Browser do
         default.merge(
           cache_ttl: 200, connecttimeout: 10, userpwd: 'log:pwd',
           cookiejar: options[:cookie_jar], cookiefile: options[:cookie_jar]
-        ).merge(headers: default[:headers].merge('Host' => 'testing'))
+        ).merge(headers: default[:headers].merge('Host' => 'testing', 'Test' => 'aa'))
       end
 
       its(:default_request_params) { should eq expected }
@@ -59,11 +60,11 @@ describe CMSScanner::Browser do
       end
 
       context 'when browser options' do
-        let(:options) { { proxy: 'http://127.0.0.1:8080' } }
+        let(:options) { { proxy: 'http://127.0.0.1:8080', headers: { 'T' => 'a' } } }
 
         it 'returns the correct hash' do
           expect(browser.request_params(params)).to eq default
-            .merge(options)
+            .merge(options) { |key, oldval, newval| key == :headers ? oldval.merge(newval) : newval }
             .merge(params) { |key, oldval, newval| key == :headers ? oldval.merge(newval) : newval }
         end
       end
