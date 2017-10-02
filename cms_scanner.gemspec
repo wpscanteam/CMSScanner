@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'nokogiri', '~> 1.8.0'
   s.add_dependency 'yajl-ruby', '~> 1.3.0' # Better JSON parser regarding memory usage
   s.add_dependency 'public_suffix', '~> 3.0.0'
-  s.add_dependency 'ruby-progressbar', '~> 1.8.1'
+  s.add_dependency 'ruby-progressbar', '~> 1.9.0'
   s.add_dependency 'opt_parse_validator', '~> 0.0.13.7'
 
   # Already required by opt_parse_validator
