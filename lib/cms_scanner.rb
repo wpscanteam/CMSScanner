@@ -103,7 +103,7 @@ module CMSScanner
       @run_error = e
 
       formatter.output('@usage', msg: e.message)
-    rescue => e
+    rescue Interrupt, StandardError => e
       @run_error = e
 
       formatter.output('@scan_aborted',

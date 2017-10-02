@@ -1,16 +1,5 @@
 require 'spec_helper'
 
-module CMSScanner
-  module Controller
-    # Failure class for testing
-    class SpecFailure < Base
-      def before_scan
-        fail 'error spotted'
-      end
-    end
-  end
-end
-
 describe CMSScanner do
   let(:target_url) { 'http://wp.lab/' }
 
@@ -80,16 +69,20 @@ describe CMSScanner::Scan do
       end
     end
 
-    context 'when an error is raised during the #run' do
-      let(:run_error) { RuntimeError.new('error spotted') }
+    [RuntimeError.new('error spotted'), Interrupt.new('interrupt')].each do |error|
+      context "when an/a #{error.class} is raised during the scan" do
+        let(:run_error) { error }
 
-      it 'aborts the scan with the associated output' do
-        scanner.controllers[0] = controller::SpecFailure.new
+        it 'aborts the scan with the associated output' do
+          expect(scanner.controllers.option_parser).to receive(:results).and_return({})
 
-        expect(scanner.controllers.option_parser).to receive(:results).and_return({})
+          expect(scanner.controllers.first)
+            .to receive(:before_scan)
+            .and_raise(run_error.class, run_error.message)
 
-        expect(scanner.formatter).to receive(:output)
-          .with('@scan_aborted', hash_including(reason: run_error.message, trace: anything, verbose: nil))
+          expect(scanner.formatter).to receive(:output)
+            .with('@scan_aborted', hash_including(reason: run_error.message, trace: anything, verbose: nil))
+        end
       end
     end
   end
