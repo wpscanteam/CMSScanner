@@ -9,7 +9,12 @@ module CMSScanner
     def self.page_hash(page)
       page = NS::Browser.get(page, followlocation: true) unless page.is_a?(Typhoeus::Response)
 
-      Digest::MD5.hexdigest(page.body.gsub(/<!--.*?-->/m, ''))
+      # Removes comments and script tags before computing the hash
+      # to remove any potential cached stuff
+      html = Nokogiri::HTML(page.body)
+      html.xpath('//script|//comment()').each(&:remove)
+
+      Digest::MD5.hexdigest(html)
     end
 
     # @return [ String ] The hash of the homepage

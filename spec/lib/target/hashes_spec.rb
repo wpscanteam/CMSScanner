@@ -41,6 +41,18 @@ describe CMSScanner::Target do
         @expected = md5sum("yolo\n\n\nworld!")
       end
     end
+
+    context 'when there are script tags' do
+      let(:page) do
+        body = "aa<script>var t = 'test';</script>bbb"
+
+        Typhoeus::Response.new(body: body)
+      end
+
+      it 'removes them' do
+        @expected = md5sum('aabbb')
+      end
+    end
   end
 
   describe '#homepage_hash' do
