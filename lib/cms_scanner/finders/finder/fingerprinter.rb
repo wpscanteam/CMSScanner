@@ -4,7 +4,7 @@ module CMSScanner
       # Module to provide an easy way to fingerprint things such as versions
       module Fingerprinter
         # @param [ Hash ] fingerprints The fingerprints
-        # Format should be the following:
+        # Format should be like the following:
         # {
         #   file_path_1: {
         #     md5_hash_1: version_1,
@@ -23,7 +23,7 @@ module CMSScanner
         # @yield [ Mixed, String, String ] version/s, url, hash The version associated to the
         #                                                       fingerprint of the url
         def fingerprint(fingerprints, opts = {})
-          create_progress_bar(opts.merge(total: fingerprints.size)) # if opts[:show_progression]
+          create_progress_bar(opts.merge(total: fingerprints.size))
 
           fingerprints.each do |path, f|
             url     = target.url(path.dup)
