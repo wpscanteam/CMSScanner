@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'yajl-ruby', '~> 1.3.0' # Better JSON parser regarding memory usage
   s.add_dependency 'public_suffix', '~> 3.0.0'
   s.add_dependency 'ruby-progressbar', '~> 1.9.0'
-  s.add_dependency 'opt_parse_validator', '~> 0.0.13.9'
+  s.add_dependency 'opt_parse_validator', '~> 0.0.13.11'
 
   # Already required by opt_parse_validator
   # so version restriction loosen to avoid potential future conflicts
@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'activesupport', '~> 5.0'
 
   s.add_development_dependency 'rake', '~> 12.0'
-  s.add_development_dependency 'rspec', '~> 3.6.0'
+  s.add_development_dependency 'rspec', '~> 3.7.0'
   s.add_development_dependency 'rspec-its', '~> 1.2.0'
   s.add_development_dependency 'bundler', '~> 1.6'
   s.add_development_dependency 'rubocop', '~> 0.50.0'

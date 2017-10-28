@@ -88,7 +88,8 @@ describe 'SubScanner' do
       let(:options_file_path) { '.subscanner/rspec.yml' }
 
       it 'register the correct file' do
-        expect(File).to receive(:exist?).with(options_file_path).and_return(true)
+        allow(File).to receive(:exist?).and_call_original
+        allow(File).to receive(:exist?).with(options_file_path).and_return(true)
 
         option_parser = SubScanner::Scan.new.controllers.option_parser
 

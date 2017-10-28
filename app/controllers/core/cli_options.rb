@@ -15,7 +15,7 @@ module CMSScanner
           OptChoice.new(['--detection-mode MODE'],
                         choices: %w[mixed passive aggressive],
                         normalize: :to_sym,
-                        default: :mixed),
+                        default: 'mixed'),
           OptArray.new(['--scope DOMAINS',
                         'Comma separated (sub-)domains to consider in scope. ',
                         'Wildcard(s) allowed in the trd of valid domains, e.g: *.target.tld'])
@@ -31,13 +31,13 @@ module CMSScanner
                            'List of agents to use with --random-user-agent'], exists: true),
           OptCredentials.new(['--http-auth login:password']),
           OptPositiveInteger.new(['--max-threads VALUE', '-t', 'The max threads to use'],
-                                 default: 5),
+                                 default: '5'),
           OptPositiveInteger.new(['--throttle MilliSeconds', 'Milliseconds to wait before doing another web request. ' \
                                   'If used, the max threads will be set to 1.']),
           OptPositiveInteger.new(['--request-timeout SECONDS', 'The request timeout in seconds'],
-                                 default: 60),
+                                 default: '60'),
           OptPositiveInteger.new(['--connect-timeout SECONDS', 'The connection timeout in seconds'],
-                                 default: 30)
+                                 default: '30')
         ] + cli_browser_proxy_options + cli_browser_cookies_options + cli_browser_cache_options
       end
 
@@ -67,7 +67,8 @@ module CMSScanner
                          'format: cookie1=value1[; cookie2=value2]']),
           OptFilePath.new(['--cookie-jar FILE-PATH', 'File to read and write cookies'],
                           writable: true,
-                          exists: false,
+                          readable: true,
+                          create: true,
                           default: File.join(tmp_directory, 'cookie_jar.txt'))
         ]
       end
@@ -75,11 +76,12 @@ module CMSScanner
       # @return [ Array<OptParseValidator::OptBase> ]
       def cli_browser_cache_options
         [
-          OptInteger.new(['--cache-ttl TIME_TO_LIVE', 'The cache time to live in seconds'], default: 600),
+          OptInteger.new(['--cache-ttl TIME_TO_LIVE', 'The cache time to live in seconds'], default: '600'),
           OptBoolean.new(['--clear-cache', 'Clear the cache before the scan']),
           OptDirectoryPath.new(['--cache-dir PATH'],
                                readable: true,
                                writable: true,
+                               create: true,
                                default: File.join(tmp_directory, 'cache'))
         ]
       end
