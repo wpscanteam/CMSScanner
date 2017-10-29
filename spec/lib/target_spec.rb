@@ -29,6 +29,10 @@ describe CMSScanner::Target do
     end
   end
 
+  describe '#xpath_pattern_from_page' do
+    # Handled in #comments_from_page & #javascripts_from_page
+  end
+
   describe '#comments_from_page' do
     let(:fixture) { File.join(fixtures, 'comments.html') }
     let(:page)    { Typhoeus::Response.new(body: File.read(fixture)) }
@@ -56,6 +60,7 @@ describe CMSScanner::Target do
       end
 
       # The below doesn't work, dunno why
+      # Would need to find a way to ensure the MatchData and XML::Comment are correct
       context 'when block given' do
         it 'yield the MatchData' do
           expect { |b| target.comments_from_page(pattern, page, &b) }
@@ -76,8 +81,44 @@ describe CMSScanner::Target do
     end
   end
 
+  describe '#javascripts_from_page' do
+    let(:fixture) { File.join(fixtures, 'javascripts.html') }
+    let(:page)    { Typhoeus::Response.new(body: File.read(fixture)) }
+
+    context 'when the pattern does not match anything' do
+      it 'returns an empty array' do
+        expect(target.javascripts_from_page(/none/, page)).to eql([])
+      end
+    end
+
+    context 'when the pattern matches' do
+      let(:pattern) { /_version =/i }
+      let(:s)       { "var _version = '1.2.4';" }
+
+      context 'when no block given' do
+        it 'returns the expected matches' do
+          results = target.javascripts_from_page(pattern, page)
+
+          expect(results[0].first).to eql s.match(pattern)
+          expect(results[0].last.text.to_s).to eql s
+        end
+      end
+
+      # The below doesn't work, dunno why
+      # # Would need to find a way to ensure the MatchData and XML::Element are correct
+      context 'when block given' do
+        it 'yield the MatchData' do
+          expect { |b| target.javascripts_from_page(pattern, page, &b) }
+            .to yield_successive_args(
+              [MatchData, Nokogiri::XML::Element]
+            )
+        end
+      end
+    end
+  end
+
   describe '#urls_from_page' do
-    let(:page)    { Typhoeus::Response.new(body: File.read(File.join(fixtures, 'urls_from_page.html'))) }
+    let(:page) { Typhoeus::Response.new(body: File.read(File.join(fixtures, 'urls_from_page.html'))) }
 
     context 'when block given' do
       it 'yield the url' do

@@ -35,16 +35,17 @@ module CMSScanner
       false
     end
 
+    # @param [ String ] xpath
     # @param [ Regexp ] pattern
     # @param [ Typhoeus::Response, String ] page
     #
-    # @return [ Array<Array<MatchData, Nokogiri::XML::Comment>> ]
-    # @yield [ MatchData, Nokogiri::XML::Comment ]
-    def comments_from_page(pattern, page = nil)
+    # @return [ Array<Array<MatchData, Nokogiri::XML::Element>> ]
+    # @yield  [ MatchData, Nokogiri::XML::Element ]
+    def xpath_pattern_from_page(xpath, pattern, page = nil)
       page    = NS::Browser.get(url(page)) unless page.is_a?(Typhoeus::Response)
       matches = []
 
-      page.html.xpath('//comment()').each do |node|
+      page.html.xpath(xpath).each do |node|
         next unless node.text.strip =~ pattern
 
         yield Regexp.last_match, node if block_given?
@@ -53,6 +54,28 @@ module CMSScanner
       end
 
       matches
+    end
+
+    # @param [ Regexp ] pattern
+    # @param [ Typhoeus::Response, String ] page
+    #
+    # @return [ Array<Array<MatchData, Nokogiri::XML::Comment>> ]
+    # @yield  [ MatchData, Nokogiri::XML::Comment ]
+    def comments_from_page(pattern, page = nil)
+      xpath_pattern_from_page('//comment()', pattern, page) do |match, node|
+        yield match, node if block_given?
+      end
+    end
+
+    # @param [ Regexp ] pattern
+    # @param [ Typhoeus::Response, String ] page
+    #
+    # @return [ Array<Array<MatchData, Nokogiri::XML::Element>> ]
+    # @yield  [ MatchData, Nokogiri::XML::Element ]
+    def javascripts_from_page(pattern, page = nil)
+      xpath_pattern_from_page('//script', pattern, page) do |match, node|
+        yield match, node if block_given?
+      end
     end
 
     # @param [ Typhoeus::Response, String ] page
