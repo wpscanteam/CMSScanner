@@ -69,7 +69,20 @@ describe CMSScanner::Scan do
       end
     end
 
-    [RuntimeError.new('error spotted'), Interrupt.new('interrupt')].each do |error|
+    context 'when an Interrupt is raised during the scan' do
+      it 'aborts the scan with the correct output' do
+        expect(scanner.controllers.option_parser).to receive(:results).and_return({})
+
+        expect(scanner.controllers.first)
+          .to receive(:before_scan)
+          .and_raise(Interrupt)
+
+        expect(scanner.formatter).to receive(:output)
+          .with('@scan_aborted', reason: 'Canceled by User')
+      end
+    end
+
+    [RuntimeError.new('error spotted')].each do |error|
       context "when an/a #{error.class} is raised during the scan" do
         let(:run_error) { error }
 
