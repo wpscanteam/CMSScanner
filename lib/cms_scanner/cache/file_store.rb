@@ -34,7 +34,7 @@ module CMSScanner
         return if expired_entry?(key)
 
         serializer.load(File.read(file_path))
-      rescue
+      rescue StandardError
         nil
       end
 
@@ -68,7 +68,9 @@ module CMSScanner
       #
       # @return [ Boolean ]
       def expired_entry?(key)
-        File.read(entry_expiration_path(key)).to_i <= Time.now.to_i rescue true
+        File.read(entry_expiration_path(key)).to_i <= Time.now.to_i
+      rescue StandardError
+        true
       end
     end
   end

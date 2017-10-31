@@ -34,7 +34,7 @@ module CMSScanner
       other = self.class.new(other) unless other.is_a?(self.class) # handle potential '.1' version
 
       Gem::Version.new(number) <=> Gem::Version.new(other.number)
-    rescue
+    rescue ArgumentError
       false
     end
 

@@ -11,7 +11,7 @@ module CMSScanner
     # @return [ Boolean ] true if the url given is in scope
     def in_scope?(url)
       scope.include?(Addressable::URI.parse(url.strip).host)
-    rescue
+    rescue StandardError
       false
     end
 
