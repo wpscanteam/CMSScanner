@@ -78,11 +78,11 @@ describe CMSScanner::Scan do
           .and_raise(Interrupt)
 
         expect(scanner.formatter).to receive(:output)
-          .with('@scan_aborted', reason: 'Canceled by User')
+          .with('@scan_aborted', hash_including(reason: 'Canceled by User', trace: anything, verbose: nil))
       end
     end
 
-    [RuntimeError.new('error spotted')].each do |error|
+    [RuntimeError.new('error spotted'), SignalException.new('SIGTERM')].each do |error|
       context "when an/a #{error.class} is raised during the scan" do
         let(:run_error) { error }
 

@@ -103,17 +103,13 @@ module CMSScanner
       @run_error = e
 
       formatter.output('@usage', msg: e.message)
-    rescue StandardError => e
+    rescue StandardError, SignalException => e
       @run_error = e
 
       formatter.output('@scan_aborted',
-                       reason: e.message,
+                       reason: e.is_a?(Interrupt) ? 'Canceled by User' : e.message,
                        trace: e.backtrace,
                        verbose: controllers.first.parsed_options[:verbose])
-    rescue Interrupt => e
-      @run_error = e
-
-      formatter.output('@scan_aborted', reason: 'Canceled by User')
     ensure
       Browser.instance.hydra.abort
 
