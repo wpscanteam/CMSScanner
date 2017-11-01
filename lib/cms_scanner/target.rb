@@ -95,7 +95,13 @@ module CMSScanner
 
           next unless attr_value && !attr_value.empty?
 
-          tag_uri        = uri.join(attr_value.strip) rescue next
+          tag_uri = begin
+                      uri.join(attr_value.strip)
+                    rescue StandardError
+                      # Skip potential malformed URLs etc.
+                      next
+                    end
+
           tag_uri_string = tag_uri.to_s
 
           next unless tag_uri.host
