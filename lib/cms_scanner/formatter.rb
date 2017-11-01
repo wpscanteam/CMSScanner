@@ -109,11 +109,11 @@ module CMSScanner
         if tpl[0, 1] == '@' # Global Template
           tpl = tpl.delete('@')
         else
-          fail 'The controller_name can not be nil' unless controller_name
+          raise 'The controller_name can not be nil' unless controller_name
           tpl = "#{controller_name}/#{tpl}"
         end
 
-        fail "Wrong tpl format: '#{tpl}'" unless tpl =~ %r{\A[\w/_]+\z}
+        raise "Wrong tpl format: '#{tpl}'" unless tpl =~ %r{\A[\w/_]+\z}
 
         views_directories.reverse_each do |dir|
           formats.each do |format|
@@ -123,7 +123,7 @@ module CMSScanner
           end
         end
 
-        fail "View not found for #{format}/#{tpl}"
+        raise "View not found for #{format}/#{tpl}"
       end
 
       # @return [ Array<String> ] The directories to look into for views

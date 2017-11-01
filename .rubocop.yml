@@ -8,8 +8,6 @@ LineLength:
   Max: 120
 ClassVars:
   Enabled: false
-Style/SignalException:
-  EnforcedStyle: semantic
 Style/FrozenStringLiteralComment:
   Enabled: false
 MethodLength:

@@ -29,13 +29,13 @@ module CMSScanner
 
         case res.code
         when 0
-          fail TargetDownError, res
+          raise TargetDownError, res
         when 401
-          fail HTTPAuthRequiredError
+          raise HTTPAuthRequiredError
         when 403
-          fail AccessForbiddenError
+          raise AccessForbiddenError
         when 407
-          fail ProxyAuthRequiredError
+          raise ProxyAuthRequiredError
         end
 
         # Checks for redirects
@@ -44,7 +44,7 @@ module CMSScanner
 
         return if target.in_scope?(effective_url)
 
-        fail HTTPRedirectError, effective_url unless parsed_options[:ignore_main_redirect]
+        raise HTTPRedirectError, effective_url unless parsed_options[:ignore_main_redirect]
 
         target.homepage_res = res
       end

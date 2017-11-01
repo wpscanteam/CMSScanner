@@ -10,7 +10,7 @@ module CMSScanner
         #
         # @return []
         def process_urls(_urls, _opts = {})
-          fail NotImplementedError
+          raise NotImplementedError
         end
 
         # @param [ Hash ] opts
@@ -29,7 +29,7 @@ module CMSScanner
 
         # @return [ String ]
         def passive_urls_xpath
-          fail NotImplementedError
+          raise NotImplementedError
         end
 
         # @param [ Hash ] opts
@@ -47,7 +47,7 @@ module CMSScanner
         #
         # @return [ Array<String> ]
         def aggressive_urls(_opts = {})
-          fail NotImplementedError
+          raise NotImplementedError
         end
       end
     end
