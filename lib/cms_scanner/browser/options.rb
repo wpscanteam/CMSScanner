@@ -44,7 +44,7 @@ module CMSScanner
     #
     # @param [ Integer ] number
     def max_threads=(number)
-      @max_threads = number.to_i > 0 && throttle.zero? ? number.to_i : 1
+      @max_threads = number.to_i.positive? && throttle.zero? ? number.to_i : 1
 
       hydra.max_concurrency = @max_threads
     end
@@ -79,11 +79,11 @@ module CMSScanner
     def throttle=(value)
       @throttle = value.to_i.abs / 1000.0
 
-      self.max_threads = 1 if @throttle > 0
+      self.max_threads = 1 if @throttle.positive?
     end
 
     def trottle!
-      sleep(throttle) if throttle > 0
+      sleep(throttle) if throttle.positive?
     end
   end
 end

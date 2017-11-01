@@ -1,4 +1,5 @@
 AllCops:
+  TargetRubyVersion: 2.3
   Exclude:
     - '*.gemspec'
     - 'vendor/**/*'
@@ -9,6 +10,8 @@ ClassVars:
   Enabled: false
 Style/SignalException:
   EnforcedStyle: semantic
+Style/FrozenStringLiteralComment:
+  Enabled: false
 MethodLength:
   Max: 18
 Metrics/AbcSize:

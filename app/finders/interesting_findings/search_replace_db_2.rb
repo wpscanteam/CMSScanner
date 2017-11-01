@@ -12,7 +12,7 @@ module CMSScanner
         def aggressive(_opts = {})
           res = NS::Browser.get(url)
 
-          return unless res && res.code == 200 && res.body =~ /by interconnect/i
+          return unless res&.code == 200 && res.body =~ /by interconnect/i
 
           NS::InterestingFinding.new(url, confidence: 100,
                                           found_by: found_by,
