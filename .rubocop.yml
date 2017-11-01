@@ -14,12 +14,12 @@ Lint/UriEscapeUnescape:
   Enabled: false
 Metrics/AbcSize:
   Max: 25
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
 Metrics/CyclomaticComplexity:
   Max: 10
 Metrics/PerceivedComplexity:
   Max: 9
-Metrics/BlockLength:
-  Exclude:
-    - 'spec/**/*'
 Style/FrozenStringLiteralComment:
   Enabled: false
