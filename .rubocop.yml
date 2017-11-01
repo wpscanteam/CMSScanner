@@ -4,14 +4,14 @@ AllCops:
     - '*.gemspec'
     - 'vendor/**/*'
     - 'example/**/*'
-LineLength:
-  Max: 120
 ClassVars:
   Enabled: false
-Style/FrozenStringLiteralComment:
-  Enabled: false
+LineLength:
+  Max: 120
 MethodLength:
   Max: 18
+Lint/UriEscapeUnescape:
+  Enabled: false
 Metrics/AbcSize:
   Max: 25
 Metrics/CyclomaticComplexity:
@@ -19,6 +19,7 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Max: 9
 Metrics/BlockLength:
-  Enabled: false
-Lint/UriEscapeUnescape:
+  Exclude:
+    - 'spec/**/*'
+Style/FrozenStringLiteralComment:
   Enabled: false
