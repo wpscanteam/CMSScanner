@@ -38,6 +38,7 @@ module CMSScanner
         FINDING_OPTS.each { |opt| send("#{opt}=", opts[opt]) if opts.key?(opt) }
       end
 
+      # TODO: maybe also check for interesting_entries and confirmed_by ?
       def eql?(other)
         self == other && confidence == other.confidence && found_by == other.found_by
       end
