@@ -132,7 +132,7 @@ describe CMSScanner::Controller::Core do
 
         context 'when credentials' do
           context 'when valid' do
-            before { stub_request(:get, 'http://user:pass@example.com') }
+            before { stub_request(:get, 'http://example.com').with(basic_auth: %w[user pass]) }
 
             let(:parsed_options) do
               super().merge(http_auth: { username: 'user', password: 'pass' })
@@ -144,7 +144,10 @@ describe CMSScanner::Controller::Core do
           end
 
           context 'when invalid' do
-            before { stub_request(:get, 'http://user:p@ss@example.com').to_return(status: 401) }
+            before do
+              stub_request(:get, 'http://example.com')
+                .with(basic_auth: %w[user p@ss]).to_return(status: 401)
+            end
 
             let(:parsed_options) do
               super().merge(http_auth: { username: 'user', password: 'p@ss' })
