@@ -28,12 +28,33 @@ describe CMSScanner::Finders::Finder do
   its(:hydra) { should be_a Typhoeus::Hydra }
 
   describe '#found_by' do
-    context 'when no passive or aggresive match' do
-      it 'returns nil' do
-        expect(finder).to receive(:caller_locations).and_return([])
+    context 'when no klass supplied' do
+      context 'when no passive or aggresive match' do
+        it 'returns nil' do
+          expect(finder).to receive(:caller_locations).and_return([])
 
-        expect(finder.found_by).to be_nil
+          expect(finder.found_by).to be_nil
+        end
       end
+
+      # TODO: make the below work
+      # context 'when aggressive match' do
+      #  it 'returns the expected string' do
+      #    expect(finder).to receive(:caller_locations)
+      #      .and_return([Thread::Backtrace::Location.new("/aaaaa/file.rb:xx:in `aggressive'")])
+      #
+      #    expect(finder.found_by).to eql 'Finder (Aggressive Detection)'
+      #  end
+      # end
     end
+
+    # context 'when class supplied' do
+    #  it 'returns the expected string' do
+    #    expect(finder).to receive(:caller_locations)
+    #      .and_return(["/aaaaa/file.rb:xx:in `passive'"])
+    #
+    #    expect(finder.found_by('Rspec')).to eql 'Rspec (Passive Detection)'
+    #  end
+    # end
   end
 end

@@ -47,13 +47,15 @@ module CMSScanner
         @hydra ||= browser.hydra
       end
 
-      def found_by
+      # @param [ String, Symbol ] klass
+      # @return [ String ]
+      def found_by(klass = self)
         caller_locations.each do |call|
           label = call.label
 
           next unless %w[aggressive passive].include? label
 
-          return "#{titleize} (#{label.capitalize} Detection)"
+          return "#{klass.titleize} (#{label.capitalize} Detection)"
         end
         nil
       end
