@@ -30,9 +30,5 @@ module CMSScanner
         x-webkit-csp x-xss-protection
       ]
     end
-
-    def eql?(other)
-      super(other) && interesting_entries == other.interesting_entries
-    end
   end
 end

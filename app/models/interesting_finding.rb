@@ -31,7 +31,7 @@ module CMSScanner
       @to_s || url
     end
 
-    # @return [ Bollean ]
+    # @return [ Boolean ]
     def ==(other)
       self.class == other.class && to_s == other.to_s
     end

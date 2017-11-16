@@ -39,6 +39,7 @@ module CMSScanner
       end
 
       # TODO: maybe also check for interesting_entries and confirmed_by ?
+      # So far this is used in specs only
       def eql?(other)
         self == other && confidence == other.confidence && found_by == other.found_by
       end
