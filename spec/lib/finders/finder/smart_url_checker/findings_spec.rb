@@ -6,7 +6,7 @@ describe CMSScanner::Finders::Finder::SmartURLChecker::Findings do
   let(:finding)      { CMSScanner::DummyFinding }
 
   describe '#<<' do
-    after { expect(findings).to eq @expected }
+    after { expect(findings).to match_array(@expected.map { |f| eql(f) }) }
 
     context 'when no findings already in' do
       it 'adds it' do

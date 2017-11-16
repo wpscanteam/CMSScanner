@@ -6,12 +6,12 @@ describe CMSScanner::Finders::Findings do
   let(:finding)      { CMSScanner::DummyFinding }
 
   describe '#<<' do
-    after { expect(findings).to eq @expected }
+    after { expect(findings).to match_array(@expected.map { |f| eql(f) }) }
 
     context 'when no findings already in' do
       it 'adds it' do
-        findings << finding.new('empty-test')
-        @expected = [finding.new('empty-test')]
+        findings << finding.new('empty-test', found_by: 'rspec', confidence: 20)
+        @expected = [finding.new('empty-test', found_by: 'rspec', confidence: 20)]
       end
     end
 

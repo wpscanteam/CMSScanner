@@ -20,7 +20,7 @@ describe CMSScanner::Finders::SameTypeFinders do
       result = finders.run(opts)
 
       expect(result).to be_a CMSScanner::Finders::Findings
-      expect(result).to eql @expected
+      expect(result).to match_array(@expected.map { |f| eql(f) })
     end
 
     let(:dummy_passive)     { independent_finders::DummyFinder.new(target).passive(opts) }
