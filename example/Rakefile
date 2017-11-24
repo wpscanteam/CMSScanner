@@ -6,4 +6,4 @@ RuboCop::RakeTask.new
 RSpec::Core::RakeTask.new(:spec)
 
 # Run rubocop & rspec before the build
-task build: [:rubocop, :spec]
+task build: %i[rubocop spec]
