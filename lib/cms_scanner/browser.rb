@@ -58,8 +58,8 @@ module CMSScanner
         params[typhoeus_opt] = attr_value unless attr_value.nil?
       end
 
-      params[:proxyauth] = "#{proxy_auth[:username]}:#{proxy_auth[:password]}" if proxy_auth
-      params[:userpwd]   = "#{http_auth[:username]}:#{http_auth[:password]}" if http_auth
+      params[:proxyuserpwd] = "#{proxy_auth[:username]}:#{proxy_auth[:password]}" if proxy_auth
+      params[:userpwd] = "#{http_auth[:username]}:#{http_auth[:password]}" if http_auth
 
       params[:headers]['Host'] = vhost if vhost
 

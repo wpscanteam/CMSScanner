@@ -31,13 +31,15 @@ describe CMSScanner::Browser do
           http_auth: { username: 'log', password: 'pwd' },
           cookie_jar: '/tmp/cookie_jar.txt',
           vhost: 'testing',
-          headers: { 'Test' => 'aa' }
+          headers: { 'Test' => 'aa' },
+          proxy_auth: { username: 'u', password: 'pwd' }
         }
       end
 
       let(:expected) do
         default.merge(
-          cache_ttl: 200, connecttimeout: 10, userpwd: 'log:pwd',
+          cache_ttl: 200, connecttimeout: 10,
+          userpwd: 'log:pwd', proxyuserpwd: 'u:pwd',
           cookiejar: options[:cookie_jar], cookiefile: options[:cookie_jar]
         ).merge(headers: default[:headers].merge('Host' => 'testing', 'Test' => 'aa'))
       end
