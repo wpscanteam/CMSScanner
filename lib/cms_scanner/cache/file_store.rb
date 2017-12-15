@@ -10,7 +10,7 @@ module CMSScanner
       # Marshal does not need any "require"
       #
       # @param [ String ] storage_path
-      # @param [ ] serializer
+      # @param [ Constant ] serializer
       def initialize(storage_path, serializer = Marshal)
         @storage_path = File.expand_path(storage_path)
         @serializer   = serializer
@@ -29,11 +29,9 @@ module CMSScanner
       #
       # @return [ Mixed ]
       def read_entry(key)
-        file_path = entry_path(key)
-
         return if expired_entry?(key)
 
-        serializer.load(File.read(file_path))
+        serializer.load(File.read(entry_path(key)))
       rescue StandardError
         nil
       end
