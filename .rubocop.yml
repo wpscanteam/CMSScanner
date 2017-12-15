@@ -23,3 +23,9 @@ Metrics/PerceivedComplexity:
   Max: 9
 Style/FrozenStringLiteralComment:
   Enabled: false
+Style/FormatStringToken:
+  Exclude:
+    - lib/cms_scanner/finders/finder.rb
+Style/MixinUsage:
+  Exclude:
+    - lib/cms_scanner/formatter.rb

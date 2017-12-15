@@ -50,6 +50,7 @@ module CMSScanner
       attr_reader :controller_name
 
       def initialize
+        # Can't put this at the top level of the class, due to the NS::
         extend NS::Formatter::InstanceMethods
       end
 
