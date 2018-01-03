@@ -36,17 +36,19 @@ describe CMSScanner::Controller::Core do
   end
 
   describe '#before_scan' do
-    context 'when output_banner = false' do
+    context 'when --no-banner' do
+      let(:parsed_options) { super().merge(no_banner: true) }
+
       before { expect(core.formatter).to_not receive(:output) }
 
       it 'does not raise an error when everything is fine' do
         stub_request(:get, target_url).to_return(status: 200)
 
-        expect { core.before_scan(false) }.to_not raise_error
+        expect { core.before_scan }.to_not raise_error
       end
     end
 
-    context 'when output_banner = true (default)' do
+    context 'when banner output (default)' do
       before { expect(core.formatter).to receive(:output) }
 
       it 'does not raise an error when everything is fine' do

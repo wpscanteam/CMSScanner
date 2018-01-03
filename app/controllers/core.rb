@@ -13,11 +13,10 @@ module CMSScanner
         Typhoeus::Config.cache.clean if parsed_options[:clear_cache]
       end
 
-      def before_scan(output_banner = true)
-        output('banner') if output_banner
+      def before_scan
+        output('banner') unless parsed_options[:no_banner]
 
         setup_cache
-
         check_target_availability
       end
 
