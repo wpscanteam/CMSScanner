@@ -14,7 +14,7 @@ module CMSScanner
       end
 
       def before_scan
-        output('banner') unless parsed_options[:banner] == false
+        output('banner') if parsed_options[:banner]
 
         setup_cache
         check_target_availability
