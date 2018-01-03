@@ -3,7 +3,8 @@ require 'spec_helper'
 describe CMSScanner::Controller::Core do
   subject(:core)       { described_class.new }
   let(:target_url)     { 'http://example.com/' }
-  let(:parsed_options) { { url: target_url } }
+  let(:cli_args)       { "--url #{target_url}" }
+  let(:parsed_options) { rspec_parsed_options(cli_args) }
 
   before do
     CMSScanner::Browser.reset
@@ -21,9 +22,9 @@ describe CMSScanner::Controller::Core do
     end
 
     context 'when cache_dir' do
-      let(:parsed_options) { super().merge(cache_dir: CACHE) }
-      let(:cache)          { Typhoeus::Config.cache }
-      let(:storage) { File.join(parsed_options[:cache_dir], Digest::MD5.hexdigest(target_url)) }
+      let(:cli_args) { "#{super()} --cache-dir #{CACHE}" }
+      let(:cache)    { Typhoeus::Config.cache }
+      let(:storage)  { File.join(parsed_options[:cache_dir], Digest::MD5.hexdigest(target_url)) }
 
       before { core.setup_cache }
       after  { Typhoeus::Config.cache = nil }
@@ -37,7 +38,7 @@ describe CMSScanner::Controller::Core do
 
   describe '#before_scan' do
     context 'when --no-banner' do
-      let(:parsed_options) { super().merge(banner: false) }
+      let(:cli_args) { "#{super()} --no-banner" }
 
       before { expect(core.formatter).to_not receive(:output) }
 
@@ -88,7 +89,7 @@ describe CMSScanner::Controller::Core do
           end
 
           context 'when the --ignore-main-redirect is supplied' do
-            let(:parsed_options) { super().merge(ignore_main_redirect: true) }
+            let(:cli_args) { "#{super()} --ignore-main-redirect" }
 
             it 'does not raise any error' do
               expect { core.before_scan }.to_not raise_error
@@ -136,9 +137,7 @@ describe CMSScanner::Controller::Core do
           context 'when valid' do
             before { stub_request(:get, 'http://example.com').with(basic_auth: %w[user pass]) }
 
-            let(:parsed_options) do
-              super().merge(http_auth: { username: 'user', password: 'pass' })
-            end
+            let(:cli_args) { "#{super()} --http-auth user:pass" }
 
             it 'does not raise any error' do
               expect { core.before_scan }.to_not raise_error
@@ -151,9 +150,7 @@ describe CMSScanner::Controller::Core do
                 .with(basic_auth: %w[user p@ss]).to_return(status: 401)
             end
 
-            let(:parsed_options) do
-              super().merge(http_auth: { username: 'user', password: 'p@ss' })
-            end
+            let(:cli_args) { "#{super()} --http-auth user:p@ss" }
 
             it 'raises an error' do
               expect { core.before_scan }.to raise_error(CMSScanner::HTTPAuthRequiredError)
@@ -172,7 +169,7 @@ describe CMSScanner::Controller::Core do
         end
 
         context 'when invalid credentials' do
-          let(:parsed_options) { super().merge(proxy_auth: { username: 'user', password: 'p@ss' }) }
+          let(:cli_args) { "#{super()} --proxy-auth user:p@ss" }
 
           it 'raises an error' do
             expect(CMSScanner::Browser.instance.proxy_auth).to eq(parsed_options[:proxy_auth])
@@ -184,7 +181,7 @@ describe CMSScanner::Controller::Core do
         context 'when valid credentials' do
           before { stub_request(:get, target_url) }
 
-          let(:parsed_options) { super().merge(proxy_auth: { username: 'user', password: 'pass' }) }
+          let(:cli_args) { "#{super()} --proxy-auth user:pass" }
 
           it 'raises an error' do
             expect(CMSScanner::Browser.instance.proxy_auth).to eq(parsed_options[:proxy_auth])

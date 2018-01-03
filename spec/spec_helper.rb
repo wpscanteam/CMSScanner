@@ -41,6 +41,14 @@ end
 require 'cms_scanner'
 require 'shared_examples'
 
+def rspec_parsed_options(args)
+  controllers = CMSScanner::Controllers.new <<
+                CMSScanner::Controller::Core.new <<
+                CMSScanner::Controller::InterestingFindings.new
+
+  controllers.option_parser.results(args.split(' '))
+end
+
 # TODO: remove when https://github.com/bblimke/webmock/issues/552 fixed
 # rubocop:disable all
 module WebMock

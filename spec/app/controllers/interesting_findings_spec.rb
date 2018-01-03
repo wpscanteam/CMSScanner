@@ -3,7 +3,8 @@ require 'spec_helper'
 describe CMSScanner::Controller::InterestingFindings do
   subject(:controller) { described_class.new }
   let(:target_url)     { 'http://example.com/' }
-  let(:parsed_options) { { url: target_url } }
+  let(:cli_args)       { "--url #{target_url}" }
+  let(:parsed_options) { rspec_parsed_options(cli_args) }
 
   before do
     CMSScanner::Browser.reset
@@ -34,7 +35,7 @@ describe CMSScanner::Controller::InterestingFindings do
 
     %i[mixed passive aggressive].each do |mode|
       context "when --detection-mode #{mode}" do
-        let(:parsed_options) { super().merge(detection_mode: mode) }
+        let(:cli_args) { "#{super()} --detection-mode #{mode}" }
 
         context 'when no findings' do
           let(:stubbed) { [] }
@@ -46,9 +47,7 @@ describe CMSScanner::Controller::InterestingFindings do
           end
 
           context 'when --interesting-files-detection mode supplied' do
-            let(:parsed_options) do
-              super().merge(interesting_findings_detection: :passive)
-            end
+            let(:cli_args) { "#{super()} --interesting-findings-detection passive" }
 
             it 'gives the correct detection paramter' do
               # Handled by before/after statements
