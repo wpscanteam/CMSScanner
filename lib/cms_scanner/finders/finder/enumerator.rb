@@ -10,7 +10,7 @@ module CMSScanner
         #
         # @yield [ Typhoeus::Response, String ]
         def enumerate(target_urls, opts = {})
-          create_progress_bar(opts.merge(total: target_urls.size)) # if opts[:show_progression]
+          create_progress_bar(opts.merge(total: target_urls.size))
 
           target_urls.each do |url, id|
             request = browser.forge_request(url, request_params)

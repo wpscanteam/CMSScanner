@@ -4,6 +4,9 @@ module CMSScanner
   module Finders
     class Finder
       # Smart URL Checker
+      # Typically used when some URLs are potentially in the homepage. If they are found
+      # in it, they will be checked in the #passive (like a browser/client would do when loading the page).
+      # Otherwise they will be checked in the #aggressive
       module SmartURLChecker
         # @param [ Array<String> ] urls
         # @param [ Hash ] opts
