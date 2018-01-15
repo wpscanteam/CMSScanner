@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.require_path          = 'lib'
 
   s.add_dependency 'nokogiri', '~> 1.8.0'
-  s.add_dependency 'opt_parse_validator', '~> 0.0.14.1'
+  s.add_dependency 'opt_parse_validator', '~> 0.0.15.0'
   s.add_dependency 'public_suffix', '~> 3.0.0'
   s.add_dependency 'ruby-progressbar', '~> 1.9.0'
   s.add_dependency 'typhoeus', '~> 1.3.0'
@@ -50,5 +50,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-its', '~> 1.2.0'
   s.add_development_dependency 'rubocop', '~> 0.52.0'
   s.add_development_dependency 'simplecov', '~> 0.14.0' # Can't update to 0.15 as it breaks coveralls dep
-  s.add_development_dependency 'webmock', '~> 3.1.0'
+  s.add_development_dependency 'webmock', '~> 3.2.0'
 end
