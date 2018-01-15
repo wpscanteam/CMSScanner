@@ -1,4 +1,4 @@
 # Version
 module CMSScanner
-  VERSION = '0.0.38.4'.freeze
+  VERSION = '0.0.39.0'.freeze
 end
