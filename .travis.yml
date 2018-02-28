@@ -20,3 +20,6 @@ matrix:
 script:
   - bundle exec rspec
   - bundle exec rubocop
+notifications:
+  email:
+    - team@wpscan.org
