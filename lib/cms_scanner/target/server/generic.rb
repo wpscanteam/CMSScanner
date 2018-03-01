@@ -60,7 +60,7 @@ module CMSScanner
           NS::Browser.get(url(path), params).html.css(selector).each do |node|
             entry = node.text.to_s
 
-            next if entry.match?(ignore)
+            next if entry =~ ignore
             found << entry
           end
 

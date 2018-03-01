@@ -114,7 +114,7 @@ module CMSScanner
           tpl = "#{controller_name}/#{tpl}"
         end
 
-        raise "Wrong tpl format: '#{tpl}'" unless tpl.match?(%r{\A[\w/_]+\z})
+        raise "Wrong tpl format: '#{tpl}'" unless tpl =~ %r{\A[\w/_]+\z}
 
         views_directories.reverse_each do |dir|
           formats.each do |format|
