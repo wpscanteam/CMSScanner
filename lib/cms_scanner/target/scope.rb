@@ -61,7 +61,7 @@ module CMSScanner
         if PublicSuffix.valid?(host)
           domain = PublicSuffix.parse(host)
 
-          domains.each { |d| return true if domain.match(d) }
+          domains.each { |d| return true if domain.match?(d) }
         else
           invalid_domains.each { |d| return true if host == d }
         end

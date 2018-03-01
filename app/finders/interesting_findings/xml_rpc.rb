@@ -46,7 +46,7 @@ module CMSScanner
 
             res = NS::Browser.get(potential_url)
 
-            next unless res&.body =~ /XML-RPC server accepts POST requests only/i
+            next unless res&.body&.match?(/XML-RPC server accepts POST requests only/i)
 
             return NS::XMLRPC.new(potential_url,
                                   confidence: 100,

@@ -17,7 +17,7 @@ module CMSScanner
           # which can be huge (~ 2Go)
           res = NS::Browser.get(url(path), params.merge(headers: { 'range' => 'bytes=0-700' }))
 
-          res.body =~ pattern ? true : false
+          res.body.match?(pattern) ? true : false
         end
 
         # @param [ String ] path
