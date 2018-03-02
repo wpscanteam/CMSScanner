@@ -4,10 +4,14 @@ describe CMSScanner::Controller do
   subject(:controller) { described_class::Base.new }
 
   context 'when parsed_options' do
-    before { described_class::Base.parsed_options = parsed_options }
+    before do
+      described_class::Base.option_parser  = nil
+      described_class::Base.parsed_options = parsed_options
+    end
 
     let(:parsed_options) { { url: 'http://example.com/' } }
 
+    its(:option_parser)         { should be nil }
     its(:parsed_options)        { should eq(parsed_options) }
     its(:formatter)             { should be_a CMSScanner::Formatter::Cli }
     its(:user_interaction?)     { should be true }

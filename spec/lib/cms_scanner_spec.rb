@@ -5,7 +5,7 @@ describe CMSScanner do
 
   before do
     scanner = CMSScanner::Scan.new
-    scanner.controllers.first.class.parsed_options = { url: target_url }
+    scanner.controllers.first.class.parsed_options = rspec_parsed_options("--url #{target_url}")
   end
 
   describe 'typhoeus_on_complete' do
@@ -54,18 +54,10 @@ describe CMSScanner::Scan do
       expect(scanner.formatter).to receive(:beautify).ordered
     end
 
-    # Maybe there is a way to give the parser the raw ARGV to parse, instead
-    # of use the expect on the results
     context 'when no required option supplied' do
-      let(:run_error) { OptParseValidator::NoRequiredOption.new('The option url is required') }
-
       it 'calls the formatter to display the usage view' do
-        expect(scanner.controllers.option_parser)
-          .to receive(:results)
-          .and_raise(run_error.class, run_error.message)
-
         expect(scanner.formatter).to receive(:output)
-          .with('@usage', msg: run_error.message)
+          .with('@usage', msg: 'One of the following options is required: url, help, version')
       end
     end
 

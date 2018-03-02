@@ -34,6 +34,7 @@ module CMSScanner
 
     def run
       parsed_options             = option_parser.results
+      first.class.option_parser  = option_parser
       first.class.parsed_options = parsed_options
 
       redirect_output_to_file(parsed_options[:output]) if parsed_options[:output]

@@ -14,10 +14,18 @@ module CMSScanner
       end
 
       def before_scan
-        output('banner') if parsed_options[:banner]
+        maybe_output_banner_help_and_version
 
         setup_cache
         check_target_availability
+      end
+
+      def maybe_output_banner_help_and_version
+        output('banner') if parsed_options[:banner]
+        output('help', help: option_parser.to_s) if parsed_options[:help]
+        output('version') if parsed_options[:version]
+
+        exit(NS::ExitCode::OK) if parsed_options[:help] || parsed_options[:version]
       end
 
       # Checks that the target is accessible, raises related errors otherwise
