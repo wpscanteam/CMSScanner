@@ -18,8 +18,8 @@ matrix:
   allow_failures:
     - rvm: ruby-head
 script:
-  - bundle exec rspec
   - bundle exec rubocop
+  - bundle exec rspec
 notifications:
   email:
     - team@wpscan.org
