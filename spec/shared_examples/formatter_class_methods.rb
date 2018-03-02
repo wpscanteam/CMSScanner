@@ -20,7 +20,7 @@ shared_examples CMSScanner::Formatter::ClassMethods do
 
   describe '#availables' do
     it 'returns the right list' do
-      expect(subject.availables).to match_array(%w[json cli-no-colour cli])
+      expect(subject.availables).to match_array(%w[json cli-no-colour cli-no-color cli])
     end
   end
 end
