@@ -6,10 +6,10 @@ module CMSScanner
         formats = NS::Formatter.availables
 
         [
-          OptURL.new(['-u', '--url URL', 'The URL to scan'], required: true, default_protocol: 'http'),
-          OptBoolean.new(['--ignore-main-redirect', 'Ignore the main redirect if any and scan the target url']),
-          OptBoolean.new(%w[-v --verbose]),
-          OptBoolean.new(['--[no-]banner', 'Whether or not to display the banner'], default: true),
+          OptURL.new(['-u', '--url URL', 'The URL to scan'],
+                     required_unless: %i[help version],
+                     default_protocol: 'http')
+        ] + mixed_cli_options + [
           OptFilePath.new(['-o', '--output FILE', 'Output to FILE'], writable: true, exists: false),
           OptChoice.new(['-f', '--format FORMAT',
                          'Output results in the format supplied'], choices: formats),
@@ -21,6 +21,16 @@ module CMSScanner
                         'Comma separated (sub-)domains to consider in scope. ',
                         'Wildcard(s) allowed in the trd of valid domains, e.g: *.target.tld'])
         ] + cli_browser_options
+      end
+
+      def mixed_cli_options
+        [
+          OptBoolean.new(['-h', '--help', 'Display the help and exit']),
+          OptBoolean.new(['--version', 'Display the version and exit']),
+          OptBoolean.new(['--ignore-main-redirect', 'Ignore the main redirect (if any) and scan the target url']),
+          OptBoolean.new(['-v', '--verbose', 'Verbose mode']),
+          OptBoolean.new(['--[no-]banner', 'Whether or not to display the banner'], default: true)
+        ]
       end
 
       # @return [ Array<OptParseValidator::OptBase> ]

@@ -31,6 +31,16 @@ module CMSScanner
         @@target ||= NS::Target.new(parsed_options[:url], parsed_options)
       end
 
+      # @param [ OptParsevalidator::OptParser ] parser
+      def self.option_parser=(parser)
+        @@option_parser = parser
+      end
+
+      # @return [ OptParsevalidator::OptParser ]
+      def option_parser
+        @@option_parser
+      end
+
       # Set the parsed options and initialize the browser
       # with them
       #

@@ -4,6 +4,22 @@ shared_examples 'App::Views::Core' do
   let(:start)      { Time.at(1_414_670_521).in_time_zone('Europe/London') }
   let(:tpl_vars)   { { url: target_url, start_time: start } }
 
+  describe 'version' do
+    let(:view) { 'version' }
+
+    it 'outputs the expected string' do
+      @tpl_vars = {}
+    end
+  end
+
+  describe 'help' do
+    let(:view) { 'help' }
+
+    it 'outputs the expected string' do
+      @tpl_vars = { help: 'Help Message from OptionParser' }
+    end
+  end
+
   describe 'started' do
     let(:view) { 'started' }
 

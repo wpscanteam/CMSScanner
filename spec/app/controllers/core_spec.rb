@@ -36,6 +36,42 @@ describe CMSScanner::Controller::Core do
     end
   end
 
+  describe 'maybe_output_banner_help_and_version' do
+    before { described_class.option_parser = 'spec' }
+
+    context 'when --no-banner' do
+      let(:cli_args) { "#{super()} --no-banner" }
+
+      it 'calls output' do
+        expect(core.formatter).to_not receive(:output)
+
+        expect { core.maybe_output_banner_help_and_version }.to_not raise_error
+      end
+    end
+
+    context 'when --help' do
+      let(:cli_args) { '--help' }
+
+      it 'calls the output' do
+        expect(core.formatter).to receive(:output).with('banner', { verbose: nil }, 'core')
+        expect(core.formatter).to receive(:output).with('help', hash_including(help: 'spec'), 'core')
+
+        expect { core.maybe_output_banner_help_and_version }.to raise_error(SystemExit)
+      end
+    end
+
+    context 'when --version' do
+      let(:cli_args) { "#{super()} --version" }
+
+      it 'calls the output' do
+        expect(core.formatter).to receive(:output).with('banner', { verbose: nil }, 'core')
+        expect(core.formatter).to receive(:output).with('version', { verbose: nil }, 'core')
+
+        expect { core.maybe_output_banner_help_and_version }.to raise_error(SystemExit)
+      end
+    end
+  end
+
   describe '#before_scan' do
     context 'when --no-banner' do
       let(:cli_args) { "#{super()} --no-banner" }
