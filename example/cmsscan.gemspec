@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.executables           = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.require_path          = 'lib'
 
-  s.add_dependency 'cms_scanner', '~> 0.0.38.1'
+  s.add_dependency 'cms_scanner', '~> 0.0.39.0'
 
   # Already required by CMSScanner, so version restrictions loosen
   s.add_dependency 'activesupport', '~> 5.1'
@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '~> 12.0'
   s.add_development_dependency 'rspec', '~> 3.7.0'
   s.add_development_dependency 'rspec-its', '~> 1.2.0'
-  s.add_development_dependency 'rubocop', '~> 0.51.0'
+  s.add_development_dependency 'rubocop', '~> 0.52.0'
   s.add_development_dependency 'simplecov', '~> 0.14.0' # Can't update to 0.15 as it breaks coveralls dep
-  s.add_development_dependency 'webmock', '~> 3.1.0'
+  s.add_development_dependency 'webmock', '~> 3.3.0'
 end
