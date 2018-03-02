@@ -32,6 +32,11 @@ describe CMSScanner::Scan do
   subject(:scanner)    { described_class.new }
   let(:controller)     { CMSScanner::Controller }
 
+  before do
+    Object.send(:remove_const, :ARGV)
+    Object.const_set(:ARGV, [])
+  end
+
   describe '#new, #controllers' do
     its(:controllers) { should eq([controller::Core.new]) }
   end
