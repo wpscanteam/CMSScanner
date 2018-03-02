@@ -9,6 +9,12 @@ shared_examples 'App::Views::Core' do
 
     it 'outputs the expected string' do
       @tpl_vars = {}
+
+      @expected_output = if parsed_options[:format] == 'json'
+                           JSON.pretty_generate('version' => CMSScanner::VERSION)
+                         else
+                           "Version: #{CMSScanner::VERSION}\n"
+                         end
     end
   end
 
