@@ -1,4 +1,3 @@
-require 'cms_scanner/mocked_progress_bar'
 require 'cms_scanner/finders/finder/smart_url_checker'
 require 'cms_scanner/finders/finder/enumerator'
 require 'cms_scanner/finders/finder/fingerprinter'
@@ -30,11 +29,12 @@ module CMSScanner
       # @param [ Hash ] opts See https://github.com/jfelchner/ruby-progressbar/wiki/Options
       # @option opts [ Boolean ] :show_progression
       #
-      # @return [ ProgressBar::Base, CMSScanner::MockedProgressBar ]
+      # @return [ ProgressBar::Base ]
       def create_progress_bar(opts = {})
-        klass = opts[:show_progression] ? ProgressBar : MockedProgressBar
+        bar_opts          = { format: '%t %a <%B> (%c / %C) %P%% %e' }
+        bar_opts[:output] = ProgressBar::Outputs::Null unless opts[:show_progression]
 
-        @progress_bar = klass.create({ format: '%t %a <%B> (%c / %C) %P%% %e' }.merge(opts))
+        @progress_bar = ProgressBar.create(bar_opts.merge(opts))
       end
 
       # @return [ Browser ]

@@ -9,16 +9,16 @@ describe CMSScanner::Finders::Finder do
     context 'when opts[:show_progression] is true' do
       let(:opts) { { show_progression: true } }
 
-      it 'sets #progress_bar to a ProgressBar::Base' do
-        expect(finder.progress_bar).to be_a ProgressBar::Base
+      it 'uses the default progress-bar output' do
+        expect(finder.progress_bar.send(:output)).to be_a ProgressBar::Outputs::Tty
       end
     end
 
     context 'when opts[:show_progression] is false' do
       let(:opts) { { show_progression: false } }
 
-      it 'sets #progress_bar to a MockedProgressBar' do
-        expect(finder.progress_bar).to be_a CMSScanner::MockedProgressBar
+      it 'uses the null progress_bar outout' do
+        expect(finder.progress_bar.send(:output)).to be_a ProgressBar::Outputs::Null
       end
     end
   end
