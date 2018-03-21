@@ -14,6 +14,7 @@ require 'erb'
 require 'uri'
 require 'fileutils'
 require 'pathname'
+require 'xmlrpc/client'
 # Monkey Patches
 require 'cms_scanner/typhoeus/response'
 require 'cms_scanner/typhoeus/hydra'

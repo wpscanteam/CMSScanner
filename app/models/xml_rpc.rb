@@ -1,35 +1,69 @@
 module CMSScanner
   # XML RPC
   class XMLRPC < InterestingFinding
-    # @param [ String ] method
-    # @param [ Array ] params
+    # @return [ Browser ]
+    def browser
+      @browser ||= NS::Browser.instance
+    end
+
+    # @return [ Array<String> ]
+    def available_methods
+      return @available_methods if @available_methods
+
+      @available_methods = []
+
+      res = method_call('system.listMethods').run
+      doc = Nokogiri::XML.parse(res.body)
+
+      doc.search('methodResponse params param value array data value string').each do |s|
+        @available_methods << s.text
+      end
+
+      @available_methods
+    end
+
+    # @return [ Boolean ] Whether or not the XMLRPC is enabled
+    def enabled?
+      available_methods.include?('system.listMethods')
+    end
+
+    # @param [ String ] method_name
+    # @param [ Array ] method_params
     # @param [ Hash ] request_params
     #
-    # @return [ Typhoeus::Response ]
-    def call(method, params = [], request_params = {})
-      NS::Browser.post(url, request_params.merge(body: request_body(method, params)))
+    # @return [ Typhoeus::Request ]
+    def method_call(method_name, method_params = [], request_params = {})
+      browser.forge_request(
+        url,
+        request_params.merge(
+          method: :post,
+          body: ::XMLRPC::Create.new.methodCall(method_name, *method_params)
+        )
+      )
     end
 
-    # Might be better to use Nokogiri to create the XML body ?
+    # @param [ Array<Array> ] methods_and_params
+    # @param [ Hash ] request_params
     #
-    # @param [ String ] method
-    # @param [ Array ] params
+    # Example of methods_and_params:
+    # [
+    #   [method1, param1, param2],
+    #   [method2, param1],
+    #   [method3]
+    # ]
     #
-    # @return [ String ] The body of the XML RPC request
-    def request_body(method, params = [])
-      p_body = ''
-
-      params.each { |p| p_body << "<param><value><string>#{p}</string></value></param>" }
-
-      body = '<?xml version="1.0"?><methodCall>'
-      body << "<methodName>#{method}</methodName>"
-      body << "<params>#{p_body}</params>" unless p_body.length.zero?
-      body << '</methodCall>'
+    # @return [ Typhoeus::Request ]
+    def multi_call(methods_and_params = [], request_params = {})
+      browser.forge_request(
+        url,
+        request_params.merge(
+          method: :post,
+          body: ::XMLRPC::Create.new.methodCall(
+            'system.multicall',
+            methods_and_params.collect { |m| { methodName: m[0], params: m[1..-1] } }
+          )
+        )
+      )
     end
-
-    # Use the system.listMethods to get the list of available methods ?
-    # def entries
-    #
-    # end
   end
 end
