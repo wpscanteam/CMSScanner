@@ -5,7 +5,7 @@ describe CMSScanner::Finders::InterestingFindings::RobotsTxt do
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
   let(:robots_txt) { url + 'robots.txt' }
-  let(:fixtures)   { File.join(FIXTURES_FINDERS, 'interesting_findings', 'robots_txt') }
+  let(:fixtures)   { FIXTURES_FINDERS.join('interesting_findings', 'robots_txt') }
 
   describe '#url' do
     its(:url) { should eq robots_txt }
@@ -41,7 +41,7 @@ describe CMSScanner::Finders::InterestingFindings::RobotsTxt do
       end
 
       context 'when the body matches a robots.txt' do
-        let(:body) { File.new(File.join(fixtures, 'robots.txt')).read }
+        let(:body) { File.read(fixtures.join('robots.txt')) }
 
         it 'returns the InterestingFinding result' do
           @expected = CMSScanner::RobotsTxt.new(robots_txt,

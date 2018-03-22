@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CMSScanner::Target do
   subject(:target) { described_class.new(url) }
   let(:url)        { 'http://e.org' }
-  let(:fixtures)   { File.join(FIXTURES, 'target') }
+  let(:fixtures)   { FIXTURES.join('target') }
 
   describe '#interesting_findings' do
     before do
@@ -34,7 +34,7 @@ describe CMSScanner::Target do
   end
 
   describe '#comments_from_page' do
-    let(:fixture) { File.join(fixtures, 'comments.html') }
+    let(:fixture) { fixtures.join('comments.html') }
     let(:page)    { Typhoeus::Response.new(body: File.read(fixture)) }
 
     context 'when the pattern does not match anything' do
@@ -82,7 +82,7 @@ describe CMSScanner::Target do
   end
 
   describe '#javascripts_from_page' do
-    let(:fixture) { File.join(fixtures, 'javascripts.html') }
+    let(:fixture) { fixtures.join('javascripts.html') }
     let(:page)    { Typhoeus::Response.new(body: File.read(fixture)) }
 
     context 'when the pattern does not match anything' do
@@ -118,7 +118,7 @@ describe CMSScanner::Target do
   end
 
   describe '#urls_from_page' do
-    let(:page) { Typhoeus::Response.new(body: File.read(File.join(fixtures, 'urls_from_page.html'))) }
+    let(:page) { Typhoeus::Response.new(body: File.read(fixtures.join('urls_from_page.html'))) }
 
     context 'when block given' do
       it 'yield the url' do

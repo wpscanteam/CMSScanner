@@ -3,8 +3,8 @@ require 'spec_helper'
 describe CMSScanner::Headers do
   subject(:file) { described_class.new(url) }
   let(:url)      { 'http://example.com/' }
-  let(:fixtures) { File.join(FIXTURES_FINDERS, 'interesting_findings', 'headers') }
-  let(:fixture)  { File.join(fixtures, 'interesting.txt') }
+  let(:fixtures) { FIXTURES_FINDERS.join('interesting_findings', 'headers') }
+  let(:fixture)  { fixtures.join('interesting.txt') }
   let(:headers)  { {} }
 
   before { stub_request(:get, file.url).to_return(headers: headers) }
@@ -43,7 +43,7 @@ describe CMSScanner::Headers do
     end
 
     context 'when no interesting headers' do
-      let(:headers) { parse_headers_file(File.join(fixtures, 'no_interesting.txt')) }
+      let(:headers) { parse_headers_file(fixtures.join('no_interesting.txt')) }
 
       its(:interesting_entries) { should eq [] }
     end

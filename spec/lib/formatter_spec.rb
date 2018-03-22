@@ -78,18 +78,18 @@ describe CMSScanner::Formatter::Base do
     end
 
     context 'when the tpl is found' do
-      after { expect(formatter.view_path(@tpl)).to eq @expected }
+      after { expect(formatter.view_path(@tpl)).to eq @expected.to_s }
 
       context 'if it\'s a global tpl' do
         it 'returns its path' do
-          @expected = File.join(FIXTURES_VIEWS, 'base', 'test.erb')
+          @expected = FIXTURES_VIEWS.join('base', 'test.erb')
           @tpl      = '@test'
         end
       end
 
       context 'if it\s a local tpl' do
         it 'retuns its path' do
-          @expected = File.join(FIXTURES_VIEWS, 'base', 'ctrl', 'local.erb')
+          @expected = FIXTURES_VIEWS.join('base', 'ctrl', 'local.erb')
           @tpl      = 'local'
         end
       end
@@ -98,17 +98,17 @@ describe CMSScanner::Formatter::Base do
     context 'when base_format' do
       subject(:formatter) { CMSScanner::Formatter::Spec::BasedFormat.new }
 
-      after { expect(formatter.view_path(@tpl)).to eq @expected }
+      after { expect(formatter.view_path(@tpl)).to eq @expected.to_s }
 
       context 'when the ovverided view exists' do
         it 'returns it' do
-          @expected = File.join(FIXTURES_VIEWS, 'based_format', 'test.erb')
+          @expected = FIXTURES_VIEWS.join('based_format', 'test.erb')
           @tpl      = '@test'
         end
       end
 
       it 'returns the base views otherwise' do
-        @expected = File.join(FIXTURES_VIEWS, 'base', 'ctrl', 'local.erb')
+        @expected = FIXTURES_VIEWS.join('base', 'ctrl', 'local.erb')
         @tpl      = 'local'
       end
     end

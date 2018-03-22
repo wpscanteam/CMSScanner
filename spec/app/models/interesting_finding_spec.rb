@@ -6,7 +6,7 @@ describe CMSScanner::InterestingFinding do
   subject(:finding) { described_class.new(url, opts) }
   let(:opts)        { {} }
   let(:url)         { 'http://example.com/' }
-  let(:fixtures)    { File.join(FIXTURES_FINDERS, 'interesting_findings') }
+  let(:fixtures)    { FIXTURES_FINDERS.join('interesting_findings') }
 
   describe '#to_s' do
     context 'when no opts[:to_s]' do
@@ -47,7 +47,7 @@ describe CMSScanner::InterestingFinding do
       let(:headers) { { 'Content-Type' => 'text/plain; charset=utf-8' } }
 
       it 'returns the finding content as an array w/o empty strings' do
-        @body     = File.read(File.join(fixtures, 'file.txt'))
+        @body     = File.read(fixtures.join('file.txt'))
         @expected = ['This is', 'a test file', 'with some content']
       end
     end

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CMSScanner::XMLRPC do
   subject(:xml_rpc) { described_class.new(url) }
   let(:url)         { 'http://example.com/xmlrpc' }
-  let(:fixtures)    { File.join(FIXTURES_MODELS, 'xml_rpc') }
+  let(:fixtures)    { FIXTURES_MODELS.join('xml_rpc') }
 
   describe '#method_call' do
     after do
@@ -55,7 +55,7 @@ describe CMSScanner::XMLRPC do
     let(:request_params)     { {} }
 
     it 'sets the correct body in the request' do
-      @expected_body = File.read(File.join(fixtures, 'multi_call.xml'))
+      @expected_body = File.read(fixtures.join('multi_call.xml'))
     end
   end
 

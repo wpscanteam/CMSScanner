@@ -4,7 +4,7 @@ describe CMSScanner::Formatter::Json do
   it_behaves_like CMSScanner::Formatter::Buffer
 
   subject(:formatter) { described_class.new }
-  let(:output_file)   { File.join(FIXTURES, 'output.txt') }
+  let(:output_file)   { FIXTURES.join('output.txt') }
 
   before { formatter.views_directories << FIXTURES_VIEWS }
 

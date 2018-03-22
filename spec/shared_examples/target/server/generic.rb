@@ -7,7 +7,7 @@ shared_examples CMSScanner::Target::Server::Generic do
     context 'when apache headers' do
       %w[basic.txt].each do |file|
         context "when #{file} headers" do
-          let(:fixture) { File.join(fixtures, 'server', 'apache', file) }
+          let(:fixture) { fixtures.join('server', 'apache', file) }
 
           its(:server) { should eq :Apache }
         end
@@ -17,7 +17,7 @@ shared_examples CMSScanner::Target::Server::Generic do
     context 'when iis headers' do
       %w[basic.txt].each do |file|
         context "when #{file} headers" do
-          let(:fixture) { File.join(fixtures, 'server', 'iis', file) }
+          let(:fixture) { fixtures.join('server', 'iis', file) }
 
           its(:server) { should eq :IIS }
         end
@@ -27,7 +27,7 @@ shared_examples CMSScanner::Target::Server::Generic do
     context 'when nginx headers' do
       %w[basic.txt].each do |file|
         context "when #{file} headers" do
-          let(:fixture) { File.join(fixtures, 'server', 'nginx', file) }
+          let(:fixture) { fixtures.join('server', 'nginx', file) }
 
           its(:server) { should eq :Nginx }
         end
@@ -35,7 +35,7 @@ shared_examples CMSScanner::Target::Server::Generic do
     end
 
     context 'not detected' do
-      let(:fixture) { File.join(fixtures, 'server', 'not_detected.txt') }
+      let(:fixture) { fixtures.join('server', 'not_detected.txt') }
 
       its(:server) { should be nil }
     end

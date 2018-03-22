@@ -4,8 +4,8 @@ describe CMSScanner::Finders::InterestingFindings::Headers do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
-  let(:fixtures)   { File.join(FIXTURES_FINDERS, 'interesting_findings', 'headers') }
-  let(:fixture)    { File.join(fixtures, 'interesting.txt') }
+  let(:fixtures)   { FIXTURES_FINDERS.join('interesting_findings', 'headers') }
+  let(:fixture)    { fixtures.join('interesting.txt') }
   let(:headers)    { parse_headers_file(fixture) }
 
   describe '#passive' do

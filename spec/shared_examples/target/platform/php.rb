@@ -8,7 +8,7 @@ shared_examples CMSScanner::Target::Platform::PHP do
     context 'when the body matches' do
       %w[debug.log].each do |file|
         context "when #{file} body" do
-          let(:body) { File.read(File.join(fixtures, 'debug_log', file)) }
+          let(:body) { File.read(fixtures.join('debug_log', file)) }
 
           it 'returns true' do
             expect(target.debug_log?(path)).to be true
@@ -32,7 +32,7 @@ shared_examples CMSScanner::Target::Platform::PHP do
     context 'when the body matches' do
       %w[error.log].each do |file|
         context "when #{file} body" do
-          let(:body) { File.read(File.join(fixtures, 'error_log', file)) }
+          let(:body) { File.read(fixtures.join('error_log', file)) }
 
           it 'returns true' do
             expect(target.error_log?(path)).to be true
@@ -58,7 +58,7 @@ shared_examples CMSScanner::Target::Platform::PHP do
         'wp_rss_functions.php' => %w[/short-path/rss-f.php]
       }.each do |file, expected|
         context "when #{file} body" do
-          let(:body) { File.read(File.join(fixtures, 'fpd', file)) }
+          let(:body) { File.read(fixtures.join('fpd', file)) }
 
           it 'returns the expected array' do
             expect(target.full_path_disclosure_entries(path)).to eql expected

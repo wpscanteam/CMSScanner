@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CMSScanner::Target do
   subject(:target) { described_class.new(url, opts) }
   let(:url)        { 'http://e.org' }
-  let(:fixtures)   { File.join(FIXTURES, 'target', 'scope') }
+  let(:fixtures)   { FIXTURES.join('target', 'scope') }
   let(:opts)       { { scope: nil } }
 
   describe '#scope' do
@@ -63,7 +63,7 @@ describe CMSScanner::Target do
   end
 
   describe '#in_scope_urls' do
-    let(:res) { Typhoeus::Response.new(body: File.read(File.join(fixtures, 'index.html'))) }
+    let(:res) { Typhoeus::Response.new(body: File.read(fixtures.join('index.html'))) }
 
     context 'when block given' do
       it 'yield the url' do

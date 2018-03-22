@@ -87,10 +87,10 @@ module WebMock
 end
 # rubocop:enabled all
 
-SPECS            = Pathname.new(__FILE__).dirname.to_s
-CACHE            = File.join(SPECS, 'cache')
-FIXTURES         = File.join(SPECS, 'fixtures')
-FIXTURES_VIEWS   = File.join(FIXTURES, 'views')
-FIXTURES_FINDERS = File.join(FIXTURES, 'finders')
-FIXTURES_MODELS  = File.join(FIXTURES, 'models')
+SPECS            = Pathname.new(__FILE__).dirname
+CACHE            = SPECS.join('cache')
+FIXTURES         = SPECS.join('fixtures')
+FIXTURES_VIEWS   = FIXTURES.join('views')
+FIXTURES_FINDERS = FIXTURES.join('finders')
+FIXTURES_MODELS  = FIXTURES.join('models')
 APP_VIEWS        = File.join(CMSScanner::APP_DIR, 'views')

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CMSScanner::Cache::Typhoeus do
   subject(:cache) { described_class.new(cache_dir) }
 
-  let(:cache_dir) { File.join(CACHE, 'typhoeus_cache') }
+  let(:cache_dir) { CACHE.join('typhoeus_cache') }
   let(:url)       { 'http://example.com' }
   let(:request)   { Typhoeus::Request.new(url, cache_ttl: 20) }
   let(:key)       { request.hash.to_s }

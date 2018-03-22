@@ -5,7 +5,7 @@ describe CMSScanner::Finders::InterestingFindings::SearchReplaceDB2 do
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
   let(:file)       { url + 'searchreplacedb2.php' }
-  let(:fixtures)   { File.join(FIXTURES_FINDERS, 'interesting_findings', 'search_replace_db_2') }
+  let(:fixtures)   { FIXTURES_FINDERS.join('interesting_findings', 'search_replace_db_2') }
 
   describe '#url' do
     its(:url) { should eq file }
@@ -38,7 +38,7 @@ describe CMSScanner::Finders::InterestingFindings::SearchReplaceDB2 do
       end
 
       context 'when the body matches' do
-        let(:body) { File.new(File.join(fixtures, 'searchreplacedb2.php')).read }
+        let(:body) { File.read(fixtures.join('searchreplacedb2.php')) }
 
         it 'returns the InterestingFinding result' do
           @expected = CMSScanner::InterestingFinding.new(

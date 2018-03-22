@@ -5,7 +5,7 @@ describe CMSScanner::Finders::InterestingFindings::XMLRPC do
   let(:target)      { CMSScanner::Target.new(url) }
   let(:url)         { 'http://e.org/' }
   let(:xml_rpc_url) { url + 'xmlrpc.php' }
-  let(:fixtures)    { File.join(FIXTURES_FINDERS, 'interesting_findings', 'xml_rpc') }
+  let(:fixtures)    { FIXTURES_FINDERS.join('interesting_findings', 'xml_rpc') }
 
   describe '#potential_urls' do
     its(:potential_urls) { should be_empty }
@@ -78,13 +78,13 @@ describe CMSScanner::Finders::InterestingFindings::XMLRPC do
 
     context 'when the tag is present' do
       context 'when the URL is out of scope' do
-        let(:body) { File.new(File.join(fixtures, 'homepage_out_of_scope_pingback.html')).read }
+        let(:body) { File.read(fixtures.join('homepage_out_of_scope_pingback.html')) }
 
         its(:passive_body) { should be_nil }
       end
 
       context 'when URL is in scope' do
-        let(:body)         { File.new(File.join(fixtures, 'homepage_in_scope_pingback.html')).read }
+        let(:body)         { File.read(fixtures.join('homepage_in_scope_pingback.html')) }
         let(:expected_url) { 'http://e.org/wp/xmlrpc.php' }
 
         it 'adds the URL to the #potential_urls and returns the XMLRPC' do
@@ -122,7 +122,7 @@ describe CMSScanner::Finders::InterestingFindings::XMLRPC do
     end
 
     context 'when the body matches' do
-      let(:body) { File.new(File.join(fixtures, 'xmlrpc.php')).read }
+      let(:body) { File.read(fixtures.join('xmlrpc.php')) }
 
       it 'returns the InterestingFinding result' do
         @expected = CMSScanner::XMLRPC.new(

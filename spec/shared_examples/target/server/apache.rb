@@ -21,7 +21,7 @@ shared_examples CMSScanner::Target::Server::Apache do
 
     context 'when 200' do
       let(:status) { 200 }
-      let(:body)   { File.read(File.join(fixtures, 'directory_listing', '2.2.16.html')) }
+      let(:body)   { File.read(fixtures.join('directory_listing', '2.2.16.html')) }
 
       it 'returns true and the expected array' do
         expect(target.directory_listing?(path)).to be true
@@ -31,7 +31,7 @@ shared_examples CMSScanner::Target::Server::Apache do
 
     context 'when no files nor folders' do
       let(:status) { 200 }
-      let(:body)   { File.read(File.join(fixtures, 'directory_listing', 'empty.html')) }
+      let(:body)   { File.read(fixtures.join('directory_listing', 'empty.html')) }
 
       it 'returns true and the an empty array' do
         expect(target.directory_listing?(path)).to be true
