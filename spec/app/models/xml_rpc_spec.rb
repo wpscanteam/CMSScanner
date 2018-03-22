@@ -60,10 +60,49 @@ describe CMSScanner::XMLRPC do
   end
 
   describe '#available_methods' do
-    xit
+    after do
+      expect(xml_rpc.available_methods).to eql @expected
+
+      # When calling a second time, should not redo a request
+      expect(xml_rpc).to_not receive(:method_call)
+      expect(xml_rpc.available_methods).to eql @expected
+    end
+
+    context 'when an empty response' do
+      it 'returns an empty array' do
+        stub_request(:post, xml_rpc.url).and_return(body: '')
+
+        @expected = []
+      end
+    end
+
+    context 'when a correct response' do
+      it 'returns the expected array' do
+        stub_request(:post, xml_rpc.url).and_return(
+          body: '<?xml version="1.0" ?><methodResponse><params><param><value><array><data>'\
+                '<value><string>system.listMethods</string></value>'\
+                '<value><string>m1</string></value>'\
+                '</data></array></value></param></params></methodResponse>'
+        )
+
+        @expected = %w[system.listMethods m1]
+      end
+    end
   end
 
   describe '#enabled?' do
-    xit
+    context 'when no methods available' do
+      it 'returns false' do
+        expect(xml_rpc).to receive(:available_methods).and_return([])
+        expect(xml_rpc.enabled?).to be false
+      end
+    end
+
+    context 'when methods available' do
+      it 'returns true' do
+        expect(xml_rpc).to receive(:available_methods).and_return(%w[m1 m2])
+        expect(xml_rpc.enabled?).to be true
+      end
+    end
   end
 end

@@ -24,7 +24,7 @@ module CMSScanner
 
     # @return [ Boolean ] Whether or not the XMLRPC is enabled
     def enabled?
-      available_methods.include?('system.listMethods')
+      !available_methods.empty?
     end
 
     # @param [ String ] method_name
