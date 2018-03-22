@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'public_suffix', '~> 3.0.0'
   s.add_dependency 'ruby-progressbar', '~> 1.9.0'
   s.add_dependency 'typhoeus', '~> 1.3.0'
+  s.add_dependency 'xmlrpc', '~> 0.3'
   s.add_dependency 'yajl-ruby', '~> 1.3.0' # Better JSON parser regarding memory usage
 
   # Already required by opt_parse_validator
