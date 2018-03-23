@@ -20,6 +20,23 @@ describe CMSScanner::Finders::Finder do
       it 'uses the null progress_bar outout' do
         expect(finder.progress_bar.send(:output)).to be_a ProgressBar::Outputs::Null
       end
+
+      context 'when logging data' do
+        context 'when no logs' do
+          it 'returns an empty array' do
+            expect(finder.progress_bar.log).to eql([])
+          end
+        end
+
+        context 'when adding messages' do
+          it 'returns the messages' do
+            finder.progress_bar.log 'Hello'
+            finder.progress_bar.log 'World'
+
+            expect(finder.progress_bar.log).to eql(%w[Hello World])
+          end
+        end
+      end
     end
   end
 

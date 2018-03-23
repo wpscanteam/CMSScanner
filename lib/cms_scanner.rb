@@ -5,7 +5,6 @@ require 'yajl/json_gem'
 require 'public_suffix'
 require 'addressable/uri'
 require 'ruby-progressbar'
-require 'ruby-progressbar/outputs/null'
 require 'opt_parse_validator'
 require 'active_support/concern'
 require 'active_support/inflector'
@@ -16,10 +15,11 @@ require 'fileutils'
 require 'pathname'
 require 'xmlrpc/client'
 # Monkey Patches
-require 'cms_scanner/typhoeus/response'
-require 'cms_scanner/typhoeus/hydra'
-require 'cms_scanner/public_suffix/domain'
-require 'cms_scanner/numeric'
+require 'cms_scanner/typhoeus/response' # Adds a Response#html using Nokogiri to parse the body
+require 'cms_scanner/typhoeus/hydra' # https://github.com/typhoeus/typhoeus/issues/439
+require 'cms_scanner/public_suffix/domain' # Adds a Domain#match method and logic, used in scope stuff
+require 'cms_scanner/numeric' # Adds a Numeric#bytes_to_human
+require 'cms_scanner/ruby-progressbar/outputs/null' # https://github.com/jfelchner/ruby-progressbar/issues/144
 # Custom Libs
 require 'cms_scanner/helper'
 require 'cms_scanner/exit_code'
