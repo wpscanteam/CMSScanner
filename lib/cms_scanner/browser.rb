@@ -46,12 +46,16 @@ module CMSScanner
     # @return [ Hash ]
     def default_request_params
       params = {
-        # Disable SSL-Certificate checks, see http://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html
-        ssl_verifypeer: false, ssl_verifyhost: 0,
         headers: { 'User-Agent' => user_agent }.merge(headers || {}),
         accept_encoding: 'gzip, deflate',
         method: :get
       }
+
+      if disable_tls_checks
+        # See http://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html
+        params[:ssl_verifypeer] = false
+        params[:ssl_verifyhost] = 0
+      end
 
       typhoeus_to_browser_opts.each do |typhoeus_opt, browser_opt|
         attr_value = public_send(browser_opt)

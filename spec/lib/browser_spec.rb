@@ -8,7 +8,6 @@ describe CMSScanner::Browser do
   let(:options)     { {} }
   let(:default) do
     {
-      ssl_verifypeer: false, ssl_verifyhost: 0,
       headers: { 'User-Agent' => "CMSScanner v#{CMSScanner::VERSION}" },
       accept_encoding: 'gzip, deflate',
       method: :get
@@ -32,7 +31,8 @@ describe CMSScanner::Browser do
           cookie_jar: '/tmp/cookie_jar.txt',
           vhost: 'testing',
           headers: { 'Test' => 'aa' },
-          proxy_auth: { username: 'u', password: 'pwd' }
+          proxy_auth: { username: 'u', password: 'pwd' },
+          disable_tls_checks: true
         }
       end
 
@@ -40,7 +40,8 @@ describe CMSScanner::Browser do
         default.merge(
           cache_ttl: 200, connecttimeout: 10,
           userpwd: 'log:pwd', proxyuserpwd: 'u:pwd',
-          cookiejar: options[:cookie_jar], cookiefile: options[:cookie_jar]
+          cookiejar: options[:cookie_jar], cookiefile: options[:cookie_jar],
+          ssl_verifypeer: false, ssl_verifyhost: 0
         ).merge(headers: default[:headers].merge('Host' => 'testing', 'Test' => 'aa'))
       end
 

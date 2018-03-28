@@ -6,6 +6,7 @@ module CMSScanner
       cookie_jar
       cookie_string
       connect_timeout
+      disable_tls_checks
       headers
       http_auth
       max_threads

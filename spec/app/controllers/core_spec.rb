@@ -11,8 +11,21 @@ describe CMSScanner::Controller::Core do
     described_class.parsed_options = parsed_options
   end
 
-  its(:cli_options) { should_not be_empty }
-  its(:cli_options) { should be_a Array }
+  describe '#cli_options' do
+    its(:cli_options) { should_not be_empty }
+    its(:cli_options) { should be_a Array }
+
+    it 'contaisn the expected options' do
+      expect(core.cli_options.map(&:to_sym)).to match_array(
+        %i[
+          banner cache_dir cache_ttl clear_cache connect_timeout cookie_jar cookie_string
+          detection_mode disable_tls_checks format headers help http_auth ignore_main_redirect
+          max_threads output proxy proxy_auth random_user_agent request_timeout scope
+          throttle url user_agent user_agents_list verbose version vhost
+        ]
+      )
+    end
+  end
 
   describe '#setup_cache' do
     context 'when no cache_dir supplied (or default)' do
