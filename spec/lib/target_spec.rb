@@ -128,7 +128,8 @@ describe CMSScanner::Target do
             ['https://cdn.e.org/f2.js', Nokogiri::XML::Element],
             ['http://e.org/script/s.js', Nokogiri::XML::Element],
             ['http://wp-lamp/feed.xml', Nokogiri::XML::Element],
-            ['http://g.com/img.jpg', Nokogiri::XML::Element]
+            ['http://g.com/img.jpg', Nokogiri::XML::Element],
+            ['http://g.org/logo.png', Nokogiri::XML::Element]
           )
       end
     end
@@ -138,14 +139,14 @@ describe CMSScanner::Target do
         expect(target.urls_from_page(page)).to eql(
           %w[
             http://e.org/f.txt https://cdn.e.org/f2.js http://e.org/script/s.js
-            http://wp-lamp/feed.xml http://g.com/img.jpg
+            http://wp-lamp/feed.xml http://g.com/img.jpg http://g.org/logo.png
           ]
         )
       end
 
       context 'when xpath argument given' do
         it 'returns the expected array' do
-          xpath = '//link[@rel="alternate" and @type="application/rss+xml"]'
+          xpath = '//link[@rel="alternate" and @type="application/rss+xml"]/@href'
 
           expect(target.urls_from_page(page, xpath)).to eql(%w[http://wp-lamp/feed.xml])
         end

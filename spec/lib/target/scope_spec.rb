@@ -78,7 +78,7 @@ describe CMSScanner::Target do
 
     context 'when xpath argument given' do
       it 'returns the expected array' do
-        xpath = '//link[@rel="alternate" and @type="application/rss+xml"]'
+        xpath = '//link[@rel="alternate" and @type="application/rss+xml"]/@href'
 
         expect(target.in_scope_urls(res, xpath)).to eql(%w[http://e.org/feed])
       end

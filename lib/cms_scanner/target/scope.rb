@@ -17,15 +17,14 @@ module CMSScanner
 
     # @param [ Typhoeus::Response ] res
     # @param [ String ] xpath
-    # @param [ Array<String> ] attributes
     #
     # @yield [ String, Nokogiri::XML::Element ] The in scope url and its associated tag
     #
     # @return [ Array<String> ] The in scope absolute URLs detected in the response's body
-    def in_scope_urls(res, xpath = '//link|//script|//style|//img|//a', attributes = %w[href src])
+    def in_scope_urls(res, xpath = '//@href|//@src|//@data-src')
       found = []
 
-      urls_from_page(res, xpath, attributes) do |url, tag|
+      urls_from_page(res, xpath) do |url, tag|
         next unless in_scope?(url)
 
         yield url, tag if block_given?

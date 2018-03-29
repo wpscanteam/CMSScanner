@@ -80,36 +80,33 @@ module CMSScanner
 
     # @param [ Typhoeus::Response, String ] page
     # @param [ String ] xpath
-    # @param [ Array<String> ] attributes
     #
     # @yield [ String, Nokogiri::XML::Element ] The url and its associated tag
     #
     # @return [ Array<String> ] The absolute URLs detected in the response's body from the HTML tags
-    def urls_from_page(page = nil, xpath = '//link|//script|//style|//img|//a', attributes = %w[href src])
+    def urls_from_page(page = nil, xpath = '//@href|//@src|//@data-src')
       page    = NS::Browser.get(url(page)) unless page.is_a?(Typhoeus::Response)
       found   = []
 
-      page.html.xpath(xpath).each do |tag|
-        attributes.each do |attribute|
-          attr_value = tag[attribute]
+      page.html.xpath(xpath).each do |node|
+        attr_value = node.text.to_s
 
-          next unless attr_value && !attr_value.empty?
+        next unless attr_value && !attr_value.empty?
 
-          tag_uri = begin
+        node_uri = begin
                       uri.join(attr_value.strip)
                     rescue StandardError
                       # Skip potential malformed URLs etc.
                       next
                     end
 
-          tag_uri_string = tag_uri.to_s
+        node_uri_string = node_uri.to_s
 
-          next unless tag_uri.host
+        next unless node_uri.host
 
-          yield tag_uri_string, tag if block_given? && !found.include?(tag_uri_string)
+        yield node_uri_string, node.parent if block_given? && !found.include?(node_uri_string)
 
-          found << tag_uri_string
-        end
+        found << node_uri_string
       end
 
       found.uniq
