@@ -4,7 +4,7 @@ module CMSScanner
     # and beautify it a the end of the scan
     module Buffer
       def output(tpl, vars = {}, controller_name = nil)
-        buffer << render(tpl, vars, controller_name)
+        buffer << render(tpl, vars, controller_name).encode('UTF-8', invalid: :replace, undef: :replace)
       end
 
       def buffer

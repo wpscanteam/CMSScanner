@@ -20,11 +20,20 @@ describe CMSScanner::Formatter::Json do
   end
 
   describe '#beautify' do
-    it 'writes the buffer in the file' do
+    it 'writes the buffer in the $stdout' do
       2.times { formatter.output('@render_me', test: 'yolo') }
 
       expect($stdout).to receive(:puts).with(JSON.pretty_generate(JSON.parse('{"test": "yolo"}')))
       formatter.beautify
+    end
+
+    context 'when invalid UTF-8 chars' do
+      it 'tries to convert/replace them' do
+        formatter.output('@render_me', test: 'it’s'.encode('CP1252'))
+
+        expect($stdout).to receive(:puts).with(JSON.pretty_generate(JSON.parse('{"test": "it�s"}')))
+        formatter.beautify
+      end
     end
   end
 end
