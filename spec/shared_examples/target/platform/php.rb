@@ -1,4 +1,3 @@
-
 shared_examples CMSScanner::Target::Platform::PHP do
   before { stub_request(:get, target.url(path)).to_return(body: body) }
 

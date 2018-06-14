@@ -10,7 +10,6 @@ module CMSScanner
           def finders
             @finders ||= NS::Finders::UniqueFinders.new
           end
-          # rubocop:enable all
         end
       end
     end

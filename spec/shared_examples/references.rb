@@ -1,4 +1,3 @@
-
 shared_examples CMSScanner::References do
   describe '#references_keys' do
     it 'returns the expected array of symbols' do

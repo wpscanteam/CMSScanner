@@ -21,7 +21,7 @@ module CMSScanner
     def entries
       res = NS::Browser.get(url)
 
-      return [] unless res && res.headers['Content-Type'] =~ %r{\Atext/plain;}i # rubocop:disable Style/SafeNavigation
+      return [] unless res && res.headers['Content-Type'] =~ %r{\Atext/plain;}i
 
       res.body.split("\n").reject { |s| s.strip.empty? }
     end

@@ -1,4 +1,3 @@
-
 shared_examples 'App::Views::InterestingFindings' do
   let(:controller)       { CMSScanner::Controller::InterestingFindings.new }
   let(:tpl_vars)         { { url: target_url } }
