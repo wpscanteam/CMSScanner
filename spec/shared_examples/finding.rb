@@ -1,4 +1,3 @@
-
 shared_examples CMSScanner::Finders::Finding do
   it_behaves_like CMSScanner::References do
     let(:opts)       { { references: references } }

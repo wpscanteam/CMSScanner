@@ -1,4 +1,3 @@
-
 shared_examples CMSScanner::Browser::Actions do
   let(:url)     { 'http://example.com/file.txt' }
   let(:browser) { CMSScanner::Browser }

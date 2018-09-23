@@ -49,7 +49,7 @@ describe CMSScanner::Finders::Finder::Enumerator do
       context 'when :exclude_content' do
         before { expect(finder.target).to receive(:homepage_or_404?).twice }
 
-        context 'when it matches' do
+        context 'when body matches' do
           let(:opts) { { exclude_content: /spec/i } }
 
           it 'does not yield anything' do
@@ -57,8 +57,33 @@ describe CMSScanner::Finders::Finder::Enumerator do
           end
         end
 
-        context 'when it does not match' do
+        context 'when body does not match' do
           let(:opts) { { exclude_content: /not/i } }
+
+          it 'yield the expected items' do
+            expect { |b| finder.enumerate(target_urls, opts, &b) }.to yield_successive_args(
+              [Typhoeus::Response, 1], [Typhoeus::Response, 2]
+            )
+          end
+        end
+
+        context 'when header matches' do
+          let(:opts) { { exclude_content: %r{Location: /aa}i } }
+
+          before do
+            target_urls.each_key do |url|
+              stub_request(:get, url).to_return(status: 301,
+                                                headers: { 'Location' => '/aa' })
+            end
+          end
+
+          it 'does not yield anything' do
+            expect { |b| finder.enumerate(target_urls, opts, &b) }.to_not yield_control
+          end
+        end
+
+        context 'when header does not match' do
+          let(:opts) { { exclude_content: /not 301/i } }
 
           it 'yield the expected items' do
             expect { |b| finder.enumerate(target_urls, opts, &b) }.to yield_successive_args(

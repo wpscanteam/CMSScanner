@@ -25,7 +25,7 @@ module CMSScanner
     # @note This is used to detect potential custom 404 responding with a 200
     # @return [ String ] The hash of a 404
     def error_404_hash
-      @error404_hash ||= self.class.page_hash(non_existant_page_url)
+      @error_404_hash ||= self.class.page_hash(non_existant_page_url)
     end
 
     # @return [ String ] The URL of an unlikely existant page

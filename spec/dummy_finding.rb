@@ -5,8 +5,8 @@ module CMSScanner
 
     attr_reader :r
 
-    def initialize(r, opts = {})
-      @r = r
+    def initialize(finding, opts = {})
+      @r = finding
       parse_finding_options(opts)
     end
 

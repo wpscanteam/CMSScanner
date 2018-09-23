@@ -19,7 +19,10 @@ module CMSScanner
               progress_bar.increment
 
               next if target.homepage_or_404?(res)
-              next if opts[:exclude_content] && res.body.match(opts[:exclude_content])
+
+              if opts[:exclude_content]
+                next if res.response_headers&.match(opts[:exclude_content]) || res.body.match(opts[:exclude_content])
+              end
 
               yield res, id
             end
