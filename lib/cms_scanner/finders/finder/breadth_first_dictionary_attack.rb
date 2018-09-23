@@ -59,14 +59,14 @@ module CMSScanner
         #
         # @return [ Typhoeus::Request ]
         def login_request(username, password)
-          # To Implement
+          # To Implement in the finder related to the attack
         end
 
         # @param [ Typhoeus::Response ] response
         #
         # @return [ Boolean ] Whether or not credentials related to the request are valid
         def valid_credentials?(response)
-          # To Implement
+          # To Implement in the finder related to the attack
         end
 
         # @param [ Typhoeus::Response ] response
@@ -74,7 +74,7 @@ module CMSScanner
         # @return [ Boolean ] Whether or not something wrong happened
         #                     other than wrong credentials
         def errored_response?(response)
-          # To Implement
+          # To Implement in the finder related to the attack
         end
 
         protected
