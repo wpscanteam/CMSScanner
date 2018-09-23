@@ -88,7 +88,7 @@ module CMSScanner
                   elsif response.code.to_s =~ /^50/
                     'Server error, try reducing the number of threads.'
                   else
-                    "Unknown response received Code: #{response.code}\n Body: #{response.body}"
+                    "Unknown response received Code: #{response.code}\nBody: #{response.body}"
                   end
 
           progress_bar.log("Error: #{error}")
