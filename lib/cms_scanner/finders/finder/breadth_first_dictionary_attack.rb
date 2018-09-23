@@ -18,8 +18,11 @@ module CMSScanner
           queue_count = 0
 
           passwords.each_with_index do |password, password_index|
-            # TODO: Maybe check if there are no more users to try ? (might be useful with large wordlist)
-            users.select { |u| u.password.nil? }.each do |user|
+            remaining_users = users.select { |u| u.password.nil? }
+
+            break if remaining_users.empty?
+
+            remaining_users.each do |user|
               request = login_request(user.username, password)
 
               request.on_complete do |res|
