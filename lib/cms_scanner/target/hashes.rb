@@ -38,7 +38,7 @@ module CMSScanner
     def homepage_or_404?(page)
       md5sum = self.class.page_hash(page)
 
-      md5sum == homepage_hash || md5sum == error_404_hash
+      [homepage_hash, error_404_hash].include?(md5sum)
     end
   end
 end

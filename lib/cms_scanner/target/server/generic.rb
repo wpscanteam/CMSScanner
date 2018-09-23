@@ -61,6 +61,7 @@ module CMSScanner
             entry = node.text.to_s
 
             next if entry =~ ignore
+
             found << entry
           end
 

@@ -5,6 +5,7 @@ module CMSScanner
     def entries
       res = NS::Browser.get(url)
       return [] unless res&.headers
+
       res.headers
     end
 

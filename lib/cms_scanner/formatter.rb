@@ -111,6 +111,7 @@ module CMSScanner
           tpl = tpl.delete('@')
         else
           raise 'The controller_name can not be nil' unless controller_name
+
           tpl = "#{controller_name}/#{tpl}"
         end
 

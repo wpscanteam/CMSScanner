@@ -9,6 +9,7 @@ module CMSScanner
 
       entries.each do |entry|
         next unless entry =~ /\A(?:dis)?allow:\s*(.+)\z/i
+
         match = Regexp.last_match(1)
         next if match == '/'
 

@@ -18,6 +18,7 @@ module CMSScanner
           url = target.homepage_res.headers['X-Pingback']
 
           return unless target.in_scope?(url)
+
           potential_urls << url
 
           NS::XMLRPC.new(url, confidence: 30, found_by: 'Headers (Passive Detection)')
@@ -29,6 +30,7 @@ module CMSScanner
             url = tag.attribute('href').to_s
 
             next unless target.in_scope?(url)
+
             potential_urls << url
 
             return NS::XMLRPC.new(url, confidence: 30,

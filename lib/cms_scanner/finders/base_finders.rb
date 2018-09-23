@@ -18,6 +18,7 @@ module CMSScanner
         symbols = %i[passive aggressive]
 
         return symbols if mode.nil? || mode == :mixed
+
         symbols.include?(mode) ? [*mode] : []
       end
 

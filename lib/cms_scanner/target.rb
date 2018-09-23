@@ -94,11 +94,11 @@ module CMSScanner
         next unless attr_value && !attr_value.empty?
 
         node_uri = begin
-                      uri.join(attr_value.strip)
-                    rescue StandardError
-                      # Skip potential malformed URLs etc.
-                      next
-                    end
+                     uri.join(attr_value.strip)
+                   rescue StandardError
+                     # Skip potential malformed URLs etc.
+                     next
+                   end
 
         node_uri_string = node_uri.to_s
 

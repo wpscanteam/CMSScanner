@@ -63,6 +63,7 @@ module CMSScanner
 
       File.open(user_agents_list).each do |line|
         next if line == "\n" || line[0, 1] == '#'
+
         @user_agents << line.chomp
       end
 
