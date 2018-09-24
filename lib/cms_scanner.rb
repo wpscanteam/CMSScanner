@@ -19,7 +19,7 @@ require 'cms_scanner/typhoeus/response' # Adds a Response#html using Nokogiri to
 require 'cms_scanner/typhoeus/hydra' # https://github.com/typhoeus/typhoeus/issues/439
 require 'cms_scanner/public_suffix/domain' # Adds a Domain#match method and logic, used in scope stuff
 require 'cms_scanner/numeric' # Adds a Numeric#bytes_to_human
-require 'cms_scanner/ruby-progressbar/outputs/null' # https://github.com/jfelchner/ruby-progressbar/issues/144
+require 'cms_scanner/progressbar_null_output'
 # Custom Libs
 require 'cms_scanner/helper'
 require 'cms_scanner/exit_code'

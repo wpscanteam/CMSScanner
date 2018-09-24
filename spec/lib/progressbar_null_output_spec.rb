@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ProgressBar::Outputs::Null do
+describe CMSScanner::ProgressBarNullOutput do
   subject(:output) { described_class.new }
 
   describe '#log, #logs' do

@@ -33,9 +33,9 @@ module CMSScanner
       # @return [ ProgressBar::Base ]
       def create_progress_bar(opts = {})
         bar_opts          = { format: '%t %a <%B> (%c / %C) %P%% %e' }
-        bar_opts[:output] = ProgressBar::Outputs::Null unless opts[:show_progression]
+        bar_opts[:output] = ProgressBarNullOutput unless opts[:show_progression]
 
-        @progress_bar = ProgressBar.create(bar_opts.merge(opts))
+        @progress_bar = ::ProgressBar.create(bar_opts.merge(opts))
       end
 
       # @return [ Browser ]
