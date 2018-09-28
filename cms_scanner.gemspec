@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
 
   s.test_files            = []
   s.executables           = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  s.require_path          = 'lib'
+  s.require_paths          = 'lib'
 
   s.add_dependency 'nokogiri', '~> 1.8.0'
   s.add_dependency 'opt_parse_validator', '~> 0.0.16.2'
