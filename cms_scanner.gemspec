@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.homepage              = 'https://github.com/wpscanteam/CMSScanner'
   s.license               = 'MIT'
 
-  s.files                 = Dir.glob('lib/**/*') + Dir.glob('app/**/*')
+  s.files                 = Dir.glob('lib/**/*') + Dir.glob('app/**/*') + %w[LICENSE README.md]
   s.test_files            = []
   s.require_paths         = ['lib']
 
