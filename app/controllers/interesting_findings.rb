@@ -7,8 +7,7 @@ module CMSScanner
           OptChoice.new(
             ['--interesting-findings-detection MODE',
              'Use the supplied mode for the interesting findings detection. '],
-            choices: %w[mixed passive aggressive],
-            normalize: :to_sym
+            choices: %w[mixed passive aggressive], normalize: :to_sym, advanced: true
           )
         ]
       end

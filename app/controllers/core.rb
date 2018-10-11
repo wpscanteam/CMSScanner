@@ -22,10 +22,11 @@ module CMSScanner
 
       def maybe_output_banner_help_and_version
         output('banner') if parsed_options[:banner]
-        output('help', help: option_parser.to_s) if parsed_options[:help]
+        output('help', help: option_parser.simple_help, simple: true) if parsed_options[:help]
+        output('help', help: option_parser.full_help, simple: false) if parsed_options[:hh]
         output('version') if parsed_options[:version]
 
-        exit(NS::ExitCode::OK) if parsed_options[:help] || parsed_options[:version]
+        exit(NS::ExitCode::OK) if parsed_options[:help] || parsed_options[:hh] || parsed_options[:version]
       end
 
       # Checks that the target is accessible, raises related errors otherwise

@@ -19,7 +19,7 @@ describe CMSScanner::Controller::Core do
       expect(core.cli_options.map(&:to_sym)).to match_array(
         %i[
           banner cache_dir cache_ttl clear_cache connect_timeout cookie_jar cookie_string
-          detection_mode disable_tls_checks format headers help http_auth ignore_main_redirect
+          detection_mode disable_tls_checks format headers help hh http_auth ignore_main_redirect
           max_threads output proxy proxy_auth random_user_agent request_timeout scope
           throttle url user_agent user_agents_list verbose version vhost
         ]
@@ -50,7 +50,9 @@ describe CMSScanner::Controller::Core do
   end
 
   describe 'maybe_output_banner_help_and_version' do
-    before { described_class.option_parser = 'spec' }
+    before { described_class.option_parser = OptParseValidator::OptParser.new(nil, 40) }
+
+    let(:fixtures) { FIXTURES_CONTROLLERS.join('core', 'help') }
 
     context 'when --no-banner' do
       let(:cli_args) { "#{super()} --no-banner" }
@@ -67,7 +69,28 @@ describe CMSScanner::Controller::Core do
 
       it 'calls the output' do
         expect(core.formatter).to receive(:output).with('banner', { verbose: nil }, 'core')
-        expect(core.formatter).to receive(:output).with('help', hash_including(help: 'spec'), 'core')
+        expect(core.formatter)
+          .to receive(:output)
+          .with('help', hash_including(:help, simple: true), 'core')
+          .and_call_original
+
+        expect($stdout).to receive(:puts).with(File.read(fixtures.join('simple.txt')))
+
+        expect { core.maybe_output_banner_help_and_version }.to raise_error(SystemExit)
+      end
+    end
+
+    context 'when --hh' do
+      let(:cli_args) { '--hh' }
+
+      it 'calls the output' do
+        expect(core.formatter).to receive(:output).with('banner', { verbose: nil }, 'core')
+        expect(core.formatter)
+          .to receive(:output)
+          .with('help', hash_including(:help, simple: false), 'core')
+          .and_call_original
+
+        expect($stdout).to receive(:puts).with(File.read(fixtures.join('full.txt')))
 
         expect { core.maybe_output_banner_help_and_version }.to raise_error(SystemExit)
       end
