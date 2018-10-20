@@ -7,7 +7,7 @@ module CMSScanner
 
         [
           OptURL.new(['-u', '--url URL', 'The URL to scan'],
-                     required_unless: %i[help version],
+                     required_unless: %i[help hh version],
                      default_protocol: 'http')
         ] + mixed_cli_options + [
           OptFilePath.new(['-o', '--output FILE', 'Output to FILE'], writable: true, exists: false),
@@ -19,15 +19,17 @@ module CMSScanner
                         default: :mixed),
           OptArray.new(['--scope DOMAINS',
                         'Comma separated (sub-)domains to consider in scope. ',
-                        'Wildcard(s) allowed in the trd of valid domains, e.g: *.target.tld'])
+                        'Wildcard(s) allowed in the trd of valid domains, e.g: *.target.tld'], advanced: true)
         ] + cli_browser_options
       end
 
       def mixed_cli_options
         [
-          OptBoolean.new(['-h', '--help', 'Display the help and exit']),
+          OptBoolean.new(['-h', '--help', 'Display the simple help and exit']),
+          OptBoolean.new(['--hh', 'Display the full help and exit']),
           OptBoolean.new(['--version', 'Display the version and exit']),
-          OptBoolean.new(['--ignore-main-redirect', 'Ignore the main redirect (if any) and scan the target url']),
+          OptBoolean.new(['--ignore-main-redirect', 'Ignore the main redirect (if any) and scan the target url'],
+                         advanced: true),
           OptBoolean.new(['-v', '--verbose', 'Verbose mode']),
           OptBoolean.new(['--[no-]banner', 'Whether or not to display the banner'], default: true)
         ]
@@ -39,9 +41,9 @@ module CMSScanner
           OptBoolean.new(['--random-user-agent', '--rua',
                           'Use a random user-agent for each scan']),
           OptFilePath.new(['--user-agents-list FILE-PATH',
-                           'List of agents to use with --random-user-agent'], exists: true),
+                           'List of agents to use with --random-user-agent'], exists: true, advanced: true),
           OptCredentials.new(['--http-auth login:password']),
-          OptPositiveInteger.new(['--max-threads VALUE', '-t', 'The max threads to use'],
+          OptPositiveInteger.new(['-t', '--max-threads VALUE', 'The max threads to use'],
                                  default: 5),
           OptPositiveInteger.new(['--throttle MilliSeconds', 'Milliseconds to wait before doing another web request. ' \
                                   'If used, the max threads will be set to 1.']),
@@ -57,8 +59,8 @@ module CMSScanner
       def cli_browser_headers_options
         [
           OptString.new(['--user-agent VALUE', '--ua']),
-          OptHeaders.new(['--headers HEADERS', 'Additional headers to append in requests']),
-          OptString.new(['--vhost VALUE', 'The virtual host (Host header) to use in requests'])
+          OptHeaders.new(['--headers HEADERS', 'Additional headers to append in requests'], advanced: true),
+          OptString.new(['--vhost VALUE', 'The virtual host (Host header) to use in requests'], advanced: true)
         ]
       end
 
@@ -88,13 +90,15 @@ module CMSScanner
       # @return [ Array<OptParseValidator::OptBase> ]
       def cli_browser_cache_options
         [
-          OptInteger.new(['--cache-ttl TIME_TO_LIVE', 'The cache time to live in seconds'], default: 600),
-          OptBoolean.new(['--clear-cache', 'Clear the cache before the scan']),
+          OptInteger.new(['--cache-ttl TIME_TO_LIVE', 'The cache time to live in seconds'],
+                         default: 600, advanced: true),
+          OptBoolean.new(['--clear-cache', 'Clear the cache before the scan'], advanced: true),
           OptDirectoryPath.new(['--cache-dir PATH'],
                                readable: true,
                                writable: true,
                                create: true,
-                               default: File.join(tmp_directory, 'cache'))
+                               default: File.join(tmp_directory, 'cache'),
+                               advanced: true)
         ]
       end
     end
