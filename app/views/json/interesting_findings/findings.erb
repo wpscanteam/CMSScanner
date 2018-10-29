@@ -5,6 +5,7 @@
     {
       "url": <%= finding.url.to_s.to_json %>,
       "to_s": <%= finding.to_s.to_json %>,
+      "type": <%= finding.type.to_json %>,
       "found_by": <%= finding.found_by.to_s.to_json %>,
       "confidence": <%= finding.confidence.to_json %>,
       "confirmed_by": {

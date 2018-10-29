@@ -36,6 +36,16 @@ describe CMSScanner::InterestingFinding do
     end
   end
 
+  describe '#type' do
+    its(:type) { should be_nil }
+
+    context 'when found_by' do
+      let(:opts) { { found_by: 'Test Passive (Passive Detection)' } }
+
+      its(:type) { should eql 'Test Passive' }
+    end
+  end
+
   describe '#entries' do
     after do
       stub_request(:get, finding.url).to_return(headers: headers, body: @body)

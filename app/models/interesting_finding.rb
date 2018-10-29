@@ -31,6 +31,11 @@ module CMSScanner
       @to_s || url
     end
 
+    # @return [ String, nil ]
+    def type
+      @type ||= found_by.nil? ? nil : found_by[/^([^\(]+) \(/i, 1]
+    end
+
     # @return [ Boolean ]
     def ==(other)
       self.class == other.class && to_s == other.to_s
