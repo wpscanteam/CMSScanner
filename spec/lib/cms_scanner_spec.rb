@@ -9,15 +9,21 @@ describe CMSScanner do
   end
 
   describe 'typhoeus_on_complete' do
-    before { CMSScanner.total_requests = 0 }
+    before do
+      CMSScanner.total_requests = 0
+      CMSScanner.total_data_sent = 0
+      CMSScanner.total_data_received = 0
+    end
 
     # TODO: find a way to test the cached requests which should not be counted
     it 'returns the expected number of requests' do
-      stub_request(:get, /.*/)
+      stub_request(:get, /.*/).and_return(body: 'aa')
 
       CMSScanner::Browser.get(target_url)
 
       expect(CMSScanner.total_requests).to eql 1
+      expect(CMSScanner.total_data_sent).to eql 1
+      expect(CMSScanner.total_data_received).to eql 1
     end
   end
 

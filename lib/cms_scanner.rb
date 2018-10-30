@@ -40,11 +40,13 @@ module CMSScanner
   APP_DIR = Pathname.new(__FILE__).dirname.join('..', 'app').expand_path
   NS      = self
 
-  # Number of requests performed to display at the end of the scan
+  # Number of requests performed and data sent/received to display at the end of the scan
   Typhoeus.on_complete do |response|
     next if response.cached?
 
     self.total_requests += 1
+    self.total_data_sent += response.request_size || 0
+    self.total_data_received += response.length || 0
 
     NS::Browser.instance.trottle!
   end
@@ -57,9 +59,29 @@ module CMSScanner
       @@total_requests ||= 0
     end
 
-    # @param [ Integer ]
+    # @param [ Integer ] value
     def total_requests=(value)
       @@total_requests = value
+    end
+
+    # @return [ Integer ]
+    def total_data_sent
+      @@total_data_sent ||= 0
+    end
+
+    # @param [ Integer ] value
+    def total_data_sent=(value)
+      @@total_data_sent = value
+    end
+
+    # @return [ Integer ]
+    def total_data_received
+      @@total_data_received ||= 0
+    end
+
+    # @param [ Integer ] value
+    def total_data_received=(value)
+      @@total_data_received = value
     end
 
     # The lowercase name of the scanner

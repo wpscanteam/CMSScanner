@@ -10,5 +10,10 @@ module Typhoeus
     def xml
       @xml ||= Nokogiri::XML(body.encode('UTF-8', invalid: :replace, undef: :replace))
     end
+
+    # @return [ Integer ]
+    def length
+      body.size + response_headers.size
+    end
   end
 end
