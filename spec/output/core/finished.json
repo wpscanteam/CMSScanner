@@ -6,5 +6,6 @@
   "data_sent_humanised": "1000 B",
   "data_received": 2000,
   "data_received_humanised": "1.953 KB",
-  "used_memory": 100
+  "used_memory": 100,
+  "used_memory_humanised": "100 B"
 }
