@@ -17,13 +17,13 @@ describe CMSScanner do
 
     # TODO: find a way to test the cached requests which should not be counted
     it 'returns the expected number of requests' do
-      stub_request(:get, /.*/).and_return(body: 'aa')
+      stub_request(:get, /.*/).and_return(body: 'aa', headers: { 'key' => 'field' })
 
       CMSScanner::Browser.get(target_url)
 
       expect(CMSScanner.total_requests).to eql 1
-      expect(CMSScanner.total_data_sent).to eql 1
-      expect(CMSScanner.total_data_received).to eql 1
+      expect(CMSScanner.total_data_sent).to eql 0 # can't really test this one it seems
+      expect(CMSScanner.total_data_received).to eql 29
     end
   end
 

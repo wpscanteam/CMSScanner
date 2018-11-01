@@ -51,7 +51,9 @@ shared_examples 'App::Views::Core' do
         stop_time: Time.at(1_414_670_523).in_time_zone('Europe/London'),
         used_memory: 100,
         elapsed: 2,
-        requests_done: 10
+        requests_done: 10,
+        data_sent: 1000,
+        data_received: 2000
       )
     end
   end

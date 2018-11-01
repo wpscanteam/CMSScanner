@@ -65,12 +65,14 @@ module CMSScanner
       end
 
       def after_scan
-        @stop_time     = Time.now
-        @elapsed       = @stop_time - @start_time
-        @used_memory   = memory_usage - @start_memory
-        @requests_done = CMSScanner.total_requests
+        @stop_time   = Time.now
+        @elapsed     = @stop_time - @start_time
+        @used_memory = memory_usage - @start_memory
 
-        output('finished')
+        output('finished',
+               requests_done: NS.total_requests,
+               data_sent: NS.total_data_sent,
+               data_received: NS.total_data_received)
       end
     end
   end

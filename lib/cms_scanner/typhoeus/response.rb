@@ -11,9 +11,15 @@ module Typhoeus
       @xml ||= Nokogiri::XML(body.encode('UTF-8', invalid: :replace, undef: :replace))
     end
 
+    # Override of the original to ensure an integer is returned
     # @return [ Integer ]
-    def length
-      body.size + response_headers.size
+    def request_size
+      super || 0
+    end
+
+    # @return [ Integer ]
+    def size
+      (body.nil? ? 0 : body.size) + (response_headers.nil? ? 0 : response_headers.size)
     end
   end
 end

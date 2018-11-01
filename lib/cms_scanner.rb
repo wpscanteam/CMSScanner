@@ -45,8 +45,8 @@ module CMSScanner
     next if response.cached?
 
     self.total_requests += 1
-    self.total_data_sent += response.request_size || 0
-    self.total_data_received += response.length || 0
+    self.total_data_sent += response.request_size
+    self.total_data_received += response.size
 
     NS::Browser.instance.trottle!
   end

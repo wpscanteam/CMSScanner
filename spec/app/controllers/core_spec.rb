@@ -277,7 +277,9 @@ describe CMSScanner::Controller::Core do
   end
 
   describe '#after_scan' do
-    let(:keys) { %i[verbose start_time stop_time start_memory elapsed used_memory] }
+    let(:keys) do
+      %i[verbose start_time stop_time start_memory elapsed used_memory requests_done data_sent data_received]
+    end
 
     it 'calls the formatter with the correct parameters' do
       # Call the #run once to ensure that @start_time & @start_memory are set
