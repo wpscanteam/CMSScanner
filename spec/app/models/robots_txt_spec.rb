@@ -24,4 +24,8 @@ describe CMSScanner::RobotsTxt do
       end
     end
   end
+
+  describe '#type' do
+    its(:type) { should eql 'robots_txt' }
+  end
 end

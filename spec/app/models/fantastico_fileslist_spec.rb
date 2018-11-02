@@ -28,4 +28,8 @@ describe CMSScanner::FantasticoFileslist do
   describe '#references' do
     its(:references) { should_not be_nil }
   end
+
+  describe '#type' do
+    its(:type) { should eql 'fantastico_fileslist' }
+  end
 end

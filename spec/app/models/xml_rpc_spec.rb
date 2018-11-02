@@ -5,6 +5,10 @@ describe CMSScanner::XMLRPC do
   let(:url)         { 'http://example.com/xmlrpc' }
   let(:fixtures)    { FIXTURES_MODELS.join('xml_rpc') }
 
+  describe '#type' do
+    its(:type) { should eql 'xmlrpc' }
+  end
+
   describe '#method_call' do
     after do
       request = xml_rpc.method_call(method, method_params, request_params)

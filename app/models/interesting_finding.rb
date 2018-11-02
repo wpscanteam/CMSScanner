@@ -31,9 +31,9 @@ module CMSScanner
       @to_s || url
     end
 
-    # @return [ String, nil ]
+    # @return [ String ]
     def type
-      @type ||= found_by.nil? ? nil : found_by[/^([^\(]+) \(/i, 1]
+      @type ||= self.class.to_s.demodulize.underscore
     end
 
     # @return [ Boolean ]

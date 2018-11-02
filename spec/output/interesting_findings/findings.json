@@ -3,7 +3,7 @@
     {
       "url": "F1",
       "to_s": "F1_to_s",
-      "type": "Test",
+      "type": "interesting_finding",
       "found_by": "Test (Passive)",
       "confidence": 10,
       "confirmed_by": {
@@ -19,7 +19,7 @@
     {
       "url": "F2",
       "to_s": "F2",
-      "type": null,
+      "type": "interesting_finding",
       "found_by": "Spec",
       "confidence": 20,
       "confirmed_by": {
@@ -39,7 +39,7 @@
     {
       "url": "F3",
       "to_s": "F3",
-      "type": null,
+      "type": "interesting_finding",
       "found_by": "Spec",
       "confidence": 100,
       "confirmed_by": {
@@ -64,7 +64,7 @@
     {
       "url": "F4",
       "to_s": "F4",
-      "type": null,
+      "type": "interesting_finding",
       "found_by": "Spec",
       "confidence": 0,
       "confirmed_by": {

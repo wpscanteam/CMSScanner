@@ -48,4 +48,8 @@ describe CMSScanner::Headers do
       its(:interesting_entries) { should eq [] }
     end
   end
+
+  describe '#type' do
+    its(:type) { should eql 'headers' }
+  end
 end
