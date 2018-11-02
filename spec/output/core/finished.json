@@ -2,6 +2,7 @@
   "stop_time": 1414670523,
   "elapsed": 2,
   "requests_done": 10,
+  "cached_requests": 1,
   "data_sent": 1000,
   "data_sent_humanised": "1000 B",
   "data_received": 2000,

@@ -10,20 +10,37 @@ describe CMSScanner do
 
   describe 'typhoeus_on_complete' do
     before do
+      CMSScanner.cached_requests = 0
       CMSScanner.total_requests = 0
       CMSScanner.total_data_sent = 0
       CMSScanner.total_data_received = 0
     end
 
-    # TODO: find a way to test the cached requests which should not be counted
     it 'returns the expected number of requests' do
       stub_request(:get, /.*/).and_return(body: 'aa', headers: { 'key' => 'field' })
 
       CMSScanner::Browser.get(target_url)
 
+      expect(CMSScanner.cached_requests).to eql 0
       expect(CMSScanner.total_requests).to eql 1
       expect(CMSScanner.total_data_sent).to eql 0 # can't really test this one it seems
       expect(CMSScanner.total_data_received).to eql 29
+    end
+
+    context 'when cached request' do
+      it 'returns the expected values' do
+        allow_any_instance_of(Typhoeus::Response).to receive(:cached?).and_return(true)
+
+        stub_request(:get, target_url)
+
+        CMSScanner::Browser.get(target_url)
+        CMSScanner::Browser.get(target_url)
+
+        expect(CMSScanner.cached_requests).to eql 2
+        expect(CMSScanner.total_requests).to eql 0
+        expect(CMSScanner.total_data_sent).to eql 0
+        expect(CMSScanner.total_data_received).to eql 0
+      end
     end
   end
 

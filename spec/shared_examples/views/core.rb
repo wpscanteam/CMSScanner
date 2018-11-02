@@ -52,6 +52,7 @@ shared_examples 'App::Views::Core' do
         used_memory: 100,
         elapsed: 2,
         requests_done: 10,
+        cached_requests: 1,
         data_sent: 1000,
         data_received: 2000
       )

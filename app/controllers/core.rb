@@ -70,6 +70,7 @@ module CMSScanner
         @used_memory = memory_usage - @start_memory
 
         output('finished',
+               cached_requests: NS.cached_requests,
                requests_done: NS.total_requests,
                data_sent: NS.total_data_sent,
                data_received: NS.total_data_received)

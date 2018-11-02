@@ -42,6 +42,8 @@ module CMSScanner
 
   # Number of requests performed and data sent/received to display at the end of the scan
   Typhoeus.on_complete do |response|
+    self.cached_requests += 1 if response.cached?
+
     next if response.cached?
 
     self.total_requests += 1
@@ -54,6 +56,16 @@ module CMSScanner
   # Module to be able to use these class methods when the CMSScanner
   # is included in another module
   module ClassMethods
+    # @return [ Integer ]
+    def cached_requests
+      @@cached_requests ||= 0
+    end
+
+    # @param [ Integer ] value
+    def cached_requests=(value)
+      @@cached_requests = value
+    end
+
     # @return [ Integer ]
     def total_requests
       @@total_requests ||= 0
