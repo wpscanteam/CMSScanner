@@ -3,9 +3,9 @@ module CMSScanner
     module Platform
       # Some PHP specific implementation
       module PHP
-        DEBUG_LOG_PATTERN = /\[[^\]]+\] PHP (?:Warning|Error|Notice):/
-        FPD_PATTERN       = /Fatal error:.+? in (.+?) on/
-        ERROR_LOG_PATTERN = /PHP Fatal error/i
+        DEBUG_LOG_PATTERN = /\[[^\]]+\] PHP (?:Warning|Error|Notice):/.freeze
+        FPD_PATTERN       = /Fatal error:.+? in (.+?) on/.freeze
+        ERROR_LOG_PATTERN = /PHP Fatal error/i.freeze
 
         # @param [ String ] path
         # @param [ Regexp ] pattern
