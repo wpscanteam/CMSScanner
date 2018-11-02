@@ -1,7 +1,7 @@
 module Typhoeus
   # Custom Response class
   class Response
-    # @return [ Nokogiri::HTML ] The response's body parsed by Nokogiri::HTML
+    # @return [ Nokogiri::XML ] The response's body parsed by Nokogiri::HTML
     def html
       @html ||= Nokogiri::HTML(body.encode('UTF-8', invalid: :replace, undef: :replace))
     end
