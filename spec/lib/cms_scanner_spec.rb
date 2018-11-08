@@ -102,7 +102,9 @@ describe CMSScanner::Scan do
       end
     end
 
-    [RuntimeError.new('error spotted'), SignalException.new('SIGTERM')].each do |error|
+    [RuntimeError.new('error spotted'),
+     CMSScanner::Error.new('aa'),
+     SignalException.new('SIGTERM')].each do |error|
       context "when an/a #{error.class} is raised during the scan" do
         let(:run_error) { error }
 

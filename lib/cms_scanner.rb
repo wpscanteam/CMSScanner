@@ -184,7 +184,9 @@ module CMSScanner
 
       return NS::ExitCode::INTERRUPTED if run_error.is_a?(Interrupt)
 
-      NS::ExitCode::ERROR
+      return NS::ExitCode::ERROR if run_error.is_a?(NS::Error)
+
+      NS::ExitCode::EXCEPTION
     end
   end
 end

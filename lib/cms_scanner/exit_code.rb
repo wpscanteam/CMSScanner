@@ -10,11 +10,14 @@ module CMSScanner
     # Interrupt received
     INTERRUPTED      = 2
 
-    # Exceptions
-    ERROR            = 3
+    # Unhandled/unexpected Exception occured
+    EXCEPTION        = 3
+
+    # Error, scan did not finish
+    ERROR            = 4
 
     # The target has at least one vulnerability.
     # Currently, the interesting findings do not count as vulnerable things
-    VULNERABLE       = 4
+    VULNERABLE       = 5
   end
 end
