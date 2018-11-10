@@ -2,7 +2,6 @@
 def redirect_output_to_file(file)
   $stdout.reopen(file, 'w')
   $stdout.sync = true
-  $stderr.reopen($stdout) # Not sure if this is needed
 end
 
 # @return [ Integer ] The memory of the current process in Bytes
