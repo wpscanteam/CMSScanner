@@ -15,15 +15,23 @@ module CMSScanner
         # rubocop:disable all
         def attack(users, passwords, opts = {})
           create_progress_bar(total: users.size * passwords.size, show_progression: opts[:show_progression])
-          queue_count = 0
 
-          passwords.each_with_index do |password, password_index|
+          queue_count         = 0
+          # Keep the number of requests sent for each users
+          # to be able to correctly update the progress when a password is found
+          user_requests_count = {}
+
+          users.each { |u| user_requests_count[u.username] = 0 }
+
+          passwords.each do |password|
             remaining_users = users.select { |u| u.password.nil? }
 
             break if remaining_users.empty?
 
             remaining_users.each do |user|
               request = login_request(user.username, password)
+
+              user_requests_count[user.username] += 1
 
               request.on_complete do |res|
                 progress_bar.title = "Trying #{user.username} / #{password}"
@@ -34,9 +42,7 @@ module CMSScanner
 
                   yield user
 
-                  offset = progress_bar.total - progress_bar.progress < hydra.max_concurrency ? 2 : 1
-
-                  progress_bar.total -= passwords.size - password_index - offset
+                  progress_bar.total -= passwords.size - user_requests_count[user.username]
                 elsif errored_response?(res)
                   output_error(res)
                 end
