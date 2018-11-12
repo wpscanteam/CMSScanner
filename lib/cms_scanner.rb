@@ -145,7 +145,8 @@ module CMSScanner
       formatter.output('@scan_aborted',
                        reason: e.is_a?(Interrupt) ? 'Canceled by User' : e.message,
                        trace: e.backtrace,
-                       verbose: controllers.first.parsed_options[:verbose])
+                       verbose: controllers.first.parsed_options[:verbose] ||
+                                run_error_exit_code == NS::ExitCode::EXCEPTION)
     ensure
       Browser.instance.hydra.abort
 
