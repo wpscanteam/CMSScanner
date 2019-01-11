@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::ProgressBarNullOutput do
   subject(:output) { described_class.new }
 

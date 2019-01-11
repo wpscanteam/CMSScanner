@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::Browser do
   it_behaves_like described_class::Actions
 

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::WebSite do
   subject(:web_site) { described_class.new(url, opts) }
   let(:url)          { 'http://e.org' }

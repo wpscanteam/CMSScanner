@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 shared_examples CMSScanner::Target::Server::IIS do
   describe '#server' do
     its(:server) { should eq :IIS }

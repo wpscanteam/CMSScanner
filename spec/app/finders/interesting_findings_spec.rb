@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::Finders::InterestingFindings::Base do
   it_behaves_like CMSScanner::Finders::IndependentFinder do
     let(:expected_finders) { %w[Headers RobotsTxt FantasticoFileslist SearchReplaceDB2 XMLRPC] }

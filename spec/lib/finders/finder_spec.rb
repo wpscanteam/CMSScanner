@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::Finders::Finder do
   subject(:finder) { described_class.new('target') }
 

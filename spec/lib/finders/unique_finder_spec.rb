@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 module CMSScanner
   module Finders
     # Dummy Class to test the module

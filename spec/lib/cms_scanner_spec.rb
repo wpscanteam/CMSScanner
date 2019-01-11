@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner do
   let(:target_url) { 'http://wp.lab/' }
 

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 %i[Generic Apache IIS Nginx].each do |server|
   describe CMSScanner::Target do
     subject(:target) do

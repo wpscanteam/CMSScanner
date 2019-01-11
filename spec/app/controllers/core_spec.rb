@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::Controller::Core do
   subject(:core)       { described_class.new }
   let(:target_url)     { 'http://example.com/' }

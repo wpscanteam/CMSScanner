@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe PublicSuffix::Domain do
   describe '#match' do
     it 'returns true' do

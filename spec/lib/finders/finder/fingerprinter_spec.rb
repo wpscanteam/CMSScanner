@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::Finders::Finder::Fingerprinter do
   # Dummy class to test the module
   class DummyFingerprinterFinder < CMSScanner::Finders::Finder

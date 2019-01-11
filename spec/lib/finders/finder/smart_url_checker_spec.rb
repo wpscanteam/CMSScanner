@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::Finders::Finder::SmartURLChecker do
   # Dummy class to test the module
   class DummyFinder < CMSScanner::Finders::Finder

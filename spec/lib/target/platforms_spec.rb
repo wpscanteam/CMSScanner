@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 [:PHP].each do |platform|
   describe CMSScanner::Target do
     subject(:target) do

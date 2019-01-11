@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::Formatter::Json do
   it_behaves_like CMSScanner::Formatter::Buffer
 

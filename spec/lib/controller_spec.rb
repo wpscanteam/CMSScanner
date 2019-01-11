@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::Controller do
   subject(:controller) { described_class::Base.new }
 

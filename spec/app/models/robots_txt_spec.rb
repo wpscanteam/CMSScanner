@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::RobotsTxt do
   subject(:file) { described_class.new(url) }
   let(:url)      { 'http://example.com/robots.txt' }

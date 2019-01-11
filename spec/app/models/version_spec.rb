@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::Version do
   it_behaves_like CMSScanner::Finders::Finding
 

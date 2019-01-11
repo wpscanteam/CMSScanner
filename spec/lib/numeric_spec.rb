@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Numeric do
   describe '#bytes_to_human' do
     context 'when positive' do

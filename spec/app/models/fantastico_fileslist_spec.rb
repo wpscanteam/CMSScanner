@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::FantasticoFileslist do
   subject(:file) { described_class.new(url) }
   let(:url)      { 'http://example.com/robots.txt' }

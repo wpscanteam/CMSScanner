@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::Cache::Typhoeus do
   subject(:cache) { described_class.new(cache_dir) }
 

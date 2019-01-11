@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 module CMSScanner
   module Controller
     class Spec < Base

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::InterestingFinding do
   it_behaves_like CMSScanner::Finders::Finding
 

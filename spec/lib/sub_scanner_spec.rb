@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'SubScanner' do
   before :all do
     # Module including the CMSScanner to test its correct inclusion

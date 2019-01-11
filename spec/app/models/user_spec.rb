@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::User do
   subject(:user) { described_class.new(username, opts) }
   let(:username) { 'john' }

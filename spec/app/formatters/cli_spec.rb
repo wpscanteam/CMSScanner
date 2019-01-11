@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CMSScanner::Formatter::Cli do
   subject(:formatter) { described_class.new }
 
