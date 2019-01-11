@@ -4,7 +4,6 @@
 [![Build Status](https://img.shields.io/travis/wpscanteam/CMSScanner.svg)](https://travis-ci.org/wpscanteam/CMSScanner)
 [![Coverage Status](https://img.shields.io/coveralls/wpscanteam/CMSScanner.svg)](https://coveralls.io/r/wpscanteam/CMSScanner)
 [![Code Climate](https://api.codeclimate.com/v1/badges/b90b7f9f6982792ef8d6/maintainability)](https://codeclimate.com/github/wpscanteam/CMSScanner/maintainability)
-[![Dependency Status](https://img.shields.io/gemnasium/wpscanteam/CMSScanner.svg)](https://gemnasium.com/wpscanteam/CMSScanner)
 
 The goal of this gem is to provide a quick and easy way to create a CMS/WebSite Scanner by acting like a Framework and providing classes, formatters etc.
 
