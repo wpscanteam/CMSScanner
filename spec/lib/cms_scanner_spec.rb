@@ -102,6 +102,7 @@ describe CMSScanner::Scan do
 
     [RuntimeError.new('error spotted'),
      CMSScanner::Error.new('aa'),
+     CMSScanner::MaxScanDurationReachedError.new,
      SignalException.new('SIGTERM'),
      Interrupt.new('Canceled by User')].each do |error|
       context "when an/a #{error.class} is raised during the scan" do

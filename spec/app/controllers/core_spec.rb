@@ -18,8 +18,8 @@ describe CMSScanner::Controller::Core do
         %i[
           banner cache_dir cache_ttl clear_cache connect_timeout cookie_jar cookie_string
           detection_mode disable_tls_checks format headers help hh http_auth ignore_main_redirect
-          max_threads output proxy proxy_auth random_user_agent request_timeout scope
-          throttle url user_agent user_agents_list verbose version vhost
+          max_scan_duration max_threads output proxy proxy_auth random_user_agent request_timeout
+          scope throttle url user_agent user_agents_list verbose version vhost
         ]
       )
     end

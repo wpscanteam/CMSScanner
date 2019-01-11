@@ -31,7 +31,10 @@ module CMSScanner
           OptBoolean.new(['--ignore-main-redirect', 'Ignore the main redirect (if any) and scan the target url'],
                          advanced: true),
           OptBoolean.new(['-v', '--verbose', 'Verbose mode']),
-          OptBoolean.new(['--[no-]banner', 'Whether or not to display the banner'], default: true)
+          OptBoolean.new(['--[no-]banner', 'Whether or not to display the banner'], default: true),
+          OptPositiveInteger.new(['--max-scan-duration SECONDS',
+                                  'Abort the scan if it exceeds the time provided in seconds'],
+                                 advanced: true)
         ]
       end
 

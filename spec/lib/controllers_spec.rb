@@ -2,6 +2,12 @@ module CMSScanner
   module Controller
     class Spec < Base
     end
+
+    class SpecTooLong < Spec
+      def run
+        sleep(2)
+      end
+    end
   end
 end
 
@@ -45,6 +51,31 @@ describe CMSScanner::Controllers do
       [spec, base].each { |c| expect(c).to receive(:after_scan).ordered }
 
       controllers.run
+    end
+
+    context 'when max_scan_duration is provided' do
+      before do
+        expect(controllers.option_parser).to receive(:results)
+          .and_return(max_scan_duration: max_scan_duration)
+
+        controllers << controller_mod::Spec.new << controller_mod::SpecTooLong.new
+      end
+
+      context 'when the scan exceeds the max duration' do
+        let(:max_scan_duration) { 1 }
+
+        it 'raises an exception' do
+          expect { controllers.run }.to raise_error(CMSScanner::MaxScanDurationReachedError)
+        end
+      end
+
+      context 'when the scan does not exceed to max duration' do
+        let(:max_scan_duration) { 4 }
+
+        it 'does not raise an exception' do
+          expect { controllers.run }.to_not raise_error
+        end
+      end
     end
   end
 

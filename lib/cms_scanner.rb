@@ -13,6 +13,7 @@ require 'erb'
 require 'uri'
 require 'fileutils'
 require 'pathname'
+require 'timeout'
 require 'xmlrpc/client'
 # Monkey Patches
 require 'cms_scanner/typhoeus/response' # Adds a Response#html using Nokogiri to parse the body
@@ -24,6 +25,7 @@ require 'cms_scanner/progressbar_null_output'
 require 'cms_scanner/helper'
 require 'cms_scanner/exit_code'
 require 'cms_scanner/errors/http'
+require 'cms_scanner/errors/scan'
 require 'cms_scanner/cache/typhoeus'
 require 'cms_scanner/target'
 require 'cms_scanner/browser'
@@ -185,7 +187,7 @@ module CMSScanner
 
       return NS::ExitCode::INTERRUPTED if run_error.is_a?(Interrupt)
 
-      return NS::ExitCode::ERROR if run_error.is_a?(NS::Error)
+      return NS::ExitCode::ERROR if run_error.is_a?(NS::Error) || run_error.is_a?(CMSScanner::Error)
 
       NS::ExitCode::EXCEPTION
     end
