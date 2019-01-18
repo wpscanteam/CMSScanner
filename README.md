@@ -1,7 +1,7 @@
 # CMSScanner
 
 [![Gem Version](https://badge.fury.io/rb/cms_scanner.svg)](https://badge.fury.io/rb/cms_scanner)
-[![Build Status](https://img.shields.io/travis/wpscanteam/CMSScanner.svg)](https://travis-ci.org/wpscanteam/CMSScanner)
+[![Build Status](https://travis-ci.org/wpscanteam/CMSScanner.svg?branch=master)](https://travis-ci.org/wpscanteam/CMSScanner)
 [![Coverage Status](https://img.shields.io/coveralls/wpscanteam/CMSScanner.svg)](https://coveralls.io/r/wpscanteam/CMSScanner)
 [![Code Climate](https://api.codeclimate.com/v1/badges/b90b7f9f6982792ef8d6/maintainability)](https://codeclimate.com/github/wpscanteam/CMSScanner/maintainability)
 
