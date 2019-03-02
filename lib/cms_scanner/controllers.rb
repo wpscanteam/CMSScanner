@@ -13,7 +13,7 @@ module CMSScanner
     # Adds the potential option file paths to the option_parser
     def register_options_files
       [Dir.home, Dir.pwd].each do |dir|
-        option_parser.options_files.supported_extensions.each do |ext|
+        option_parser.options_files.class.supported_extensions.each do |ext|
           @option_parser.options_files << Pathname.new(dir).join(".#{NS.app_name}", "cli_options.#{ext}").to_s
         end
       end

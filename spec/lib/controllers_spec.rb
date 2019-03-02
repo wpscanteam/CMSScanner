@@ -87,7 +87,7 @@ describe CMSScanner::Controllers do
       option_parser = controllers.option_parser
 
       [Dir.home, Dir.pwd].each do |dir|
-        option_parser.options_files.supported_extensions.each do |ext|
+        option_parser.options_files.class.supported_extensions.each do |ext|
           expected << File.join(dir, '.cms_scanner', "cli_options.#{ext}")
         end
       end
