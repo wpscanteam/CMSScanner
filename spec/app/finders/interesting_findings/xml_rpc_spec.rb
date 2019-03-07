@@ -106,7 +106,7 @@ describe CMSScanner::Finders::InterestingFindings::XMLRPC do
     before { finder.potential_urls << 'htpp://ex.org' }
 
     after do
-      stub_request(:get, xml_rpc_url).to_return(body: body)
+      stub_request(:post, xml_rpc_url).to_return(body: body)
 
       expect(finder.aggressive).to eql @expected
     end

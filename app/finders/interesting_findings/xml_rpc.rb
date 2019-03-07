@@ -46,9 +46,9 @@ module CMSScanner
           potential_urls.uniq.each do |potential_url|
             next unless target.in_scope?(potential_url)
 
-            res = NS::Browser.get(potential_url)
+            res = NS::Browser.post(potential_url, body: Digest::MD5.hexdigest(rand(999_999).to_s[0..5]))
 
-            next unless res&.body =~ /XML-RPC server accepts POST requests only/i
+            next unless res&.body =~ /<methodResponse>/i
 
             return NS::XMLRPC.new(potential_url,
                                   confidence: 100,
