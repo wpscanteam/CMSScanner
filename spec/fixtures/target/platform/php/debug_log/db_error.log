@@ -1,0 +1,1 @@
+[12-Apr-2012 10:20:30 UTC] WordPress database error Table 'xxxx.xxxx' doesn't exist for query DELETE FROM xxx WHERE id NOT IN( SELECT entry_id FROM xxxx ) made by do_action_ref_array, WP_Hook->do_action, WP_Hook->apply_filters, XXX::cron, XXX::delete_orphaned_entries

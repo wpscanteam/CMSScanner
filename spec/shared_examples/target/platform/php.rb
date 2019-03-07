@@ -5,7 +5,7 @@ shared_examples CMSScanner::Target::Platform::PHP do
     let(:path) { 'd.log' }
 
     context 'when the body matches' do
-      %w[debug.log].each do |file|
+      %w[debug.log db_error.log].each do |file|
         context "when #{file} body" do
           let(:body) { File.read(fixtures.join('debug_log', file)) }
 
