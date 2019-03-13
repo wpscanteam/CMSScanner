@@ -40,9 +40,9 @@ module CMSScanner
                 if valid_credentials?(res)
                   user.password = password
 
-                  yield user
-
                   progress_bar.total -= passwords.size - user_requests_count[user.username]
+
+                  yield user
                 elsif errored_response?(res)
                   output_error(res)
                 end
