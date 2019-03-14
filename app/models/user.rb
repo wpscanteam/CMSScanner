@@ -21,7 +21,7 @@ module CMSScanner
     def ==(other)
       return false unless self.class == other.class
 
-      username == other.username
+      username == other.username && password == other.password
     end
 
     def to_s

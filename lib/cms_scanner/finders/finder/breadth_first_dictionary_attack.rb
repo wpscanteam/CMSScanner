@@ -10,6 +10,9 @@ module CMSScanner
         #
         # @yield [ CMSScanner::User ] When a valid combination is found
         #
+        # Due to Typhoeus threads shenanigans, in rare cases the progress-bar might
+        # be incorrect updated, hence the 'rescue ProgressBar::InvalidProgressError'
+        #
         # TODO: Make rubocop happy about metrics etc
         #
         # rubocop:disable all
@@ -35,12 +38,13 @@ module CMSScanner
 
               request.on_complete do |res|
                 progress_bar.title = "Trying #{user.username} / #{password}"
-                progress_bar.increment
+
+                progress_bar.increment rescue ProgressBar::InvalidProgressError
 
                 if valid_credentials?(res)
                   user.password = password
 
-                  progress_bar.total -= passwords.size - user_requests_count[user.username]
+                  progress_bar.total -= passwords.size - user_requests_count[user.username] rescue ProgressBar::InvalidProgressError
 
                   yield user
                 elsif errored_response?(res)
