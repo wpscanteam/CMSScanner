@@ -41,7 +41,7 @@ module CMSScanner
         when 401
           raise HTTPAuthRequiredError
         when 403
-          raise AccessForbiddenError
+          raise AccessForbiddenError, parsed_options[:random_user_agent]
         when 407
           raise ProxyAuthRequiredError
         end

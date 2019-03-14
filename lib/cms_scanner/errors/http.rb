@@ -35,12 +35,22 @@ module CMSScanner
 
   # Access Forbidden Error
   class AccessForbiddenError < Error
-    # :nocov:
-    def to_s
-      'The target is responding with a 403, this might be due to a WAF. ' \
-      'Please re-try with --random-user-agent'
+    attr_reader :random_user_agent_used
+
+    # @param [ Boolean ] random_user_agent_used
+    def initialize(random_user_agent_used)
+      @random_user_agent_used = random_user_agent_used
     end
-    # :nocov:
+
+    def to_s
+      msg = if random_user_agent_used
+              'Well... --random-user-agent didn\'t work, you\'re on your own now!'
+            else
+              'Please re-try with --random-user-agent'
+            end
+
+      "The target is responding with a 403, this might be due to a WAF. #{msg}"
+    end
   end
 
   # HTTP Redirect Error

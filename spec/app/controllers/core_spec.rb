@@ -187,8 +187,25 @@ describe CMSScanner::Controller::Core do
       context 'when access is forbidden' do
         before { stub_request(:get, target_url).to_return(status: 403) }
 
-        it 'raises an error' do
-          expect { core.before_scan }.to raise_error(CMSScanner::AccessForbiddenError)
+        context 'when no --random-user-agent provided' do
+          it 'raises an error with the correct message' do
+            expect { core.before_scan }.to raise_error(
+              CMSScanner::AccessForbiddenError,
+              'The target is responding with a 403, this might be due to a WAF. Please re-try with --random-user-agent'
+            )
+          end
+        end
+
+        context 'when --random-user-agent-provided' do
+          let(:cli_args) { "#{super()} --random-user-agent" }
+
+          it 'raises an error with the correct message' do
+            expect { core.before_scan }.to raise_error(
+              CMSScanner::AccessForbiddenError,
+              'The target is responding with a 403, this might be due to a WAF. ' \
+              'Well... --random-user-agent didn\'t work, you\'re on your own now!'
+            )
+          end
         end
       end
 
