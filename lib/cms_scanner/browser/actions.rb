@@ -31,7 +31,7 @@ module CMSScanner
       #
       # @return [ Typhoeus::Response ]
       def get_and_follow_location(url, params = {})
-        get(url, params.merge(followlocation: true))
+        get(url, { followlocation: true, maxredirs: 3 }.merge(params))
       end
 
       protected

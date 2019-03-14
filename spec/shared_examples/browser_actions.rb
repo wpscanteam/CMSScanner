@@ -25,5 +25,21 @@ shared_examples CMSScanner::Browser::Actions do
       # See https://github.com/typhoeus/typhoeus/issues/279
       # expect(response.body).to eq 'Got me'
     end
+
+    context 'maxredirs is present in the params' do
+      it 'overrides the default value' do
+        expect(browser).to receive(:get).with(url, hash_including(maxredirs: 10))
+
+        browser.get_and_follow_location(url, maxredirs: 10)
+      end
+    end
+
+    context 'maxredirs is no present in the params' do
+      it 'uses the default value' do
+        expect(browser).to receive(:get).with(url, hash_including(maxredirs: 3))
+
+        browser.get_and_follow_location(url)
+      end
+    end
   end
 end
