@@ -27,12 +27,12 @@ module CMSScanner
     end
 
     # Weteher or not vulnerabilities have been found.
-    # Used to set the exit code of the script
+    # Used to set the exit code of the scanner
     # and it should be overriden in the implementation
     #
     # @return [ Boolean ]
     def vulnerable?
-      false
+      raise NotImplementedError
     end
 
     # @param [ String ] xpath

@@ -27,6 +27,12 @@ describe CMSScanner::Target do
     end
   end
 
+  describe '#vulnerable' do
+    it 'raises an error' do
+      expect { target.vulnerable? }.to raise_error(NotImplementedError)
+    end
+  end
+
   describe '#xpath_pattern_from_page' do
     # Handled in #comments_from_page & #javascripts_from_page
   end

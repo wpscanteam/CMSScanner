@@ -168,7 +168,13 @@ module CMSScanner
 
     # Hook to be able to have an exit code returned
     # depending on the findings / errors
+    # :nocov:
     def exit_hook
+      # Avoid hooking the exit when rspec is running, otherwise it will always return 0
+      # and Travis won't detect failed builds. Couldn't find a better way, even though
+      # some people managed to https://github.com/rspec/rspec-core/pull/410
+      return if defined?(RSpec)
+
       at_exit do
         exit(run_error_exit_code) if run_error
 
@@ -179,6 +185,7 @@ module CMSScanner
         exit(NS::ExitCode::OK)
       end
     end
+    # :nocov:
 
     # @return [ Integer ] The exit code related to the run_error
     def run_error_exit_code
