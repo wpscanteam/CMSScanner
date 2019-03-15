@@ -41,6 +41,17 @@ describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
       it 'does not yield anything' do
         expect { |block| finder.attack(users, passwords, &block) }.not_to yield_control
       end
+
+      context 'when the progressbar increment failed' do
+        it 'does not raise an error' do
+          expect_any_instance_of(ProgressBar::Base)
+            .to receive(:increment)
+            .at_least(1)
+            .and_raise ProgressBar::InvalidProgressError
+
+          expect { |block| finder.attack(users, passwords, &block) }.not_to yield_control
+        end
+      end
     end
 
     context 'when valid credentials' do
@@ -53,6 +64,15 @@ describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
       it 'yields the matching user' do
         expect { |block| finder.attack(users, passwords, &block) }
           .to yield_with_args(CMSScanner::User.new('admin', password: 'admin'))
+      end
+
+      context 'when the progressbar total= failed' do
+        it 'does not raise an error' do
+          expect_any_instance_of(ProgressBar::Base).to receive(:total=).and_raise ProgressBar::InvalidProgressError
+
+          expect { |block| finder.attack(users, passwords, &block) }
+            .to yield_with_args(CMSScanner::User.new('admin', password: 'admin'))
+        end
       end
     end
 
