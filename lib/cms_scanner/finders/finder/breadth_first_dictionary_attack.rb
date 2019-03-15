@@ -44,7 +44,10 @@ module CMSScanner
                 if valid_credentials?(res)
                   user.password = password
 
-                  progress_bar.total -= passwords.size - user_requests_count[user.username] rescue ProgressBar::InvalidProgressError
+                  begin
+                    progress_bar.total -= passwords.size - user_requests_count[user.username]
+                  rescue ProgressBar::InvalidProgressError
+                  end
 
                   yield user
                 elsif errored_response?(res)
