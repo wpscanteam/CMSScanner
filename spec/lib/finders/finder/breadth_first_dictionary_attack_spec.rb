@@ -42,12 +42,16 @@ describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
         expect { |block| finder.attack(users, passwords, &block) }.not_to yield_control
       end
 
-      context 'when the progressbar increment failed' do
-        it 'does not raise an error' do
+      context 'when trying to increment above current progress' do
+        it 'does not call #increment' do
+          # Set the progress of the bar to the total
           expect_any_instance_of(ProgressBar::Base)
-            .to receive(:increment)
+            .to receive(:progress)
             .at_least(1)
-            .and_raise ProgressBar::InvalidProgressError
+            .and_return(users.size * passwords.size)
+
+          expect_any_instance_of(ProgressBar::Base)
+            .not_to receive(:increment)
 
           expect { |block| finder.attack(users, passwords, &block) }.not_to yield_control
         end

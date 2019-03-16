@@ -39,7 +39,7 @@ module CMSScanner
               request.on_complete do |res|
                 progress_bar.title = "Trying #{user.username} / #{password}"
 
-                progress_bar.increment rescue ProgressBar::InvalidProgressError
+                progress_bar.increment unless progress_bar.progress == progress_bar.total
 
                 if valid_credentials?(res)
                   user.password = password
