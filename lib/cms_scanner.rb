@@ -140,7 +140,7 @@ module CMSScanner
       @run_error = e
 
       formatter.output('@usage', msg: e.message)
-    rescue StandardError, SignalException => e
+    rescue NoMemoryError, ScriptError, SecurityError, SignalException, StandardError, SystemStackError => e
       @run_error = e
 
       formatter.output('@scan_aborted',

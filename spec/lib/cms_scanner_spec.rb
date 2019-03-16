@@ -100,11 +100,17 @@ describe CMSScanner::Scan do
       end
     end
 
-    [RuntimeError.new('error spotted'),
-     CMSScanner::Error.new('aa'),
-     CMSScanner::MaxScanDurationReachedError.new,
-     SignalException.new('SIGTERM'),
-     Interrupt.new('Canceled by User')].each do |error|
+    {
+      NoMemoryError.new => true,
+      ScriptError.new => true,
+      SecurityError.new => true,
+      SignalException.new('SIGTERM') => true,
+      Interrupt.new('Canceled by User') => false,
+      RuntimeError.new('error spotted') => true,
+      CMSScanner::Error.new('aa') => false,
+      CMSScanner::MaxScanDurationReachedError.new => false,
+      SystemStackError.new => true
+    }.each do |error, expected_verbose|
       context "when an/a #{error.class} is raised during the scan" do
         let(:run_error) { error }
 
@@ -118,7 +124,7 @@ describe CMSScanner::Scan do
           expect(scanner.formatter).to receive(:output)
             .with('@scan_aborted', hash_including(reason: run_error.message,
                                                   trace: anything,
-                                                  verbose: [RuntimeError, SignalException].include?(error.class)))
+                                                  verbose: expected_verbose))
         end
       end
     end
