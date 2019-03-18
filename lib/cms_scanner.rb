@@ -17,6 +17,7 @@ require 'timeout'
 require 'xmlrpc/client'
 # Monkey Patches
 require 'cms_scanner/typhoeus/response' # Adds a Response#html using Nokogiri to parse the body
+require 'cms_scanner/typhoeus/hydra' # https://github.com/typhoeus/typhoeus/issues/439
 require 'cms_scanner/public_suffix/domain' # Adds a Domain#match method and logic, used in scope stuff
 require 'cms_scanner/numeric' # Adds a Numeric#bytes_to_human
 # Custom Libs
@@ -149,7 +150,7 @@ module CMSScanner
                        verbose: controllers.first.parsed_options[:verbose] ||
                                 run_error_exit_code == NS::ExitCode::EXCEPTION)
     ensure
-      # Browser.instance.hydra.abort
+      Browser.instance.hydra.abort
 
       formatter.beautify
     end
