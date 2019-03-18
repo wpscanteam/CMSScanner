@@ -27,8 +27,9 @@ module CMSScanner
       "#{NS} v#{NS::VERSION}"
     end
 
+    # @return [ Typhoeus::Hydra ]
     def hydra
-      @hydra ||= Typhoeus::Hydra.new(max_concurrency: max_threads || 1)
+      Typhoeus::Hydra.new(max_concurrency: max_threads || 1)
     end
 
     # @param [ Hash ] options
@@ -38,16 +39,14 @@ module CMSScanner
       end
     end
 
-    # Set the threads attribute and update
-    # the max_concurrency of Typhoeus::Hydra
-    #
+    # Set the threads attribute
     # If the throttle attribute is > 0, max_threads will be forced to 1
     #
     # @param [ Integer ] number
     def max_threads=(number)
       @max_threads = number.to_i.positive? && throttle.zero? ? number.to_i : 1
 
-      hydra.max_concurrency = @max_threads
+      # hydra.max_concurrency = @max_threads
     end
 
     # @return [ String ] The user agent

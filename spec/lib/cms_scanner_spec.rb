@@ -73,10 +73,10 @@ describe CMSScanner::Scan do
     end
 
     it 'runs the controlllers and calls the formatter#beautify' do
-      hydra = CMSScanner::Browser.instance.hydra
+      # hydra = CMSScanner::Browser.instance.hydra
 
       expect(scanner.controllers).to receive(:run).ordered
-      expect(hydra).to receive(:abort).ordered
+      # expect(hydra).to receive(:abort).ordered
       expect(scanner.formatter).to receive(:beautify).ordered
     end
 

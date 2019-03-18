@@ -149,7 +149,7 @@ module CMSScanner
                        verbose: controllers.first.parsed_options[:verbose] ||
                                 run_error_exit_code == NS::ExitCode::EXCEPTION)
     ensure
-      Browser.instance.hydra.abort
+      # Browser.instance.hydra.abort
 
       formatter.beautify
     end
