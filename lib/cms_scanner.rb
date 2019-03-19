@@ -42,6 +42,10 @@ module CMSScanner
   APP_DIR = Pathname.new(__FILE__).dirname.join('..', 'app').expand_path
   NS      = self
 
+  # Avoid memory leak when using Hydra, see https://github.com/typhoeus/typhoeus/issues/562
+  # Requests are still cached via the provided Cache system
+  Typhoeus::Config.memoize = false
+
   # Number of requests performed and data sent/received to display at the end of the scan
   Typhoeus.on_complete do |response|
     self.cached_requests += 1 if response.cached?
