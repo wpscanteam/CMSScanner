@@ -6,6 +6,12 @@ describe CMSScanner do
     scanner.controllers.first.class.parsed_options = rspec_parsed_options("--url #{target_url}")
   end
 
+  describe 'typhoeus memoize' do
+    it 'should be false' do
+      expect(Typhoeus::Config.memoize).to be false
+    end
+  end
+
   describe 'typhoeus_on_complete' do
     before do
       CMSScanner.cached_requests = 0
