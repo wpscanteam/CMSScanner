@@ -39,7 +39,7 @@ module CMSScanner
 
       redirect_output_to_file(parsed_options[:output]) if parsed_options[:output]
 
-      Timeout.timeout(parsed_options[:max_scan_duration], NS::MaxScanDurationReachedError) do
+      Timeout.timeout(parsed_options[:max_scan_duration], NS::Error::MaxScanDurationReached) do
         each(&:before_scan)
         each(&:run)
         # Reverse is used here as the app/controllers/core#after_scan finishes the output

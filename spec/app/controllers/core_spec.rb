@@ -133,7 +133,7 @@ describe CMSScanner::Controller::Core do
 
         expect { core.before_scan }
           .to raise_error(
-            CMSScanner::TargetDownError,
+            CMSScanner::Error::TargetDown,
             "The url supplied '#{target_url}' seems to be down ()"
           )
       end
@@ -151,7 +151,7 @@ describe CMSScanner::Controller::Core do
           context 'when the --ignore-main-redirect is not supplied' do
             it 'raises an error' do
               expect { core.before_scan }.to raise_error(
-                CMSScanner::HTTPRedirectError,
+                CMSScanner::Error::HTTPRedirect,
                 "The URL supplied redirects to #{redirection}." \
                 ' Use the --ignore-main-redirect option to ignore the redirection and scan the target.'
               )
@@ -190,7 +190,7 @@ describe CMSScanner::Controller::Core do
         context 'when no --random-user-agent provided' do
           it 'raises an error with the correct message' do
             expect { core.before_scan }.to raise_error(
-              CMSScanner::AccessForbiddenError,
+              CMSScanner::Error::AccessForbidden,
               'The target is responding with a 403, this might be due to a WAF. Please re-try with --random-user-agent'
             )
           end
@@ -201,7 +201,7 @@ describe CMSScanner::Controller::Core do
 
           it 'raises an error with the correct message' do
             expect { core.before_scan }.to raise_error(
-              CMSScanner::AccessForbiddenError,
+              CMSScanner::Error::AccessForbidden,
               'The target is responding with a 403, this might be due to a WAF. ' \
               'Well... --random-user-agent didn\'t work, you\'re on your own now!'
             )
@@ -216,7 +216,7 @@ describe CMSScanner::Controller::Core do
           before { stub_request(:get, target_url).to_return(status: 401) }
 
           it 'raises an error' do
-            expect { core.before_scan }.to raise_error(CMSScanner::HTTPAuthRequiredError)
+            expect { core.before_scan }.to raise_error(CMSScanner::Error::HTTPAuthRequired)
           end
         end
 
@@ -240,7 +240,7 @@ describe CMSScanner::Controller::Core do
             let(:cli_args) { "#{super()} --http-auth user:p@ss" }
 
             it 'raises an error' do
-              expect { core.before_scan }.to raise_error(CMSScanner::HTTPAuthRequiredError)
+              expect { core.before_scan }.to raise_error(CMSScanner::Error::HTTPAuthRequired)
             end
           end
         end
@@ -251,7 +251,7 @@ describe CMSScanner::Controller::Core do
 
         context 'when no credentials' do
           it 'raises an error' do
-            expect { core.before_scan }.to raise_error(CMSScanner::ProxyAuthRequiredError)
+            expect { core.before_scan }.to raise_error(CMSScanner::Error::ProxyAuthRequired)
           end
         end
 
@@ -261,7 +261,7 @@ describe CMSScanner::Controller::Core do
           it 'raises an error' do
             expect(CMSScanner::Browser.instance.proxy_auth).to eq(parsed_options[:proxy_auth])
 
-            expect { core.before_scan }.to raise_error(CMSScanner::ProxyAuthRequiredError)
+            expect { core.before_scan }.to raise_error(CMSScanner::Error::ProxyAuthRequired)
           end
         end
 

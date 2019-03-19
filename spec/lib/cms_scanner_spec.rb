@@ -113,8 +113,8 @@ describe CMSScanner::Scan do
       SignalException.new('SIGTERM') => true,
       Interrupt.new('Canceled by User') => false,
       RuntimeError.new('error spotted') => true,
-      CMSScanner::Error.new('aa') => false,
-      CMSScanner::MaxScanDurationReachedError.new => false,
+      CMSScanner::Error::Standard.new('aa') => false,
+      CMSScanner::Error::MaxScanDurationReached.new => false,
       SystemStackError.new => true
     }.each do |error, expected_verbose|
       context "when an/a #{error.class} is raised during the scan" do

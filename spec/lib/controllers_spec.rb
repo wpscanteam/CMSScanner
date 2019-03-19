@@ -65,7 +65,7 @@ describe CMSScanner::Controllers do
         let(:max_scan_duration) { 1 }
 
         it 'raises an exception' do
-          expect { controllers.run }.to raise_error(CMSScanner::MaxScanDurationReachedError)
+          expect { controllers.run }.to raise_error(CMSScanner::Error::MaxScanDurationReached)
         end
       end
 

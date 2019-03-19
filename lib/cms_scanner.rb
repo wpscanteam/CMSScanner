@@ -15,7 +15,7 @@ require 'fileutils'
 require 'pathname'
 require 'timeout'
 require 'xmlrpc/client'
-# Monkey Patches
+# Monkey Patches/Fixes
 require 'cms_scanner/typhoeus/response' # Adds a Response#html using Nokogiri to parse the body
 require 'cms_scanner/typhoeus/hydra' # https://github.com/typhoeus/typhoeus/issues/439
 require 'cms_scanner/public_suffix/domain' # Adds a Domain#match method and logic, used in scope stuff
@@ -23,8 +23,7 @@ require 'cms_scanner/numeric' # Adds a Numeric#bytes_to_human
 # Custom Libs
 require 'cms_scanner/helper'
 require 'cms_scanner/exit_code'
-require 'cms_scanner/errors/http'
-require 'cms_scanner/errors/scan'
+require 'cms_scanner/errors'
 require 'cms_scanner/cache/typhoeus'
 require 'cms_scanner/target'
 require 'cms_scanner/browser'
@@ -198,7 +197,8 @@ module CMSScanner
 
       return NS::ExitCode::INTERRUPTED if run_error.is_a?(Interrupt)
 
-      return NS::ExitCode::ERROR if run_error.is_a?(NS::Error) || run_error.is_a?(CMSScanner::Error)
+      return NS::ExitCode::ERROR if run_error.is_a?(NS::Error::Standard) ||
+                                    run_error.is_a?(CMSScanner::Error::Standard)
 
       NS::ExitCode::EXCEPTION
     end
