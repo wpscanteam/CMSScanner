@@ -1,4 +1,4 @@
-describe CMSScanner::FantasticoFileslist do
+describe CMSScanner::Model::FantasticoFileslist do
   subject(:file) { described_class.new(url) }
   let(:url)      { 'http://example.com/robots.txt' }
   let(:fixtures) { FIXTURES_FINDERS.join('interesting_findings', 'fantastico_fileslist') }

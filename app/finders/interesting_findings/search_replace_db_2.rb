@@ -14,9 +14,9 @@ module CMSScanner
 
           return unless res&.code == 200 && res.body =~ /by interconnect/i
 
-          NS::InterestingFinding.new(url, confidence: 100,
-                                          found_by: found_by,
-                                          references: references)
+          NS::Model::InterestingFinding.new(url, confidence: 100,
+                                                 found_by: found_by,
+                                                 references: references)
         end
 
         def references

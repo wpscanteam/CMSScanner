@@ -54,8 +54,8 @@ describe CMSScanner::Finders::InterestingFindings::XMLRPC do
 
           expect(finder.potential_urls).to eq [xml_rpc_url]
 
-          expect(result).to be_a CMSScanner::XMLRPC
-          expect(result).to eql CMSScanner::XMLRPC.new(
+          expect(result).to be_a CMSScanner::Model::XMLRPC
+          expect(result).to eql CMSScanner::Model::XMLRPC.new(
             xml_rpc_url,
             confidence: 30,
             found_by: 'Headers (Passive Detection)'
@@ -90,8 +90,8 @@ describe CMSScanner::Finders::InterestingFindings::XMLRPC do
 
           expect(finder.potential_urls).to eq [expected_url]
 
-          expect(result).to be_a CMSScanner::XMLRPC
-          expect(result).to eql CMSScanner::XMLRPC.new(
+          expect(result).to be_a CMSScanner::Model::XMLRPC
+          expect(result).to eql CMSScanner::Model::XMLRPC.new(
             expected_url,
             confidence: 30,
             found_by: 'Link Tag (Passive Detection)'
@@ -123,7 +123,7 @@ describe CMSScanner::Finders::InterestingFindings::XMLRPC do
       let(:body) { File.read(fixtures.join('xmlrpc.php')) }
 
       it 'returns the InterestingFinding result' do
-        @expected = CMSScanner::XMLRPC.new(
+        @expected = CMSScanner::Model::XMLRPC.new(
           xml_rpc_url,
           confidence: 100,
           found_by: described_class::DIRECT_ACCESS

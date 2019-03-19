@@ -1,4 +1,4 @@
-describe CMSScanner::RobotsTxt do
+describe CMSScanner::Model::RobotsTxt do
   subject(:file) { described_class.new(url) }
   let(:url)      { 'http://example.com/robots.txt' }
   let(:fixtures) { FIXTURES_FINDERS.join('interesting_findings', 'robots_txt') }

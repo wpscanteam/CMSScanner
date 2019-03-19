@@ -13,7 +13,7 @@ describe CMSScanner::Finders::InterestingFindings::Headers do
       if @expected
         result = finder.passive
 
-        expect(result).to be_a CMSScanner::Headers
+        expect(result).to be_a CMSScanner::Model::Headers
         expect(result).to eql @expected
       end
     end
@@ -27,7 +27,7 @@ describe CMSScanner::Finders::InterestingFindings::Headers do
     context 'when headers' do
       it 'returns the result' do
         opts      = { confidence: 100, found_by: 'Headers (Passive Detection)' }
-        @expected = CMSScanner::Headers.new(url, opts)
+        @expected = CMSScanner::Model::Headers.new(url, opts)
       end
     end
   end

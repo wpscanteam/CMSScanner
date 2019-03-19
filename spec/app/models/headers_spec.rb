@@ -1,4 +1,4 @@
-describe CMSScanner::Headers do
+describe CMSScanner::Model::Headers do
   subject(:file) { described_class.new(url) }
   let(:url)      { 'http://example.com/' }
   let(:fixtures) { FIXTURES_FINDERS.join('interesting_findings', 'headers') }

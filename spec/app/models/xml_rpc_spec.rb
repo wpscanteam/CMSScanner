@@ -1,4 +1,4 @@
-describe CMSScanner::XMLRPC do
+describe CMSScanner::Model::XMLRPC do
   subject(:xml_rpc) { described_class.new(url) }
   let(:url)         { 'http://example.com/xmlrpc' }
   let(:fixtures)    { FIXTURES_MODELS.join('xml_rpc') }

@@ -15,7 +15,7 @@ describe CMSScanner::Finders::InterestingFindings::FantasticoFileslist do
 
       result = finder.aggressive
 
-      expect(result).to be_a CMSScanner::FantasticoFileslist if @expected
+      expect(result).to be_a CMSScanner::Model::FantasticoFileslist if @expected
       expect(result).to eql @expected
     end
 
@@ -52,7 +52,7 @@ describe CMSScanner::Finders::InterestingFindings::FantasticoFileslist do
         let(:headers) { { 'Content-Type' => 'text/plain' } }
 
         it 'returns the InterestingFinding result' do
-          @expected = CMSScanner::FantasticoFileslist.new(
+          @expected = CMSScanner::Model::FantasticoFileslist.new(
             file,
             confidence: 70,
             found_by: 'Fantastico Fileslist (Aggressive Detection)'

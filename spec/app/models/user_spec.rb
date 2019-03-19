@@ -1,4 +1,4 @@
-describe CMSScanner::User do
+describe CMSScanner::Model::User do
   subject(:user) { described_class.new(username, opts) }
   let(:username) { 'john' }
   let(:opts)     { {} }
@@ -29,7 +29,7 @@ describe CMSScanner::User do
 
     context 'when not the same username' do
       it 'returns false' do
-        expect(user == CMSScanner::User.new('test')).to be false
+        expect(user == described_class.new('test')).to be false
       end
     end
   end

@@ -39,7 +39,7 @@ describe CMSScanner::Finders::InterestingFindings::SearchReplaceDB2 do
         let(:body) { File.read(fixtures.join('searchreplacedb2.php')) }
 
         it 'returns the InterestingFinding result' do
-          @expected = CMSScanner::InterestingFinding.new(
+          @expected = CMSScanner::Model::InterestingFinding.new(
             file,
             confidence: 100,
             found_by: 'Search Replace Db2 (Aggressive Detection)'

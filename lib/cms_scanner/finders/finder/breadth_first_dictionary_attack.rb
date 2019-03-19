@@ -3,7 +3,7 @@ module CMSScanner
     class Finder
       # Module to provide an easy way to perform password attacks
       module BreadthFirstDictionaryAttack
-        # @param [ Array<CMSScanner::User> ] users
+        # @param [ Array<CMSScanner::Model::User> ] users
         # @param [ Array<String> ] passwords
         # @param [ Hash ] opts
         # @option opts [ Boolean ] :show_progression

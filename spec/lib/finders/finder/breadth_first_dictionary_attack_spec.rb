@@ -23,7 +23,7 @@ describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
   let(:login_url)  { target.url('login.php') }
 
   describe '#attack' do
-    let(:users) { %w[admin root user].map { |u| CMSScanner::User.new(u) } }
+    let(:users) { %w[admin root user].map { |u| CMSScanner::Model::User.new(u) } }
     let(:passwords) { %w[pwd admin P@ssw0rd] }
 
     before do
@@ -67,7 +67,7 @@ describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
 
       it 'yields the matching user' do
         expect { |block| finder.attack(users, passwords, &block) }
-          .to yield_with_args(CMSScanner::User.new('admin', password: 'admin'))
+          .to yield_with_args(CMSScanner::Model::User.new('admin', password: 'admin'))
       end
 
       context 'when the progressbar total= failed' do
@@ -75,7 +75,7 @@ describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
           expect_any_instance_of(ProgressBar::Base).to receive(:total=).and_raise ProgressBar::InvalidProgressError
 
           expect { |block| finder.attack(users, passwords, &block) }
-            .to yield_with_args(CMSScanner::User.new('admin', password: 'admin'))
+            .to yield_with_args(CMSScanner::Model::User.new('admin', password: 'admin'))
         end
       end
     end

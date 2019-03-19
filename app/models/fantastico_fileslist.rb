@@ -1,20 +1,22 @@
 module CMSScanner
-  # FantasticoFileslist
-  class FantasticoFileslist < InterestingFinding
-    # @return [ Array<String> ] The interesting files/dirs detected
-    def interesting_entries
-      results = []
+  module Model
+    # FantasticoFileslist
+    class FantasticoFileslist < InterestingFinding
+      # @return [ Array<String> ] The interesting files/dirs detected
+      def interesting_entries
+        results = []
 
-      entries.each do |entry|
-        next unless entry =~ /(?:admin|\.log|\.sql|\.db)/i
+        entries.each do |entry|
+          next unless entry =~ /(?:admin|\.log|\.sql|\.db)/i
 
-        results << entry
+          results << entry
+        end
+        results
       end
-      results
-    end
 
-    def references
-      { url: ['http://www.acunetix.com/vulnerabilities/fantastico-fileslist/'] }
+      def references
+        { url: ['http://www.acunetix.com/vulnerabilities/fantastico-fileslist/'] }
+      end
     end
   end
 end

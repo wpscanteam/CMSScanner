@@ -1,4 +1,4 @@
-describe CMSScanner::InterestingFinding do
+describe CMSScanner::Model::InterestingFinding do
   it_behaves_like CMSScanner::Finders::Finding
 
   subject(:finding) { described_class.new(url, opts) }

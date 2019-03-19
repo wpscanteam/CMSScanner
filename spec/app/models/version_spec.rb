@@ -1,4 +1,4 @@
-describe CMSScanner::Version do
+describe CMSScanner::Model::Version do
   it_behaves_like CMSScanner::Finders::Finding
 
   subject(:version) { described_class.new(number, opts) }
