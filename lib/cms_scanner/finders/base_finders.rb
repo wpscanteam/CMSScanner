@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CMSScanner
   module Finders
     # Base class container for the Finders (i.e IndependentFinders etc)

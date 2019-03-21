@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples CMSScanner::Finders::IndependentFinder do
   describe '::find' do
     it 'creates a new object and call finders#find' do

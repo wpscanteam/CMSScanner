@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples CMSScanner::Target::Server::Generic do
   describe '#server' do
     before { stub_request(:head, target.url).to_return(headers: parse_headers_file(fixture)) }

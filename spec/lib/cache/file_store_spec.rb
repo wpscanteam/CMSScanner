@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Cache::FileStore do
   let(:cache_dir) { CACHE.join('cache_file_store').to_s }
   subject(:cache) { described_class.new(cache_dir) }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Model::XMLRPC do
   subject(:xml_rpc) { described_class.new(url) }
   let(:url)         { 'http://example.com/xmlrpc' }
@@ -23,7 +25,7 @@ describe CMSScanner::Model::XMLRPC do
 
     context 'when no params' do
       it 'sets the correct body in the request' do
-        @expected_body = '<?xml version="1.0" ?><methodCall>'
+        @expected_body = +'<?xml version="1.0" ?><methodCall>'
         @expected_body << "<methodName>#{method}</methodName><params/>"
         @expected_body << "</methodCall>\n"
       end
@@ -34,7 +36,7 @@ describe CMSScanner::Model::XMLRPC do
       let(:request_params)  { { spec_key: 'yolo' } }
 
       it 'set the correct body in the request' do
-        @expected_body = '<?xml version="1.0" ?><methodCall>'
+        @expected_body = +'<?xml version="1.0" ?><methodCall>'
         @expected_body << "<methodName>#{method}</methodName><params>"
         @expected_body << '<param><value><string>p1</string></value></param>'
         @expected_body << '<param><value><string>p2</string></value></param>'

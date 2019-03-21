@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cms_scanner/browser/actions'
 require 'cms_scanner/browser/options'
 

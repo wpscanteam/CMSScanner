@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Finders::InterestingFindings::SearchReplaceDB2 do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }

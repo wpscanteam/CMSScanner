@@ -1,4 +1,6 @@
+# frozen_string_literal: true
+
 # Version
 module CMSScanner
-  VERSION = '0.0.42.0'.freeze
+  VERSION = '0.0.42.0'
 end

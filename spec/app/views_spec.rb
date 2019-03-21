@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'App::Views' do
   let(:target_url) { 'http://e.org/' }
   let(:fixtures)   { SPECS.join('output') }

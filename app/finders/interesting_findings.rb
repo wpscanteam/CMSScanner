@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'interesting_findings/headers'
 require_relative 'interesting_findings/robots_txt'
 require_relative 'interesting_findings/fantastico_fileslist'

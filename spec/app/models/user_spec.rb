@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Model::User do
   subject(:user) { described_class.new(username, opts) }
   let(:username) { 'john' }

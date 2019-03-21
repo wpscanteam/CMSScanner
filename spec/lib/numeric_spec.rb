@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Numeric do
   describe '#bytes_to_human' do
     context 'when positive' do

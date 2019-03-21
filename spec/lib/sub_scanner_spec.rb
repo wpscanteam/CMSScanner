@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'SubScanner' do
   before :all do
     # Module including the CMSScanner to test its correct inclusion
@@ -9,8 +11,8 @@ describe 'SubScanner' do
         'subscanner'
       end
 
-      VERSION = '1.0-Spec'.freeze
-      APP_DIR = '/tmp/sub_scanner/spec'.freeze
+      VERSION = '1.0-Spec'
+      APP_DIR = '/tmp/sub_scanner/spec'
 
       # This Target class should be called in the CMSScanner::Controller::Base
       # instead of the CMSScanner::Target

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Hack of the Numeric class
 class Numeric
   # @return [ String ] A human readable string of the value

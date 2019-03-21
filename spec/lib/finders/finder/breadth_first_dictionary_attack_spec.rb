@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
   # Dummy class to test the module
   class DummyBreadthFirstDictionaryAttack < CMSScanner::Finders::Finder

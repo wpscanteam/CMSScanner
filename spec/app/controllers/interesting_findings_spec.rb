@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Controller::InterestingFindings do
   subject(:controller) { described_class.new }
   let(:target_url)     { 'http://example.com/' }

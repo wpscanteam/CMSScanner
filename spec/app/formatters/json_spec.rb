@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Formatter::Json do
   it_behaves_like CMSScanner::Formatter::Buffer
 

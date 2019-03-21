@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'models/interesting_finding'
 require_relative 'models/robots_txt'
 require_relative 'models/fantastico_fileslist'

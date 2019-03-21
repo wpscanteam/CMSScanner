@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Typhoeus::Response do
   subject(:response) { Typhoeus::Response.new(opts) }
   let(:opts)         { { body: 'hello world' } }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CMSScanner
   module Controller
     # CLI Options for the Core Controller

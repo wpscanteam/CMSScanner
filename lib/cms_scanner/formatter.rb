@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cms_scanner/formatter/buffer'
 
 module CMSScanner

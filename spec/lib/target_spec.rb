@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Target do
   subject(:target) { described_class.new(url) }
   let(:url)        { 'http://e.org' }

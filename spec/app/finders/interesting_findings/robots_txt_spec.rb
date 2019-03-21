@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Finders::InterestingFindings::RobotsTxt do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }

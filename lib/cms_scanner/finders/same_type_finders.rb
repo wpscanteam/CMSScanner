@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CMSScanner
   module Finders
     # This class is designed to handle same type results, such as enumeration of plugins,

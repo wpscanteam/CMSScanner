@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe PublicSuffix::Domain do
   describe '#match' do
     it 'returns true' do

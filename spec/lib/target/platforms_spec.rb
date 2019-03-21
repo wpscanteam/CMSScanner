@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 [:PHP].each do |platform|
   describe CMSScanner::Target do
     subject(:target) do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cms_scanner/finders/finder'
 require 'cms_scanner/finders/finding'
 require 'cms_scanner/finders/findings'

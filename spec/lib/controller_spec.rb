@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Controller do
   subject(:controller) { described_class::Base.new }
 

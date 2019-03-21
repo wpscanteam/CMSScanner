@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cms_scanner/web_site'
 require 'cms_scanner/target/platform'
 require 'cms_scanner/target/server'

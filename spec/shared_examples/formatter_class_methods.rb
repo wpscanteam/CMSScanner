@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples CMSScanner::Formatter::ClassMethods do
   describe '#load' do
     context 'w/o parameter' do

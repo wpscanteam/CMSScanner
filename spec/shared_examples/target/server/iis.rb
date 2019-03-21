@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples CMSScanner::Target::Server::IIS do
   describe '#server' do
     its(:server) { should eq :IIS }

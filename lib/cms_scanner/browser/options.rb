@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CMSScanner
   # Options available in the Browser
   class Browser

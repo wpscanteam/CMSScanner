@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Finders::Finder::Enumerator do
   # Dummy class to test the module
   class DummyEnumeratorFinder < CMSScanner::Finders::Finder

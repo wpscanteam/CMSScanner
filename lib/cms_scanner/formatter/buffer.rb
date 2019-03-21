@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CMSScanner
   module Formatter
     # Module used to output the rendered views into a buffer
@@ -8,7 +10,7 @@ module CMSScanner
       end
 
       def buffer
-        @buffer ||= ''
+        @buffer ||= +''
       end
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CMSScanner
   # WebSite Implementation
   class WebSite
@@ -6,13 +8,14 @@ module CMSScanner
     # @param [ String ] site_url
     # @param [ Hash ] opts
     def initialize(site_url, opts = {})
-      self.url = site_url.dup
+      self.url = +site_url
       @opts    = opts
     end
 
     def url=(site_url)
       # Add a trailing slash to the site url
-      site_url << '/' if site_url[-1, 1] != '/'
+      # Making also sure the site_url is unfrozen
+      +site_url << '/' if site_url[-1, 1] != '/'
 
       # Use the validator to ensure the site_url has a correct format
       OptParseValidator::OptURL.new([]).validate(site_url)

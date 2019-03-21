@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PublicSuffix
   # Monkey Patch to include the match logic
   class Domain

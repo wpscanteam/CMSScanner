@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CMSScanner
   module Error
     # Used instead of the Timeout::Error

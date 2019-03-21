@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cms_scanner/finders/finder/smart_url_checker/findings'
 
 module CMSScanner

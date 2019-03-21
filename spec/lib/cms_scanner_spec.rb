@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner do
   let(:target_url) { 'http://wp.lab/' }
 

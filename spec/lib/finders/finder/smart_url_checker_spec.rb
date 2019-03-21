@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Finders::Finder::SmartURLChecker do
   # Dummy class to test the module
   class DummyFinder < CMSScanner::Finders::Finder

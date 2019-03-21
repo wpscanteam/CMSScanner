@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Finders::Finder::Fingerprinter do
   # Dummy class to test the module
   class DummyFingerprinterFinder < CMSScanner::Finders::Finder

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Typhoeus
   # Custom Response class
   class Response

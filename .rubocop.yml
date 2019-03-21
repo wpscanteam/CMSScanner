@@ -21,8 +21,6 @@ Metrics/CyclomaticComplexity:
   Max: 10
 Metrics/PerceivedComplexity:
   Max: 9
-Style/FrozenStringLiteralComment:
-  Enabled: false
 Style/FormatStringToken:
   Exclude:
     - lib/cms_scanner/finders/finder.rb

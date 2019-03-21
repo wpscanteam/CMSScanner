@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CMSScanner
   module Finders
     # Dummy Class to test the module

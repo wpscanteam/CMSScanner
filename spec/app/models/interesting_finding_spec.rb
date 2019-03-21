@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Model::InterestingFinding do
   it_behaves_like CMSScanner::Finders::Finding
 

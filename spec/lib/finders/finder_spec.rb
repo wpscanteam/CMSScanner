@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Finders::Finder do
   subject(:finder) { described_class.new('target') }
 

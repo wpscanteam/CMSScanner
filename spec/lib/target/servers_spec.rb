@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 %i[Generic Apache IIS Nginx].each do |server|
   describe CMSScanner::Target do
     subject(:target) do

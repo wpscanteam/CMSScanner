@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CMSScanner
   # References related to the issue
   module References

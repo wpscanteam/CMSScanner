@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CMSScanner
   module Finders
     # This class is designed to return a unique result such as a version

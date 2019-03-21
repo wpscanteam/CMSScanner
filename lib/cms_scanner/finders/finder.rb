@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cms_scanner/finders/finder/smart_url_checker'
 require 'cms_scanner/finders/finder/enumerator'
 require 'cms_scanner/finders/finder/fingerprinter'
@@ -8,7 +10,7 @@ module CMSScanner
     # Finder
     class Finder
       # Constants for common found_by
-      DIRECT_ACCESS = 'Direct Access (Aggressive Detection)'.freeze
+      DIRECT_ACCESS = 'Direct Access (Aggressive Detection)'
 
       attr_accessor :target, :progress_bar
 

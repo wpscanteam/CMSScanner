@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe CMSScanner::Browser do
   it_behaves_like described_class::Actions
 
