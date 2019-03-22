@@ -1,5 +1,13 @@
 shared_examples CMSScanner::Target::Platform::PHP do
-  before { stub_request(:get, target.url(path)).to_return(body: body) }
+  before do
+    if path =~ /\.log\z/i
+      stub_request(:get, target.url(path))
+        .with(headers: { 'Range' => 'bytes=0-700' })
+        .to_return(body: body)
+    else
+      stub_request(:get, target.url(path)).to_return(body: body)
+    end
+  end
 
   describe '#debug_log?' do
     let(:path) { 'd.log' }
