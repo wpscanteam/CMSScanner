@@ -5,19 +5,19 @@ module CMSScanner
     module InterestingFindings
       # FantasticoFileslist finder
       class FantasticoFileslist < Finder
-        # @return [ String ] The url of the fantastico_fileslist.txt file
-        def url
-          target.url('fantastico_fileslist.txt')
+        # @return [ String ] The path of the fantastico_fileslist.txt file
+        def path
+          @path ||= 'fantastico_fileslist.txt'
         end
 
         # @return [ InterestingFinding ]
         def aggressive(_opts = {})
-          res = NS::Browser.get(url)
+          res = target.head_and_get(path)
 
-          return unless res&.code == 200 && !res.body.empty?
+          return if res.body.strip.empty?
           return unless res.headers && res.headers['Content-Type'] =~ %r{\Atext/plain}
 
-          NS::Model::FantasticoFileslist.new(url, confidence: 70, found_by: found_by)
+          NS::Model::FantasticoFileslist.new(target.url(path), confidence: 70, found_by: found_by)
         end
       end
     end

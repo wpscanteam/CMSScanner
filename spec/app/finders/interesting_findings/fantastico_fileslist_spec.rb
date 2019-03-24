@@ -4,58 +4,50 @@ describe CMSScanner::Finders::InterestingFindings::FantasticoFileslist do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
-  let(:file)       { url + 'fantastico_fileslist.txt' }
+  let(:file_url)   { url + 'fantastico_fileslist.txt' }
   let(:fixtures)   { FIXTURES_FINDERS.join('interesting_findings', 'fantastico_fileslist') }
 
-  describe '#url' do
-    its(:url) { should eq file }
-  end
+  before { expect(finder.target).to receive(:head_or_get_params).and_return(method: :head) }
 
   describe '#aggressive' do
-    after do
-      stub_request(:get, file).to_return(status: status, body: body, headers: headers)
-
-      result = finder.aggressive
-
-      expect(result).to be_a CMSScanner::Model::FantasticoFileslist if @expected
-      expect(result).to eql @expected
+    before do
+      stub_request(:head, file_url).to_return(status: head_status)
     end
 
-    let(:body)    { '' }
-    let(:headers) { { 'Content-Type' => 'text/html ' } }
-
     context 'when 404' do
-      let(:status) { 404 }
+      let(:head_status) { 404 }
 
-      it 'returns nil' do
-        @expected = nil
-      end
+      its(:aggressive) { should eql nil }
     end
 
     context 'when 200' do
-      let(:status) { 200 }
+      let(:head_status) { 200 }
 
-      context 'when the body is empty' do
+      context 'when body is empty' do
         it 'returns nil' do
-          @expected = nil
+          stub_request(:get, file_url).to_return(status: 200, body: '')
+
+          expect(finder.aggressive).to eql nil
         end
       end
 
       context 'when not a text/plain Content-Type' do
-        let(:body) { 'not an empty body' }
+        it 'return nil' do
+          stub_request(:get, file_url)
+            .to_return(status: 200, body: 'not empty', headers: { 'Content-Type' => 'text/html ' })
 
-        it 'returns nil' do
-          @expected = nil
+          expect(finder.aggressive).to eql nil
         end
       end
 
       context 'when the body matches and Content-Type = text/plain' do
-        let(:body)    { File.read(fixtures.join('fantastico_fileslist.txt')) }
-        let(:headers) { { 'Content-Type' => 'text/plain' } }
+        it 'returns the InterestingFinding object' do
+          stub_request(:get, file_url)
+            .to_return(body: File.read(fixtures.join('fantastico_fileslist.txt')),
+                       headers: { 'Content-Type' => 'text/plain' })
 
-        it 'returns the InterestingFinding result' do
-          @expected = CMSScanner::Model::FantasticoFileslist.new(
-            file,
+          expect(finder.aggressive).to eql CMSScanner::Model::FantasticoFileslist.new(
+            file_url,
             confidence: 70,
             found_by: 'Fantastico Fileslist (Aggressive Detection)'
           )

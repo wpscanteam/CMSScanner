@@ -7,7 +7,7 @@ module CMSScanner
       class RobotsTxt < Finder
         # @return [ String ] The url of the robots.txt file
         def url
-          target.url('robots.txt')
+          @url ||= target.url('robots.txt')
         end
 
         # @return [ InterestingFinding ]

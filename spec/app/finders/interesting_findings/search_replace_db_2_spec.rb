@@ -4,45 +4,39 @@ describe CMSScanner::Finders::InterestingFindings::SearchReplaceDB2 do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
-  let(:file)       { url + 'searchreplacedb2.php' }
+  let(:file_url)   { url + 'searchreplacedb2.php' }
   let(:fixtures)   { FIXTURES_FINDERS.join('interesting_findings', 'search_replace_db_2') }
 
-  describe '#url' do
-    its(:url) { should eq file }
-  end
+  before { expect(finder.target).to receive(:head_or_get_params).and_return(method: :head) }
 
   describe '#aggressive' do
-    after do
-      stub_request(:get, file).to_return(status: status, body: body)
-
-      expect(finder.aggressive).to eql @expected
+    before do
+      stub_request(:head, file_url).to_return(status: head_status)
     end
 
-    let(:body) { '' }
-
     context 'when 404' do
-      let(:status) { 404 }
+      let(:head_status) { 404 }
 
-      it 'returns nil' do
-        @expected = nil
-      end
+      its(:aggressive) { should eql nil }
     end
 
     context 'when 200' do
-      let(:status) { 200 }
+      let(:head_status) { 200 }
 
-      context 'when the body is empty' do
-        it 'returns nil' do
-          @expected = nil
-        end
+      before { stub_request(:get, file_url).to_return(status: 200, body: body) }
+
+      context 'when the body does not match' do
+        let(:body) { 'not this one' }
+
+        its(:aggressive) { should eql nil }
       end
 
       context 'when the body matches' do
         let(:body) { File.read(fixtures.join('searchreplacedb2.php')) }
 
-        it 'returns the InterestingFinding result' do
-          @expected = CMSScanner::Model::InterestingFinding.new(
-            file,
+        it 'returns the InterestingFinding object' do
+          expect(finder.aggressive).to eql CMSScanner::Model::InterestingFinding.new(
+            file_url,
             confidence: 100,
             found_by: 'Search Replace Db2 (Aggressive Detection)'
           )
