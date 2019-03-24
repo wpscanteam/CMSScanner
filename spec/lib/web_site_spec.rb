@@ -128,21 +128,31 @@ describe CMSScanner::WebSite do
   end
 
   describe '#head_or_get_params' do
-    before do
-      stub_request(:get, web_site.url)
-      stub_request(:head, web_site.homepage_url).to_return(status: status)
+    context 'when not already checked' do
+      before do
+        stub_request(:get, web_site.url)
+        stub_request(:head, web_site.homepage_url).to_return(status: status)
+      end
+
+      context 'when HEAD not supported' do
+        let(:status) { 405 }
+
+        its(:head_or_get_params) { should eql(method: :get, maxfilesize: 1) }
+      end
+
+      context 'when HEAD supported' do
+        let(:status) { 200 }
+
+        its(:head_or_get_params) { should eql(method: :head) }
+      end
     end
 
-    context 'when HEAD not supported' do
-      let(:status) { 405 }
+    context 'when already set' do
+      it 'returns it' do
+        web_site.instance_variable_set(:@head_or_get_params, method: :head)
 
-      its(:head_or_get_params) { should eql(method: :get, maxfilesize: 1) }
-    end
-
-    context 'when HEAD supported' do
-      let(:status) { 200 }
-
-      its(:head_or_get_params) { should eql(method: :head) }
+        expect(web_site.head_or_get_params).to eql(method: :head)
+      end
     end
   end
 end
