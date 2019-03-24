@@ -126,4 +126,23 @@ describe CMSScanner::WebSite do
       end
     end
   end
+
+  describe '#head_or_get_params' do
+    before do
+      stub_request(:get, web_site.url)
+      stub_request(:head, web_site.homepage_url).to_return(status: status)
+    end
+
+    context 'when HEAD not supported' do
+      let(:status) { 405 }
+
+      its(:head_or_get_params) { should eql(method: :get, maxfilesize: 1) }
+    end
+
+    context 'when HEAD supported' do
+      let(:status) { 200 }
+
+      its(:head_or_get_params) { should eql(method: :head) }
+    end
+  end
 end

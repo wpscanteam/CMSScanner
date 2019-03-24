@@ -101,5 +101,14 @@ module CMSScanner
       res.effective_url == url ? nil : res.effective_url
     end
     # :nocov:
+
+    # @return [ Hash ] The Typhoeus params to use to perform head requests
+    def head_or_get_params
+      @head_or_get_params ||= if NS::Browser.head(homepage_url).code == 405
+                                { method: :get, maxfilesize: 1 }
+                              else
+                                { method: :head }
+                              end
+    end
   end
 end
