@@ -117,15 +117,18 @@ module CMSScanner
     #
     # @param [ String ] path
     # @param [ Array<String> ] codes
-    # @param [ Hash ] request_params
+    # @param [ Hash ] params The requests params
+    # @option params [ Hash ] :head Request params for the HEAD
+    # @option params [ hash ] :get Request params for the GET
     #
     # @return [ Typhoeus::Response ]
-    def head_and_get(path, codes = [200], request_params = {})
-      url_to_get = url(path)
+    def head_and_get(path, codes = [200], params = {})
+      url_to_get  = url(path)
+      head_params = (params[:head] || {}).merge(head_or_get_params)
 
-      head_res = NS::Browser.instance.forge_request(url_to_get, request_params.merge(head_or_get_params)).run
+      head_res = NS::Browser.instance.forge_request(url_to_get, head_params).run
 
-      codes.include?(head_res.code) ? NS::Browser.get(url_to_get, request_params) : head_res
+      codes.include?(head_res.code) ? NS::Browser.get(url_to_get, params[:get] || {}) : head_res
     end
   end
 end
