@@ -155,4 +155,64 @@ describe CMSScanner::WebSite do
       end
     end
   end
+
+  describe '#head_and_get' do
+    before do
+      stub_request(:head, web_site.url(path)).to_return(status: status)
+
+      expect(web_site).to receive(:head_or_get_params).and_return(method: :head)
+    end
+
+    let(:path) { 'something' }
+
+    context 'when HEAD response status is not in the codes given' do
+      let(:status) { 404 }
+
+      after do
+        expect(@res).to be_a(Typhoeus::Response)
+        expect(@res.code).to eql status
+        expect(@res.request.options[:method]).to eql :head
+        expect(@res.body).to be_empty
+      end
+
+      context 'when codes not provided' do
+        it 'uses the default [200] and returns the HEAD response' do
+          @res = web_site.head_and_get(path)
+        end
+      end
+
+      context 'when codes provided' do
+        it 'uses them and returns the HEAD response' do
+          @res = web_site.head_and_get(path, [400])
+        end
+      end
+    end
+
+    context 'when HEAD response status is in the codes given' do
+      before { stub_request(:get, web_site.url(path)).to_return(status: status, body: 'hello') }
+
+      after do
+        expect(@res).to be_a(Typhoeus::Response)
+        expect(@res.code).to eql status
+        expect(@res.request.options[:method]).to eql :get
+        expect(@res.body).to eql 'hello'
+      end
+
+      context 'when codes not provided' do
+        let(:status) { 200 }
+
+        it 'uses the default [200] and returns the GET response' do
+          @res = web_site.head_and_get(path)
+        end
+      end
+
+      context 'when codes provided' do
+        let(:status) { 400 }
+
+        it 'uses them and returns the GET response' do
+          @res = web_site.head_and_get(path, [400])
+        end
+      end
+    end
+  end
 end

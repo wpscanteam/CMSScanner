@@ -110,5 +110,22 @@ module CMSScanner
                                 { method: :head }
                               end
     end
+
+    # Perform a HEAD request to the path provided, then if its response code
+    # is in the array of codes given, a GET is done and the response returned. Otherwise the
+    # HEAD response is returned.
+    #
+    # @param [ String ] path
+    # @param [ Array<String> ] codes
+    # @param [ Hash ] request_params
+    #
+    # @return [ Typhoeus::Response ]
+    def head_and_get(path, codes = [200], request_params = {})
+      url_to_get = url(path)
+
+      head_res = NS::Browser.instance.forge_request(url_to_get, request_params.merge(head_or_get_params)).run
+
+      codes.include?(head_res.code) ? NS::Browser.get(url_to_get, request_params) : head_res
+    end
   end
 end

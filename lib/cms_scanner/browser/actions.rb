@@ -43,7 +43,7 @@ module CMSScanner
       #
       # @return [ Typhoeus::Response ]
       def process(url, params)
-        Typhoeus::Request.new(url, NS::Browser.instance.request_params(params)).run
+        NS::Browser.instance.forge_request(url, params).run
       end
     end
   end
