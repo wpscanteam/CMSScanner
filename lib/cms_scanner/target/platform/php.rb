@@ -18,7 +18,7 @@ module CMSScanner
         def log_file?(path, pattern, params = {})
           # Only the first 700 bytes of the file are retrieved to avoid getting entire log file
           # which can be huge (~ 2Go)
-          res = NS::Browser.get(url(path), params.merge(headers: { 'Range' => 'bytes=0-700' }))
+          res = head_and_get(path, [200], get: params.merge(headers: { 'Range' => 'bytes=0-700' }))
 
           res.body =~ pattern ? true : false
         end
