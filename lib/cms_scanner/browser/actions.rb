@@ -7,9 +7,17 @@ module CMSScanner
       # @param [ String ] url
       # @param [ Hash ] params
       #
+      # @return [ Typhoeus::Request ]
+      def forge_request(url, params = {})
+        NS::Browser.instance.forge_request(url, params)
+      end
+
+      # @param [ String ] url
+      # @param [ Hash ] params
+      #
       # @return [ Typhoeus::Response ]
       def get(url, params = {})
-        process(url, params.merge(method: :get))
+        forge_request(url, params.merge(method: :get)).run
       end
 
       # @param [ String ] url
@@ -17,7 +25,7 @@ module CMSScanner
       #
       # @return [ Typhoeus::Response ]
       def post(url, params = {})
-        process(url, params.merge(method: :post))
+        forge_request(url, params.merge(method: :post)).run
       end
 
       # @param [ String ] url
@@ -25,7 +33,7 @@ module CMSScanner
       #
       # @return [ Typhoeus::Response ]
       def head(url, params = {})
-        process(url, params.merge(method: :head))
+        forge_request(url, params.merge(method: :head)).run
       end
 
       # @param [ String ] url
@@ -34,16 +42,6 @@ module CMSScanner
       # @return [ Typhoeus::Response ]
       def get_and_follow_location(url, params = {})
         get(url, { followlocation: true, maxredirs: 3 }.merge(params))
-      end
-
-      protected
-
-      # @param [ String ] url
-      # @param [ Hash ] params
-      #
-      # @return [ Typhoeus::Response ]
-      def process(url, params)
-        NS::Browser.instance.forge_request(url, params).run
       end
     end
   end

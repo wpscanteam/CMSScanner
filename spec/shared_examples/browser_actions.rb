@@ -4,6 +4,10 @@ shared_examples CMSScanner::Browser::Actions do
   let(:url)     { 'http://example.com/file.txt' }
   let(:browser) { CMSScanner::Browser }
 
+  describe '#forge_request' do
+    # Tested from #get etc
+  end
+
   describe '#get, #post, #head' do
     %i[get post head].each do |method|
       it 'calls the method and returns a Typhoeus::Response' do
