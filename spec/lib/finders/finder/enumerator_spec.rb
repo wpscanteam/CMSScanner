@@ -15,15 +15,15 @@ describe CMSScanner::Finders::Finder::Enumerator do
   its(:valid_response_codes)       { should eql [200] }
   its(:full_request_params)        { should eql({}) }
 
-  describe '#check_full_response' do
+  describe '#maybe_get_full_response' do
     let(:head_res)      { Typhoeus::Response.new(code: 200, effective_url: effective_url) }
-    let(:effective_url) { target.url('check_full_response_spec') }
+    let(:effective_url) { target.url('maybe_get_full_response') }
     let(:opts)          { {} }
 
     context 'when check_full_response is false/nil' do
-      it 'returns nil' do
-        expect(finder.check_full_response(head_res, {})).to eql nil
-        expect(finder.check_full_response(head_res, check_full_response: false)).to eql nil
+      it 'returns the head response' do
+        expect(finder.maybe_get_full_response(head_res, {})).to eql head_res
+        expect(finder.maybe_get_full_response(head_res, check_full_response: false)).to eql head_res
       end
     end
 
@@ -37,7 +37,7 @@ describe CMSScanner::Finders::Finder::Enumerator do
         it 'returns nil' do
           expect(target).to receive(:homepage_or_404?).and_return(true)
 
-          expect(finder.check_full_response(head_res, opts)).to eql nil
+          expect(finder.maybe_get_full_response(head_res, opts)).to eql nil
         end
       end
 
@@ -50,7 +50,7 @@ describe CMSScanner::Finders::Finder::Enumerator do
           let(:body) { 'should be ignored' }
 
           it 'returns nil' do
-            expect(finder.check_full_response(head_res, opts)).to eql nil
+            expect(finder.maybe_get_full_response(head_res, opts)).to eql nil
           end
         end
 
@@ -58,7 +58,7 @@ describe CMSScanner::Finders::Finder::Enumerator do
           let(:body) { 'should pass' }
 
           it 'returns the GET response' do
-            res = finder.check_full_response(head_res, opts)
+            res = finder.maybe_get_full_response(head_res, opts)
 
             expect(res).to be_a Typhoeus::Response
             expect(res.request.options[:method]).to eql :get
@@ -71,7 +71,7 @@ describe CMSScanner::Finders::Finder::Enumerator do
         before { expect(target).to receive(:homepage_or_404?).and_return(false) }
 
         it 'returns the GET response' do
-          res = finder.check_full_response(head_res, opts)
+          res = finder.maybe_get_full_response(head_res, opts)
 
           expect(res).to be_a Typhoeus::Response
           expect(res.request.options[:method]).to eql :get
@@ -86,8 +86,8 @@ describe CMSScanner::Finders::Finder::Enumerator do
       context 'when the head_res status is not in the array' do
         let(:head_res) { Typhoeus::Response.new(code: 400, effective_url: effective_url) }
 
-        it 'returns nil' do
-          expect(finder.check_full_response(head_res, opts)).to eql nil
+        it 'returns the HEAD response' do
+          expect(finder.maybe_get_full_response(head_res, opts)).to eql head_res
         end
       end
 
@@ -101,7 +101,37 @@ describe CMSScanner::Finders::Finder::Enumerator do
         end
 
         it 'returns the GET response' do
-          res = finder.check_full_response(head_res, opts)
+          res = finder.maybe_get_full_response(head_res, opts)
+
+          expect(res).to be_a Typhoeus::Response
+          expect(res.request.options[:method]).to eql :get
+          expect(res.body).to eql 'body'
+        end
+      end
+    end
+
+    context 'when check_full_response is a status code (string)' do
+      let(:opts) { super().merge(check_full_response: 200) }
+
+      context 'when the head_res status has not the same status' do
+        let(:head_res) { Typhoeus::Response.new(code: 400, effective_url: effective_url) }
+
+        it 'returns the HEAD response' do
+          expect(finder.maybe_get_full_response(head_res, opts)).to eql head_res
+        end
+      end
+
+      context 'when the head_res status has the same status' do
+        let(:head_res) { Typhoeus::Response.new(code: 200, effective_url: effective_url) }
+
+        before do
+          stub_request(:get, effective_url).to_return(body: 'body')
+
+          expect(target).to receive(:homepage_or_404?).and_return(false)
+        end
+
+        it 'returns the GET response' do
+          res = finder.maybe_get_full_response(head_res, opts)
 
           expect(res).to be_a Typhoeus::Response
           expect(res.request.options[:method]).to eql :get
@@ -188,9 +218,9 @@ describe CMSScanner::Finders::Finder::Enumerator do
           end
         end
 
-        context 'when #check_full_response returns nil' do
+        context 'when #maybe_get_full_response returns nil' do
           it 'does not yield anything' do
-            expect(finder).to receive(:check_full_response).twice.and_return(nil)
+            expect(finder).to receive(:maybe_get_full_response).twice.and_return(nil)
 
             expect { |b| finder.enumerate(target_urls, opts, &b) }.to_not yield_control
           end
@@ -199,7 +229,7 @@ describe CMSScanner::Finders::Finder::Enumerator do
         context 'when #check_full_response' do
           it 'yields the GET responses' do
             expect(finder)
-              .to receive(:check_full_response)
+              .to receive(:maybe_get_full_response)
               .twice
               .and_return(Typhoeus::Response.new(code: 200))
 

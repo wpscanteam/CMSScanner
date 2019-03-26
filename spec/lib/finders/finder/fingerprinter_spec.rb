@@ -9,23 +9,23 @@ describe CMSScanner::Finders::Finder::Fingerprinter do
   subject(:finder) { DummyFingerprinterFinder.new(target) }
   let(:target)     { CMSScanner::Target.new('http://e.org/') }
 
-  its(:request_params) { should eql({}) }
-
   describe '#fingerprint' do
     let(:fingerprints) do
       {
-        target.url('f1.css') => {
+        'f1.css' => {
           finder.hexdigest('f1_body') => 'v1'
         },
-        target.url('f2.js') => {
+        'f2.js' => {
           finder.hexdigest('f2_body') => %w[v1 v2],
           finder.hexdigest('f2_2_body') => %w[v3]
         }
       }
     end
 
+    before { expect(target).to receive(:head_or_get_params).and_return(method: :head) }
+
     context 'when no matches' do
-      before { stub_request(:get, /.*/).to_return(body: '404') }
+      before { stub_request(:head, /.*/).to_return(status: 404) }
 
       it 'does not yield anything' do
         expect { |b| finder.fingerprint(fingerprints, &b) }.not_to yield_control
@@ -34,7 +34,13 @@ describe CMSScanner::Finders::Finder::Fingerprinter do
 
     context 'when matches' do
       before do
+        # Used to simulate a custom 404 homepage with status 200
+        stub_request(:get, /.*/).to_return(body: '404 body')
+
+        stub_request(:head, target.url('f1.css'))
         stub_request(:get, target.url('f1.css')).to_return(body: 'f1_body')
+
+        stub_request(:head, target.url('f2.js'))
         stub_request(:get, target.url('f2.js')).to_return(body: 'f2_body')
       end
 

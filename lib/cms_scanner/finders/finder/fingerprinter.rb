@@ -5,6 +5,8 @@ module CMSScanner
     class Finder
       # Module to provide an easy way to fingerprint things such as versions
       module Fingerprinter
+        include Enumerator
+
         # @param [ Hash ] fingerprints The fingerprints
         # Format should be like the following:
         # {
@@ -25,31 +27,15 @@ module CMSScanner
         # @yield [ Mixed, String, String ] version/s, url, hash The version associated to the
         #                                                       fingerprint of the url
         def fingerprint(fingerprints, opts = {})
-          create_progress_bar(opts.merge(total: fingerprints.size))
+          enum_opts = opts.merge(check_full_response: 200)
 
-          fingerprints.each do |path, f|
-            url     = target.url(path.dup)
-            request = browser.forge_request(url, request_params)
+          enumerate(fingerprints.transform_keys { |k| target.url(k) }, enum_opts) do |res, fingerprint|
+            md5sum = hexdigest(res.body)
 
-            request.on_complete do |res|
-              progress_bar.increment
+            next unless fingerprint.key?(md5sum)
 
-              md5sum = hexdigest(res.body)
-
-              next unless f.key?(md5sum)
-
-              yield f[md5sum], url, md5sum
-            end
-
-            hydra.queue(request)
+            yield fingerprint[md5sum], res.effective_url, md5sum
           end
-
-          hydra.run
-        end
-
-        # @return [ Hash ]
-        def request_params
-          {}
         end
 
         # @return [ String ] The hashed value for the given body

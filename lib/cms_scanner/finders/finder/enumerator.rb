@@ -38,13 +38,9 @@ module CMSScanner
 
               next if opts[:exclude_content] && head_res.response_headers&.match(opts[:exclude_content])
 
-              if opts[:check_full_response]
-                full_res = check_full_response(head_res, opts)
+              head_or_full_res = maybe_get_full_response(head_res, opts)
 
-                yield full_res, id if full_res
-              else
-                yield head_res, id
-              end
+              yield head_or_full_res, id if head_or_full_res
             end
 
             hydra.queue(request)
@@ -57,11 +53,10 @@ module CMSScanner
         # @param [ Hash ] opts
         #
         # @return [ Typhoeus::Response, nil ]
-        def check_full_response(head_res, opts)
-          return unless opts[:check_full_response] == true ||
-                        [*opts[:check_full_response]].include?(head_res.code)
+        def maybe_get_full_response(head_res, opts)
+          return head_res unless opts[:check_full_response] == true ||
+                                 [*opts[:check_full_response]].include?(head_res.code)
 
-          # ? full_res = NS::Browser.get(head_res.request.url, full_request_params)
           full_res = NS::Browser.get(head_res.effective_url, full_request_params)
 
           return if target.homepage_or_404?(full_res) ||
