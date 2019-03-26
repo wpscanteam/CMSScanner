@@ -5,28 +5,46 @@ module CMSScanner
     class Finder
       # Module to provide an easy way to enumerate items such as plugins, themes etc
       module Enumerator
+        # @return [ Hash ]
+        def head_or_get_request_params
+          # Disabling the cache, as it causes a 'stack level too deep' exception
+          # with a large number of requests.
+          # See https://github.com/typhoeus/typhoeus/issues/408
+          @head_or_get_request_params ||= target.head_or_get_params.merge(cache_ttl: 0)
+        end
+
+        # @return [ Array<Integer> ]
+        def valid_response_codes
+          @valid_response_codes ||= [200]
+        end
+
         # @param [ Hash ] The target urls
         # @param [ Hash ] opts
         # @option opts [ Boolean ] :show_progression Wether or not to display the progress bar
         # @option opts [ Regexp ] :exclude_content
+        # @option opts [ Boolean, Array, String ] :check_full_response
         #
         # @yield [ Typhoeus::Response, String ]
-        def enumerate(target_urls, opts = {})
-          create_progress_bar(opts.merge(total: target_urls.size))
+        def enumerate(urls, opts = {})
+          create_progress_bar(opts.merge(total: urls.size))
 
-          target_urls.each do |url, id|
-            request = browser.forge_request(url, request_params)
+          urls.each do |url, id|
+            request = browser.forge_request(url, head_or_get_request_params)
 
-            request.on_complete do |res|
+            request.on_complete do |head_res|
               progress_bar.increment
 
-              next if target.homepage_or_404?(res)
+              next unless valid_response_codes.include?(head_res.code)
 
-              if opts[:exclude_content]
-                next if res.response_headers&.match(opts[:exclude_content]) || res.body.match(opts[:exclude_content])
+              next if opts[:exclude_content] && head_res.response_headers&.match(opts[:exclude_content])
+
+              if opts[:check_full_response]
+                full_res = check_full_response(head_res, opts)
+
+                yield full_res, id if full_res
+              else
+                yield head_res, id
               end
-
-              yield res, id
             end
 
             hydra.queue(request)
@@ -35,12 +53,26 @@ module CMSScanner
           hydra.run
         end
 
+        # @param [ Typhoeus::Response ] head_res
+        # @param [ Hash ] opts
+        #
+        # @return [ Typhoeus::Response, nil ]
+        def check_full_response(head_res, opts)
+          return unless opts[:check_full_response] == true ||
+                        [*opts[:check_full_response]].include?(head_res.code)
+
+          # ? full_res = NS::Browser.get(head_res.request.url, full_request_params)
+          full_res = NS::Browser.get(head_res.effective_url, full_request_params)
+
+          return if target.homepage_or_404?(full_res) ||
+                    opts[:exclude_content] && full_res.body&.match(opts[:exclude_content])
+
+          full_res
+        end
+
         # @return [ Hash ]
-        def request_params
-          # disabling the cache, as it causes a 'stack level too deep' exception
-          # with a large number of requests :/
-          # See https://github.com/typhoeus/typhoeus/issues/408
-          { cache_ttl: 0 }
+        def full_request_params
+          @full_request_params ||= {}
         end
       end
     end

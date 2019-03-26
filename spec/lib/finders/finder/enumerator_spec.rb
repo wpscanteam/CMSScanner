@@ -9,13 +9,109 @@ describe CMSScanner::Finders::Finder::Enumerator do
   subject(:finder) { DummyEnumeratorFinder.new(target) }
   let(:target)     { CMSScanner::Target.new('http://e.org') }
 
-  its(:request_params) { should eql(cache_ttl: 0) }
+  before { allow(target).to receive(:head_or_get_params).and_return(method: :head) }
 
-  describe '#enumerate' do
-    before do
-      target_urls.each_key { |url| stub_request(:get, url).to_return(status: 200, body: 'rspec') }
+  its(:head_or_get_request_params) { should eql(method: :head, cache_ttl: 0) }
+  its(:valid_response_codes)       { should eql [200] }
+  its(:full_request_params)        { should eql({}) }
+
+  describe '#check_full_response' do
+    let(:head_res)      { Typhoeus::Response.new(code: 200, effective_url: effective_url) }
+    let(:effective_url) { target.url('check_full_response_spec') }
+    let(:opts)          { {} }
+
+    context 'when check_full_response is false/nil' do
+      it 'returns nil' do
+        expect(finder.check_full_response(head_res, {})).to eql nil
+        expect(finder.check_full_response(head_res, check_full_response: false)).to eql nil
+      end
     end
 
+    context 'when check_full_response is true' do
+      let(:opts) { super().merge(check_full_response: true) }
+      let(:body) { '' }
+
+      before { stub_request(:get, effective_url).to_return(body: body) }
+
+      context 'when the body matches the 404 homepage' do
+        it 'returns nil' do
+          expect(target).to receive(:homepage_or_404?).and_return(true)
+
+          expect(finder.check_full_response(head_res, opts)).to eql nil
+        end
+      end
+
+      context 'when the exclude_content is set' do
+        before { expect(target).to receive(:homepage_or_404?).and_return(false) }
+
+        let(:opts) { super().merge(exclude_content: /ignored/) }
+
+        context 'when the body matches' do
+          let(:body) { 'should be ignored' }
+
+          it 'returns nil' do
+            expect(finder.check_full_response(head_res, opts)).to eql nil
+          end
+        end
+
+        context 'when the body does not match' do
+          let(:body) { 'should pass' }
+
+          it 'returns the GET response' do
+            res = finder.check_full_response(head_res, opts)
+
+            expect(res).to be_a Typhoeus::Response
+            expect(res.request.options[:method]).to eql :get
+            expect(res.body).to eql body
+          end
+        end
+      end
+
+      context 'when not 404 and no exclude_content' do
+        before { expect(target).to receive(:homepage_or_404?).and_return(false) }
+
+        it 'returns the GET response' do
+          res = finder.check_full_response(head_res, opts)
+
+          expect(res).to be_a Typhoeus::Response
+          expect(res.request.options[:method]).to eql :get
+          expect(res.body).to eql body
+        end
+      end
+    end
+
+    context 'when check_full_response is an array of status codes' do
+      let(:opts) { super().merge(check_full_response: [200]) }
+
+      context 'when the head_res status is not in the array' do
+        let(:head_res) { Typhoeus::Response.new(code: 400, effective_url: effective_url) }
+
+        it 'returns nil' do
+          expect(finder.check_full_response(head_res, opts)).to eql nil
+        end
+      end
+
+      context 'when the head_res status is in the array' do
+        let(:head_res) { Typhoeus::Response.new(code: 200, effective_url: effective_url) }
+
+        before do
+          stub_request(:get, effective_url).to_return(body: 'body')
+
+          expect(target).to receive(:homepage_or_404?).and_return(false)
+        end
+
+        it 'returns the GET response' do
+          res = finder.check_full_response(head_res, opts)
+
+          expect(res).to be_a Typhoeus::Response
+          expect(res.request.options[:method]).to eql :get
+          expect(res.body).to eql 'body'
+        end
+      end
+    end
+  end
+
+  describe '#enumerate' do
     let(:target_urls) do
       {
         target.url('1') => 1,
@@ -23,59 +119,45 @@ describe CMSScanner::Finders::Finder::Enumerator do
       }
     end
 
-    context 'when no opts' do
-      let(:opts) { {} }
+    let(:opts) { {} }
 
-      context 'when response are the homepage or custom 404' do
-        before { expect(finder.target).to receive(:homepage_or_404?).twice.and_return(true) }
+    context ' when no opts' do
+      context 'when all HEADS are 404' do
+        before do
+          target_urls.each_key do |url|
+            stub_request(:head, url).to_return(status: 404)
+          end
+        end
 
         it 'does not yield anything' do
           expect { |b| finder.enumerate(target_urls, opts, &b) }.to_not yield_control
         end
       end
 
-      context 'when not the hompage or 404' do
-        before { expect(finder.target).to receive(:homepage_or_404?).twice }
+      context 'when some pages are 200 (default valid_response_codes)' do
+        before do
+          stub_request(:head, target_urls.key(1)).to_return(status: 404)
+
+          stub_request(:head, target_urls.key(2)).to_return(status: 200)
+          stub_request(:get, target_urls.key(2)).to_return(status: 200, body: 'rspec')
+        end
 
         it 'yield the expected items' do
-          expect { |b| finder.enumerate(target_urls, opts, &b) }.to yield_successive_args(
-            [Typhoeus::Response, 1], [Typhoeus::Response, 2]
-          )
+          expect { |b| finder.enumerate(target_urls, opts, &b) }.to yield_with_args(Typhoeus::Response, 2)
         end
       end
     end
 
     context 'when opts' do
       context 'when :exclude_content' do
-        before { expect(finder.target).to receive(:homepage_or_404?).twice }
-
-        context 'when body matches' do
-          let(:opts) { { exclude_content: /spec/i } }
-
-          it 'does not yield anything' do
-            expect { |b| finder.enumerate(target_urls, opts, &b) }.to_not yield_control
-          end
-        end
-
-        context 'when body does not match' do
-          let(:opts) { { exclude_content: /not/i } }
-
-          it 'yield the expected items' do
-            expect { |b| finder.enumerate(target_urls, opts, &b) }.to yield_successive_args(
-              [Typhoeus::Response, 1], [Typhoeus::Response, 2]
-            )
+        before do
+          target_urls.each_key do |url|
+            stub_request(:head, url).to_return(status: 200, headers: { 'Key' => 'aa' })
           end
         end
 
         context 'when header matches' do
-          let(:opts) { { exclude_content: %r{Location: /aa}i } }
-
-          before do
-            target_urls.each_key do |url|
-              stub_request(:get, url).to_return(status: 301,
-                                                headers: { 'Location' => '/aa' })
-            end
-          end
+          let(:opts) { super().merge(exclude_content: /Key: aa/i) }
 
           it 'does not yield anything' do
             expect { |b| finder.enumerate(target_urls, opts, &b) }.to_not yield_control
@@ -83,9 +165,44 @@ describe CMSScanner::Finders::Finder::Enumerator do
         end
 
         context 'when header does not match' do
-          let(:opts) { { exclude_content: /not 301/i } }
+          let(:opts) { super().merge(exclude_content: /not aa/i) }
+
+          before do
+            target_urls.each_key { |url| stub_request(:get, url).to_return(status: 200) }
+          end
 
           it 'yield the expected items' do
+            expect { |b| finder.enumerate(target_urls, opts, &b) }.to yield_successive_args(
+              [Typhoeus::Response, 1], [Typhoeus::Response, 2]
+            )
+          end
+        end
+      end
+
+      context 'when check_full_response' do
+        let(:opts) { super().merge(check_full_response: true) }
+
+        before do
+          target_urls.each_key do |url|
+            stub_request(:head, url).to_return(status: 200)
+          end
+        end
+
+        context 'when #check_full_response returns nil' do
+          it 'does not yield anything' do
+            expect(finder).to receive(:check_full_response).twice.and_return(nil)
+
+            expect { |b| finder.enumerate(target_urls, opts, &b) }.to_not yield_control
+          end
+        end
+
+        context 'when #check_full_response' do
+          it 'yields the GET responses' do
+            expect(finder)
+              .to receive(:check_full_response)
+              .twice
+              .and_return(Typhoeus::Response.new(code: 200))
+
             expect { |b| finder.enumerate(target_urls, opts, &b) }.to yield_successive_args(
               [Typhoeus::Response, 1], [Typhoeus::Response, 2]
             )
