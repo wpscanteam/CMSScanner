@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Gems
 require 'cms_scanner'
 require 'yajl/json_gem'

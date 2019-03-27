@@ -1,1 +1,3 @@
-require_relative 'controllers'
+# frozen_string_literal: true
+
+require_relative 'controllers/example'
