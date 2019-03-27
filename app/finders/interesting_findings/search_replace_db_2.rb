@@ -5,13 +5,10 @@ module CMSScanner
     module InterestingFindings
       # SearchReplaceDB2 finder
       class SearchReplaceDB2 < Finder
-        # @return [ String ] The path to the searchreplacedb2 PHP file
-        def path
-          @path ||= 'searchreplacedb2.php'
-        end
-
         # @return [ InterestingFinding ]
         def aggressive(_opts = {})
+          path = 'searchreplacedb2.php'
+
           return unless target.head_and_get(path).body =~ /by interconnect/i
 
           NS::Model::InterestingFinding.new(target.url(path),

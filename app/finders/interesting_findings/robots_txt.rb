@@ -5,15 +5,10 @@ module CMSScanner
     module InterestingFindings
       # Robots.txt finder
       class RobotsTxt < Finder
-        # @return [ String ] The path of the robots.txt file
-        def path
-          @path ||= 'robots.txt'
-        end
-
         # @return [ InterestingFinding ]
         def aggressive(_opts = {})
-          # res = NS::Browser.get(url)
-          res = target.head_and_get(path)
+          path = 'robots.txt'
+          res  = target.head_and_get(path)
 
           return unless res&.code == 200 && res.body =~ /(?:user-agent|(?:dis)?allow):/i
 
