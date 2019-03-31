@@ -3,7 +3,7 @@
 module CMSScanner
   # Controllers Container
   class Controllers < Array
-    attr_reader :option_parser
+    attr_reader :option_parser, :running
 
     # @param [ OptParsevalidator::OptParser ] options_parser
     def initialize(option_parser = OptParseValidator::OptParser.new(nil, 40))
@@ -43,11 +43,20 @@ module CMSScanner
 
       Timeout.timeout(parsed_options[:max_scan_duration], NS::Error::MaxScanDurationReached) do
         each(&:before_scan)
+
+        @running = true
+
         each(&:run)
-        # Reverse is used here as the app/controllers/core#after_scan finishes the output
-        # and must be the last one to be executed
-        reverse_each(&:after_scan)
       end
+    ensure
+      Browser.instance.hydra.abort
+
+      # Reverse is used here as the app/controllers/core#after_scan finishes the output
+      # and must be the last one to be executed. It also guarantee that stats will be output
+      # even when an error occurs, which could help in debugging.
+      # However, the #after_scan methods are only executed if the scan was running, and won't be
+      # called when there is a CLI error, or just -h/--hh/--version for example
+      reverse_each(&:after_scan) if running
     end
   end
 end
