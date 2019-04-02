@@ -12,7 +12,7 @@ describe CMSScanner::Scan do
   describe '#new, #controllers' do
     its(:controllers) { should eq([controller::Core.new]) }
 
-    it 'should set the CMSScanner.start_memory' do
+    it 'sets the CMSScanner.start_memory' do
       expect(CMSScanner.start_memory).to be_positive
     end
   end
