@@ -13,6 +13,10 @@ describe CMSScanner::Scan do
     its(:controllers) { should eq([controller::Core.new]) }
 
     it 'sets the CMSScanner.start_memory' do
+      CMSScanner.start_memory = 0 # to avoid getting it from previous specs
+
+      described_class.new
+
       expect(CMSScanner.start_memory).to be_positive
     end
   end
