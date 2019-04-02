@@ -104,6 +104,16 @@ module CMSScanner
       @@total_data_received = value
     end
 
+    # @return [ Integer ] The memory at the start of the scan (when Scan.new), in B
+    def start_memory
+      @@start_memory ||= 0
+    end
+
+    # @param [ Integer ] value
+    def start_memory=(value)
+      @@start_memory = value
+    end
+
     # The lowercase name of the scanner
     # Mainly used in directory paths like the default cookie-jar file and
     # path to load the cli options from files

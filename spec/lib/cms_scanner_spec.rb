@@ -50,6 +50,12 @@ describe CMSScanner do
     end
   end
 
+  describe '#start_memory' do
+    it 'should be set by Scan.new' do
+      expect(CMSScanner.start_memory).to be_positive
+    end
+  end
+
   describe '#app_name' do
     it 'returns the excpected string' do
       expect(CMSScanner.app_name).to eql 'cms_scanner'

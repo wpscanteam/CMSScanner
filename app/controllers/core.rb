@@ -60,8 +60,8 @@ module CMSScanner
       end
 
       def run
-        @start_time   = Time.now
-        @start_memory = memory_usage
+        @start_time = Time.now
+        @start_memory = NS.start_memory
 
         output('started', url: target.url, effective_url: target.homepage_url)
       end

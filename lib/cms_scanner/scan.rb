@@ -6,6 +6,8 @@ module CMSScanner
     attr_reader :run_error
 
     def initialize
+      NS.start_memory = memory_usage
+
       controllers << NS::Controller::Core.new
 
       exit_hook
