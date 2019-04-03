@@ -2,5 +2,5 @@
 
 # Version
 module CMSScanner
-  VERSION = '0.0.43.1'
+  VERSION = '0.0.43.2'
 end
