@@ -38,9 +38,7 @@ module CMSScanner
     # @param [ Typhoeus::Response, String ] page
     # @return [ Boolean ] Wether or not the page is a the homepage or a 404 based on its md5sum
     def homepage_or_404?(page)
-      md5sum = self.class.page_hash(page)
-
-      homepage_and_404_hashes.include?(md5sum)
+      homepage_and_404_hashes.include?(self.class.page_hash(page))
     end
 
     protected
