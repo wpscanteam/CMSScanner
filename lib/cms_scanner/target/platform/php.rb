@@ -20,7 +20,7 @@ module CMSScanner
           # which can be huge (~ 2Go)
           res = head_and_get(path, [200], get: params.merge(headers: { 'Range' => 'bytes=0-700' }))
 
-          res.body =~ pattern ? true : false
+          res.body&.match?(pattern) ? true : false
         end
 
         # @param [ String ] path

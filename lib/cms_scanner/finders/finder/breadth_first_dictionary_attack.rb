@@ -103,7 +103,7 @@ module CMSScanner
                     'Request timed out.'
                   elsif response.code.zero?
                     "No response from remote server. WAF/IPS? (#{response.return_message})"
-                  elsif response.code.to_s =~ /^50/
+                  elsif /^50/.match?(response.code.to_s)
                     'Server error, try reducing the number of threads.'
                   else
                     "Unknown response received Code: #{response.code}\nBody: #{response.body}"

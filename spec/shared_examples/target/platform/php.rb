@@ -2,7 +2,7 @@
 
 shared_examples CMSScanner::Target::Platform::PHP do
   before do
-    if path =~ /\.log\z/i
+    if /\.log\z/i.match?(path)
       expect(target).to receive(:head_or_get_params).and_return(method: :head)
 
       stub_request(:head, target.url(path)).and_return(status: head_status)
