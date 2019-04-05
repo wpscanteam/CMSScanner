@@ -24,6 +24,7 @@ require 'cms_scanner/public_suffix/domain' # Adds a Domain#match method and logi
 require 'cms_scanner/numeric' # Adds a Numeric#bytes_to_human
 # Custom Libs
 require 'cms_scanner/scan'
+require 'cms_scanner/parsed_cli'
 require 'cms_scanner/helper'
 require 'cms_scanner/exit_code'
 require 'cms_scanner/errors'

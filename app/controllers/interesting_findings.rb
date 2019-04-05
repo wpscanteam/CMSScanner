@@ -15,7 +15,7 @@ module CMSScanner
       end
 
       def run
-        mode = parsed_options[:interesting_findings_detection] || parsed_options[:detection_mode]
+        mode = NS::ParsedCli.interesting_findings_detection || NS::ParsedCli.detection_mode
         findings = target.interesting_findings(mode: mode)
 
         output('findings', findings: findings) unless findings.empty?

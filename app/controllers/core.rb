@@ -7,12 +7,12 @@ module CMSScanner
     # Core Controller
     class Core < Base
       def setup_cache
-        return unless parsed_options[:cache_dir]
+        return unless NS::ParsedCli.cache_dir
 
-        storage_path = File.join(parsed_options[:cache_dir], Digest::MD5.hexdigest(target.url))
+        storage_path = File.join(NS::ParsedCli.cache_dir, Digest::MD5.hexdigest(target.url))
 
         Typhoeus::Config.cache = Cache::Typhoeus.new(storage_path)
-        Typhoeus::Config.cache.clean if parsed_options[:clear_cache]
+        Typhoeus::Config.cache.clean if NS::ParsedCli.clear_cache
       end
 
       def before_scan
@@ -23,12 +23,12 @@ module CMSScanner
       end
 
       def maybe_output_banner_help_and_version
-        output('banner') if parsed_options[:banner]
-        output('help', help: option_parser.simple_help, simple: true) if parsed_options[:help]
-        output('help', help: option_parser.full_help, simple: false) if parsed_options[:hh]
-        output('version') if parsed_options[:version]
+        output('banner') if NS::ParsedCli.banner
+        output('help', help: option_parser.simple_help, simple: true) if NS::ParsedCli.help
+        output('help', help: option_parser.full_help, simple: false) if NS::ParsedCli.hh
+        output('version') if NS::ParsedCli.version
 
-        exit(NS::ExitCode::OK) if parsed_options[:help] || parsed_options[:hh] || parsed_options[:version]
+        exit(NS::ExitCode::OK) if NS::ParsedCli.help || NS::ParsedCli.hh || NS::ParsedCli.version
       end
 
       # Checks that the target is accessible, raises related errors otherwise
@@ -43,7 +43,7 @@ module CMSScanner
         when 401
           raise Error::HTTPAuthRequired
         when 403
-          raise Error::AccessForbidden, parsed_options[:random_user_agent]
+          raise Error::AccessForbidden, NS::ParsedCli.random_user_agent
         when 407
           raise Error::ProxyAuthRequired
         end
@@ -54,7 +54,7 @@ module CMSScanner
 
         return if target.in_scope?(effective_url)
 
-        raise Error::HTTPRedirect, effective_url unless parsed_options[:ignore_main_redirect]
+        raise Error::HTTPRedirect, effective_url unless NS::ParsedCli.ignore_main_redirect
 
         target.homepage_res = res
       end

@@ -14,7 +14,7 @@ module CMSScanner
     def initialize(parsed_options = {})
       self.throttle = 0
 
-      load_options(parsed_options)
+      load_options(parsed_options.dup)
     end
 
     private_class_method :new

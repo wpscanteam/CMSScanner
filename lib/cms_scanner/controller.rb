@@ -22,15 +22,14 @@ module CMSScanner
       # Reset all the class attibutes
       # Currently only used in specs
       def self.reset
-        @@target         = nil
-        @@parsed_options = nil
-        @@datastore      = nil
-        @@formatter      = nil
+        @@target    = nil
+        @@datastore = nil
+        @@formatter = nil
       end
 
       # @return [ Target ]
       def target
-        @@target ||= NS::Target.new(parsed_options[:url], parsed_options)
+        @@target ||= NS::Target.new(NS::ParsedCli.url, NS::ParsedCli.options)
       end
 
       # @param [ OptParsevalidator::OptParser ] parser
@@ -43,21 +42,6 @@ module CMSScanner
         @@option_parser
       end
 
-      # Set the parsed options and initialize the browser
-      # with them
-      #
-      # @param [ Hash ] options
-      def self.parsed_options=(options)
-        @@parsed_options = options
-
-        NS::Browser.instance(options)
-      end
-
-      # @return [ Hash ]
-      def parsed_options
-        @@parsed_options ||= {}
-      end
-
       # @return [ Hash ]
       def datastore
         @@datastore ||= {}
@@ -65,7 +49,7 @@ module CMSScanner
 
       # @return [ Formatter::Base ]
       def formatter
-        @@formatter ||= NS::Formatter.load(parsed_options[:format], datastore[:views])
+        @@formatter ||= NS::Formatter.load(NS::ParsedCli.format, datastore[:views])
       end
 
       # @see Formatter#output
@@ -84,7 +68,7 @@ module CMSScanner
 
       # @return [ Boolean ]
       def user_interaction?
-        formatter.user_interaction? && !parsed_options[:output]
+        formatter.user_interaction? && !NS::ParsedCli.output
       end
 
       # @return [ String ]
@@ -108,7 +92,7 @@ module CMSScanner
 
       # @return [ Hash ] All the instance variable keys (and their values) and the verbose value
       def instance_variable_values
-        h = { verbose: parsed_options[:verbose] }
+        h = { verbose: NS::ParsedCli.verbose }
         instance_variables.each do |a|
           s    = a.to_s
           n    = s[1..s.size]

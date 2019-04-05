@@ -57,7 +57,7 @@ describe 'SubScanner' do
   let(:target_url)      { 'http://ex.lo/' }
 
   before do
-    scanner.controllers.first.class.parsed_options = { url: target_url }
+    SubScanner::ParsedCli.options = { url: target_url }
   end
 
   describe '#app_name' do

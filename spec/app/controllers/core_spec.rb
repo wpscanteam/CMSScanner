@@ -1,21 +1,19 @@
 # frozen_string_literal: true
 
 describe CMSScanner::Controller::Core do
-  subject(:core)       { described_class.new }
-  let(:target_url)     { 'http://example.com/' }
-  let(:cli_args)       { "--url #{target_url}" }
-  let(:parsed_options) { rspec_parsed_options(cli_args) }
+  subject(:core)   { described_class.new }
+  let(:target_url) { 'http://example.com/' }
+  let(:cli_args)   { "--url #{target_url}" }
 
   before do
-    CMSScanner::Browser.reset
-    described_class.parsed_options = parsed_options
+    CMSScanner::ParsedCli.options = rspec_parsed_options(cli_args)
   end
 
   describe '#cli_options' do
     its(:cli_options) { should_not be_empty }
     its(:cli_options) { should be_a Array }
 
-    it 'contaisn the expected options' do
+    it 'contains the expected options' do
       expect(core.cli_options.map(&:to_sym)).to match_array(
         %i[
           banner cache_dir cache_ttl clear_cache connect_timeout cookie_jar cookie_string
@@ -37,7 +35,7 @@ describe CMSScanner::Controller::Core do
     context 'when cache_dir' do
       let(:cli_args) { "#{super()} --cache-dir #{CACHE}" }
       let(:cache)    { Typhoeus::Config.cache }
-      let(:storage)  { File.join(parsed_options[:cache_dir], Digest::MD5.hexdigest(target_url)) }
+      let(:storage)  { File.join(CMSScanner::ParsedCli.cache_dir, Digest::MD5.hexdigest(target_url)) }
 
       before { core.setup_cache }
       after  { Typhoeus::Config.cache = nil }
@@ -261,7 +259,7 @@ describe CMSScanner::Controller::Core do
           let(:cli_args) { "#{super()} --proxy-auth user:p@ss" }
 
           it 'raises an error' do
-            expect(CMSScanner::Browser.instance.proxy_auth).to eq(parsed_options[:proxy_auth])
+            expect(CMSScanner::Browser.instance.proxy_auth).to eq(CMSScanner::ParsedCli.proxy_auth)
 
             expect { core.before_scan }.to raise_error(CMSScanner::Error::ProxyAuthRequired)
           end
@@ -273,7 +271,7 @@ describe CMSScanner::Controller::Core do
           let(:cli_args) { "#{super()} --proxy-auth user:pass" }
 
           it 'raises an error' do
-            expect(CMSScanner::Browser.instance.proxy_auth).to eq(parsed_options[:proxy_auth])
+            expect(CMSScanner::Browser.instance.proxy_auth).to eq(CMSScanner::ParsedCli.proxy_auth)
 
             expect { core.before_scan }.to_not raise_error
           end

@@ -4,9 +4,9 @@ module CMSScanner
   module Controller
     class Spec < Base
       def before_scan
-        output('help', help: option_parser.simple_help, simple: true) if parsed_options[:help]
+        output('help', help: option_parser.simple_help, simple: true) if NS::ParsedCli.help
 
-        exit(NS::ExitCode::OK) if parsed_options[:help]
+        exit(NS::ExitCode::OK) if NS::ParsedCli.help
       end
     end
 
@@ -58,7 +58,7 @@ describe CMSScanner::Controllers do
       [base, spec].each { |c| expect(c).to receive(:before_scan).ordered }
       [base, spec].each { |c| expect(c).to receive(:run).ordered }
 
-      expect(hydra).to receive(:abort).ordered
+      expect_any_instance_of(Typhoeus::Hydra).to receive(:abort)
 
       [spec, base].each { |c| expect(c).to receive(:after_scan).ordered }
 
@@ -80,7 +80,7 @@ describe CMSScanner::Controllers do
           .ordered
           .with('help', hash_including(:help, :simple), 'spec')
 
-        expect(hydra).to receive(:abort).ordered
+        expect_any_instance_of(Typhoeus::Hydra).to receive(:abort)
 
         expect { controllers.run }.to raise_error(SystemExit)
       end
@@ -98,7 +98,7 @@ describe CMSScanner::Controllers do
         let(:max_scan_duration) { 1 }
 
         it 'raises an exception' do
-          expect(hydra).to receive(:abort).ordered
+          expect_any_instance_of(Typhoeus::Hydra).to receive(:abort)
 
           controllers.reverse_each { |c| expect(c).to receive(:after_scan).ordered }
 

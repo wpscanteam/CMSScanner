@@ -32,7 +32,7 @@ module CMSScanner
       formatter.output('@scan_aborted',
                        reason: e.is_a?(Interrupt) ? 'Canceled by User' : e.message,
                        trace: e.backtrace,
-                       verbose: controllers.first.parsed_options[:verbose] ||
+                       verbose: NS::ParsedCli.verbose ||
                                 run_error_exit_code == NS::ExitCode::EXCEPTION)
     ensure
       formatter.beautify
@@ -61,10 +61,8 @@ module CMSScanner
       at_exit do
         exit(run_error_exit_code) if run_error
 
-        controller = controllers.first
-
         # The parsed_option[:url] must be checked to avoid raising erros when only -h/-v are given
-        exit(NS::ExitCode::VULNERABLE) if controller.parsed_options[:url] && controller.target.vulnerable?
+        exit(NS::ExitCode::VULNERABLE) if NS::ParsedCli.url && controllers.first.target.vulnerable?
         exit(NS::ExitCode::OK)
       end
     end

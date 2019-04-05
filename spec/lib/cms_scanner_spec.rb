@@ -4,8 +4,8 @@ describe CMSScanner do
   let(:target_url) { 'http://wp.lab/' }
 
   before do
-    scanner = CMSScanner::Scan.new
-    scanner.controllers.first.class.parsed_options = rspec_parsed_options("--url #{target_url}")
+    CMSScanner::Scan.new # To initialize the start memory
+    CMSScanner::ParsedCli.options = rspec_parsed_options("--url #{target_url}")
   end
 
   describe 'typhoeus memoize' do

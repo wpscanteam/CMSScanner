@@ -4,11 +4,9 @@ describe CMSScanner::Controller::InterestingFindings do
   subject(:controller) { described_class.new }
   let(:target_url)     { 'http://example.com/' }
   let(:cli_args)       { "--url #{target_url}" }
-  let(:parsed_options) { rspec_parsed_options(cli_args) }
 
   before do
-    CMSScanner::Browser.reset
-    described_class.parsed_options = parsed_options
+    CMSScanner::ParsedCli.options = rspec_parsed_options(cli_args)
   end
 
   its(:before_scan) { should be_nil }
@@ -27,7 +25,8 @@ describe CMSScanner::Controller::InterestingFindings do
     before do
       expect(controller.target).to receive(:interesting_findings)
         .with(
-          mode: parsed_options[:interesting_findings_detection] || parsed_options[:detection_mode]
+          mode: CMSScanner::ParsedCli.interesting_findings_detection ||
+                CMSScanner::ParsedCli.detection_mode
         ).and_return(stubbed)
     end
 
