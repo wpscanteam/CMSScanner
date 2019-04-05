@@ -38,7 +38,6 @@ module CMSScanner
       NS::ParsedCli.options     = option_parser.results
       first.class.option_parser = option_parser # To be able to output the help when -h/--hh
 
-      # redirect_output_to_file(parsed_options[:output]) if parsed_options[:output]
       redirect_output_to_file(NS::ParsedCli.output) if NS::ParsedCli.output
 
       Timeout.timeout(NS::ParsedCli.max_scan_duration, NS::Error::MaxScanDurationReached) do
