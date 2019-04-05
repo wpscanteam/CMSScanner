@@ -62,6 +62,8 @@ module CMSScanner
 
       @user_agents = []
 
+      # The user_agents_list is managed by the CLI options, with the default being
+      # APP_DIR/user_agents.txt
       File.open(user_agents_list).each do |line|
         next if line == "\n" || line[0, 1] == '#'
 
@@ -69,11 +71,6 @@ module CMSScanner
       end
 
       @user_agents
-    end
-
-    # @return [ String ] The path to the user agents list
-    def user_agents_list
-      @user_agents_list ||= File.join(APP_DIR, 'user_agents.txt')
     end
 
     # @param [ value ] The throttle time in milliseconds

@@ -10,6 +10,8 @@ LineLength:
   Max: 120
 MethodLength:
   Max: 18
+  Exclude:
+    - app/controllers/core/cli_options.rb
 Lint/UriEscapeUnescape:
   Enabled: false
 Metrics/AbcSize:

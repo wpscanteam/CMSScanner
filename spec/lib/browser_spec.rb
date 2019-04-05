@@ -81,8 +81,6 @@ describe CMSScanner::Browser do
           expected = case sym
                      when :user_agent
                        browser.default_user_agent
-                     when :user_agents_list
-                       File.join(CMSScanner::APP_DIR, 'user_agents.txt')
                      when :throttle
                        0.0
                      end
@@ -219,8 +217,11 @@ describe CMSScanner::Browser do
     context 'when --random-user-agent' do
       let(:options) { super().merge(random_user_agent: true) }
 
-      it 'select a random UA in the user_agents' do
+      it 'selects a random UA in the user_agents' do
+        expect(browser).to receive(:user_agents_list).and_return(FIXTURES.join('user_agents.txt'))
+
         expect(browser.user_agent).to_not eql browser.default_user_agent
+
         # Should not pick up a random one each time
         expect(browser.user_agent).to eql browser.user_agent
       end
