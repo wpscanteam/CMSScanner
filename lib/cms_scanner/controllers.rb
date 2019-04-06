@@ -48,7 +48,7 @@ module CMSScanner
         each(&:run)
       end
     ensure
-      Browser.instance.hydra.abort
+      NS::Browser.instance.hydra.abort
 
       # Reverse is used here as the app/controllers/core#after_scan finishes the output
       # and must be the last one to be executed. It also guarantee that stats will be output
