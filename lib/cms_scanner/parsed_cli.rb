@@ -6,16 +6,15 @@ module CMSScanner
   # This is similar to an OpenStruct, but class wise (rather than instance), and with
   # the logic to update the Browser options accordinly
   class ParsedCli
-    @options = {}
-
-    class << self
-      attr_reader :options
+    # @return [ Hash ]
+    def self.options
+      @options ||= {}
     end
 
     # Sets the CLI options, and put them into the Browser as well
     # @param [ Hash ] options
     def self.options=(options)
-      @options = options.dup
+      @options = options.dup || {}
 
       NS::Browser.reset
       NS::Browser.instance(@options)

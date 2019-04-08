@@ -21,6 +21,14 @@ describe CMSScanner::ParsedCli do
         expect(parsed_cli.options).to eql(key: 'value', cache_ttl: 10)
       end
     end
+
+    context 'when passing nil' do
+      it 'sets an empty hash' do
+        parsed_cli.options = nil
+
+        expect(parsed_cli.options).to eql({})
+      end
+    end
   end
 
   describe '.options, .verbose etc' do
