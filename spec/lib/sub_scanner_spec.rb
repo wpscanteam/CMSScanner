@@ -22,6 +22,9 @@ describe 'SubScanner' do
         end
       end
 
+      class ParsedCli < CMSScanner::ParsedCli
+      end
+
       # Testing the override of the register_options_files
       class Controllers < CMSScanner::Controllers
         def register_options_files
@@ -56,77 +59,93 @@ describe 'SubScanner' do
   let(:formatter_class) { SubScanner::Formatter }
   let(:target_url)      { 'http://ex.lo/' }
 
-  before do
-    SubScanner::ParsedCli.options = { url: target_url }
-  end
+  context 'when no CLI options given' do
+    it 'runs the controlllers and calls the formatter in the correct order' do
+      expect(scanner.controllers).to receive(:run).ordered.and_call_original
 
-  describe '#app_name' do
-    it 'returns the correct app_name' do
-      expect(SubScanner.app_name).to eql 'subscanner'
+      expect(scanner.formatter).to receive(:output)
+        .ordered
+        .with('@usage', msg: 'One of the following options is required: url, help, hh, version')
+
+      expect(scanner.formatter).to receive(:beautify).ordered
+
+      scanner.run
     end
   end
 
-  describe 'Browser#default_user_agent' do
-    it 'returns the correct user_agent' do
-      expect(SubScanner::Browser.instance.default_user_agent).to eql 'SubScanner v1.0-Spec'
+  context 'when CLI options provided' do
+    before do
+      SubScanner::ParsedCli.options = { url: target_url }
     end
-  end
 
-  describe 'Controllers' do
-    describe '#target' do
-      it 'loads the overrided Target class' do
-        target = scanner.controllers.first.target
-
-        expect(target).to be_a SubScanner::Target
-        expect(target).to respond_to(:new_method)
-        expect(target.new_method).to eq 'working'
-        expect(target.url).to eql target_url
+    describe '#app_name' do
+      it 'returns the correct app_name' do
+        expect(SubScanner.app_name).to eql 'subscanner'
       end
     end
 
-    describe '#register_options_files' do
-      let(:options_file_path) { '.subscanner/rspec.yml' }
-
-      it 'register the correct file' do
-        allow(File).to receive(:exist?).and_call_original
-        allow(File).to receive(:exist?).with(options_file_path).and_return(true)
-
-        option_parser = SubScanner::Scan.new.controllers.option_parser
-
-        expect(option_parser.options_files.map(&:path)).to eql [options_file_path]
+    describe 'Browser#default_user_agent' do
+      it 'returns the correct user_agent' do
+        expect(SubScanner::Browser.instance.default_user_agent).to eql 'SubScanner v1.0-Spec'
       end
     end
-  end
 
-  describe 'Controller::Base#tmp_directory' do
-    it 'returns the expected value' do
-      expect(scanner.controllers.first.tmp_directory).to eql '/tmp/subscanner'
-    end
-  end
+    describe 'Controllers' do
+      describe '#target' do
+        it 'loads the overrided Target class' do
+          target = scanner.controllers.first.target
 
-  describe 'Formatter' do
-    it_behaves_like CMSScanner::Formatter::ClassMethods do
-      subject(:formatter) { formatter_class }
-    end
+          expect(target).to be_a SubScanner::Target
+          expect(target).to respond_to(:new_method)
+          expect(target.new_method).to eq 'working'
+          expect(target.url).to eql target_url
+        end
+      end
 
-    describe '.load' do
-      it 'adds the #custom method for all formatters' do
-        formatter_class.availables.each do |format|
-          expect(formatter_class.load(format).custom).to eql 'It Works!'
+      describe '#register_options_files' do
+        let(:options_file_path) { '.subscanner/rspec.yml' }
+
+        it 'register the correct file' do
+          allow(File).to receive(:exist?).and_call_original
+          allow(File).to receive(:exist?).with(options_file_path).and_return(true)
+
+          option_parser = SubScanner::Scan.new.controllers.option_parser
+
+          expect(option_parser.options_files.map(&:path)).to eql [options_file_path]
         end
       end
     end
 
-    describe '#views_directories' do
-      it 'returns the expected paths' do
-        expect(scanner.formatter.views_directories).to eql(
-          [
-            CMSScanner::APP_DIR, SubScanner::APP_DIR,
-            File.join(Dir.home, '.subscanner'), File.join(Dir.pwd, '.subscanner')
-          ].reduce([]) do |a, e|
-            a << File.join(e, 'views')
+    describe 'Controller::Base#tmp_directory' do
+      it 'returns the expected value' do
+        expect(scanner.controllers.first.tmp_directory).to eql '/tmp/subscanner'
+      end
+    end
+
+    describe 'Formatter' do
+      it_behaves_like CMSScanner::Formatter::ClassMethods do
+        subject(:formatter) { formatter_class }
+      end
+
+      describe '.load' do
+        it 'adds the #custom method for all formatters' do
+          formatter_class.availables.each do |format|
+            expect(formatter_class.load(format).custom).to eql 'It Works!'
           end
-        )
+        end
+      end
+
+      describe '#views_directories' do
+        it 'returns the expected paths' do
+          expect(scanner.formatter.views_directories).to eql(
+            [
+              CMSScanner::APP_DIR, SubScanner::APP_DIR,
+              File.join(Dir.home, '.subscanner'), File.join(Dir.pwd, '.subscanner')
+            ].reduce([]) do |a, e|
+              a << File.join(e, 'views')
+            end
+          )
+        end
       end
     end
   end
