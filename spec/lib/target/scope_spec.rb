@@ -46,7 +46,7 @@ describe CMSScanner::Target do
     end
 
     context 'when custom scope' do
-      let(:opts) { { scope: ['*.e.org', '192.168.1.12'] } }
+      let(:opts) { { scope: ['*.cdn.com', '192.168.1.12', '*.cloudfront.net'] } }
 
       [nil, '', 'http://out-of-scope.com', '//jquery.com/j.js', 'http://192.168.1.2/'].each do |url|
         it "returns false for #{url}" do
@@ -54,7 +54,10 @@ describe CMSScanner::Target do
         end
       end
 
-      %w[http://e.org //cdn.e.org/f.txt http://s.e.org/ https://192.168.1.12/h].each do |url|
+      %w[
+        https://e.org //aa.cdn.com/f.txt http://s.cdn.com/
+        https://192.168.1.12/h https://aa.cloudfront.net/
+      ].each do |url|
         it "returns true for #{url}" do
           expect(target.in_scope?(url)).to eql true
         end
@@ -94,10 +97,10 @@ describe CMSScanner::Target do
       end
 
       context 'when supplied scope' do
-        let(:opts) { super().merge(scope: ['*.e.org', 'wp-lamp']) }
+        let(:opts) { super().merge(scope: ['*.cdn.com', 'wp-lamp']) }
 
         it 'returns the expected array' do
-          @expected = %w[http://e.org/f.txt https://cdn.e.org/f2.js http://e.org/script/s.js
+          @expected = %w[http://e.org/f.txt https://a.cdn.com/f2.js http://e.org/script/s.js
                          http://wp-lamp/robots.txt http://e.org/feed]
         end
       end
