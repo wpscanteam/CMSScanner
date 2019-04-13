@@ -50,7 +50,7 @@ module CMSScanner
       end
 
       def <<(element)
-        if PublicSuffix.valid?(element)
+        if PublicSuffix.valid?(element, ignore_private: true)
           domains << PublicSuffix.parse(element, ignore_private: true)
         else
           invalid_domains << element
@@ -59,7 +59,7 @@ module CMSScanner
 
       # @return [ Boolean ] Wether or not the host is in the scope
       def include?(host)
-        if PublicSuffix.valid?(host)
+        if PublicSuffix.valid?(host, ignore_private: true)
           domain = PublicSuffix.parse(host, ignore_private: true)
 
           domains.each { |d| return true if domain.match(d) }
