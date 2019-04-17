@@ -35,6 +35,16 @@ describe CMSScanner::Target do
     end
   end
 
+  describe '#url_pattern' do
+    its(:url_pattern) { should eql %r{https?://e\.org/}i }
+
+    context 'when already https protocol' do
+      let(:url) { 'htTpS://ex.com/' }
+
+      its(:url_pattern) { should eql %r{https?://ex\.com/}i }
+    end
+  end
+
   describe '#xpath_pattern_from_page' do
     # Handled in #comments_from_page & #javascripts_from_page
   end

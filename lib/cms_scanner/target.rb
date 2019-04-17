@@ -37,6 +37,11 @@ module CMSScanner
       raise NotImplementedError
     end
 
+    # @return [ Regexp ]
+    def url_pattern
+      @url_pattern ||= Regexp.new(Regexp.escape(url).gsub(/https?/i, 'https?'), Regexp::IGNORECASE)
+    end
+
     # @param [ String ] xpath
     # @param [ Regexp ] pattern
     # @param [ Typhoeus::Response, String ] page
