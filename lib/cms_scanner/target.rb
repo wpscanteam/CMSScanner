@@ -37,9 +37,10 @@ module CMSScanner
       raise NotImplementedError
     end
 
-    # @return [ Regexp ]
+    # @return [ Regexp ] The pattern related to the target url, also matches escaped /, such as
+    #                    in JSON JS data: http:\/\/t.com\/
     def url_pattern
-      @url_pattern ||= Regexp.new(Regexp.escape(url).gsub(/https?/i, 'https?'), Regexp::IGNORECASE)
+      @url_pattern ||= Regexp.new(Regexp.escape(url).gsub(/https?/i, 'https?').gsub('/', '\\\\\?/'), Regexp::IGNORECASE)
     end
 
     # @param [ String ] xpath

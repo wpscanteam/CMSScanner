@@ -109,18 +109,18 @@ describe CMSScanner::Target do
 
   describe '#scope_url_pattern' do
     context 'when no scope given' do
-      its(:scope_url_pattern) { should eql %r{https?://(?:e\.org)/?}i }
+      its(:scope_url_pattern) { should eql %r{https?:\\?/\\?/(?:e\.org)\\?/?}i }
     end
 
     context 'when scope given' do
       let(:opts) { super().merge(scope: ['*.cdn.org', 'wp-lamp']) }
 
-      its(:scope_url_pattern) { should eql %r{https?://(?:e\.org|.*\.cdn\.org|wp\-lamp)/?}i }
+      its(:scope_url_pattern) { should eql %r{https?:\\?/\\?/(?:e\.org|.*\.cdn\.org|wp\-lamp)\\?/?}i }
 
       context 'when target URL has a subdir' do
-        let(:url) { 'https://e.org/blog' }
+        let(:url) { 'https://e.org/blog/test' }
 
-        its(:scope_url_pattern) { should eql %r{https?://(?:e\.org/blog|.*\.cdn\.org|wp\-lamp)/?}i }
+        its(:scope_url_pattern) { should eql %r{https?:\\?/\\?/(?:e\.org\\?/blog\\?/test|.*\.cdn\.org|wp\-lamp)\\?/?}i }
       end
     end
   end

@@ -36,12 +36,13 @@ describe CMSScanner::Target do
   end
 
   describe '#url_pattern' do
-    its(:url_pattern) { should eql %r{https?://e\.org/}i }
+    its(:url_pattern) { should eql %r{https?:\\?/\\?/e\.org\\?/}i }
+    its(:url_pattern) { should match 'https:\/\/e.org\/' }
 
     context 'when already https protocol' do
       let(:url) { 'htTpS://ex.com/' }
 
-      its(:url_pattern) { should eql %r{https?://ex\.com/}i }
+      its(:url_pattern) { should eql %r{https?:\\?/\\?/ex\.com\\?/}i }
     end
   end
 

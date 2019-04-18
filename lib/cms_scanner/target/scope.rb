@@ -39,15 +39,16 @@ module CMSScanner
 
     # Similar to Target#url_pattern but considering the in scope domains as well
     #
-    # @return [ Regexp ]
+    # @return [ Regexp ] The pattern related to the target url and in scope domains,
+    #                    it also matches escaped /, such as in JSON JS data: http:\/\/t.com\/
     def scope_url_pattern
       return @scope_url_pattern if @scope_url_pattern
 
       domains = [uri.host + uri.path] + scope.domains[1..-1]&.map(&:to_s) + scope.invalid_domains
 
-      domains.map! { |d| Regexp.escape(d.gsub(%r{/$}, '')).sub('\*', '.*') }
+      domains.map! { |d| Regexp.escape(d.gsub(%r{/$}, '')).gsub('\*', '.*').gsub('/', '\\\\\?/') }
 
-      @scope_url_pattern = %r{https?://(?:#{domains.join('|')})/?}i
+      @scope_url_pattern = %r{https?:\\?/\\?/(?:#{domains.join('|')})\\?/?}i
     end
 
     # Scope Implementation
