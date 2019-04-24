@@ -32,13 +32,14 @@ describe CMSScanner::Target do
   describe '#in_scope?' do
     context 'when default scope (target domain)' do
       [nil, '', 'http://out-of-scope.com', '//jquery.com/j.js',
-       'javascript:alert(3)', 'mailto:p@g.com'].each do |url|
+       'javascript:alert(3)', 'mailto:p@g.com',
+       Addressable::URI.parse('https://out.cloudfront.net')].each do |url|
         it "returns false for #{url}" do
           expect(target.in_scope?(url)).to eql false
         end
       end
 
-      %w[https://e.org/file.txt http://e.org/ //e.org].each do |url|
+      ['https://e.org/file.txt', 'http://e.org/', '//e.org', Addressable::URI.parse('http://e.org')].each do |url|
         it "returns true for #{url}" do
           expect(target.in_scope?(url)).to eql true
         end
@@ -65,16 +66,16 @@ describe CMSScanner::Target do
     end
   end
 
-  describe '#in_scope_urls' do
+  describe '#in_scope_uris' do
     let(:res) { Typhoeus::Response.new(body: File.read(fixtures.join('index.html'))) }
 
     context 'when block given' do
       it 'yield the url' do
-        expect { |b| target.in_scope_urls(res, &b) }
+        expect { |b| target.in_scope_uris(res, &b) }
           .to yield_successive_args(
-            ['http://e.org/f.txt', Nokogiri::XML::Element],
-            ['http://e.org/script/s.js', Nokogiri::XML::Element],
-            ['http://e.org/feed', Nokogiri::XML::Element]
+            [Addressable::URI.parse('http://e.org/f.txt'), Nokogiri::XML::Element],
+            [Addressable::URI.parse('http://e.org/script/s.js'), Nokogiri::XML::Element],
+            [Addressable::URI.parse('http://e.org/feed'), Nokogiri::XML::Element]
           )
       end
     end
@@ -83,16 +84,17 @@ describe CMSScanner::Target do
       it 'returns the expected array' do
         xpath = '//link[@rel="alternate" and @type="application/rss+xml"]/@href'
 
-        expect(target.in_scope_urls(res, xpath)).to eql(%w[http://e.org/feed])
+        expect(target.in_scope_uris(res, xpath)).to eql([Addressable::URI.parse('http://e.org/feed')])
       end
     end
 
     context 'when no block given' do
-      after { expect(target.in_scope_urls(res)).to eql @expected }
+      after { expect(target.in_scope_uris(res)).to eql @expected }
 
       context 'when default scope' do
         it 'returns the expected array' do
-          @expected = %w[http://e.org/f.txt http://e.org/script/s.js http://e.org/feed]
+          @expected = %w[http://e.org/f.txt http://e.org/script/s.js
+                         http://e.org/feed].map { |url| Addressable::URI.parse(url) }
         end
       end
 
@@ -101,7 +103,7 @@ describe CMSScanner::Target do
 
         it 'returns the expected array' do
           @expected = %w[http://e.org/f.txt https://a.cdn.com/f2.js http://e.org/script/s.js
-                         http://wp-lamp/robots.txt http://e.org/feed]
+                         http://wp-lamp/robots.txt http://e.org/feed].map { |url| Addressable::URI.parse(url) }
         end
       end
     end

@@ -89,10 +89,10 @@ module CMSScanner
     # @param [ Typhoeus::Response, String ] page
     # @param [ String ] xpath
     #
-    # @yield [ String, Nokogiri::XML::Element ] The url and its associated tag
+    # @yield [ Addressable::URI, Nokogiri::XML::Element ] The url and its associated tag
     #
-    # @return [ Array<String> ] The absolute URLs detected in the response's body from the HTML tags
-    def urls_from_page(page = nil, xpath = '//@href|//@src|//@data-src')
+    # @return [ Array<Addressable::URI> ] The absolute URIs detected in the response's body from the HTML tags
+    def uris_from_page(page = nil, xpath = '//@href|//@src|//@data-src')
       page    = NS::Browser.get(url(page)) unless page.is_a?(Typhoeus::Response)
       found   = []
 
@@ -108,13 +108,11 @@ module CMSScanner
                      next
                    end
 
-        node_uri_string = node_uri.to_s
-
         next unless node_uri.host
 
-        yield node_uri_string, node.parent if block_given? && !found.include?(node_uri_string)
+        yield node_uri, node.parent if block_given? && !found.include?(node_uri)
 
-        found << node_uri_string
+        found << node_uri
       end
 
       found.uniq

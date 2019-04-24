@@ -8,11 +8,13 @@ module CMSScanner
       @scope ||= Scope.new
     end
 
-    # @param [ String ] url An absolute URL
+    # @param [ String, Addressable::URI ] url An absolute URL or URI
     #
     # @return [ Boolean ] true if the url given is in scope
-    def in_scope?(url)
-      scope.include?(Addressable::URI.parse(url.strip).host)
+    def in_scope?(url_or_uri)
+      url_or_uri = Addressable::URI.parse(url_or_uri.strip) unless url_or_uri.is_a?(Addressable::URI)
+
+      scope.include?(url_or_uri.host)
     rescue StandardError
       false
     end
@@ -20,18 +22,18 @@ module CMSScanner
     # @param [ Typhoeus::Response ] res
     # @param [ String ] xpath
     #
-    # @yield [ String, Nokogiri::XML::Element ] The in scope url and its associated tag
+    # @yield [ Addressable::URI, Nokogiri::XML::Element ] The in scope url and its associated tag
     #
-    # @return [ Array<String> ] The in scope absolute URLs detected in the response's body
-    def in_scope_urls(res, xpath = '//@href|//@src|//@data-src')
+    # @return [ Array<Addressable::URI> ] The in scope absolute URIs detected in the response's body
+    def in_scope_uris(res, xpath = '//@href|//@src|//@data-src')
       found = []
 
-      urls_from_page(res, xpath) do |url, tag|
-        next unless in_scope?(url)
+      uris_from_page(res, xpath) do |uri, tag|
+        next unless in_scope?(uri)
 
-        yield url, tag if block_given?
+        yield uri, tag if block_given?
 
-        found << url
+        found << uri
       end
 
       found

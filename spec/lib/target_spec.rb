@@ -134,30 +134,30 @@ describe CMSScanner::Target do
     end
   end
 
-  describe '#urls_from_page' do
-    let(:page) { Typhoeus::Response.new(body: File.read(fixtures.join('urls_from_page.html'))) }
+  describe '#uris_from_page' do
+    let(:page) { Typhoeus::Response.new(body: File.read(fixtures.join('uris_from_page.html'))) }
 
     context 'when block given' do
       it 'yield the url' do
-        expect { |b| target.urls_from_page(page, &b) }
+        expect { |b| target.uris_from_page(page, &b) }
           .to yield_successive_args(
-            ['http://e.org/f.txt', Nokogiri::XML::Element],
-            ['https://cdn.e.org/f2.js', Nokogiri::XML::Element],
-            ['http://e.org/script/s.js', Nokogiri::XML::Element],
-            ['http://wp-lamp/feed.xml', Nokogiri::XML::Element],
-            ['http://g.com/img.jpg', Nokogiri::XML::Element],
-            ['http://g.org/logo.png', Nokogiri::XML::Element]
+            [Addressable::URI.parse('http://e.org/f.txt'), Nokogiri::XML::Element],
+            [Addressable::URI.parse('https://cdn.e.org/f2.js'), Nokogiri::XML::Element],
+            [Addressable::URI.parse('http://e.org/script/s.js'), Nokogiri::XML::Element],
+            [Addressable::URI.parse('http://wp-lamp/feed.xml'), Nokogiri::XML::Element],
+            [Addressable::URI.parse('http://g.com/img.jpg'), Nokogiri::XML::Element],
+            [Addressable::URI.parse('http://g.org/logo.png'), Nokogiri::XML::Element]
           )
       end
     end
 
     context 'when no block given' do
       it 'returns the expected array' do
-        expect(target.urls_from_page(page)).to eql(
+        expect(target.uris_from_page(page)).to eql(
           %w[
             http://e.org/f.txt https://cdn.e.org/f2.js http://e.org/script/s.js
             http://wp-lamp/feed.xml http://g.com/img.jpg http://g.org/logo.png
-          ]
+          ].map { |url| Addressable::URI.parse(url) }
         )
       end
 
@@ -165,7 +165,7 @@ describe CMSScanner::Target do
         it 'returns the expected array' do
           xpath = '//link[@rel="alternate" and @type="application/rss+xml"]/@href'
 
-          expect(target.urls_from_page(page, xpath)).to eql(%w[http://wp-lamp/feed.xml])
+          expect(target.uris_from_page(page, xpath)).to eql([Addressable::URI.parse('http://wp-lamp/feed.xml')])
         end
       end
     end
