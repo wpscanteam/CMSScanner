@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.require_paths         = ['lib']
 
   s.add_dependency 'nokogiri', '~> 1.10.0'
-  s.add_dependency 'opt_parse_validator', '~> 0.0.17.1'
+  s.add_dependency 'opt_parse_validator', '~> 1.7.2'
   s.add_dependency 'public_suffix', '~> 3.0.0'
   s.add_dependency 'ruby-progressbar', '~> 1.10.0'
   s.add_dependency 'typhoeus', '~> 1.3.0'
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake',      '~> 12.3'
   s.add_development_dependency 'rspec',     '~> 3.8.0'
   s.add_development_dependency 'rspec-its', '~> 1.3.0'
-  s.add_development_dependency 'rubocop',   '~> 0.67.1'
+  s.add_development_dependency 'rubocop',   '~> 0.67.2'
   s.add_development_dependency 'simplecov', '~> 0.16.1'
   s.add_development_dependency 'webmock',   '~> 3.5.1'
 end
