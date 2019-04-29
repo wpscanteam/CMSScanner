@@ -27,12 +27,13 @@ Gem::Specification.new do |s|
   s.add_dependency 'xmlrpc', '~> 0.3'
   s.add_dependency 'yajl-ruby', '~> 1.4.1' # Better JSON parser regarding memory usage
 
-  s.add_development_dependency 'bundler',   '>= 1.6'
-  s.add_development_dependency 'coveralls', '~> 0.8.0'
-  s.add_development_dependency 'rake',      '~> 12.3'
-  s.add_development_dependency 'rspec',     '~> 3.8.0'
-  s.add_development_dependency 'rspec-its', '~> 1.3.0'
-  s.add_development_dependency 'rubocop',   '~> 0.67.2'
-  s.add_development_dependency 'simplecov', '~> 0.16.1'
-  s.add_development_dependency 'webmock',   '~> 3.5.1'
+  s.add_development_dependency 'bundler',             '>= 1.6'
+  s.add_development_dependency 'coveralls',           '~> 0.8.0'
+  s.add_development_dependency 'rake',                '~> 12.3'
+  s.add_development_dependency 'rspec',               '~> 3.8.0'
+  s.add_development_dependency 'rspec-its',           '~> 1.3.0'
+  s.add_development_dependency 'rubocop',             '~> 0.68.0'
+  s.add_development_dependency 'rubocop-performance', '~> 1.1.0'
+  s.add_development_dependency 'simplecov',           '~> 0.16.1'
+  s.add_development_dependency 'webmock',             '~> 3.5.1'
 end

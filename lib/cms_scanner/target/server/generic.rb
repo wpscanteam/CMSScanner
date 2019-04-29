@@ -51,10 +51,7 @@ module CMSScanner
         #
         # @return [ Array<String> ] The first level of directories/files listed,
         #                           or an empty array if none
-        def directory_listing_entries(
-          path = nil, params = {},
-          selector = 'pre a', ignore = /parent directory/i
-        )
+        def directory_listing_entries(path = nil, params = {}, selector = 'pre a', ignore = /parent directory/i)
           return [] unless directory_listing?(path, params)
 
           found = []
