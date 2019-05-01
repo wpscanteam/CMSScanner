@@ -112,17 +112,32 @@ describe CMSScanner::Target do
   describe '#scope_url_pattern' do
     context 'when no scope given' do
       its(:scope_url_pattern) { should eql %r{https?:\\?/\\?/(?:e\.org)\\?/?}i }
+
+      context 'when target is an invalid domain for PublicSuffix' do
+        let(:url) { 'http://wp-lab/' }
+
+        its(:scope_url_pattern) { should eql %r{https?:\\?/\\?/(?:wp\-lab)\\?/?}i }
+      end
+
+      context 'when a port is present in the target URL' do
+        let(:url) { 'http://wp.lab:82/aa' }
+
+        its(:scope_url_pattern) { should eql %r{https?:\\?/\\?/(?:wp\.lab(?::\d+)?\\?/aa)\\?/?}i }
+        its(:scope_url_pattern) { should match 'https://wp.lab:82/aa' }
+      end
     end
 
     context 'when scope given' do
-      let(:opts) { super().merge(scope: ['*.cdn.org', 'wp-lamp']) }
+      let(:opts) { super().merge(scope: ['*.cdn.org', 'wp-lamp', '192.168.1.1']) }
 
-      its(:scope_url_pattern) { should eql %r{https?:\\?/\\?/(?:e\.org|.*\.cdn\.org|wp\-lamp)\\?/?}i }
+      its(:scope_url_pattern) { should eql %r{https?:\\?/\\?/(?:e\.org|.*\.cdn\.org|192\.168\.1\.1|wp\-lamp)\\?/?}i }
 
       context 'when target URL has a subdir' do
         let(:url) { 'https://e.org/blog/test' }
 
-        its(:scope_url_pattern) { should eql %r{https?:\\?/\\?/(?:e\.org\\?/blog\\?/test|.*\.cdn\.org|wp\-lamp)\\?/?}i }
+        its(:scope_url_pattern) do
+          should eql %r{https?:\\?/\\?/(?:e\.org\\?/blog\\?/test|.*\.cdn\.org|192\.168\.1\.1|wp\-lamp)\\?/?}i
+        end
       end
     end
   end

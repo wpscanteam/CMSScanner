@@ -43,15 +43,25 @@ module CMSScanner
     #
     # @return [ Regexp ] The pattern related to the target url and in scope domains,
     #                    it also matches escaped /, such as in JSON JS data: http:\/\/t.com\/
+    # rubocop:disable Metrics/AbcSize
     def scope_url_pattern
       return @scope_url_pattern if @scope_url_pattern
 
-      domains = [uri.host + uri.path] + scope.domains[1..-1]&.map(&:to_s) + scope.invalid_domains
+      domains = [uri.host + uri.path]
+
+      domains += if scope.domains.empty?
+                   [*scope.invalid_domains[1..-1]]
+                 else
+                   [*scope.domains[1..-1]].map(&:to_s) + scope.invalid_domains
+                 end
 
       domains.map! { |d| Regexp.escape(d.gsub(%r{/$}, '')).gsub('\*', '.*').gsub('/', '\\\\\?/') }
 
+      domains[0].gsub!(Regexp.escape(uri.host), Regexp.escape(uri.host) + '(?::\\d+)?') if uri.port
+
       @scope_url_pattern = %r{https?:\\?/\\?/(?:#{domains.join('|')})\\?/?}i
     end
+    # rubocop:enable Metrics/AbcSize
 
     # Scope Implementation
     class Scope
