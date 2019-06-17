@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.require_paths         = ['lib']
 
   s.add_dependency 'nokogiri', '~> 1.10.0'
-  s.add_dependency 'opt_parse_validator', '~> 1.7.2'
+  s.add_dependency 'opt_parse_validator', '~> 1.7.3'
   s.add_dependency 'public_suffix', '>= 3.0', '< 3.2'
   s.add_dependency 'ruby-progressbar', '~> 1.10.0'
   s.add_dependency 'typhoeus', '~> 1.3.0'
