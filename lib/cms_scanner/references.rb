@@ -60,7 +60,7 @@ module CMSScanner
 
     # @return [ String ] The URL to the Secunia advisory
     def secunia_url(id)
-      "https://secunia.com/advisories/#{id}/"
+      "https://secuniaresearch.flexerasoftware.com/advisories/#{id}/"
     end
 
     # @return [ Array<String> ] The OSVDB IDs
