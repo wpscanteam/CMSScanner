@@ -48,7 +48,11 @@ module CMSScanner
         each(&:run)
       end
     ensure
-      NS::Browser.instance.hydra.abort
+      # The rescue is there to prevent unfinished requests to raise an error, which would prevent
+      # the reverse_each to run
+      # rubocop:disable Style/RescueModifier
+      NS::Browser.instance.hydra.abort rescue nil
+      # rubocop:enable Style/RescueModifier
 
       # Reverse is used here as the app/controllers/core#after_scan finishes the output
       # and must be the last one to be executed. It also guarantee that stats will be output
