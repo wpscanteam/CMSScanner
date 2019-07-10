@@ -114,6 +114,28 @@ describe CMSScanner::Controllers do
         end
       end
     end
+
+    context 'when an error is raised by abort' do
+      it 'ignores it and runs the after_scan methods of each controller' do
+        spec = controller_mod::Spec.new
+        base = controller_mod::Base.new
+
+        controllers << base << spec
+
+        # Needed otherwise the default_argv is taken from rspec
+        # (@default_argv=["--pattern", "spec/**{,/*/**}/*_spec.rb"]>)
+        expect(controllers.option_parser).to receive(:results).and_return({})
+
+        [base, spec].each { |c| expect(c).to receive(:before_scan).ordered }
+        [base, spec].each { |c| expect(c).to receive(:run).ordered }
+
+        expect_any_instance_of(Typhoeus::Hydra).to receive(:abort).and_raise('Should be Ignored')
+
+        [spec, base].each { |c| expect(c).to receive(:after_scan).ordered }
+
+        controllers.run
+      end
+    end
   end
 
   describe '#register_options_files' do
