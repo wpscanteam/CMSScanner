@@ -9,7 +9,7 @@ module CMSScanner
         def aggressive(_opts = {})
           path = 'searchreplacedb2.php'
 
-          return unless target.head_and_get(path).body =~ /by interconnect/i
+          return unless /by interconnect/i.match?(target.head_and_get(path).body)
 
           NS::Model::InterestingFinding.new(target.url(path),
                                             confidence: 100,

@@ -50,7 +50,7 @@ module CMSScanner
 
             res = NS::Browser.post(potential_url, body: Digest::MD5.hexdigest(rand(999_999).to_s[0..5]))
 
-            next unless res&.body =~ /<methodResponse>/i
+            next unless /<methodResponse>/i.match?(res&.body)
 
             return NS::Model::XMLRPC.new(potential_url,
                                          confidence: 100,

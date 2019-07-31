@@ -9,7 +9,7 @@ module CMSScanner
         results = []
 
         entries.each do |entry|
-          next unless entry =~ /(?:admin|\.log|\.sql|\.db)/i
+          next unless /(?:admin|\.log|\.sql|\.db)/i.match?(entry)
 
           results << entry
         end
