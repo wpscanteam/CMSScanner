@@ -17,6 +17,7 @@ module CMSScanner
       random_user_agent
       request_timeout
       throttle
+      url
       user_agent
       user_agents_list
       vhost

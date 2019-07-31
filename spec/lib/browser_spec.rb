@@ -8,7 +8,7 @@ describe CMSScanner::Browser do
   let(:options)     { {} }
   let(:default) do
     {
-      headers: { 'User-Agent' => "CMSScanner v#{CMSScanner::VERSION}" },
+      headers: { 'User-Agent' => "CMSScanner v#{CMSScanner::VERSION}", 'Referer' => nil },
       accept_encoding: 'gzip, deflate',
       method: :get
     }
@@ -26,6 +26,7 @@ describe CMSScanner::Browser do
     context 'when some attributes are set' do
       let(:options) do
         {
+          url: 'http://wp.lo/',
           cache_ttl: 200, connect_timeout: 10,
           http_auth: { username: 'log', password: 'pwd' },
           cookie_jar: '/tmp/cookie_jar.txt',
@@ -42,7 +43,7 @@ describe CMSScanner::Browser do
           userpwd: 'log:pwd', proxyuserpwd: 'u:pwd',
           cookiejar: options[:cookie_jar], cookiefile: options[:cookie_jar],
           ssl_verifypeer: false, ssl_verifyhost: 0
-        ).merge(headers: default[:headers].merge('Host' => 'testing', 'Test' => 'aa'))
+        ).merge(headers: default[:headers].merge('Host' => 'testing', 'Test' => 'aa', 'Referer' => 'http://wp.lo/'))
       end
 
       its(:default_request_params) { should eq expected }

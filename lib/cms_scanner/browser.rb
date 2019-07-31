@@ -48,7 +48,7 @@ module CMSScanner
     # @return [ Hash ]
     def default_request_params
       params = {
-        headers: { 'User-Agent' => user_agent }.merge(headers || {}),
+        headers: { 'User-Agent' => user_agent, 'Referer' => url }.merge(headers || {}),
         accept_encoding: 'gzip, deflate',
         method: :get
       }
