@@ -17,12 +17,24 @@ describe CMSScanner::Cache::Typhoeus do
   end
 
   describe '#set' do
-    let(:response) { Typhoeus::Response.new }
+    context 'when response did not time out' do
+      let(:response) { Typhoeus::Response.new(return_code: :ok, status: 200) }
 
-    it 'calls #write_entry' do
-      expect(cache).to receive(:write_entry).with(key, response, request.cache_ttl)
+      it 'calls #write_entry' do
+        expect(cache).to receive(:write_entry).with(key, response, request.cache_ttl)
 
-      cache.set(request, response)
+        cache.set(request, response)
+      end
+    end
+
+    context 'when response timed out' do
+      let(:response) { Typhoeus::Response.new(return_code: :operation_timedout) }
+
+      it 'does not write the entry' do
+        expect(cache).to_not receive(:write_entry)
+
+        cache.set(request, response)
+      end
     end
   end
 end

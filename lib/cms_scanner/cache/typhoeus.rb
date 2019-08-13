@@ -16,6 +16,8 @@ module CMSScanner
       # @param [ Typhoeus::Request ] request
       # @param [ Typhoeus::Response ] response
       def set(request, response)
+        return if response.timed_out?
+
         write_entry(request.hash.to_s, response, request.cache_ttl)
       end
     end
