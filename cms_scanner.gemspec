@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.test_files            = []
   s.require_paths         = ['lib']
 
-  s.add_dependency 'nokogiri', '~> 1.10.0'
+  s.add_dependency 'nokogiri', '~> 1.10.4'
   s.add_dependency 'opt_parse_validator', '~> 1.7.4'
   s.add_dependency 'public_suffix', '>= 3.0', '< 4.1'
   s.add_dependency 'ruby-progressbar', '~> 1.10.0'
