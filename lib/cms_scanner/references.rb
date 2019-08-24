@@ -9,7 +9,7 @@ module CMSScanner
     module ClassMethods
       # @return [ Array<Symbol> ]
       def references_keys
-        @references_keys ||= %i[cve secunia osvdb exploitdb url metasploit packetstorm securityfocus]
+        @references_keys ||= %i[cve exploitdb url metasploit packetstorm securityfocus]
       end
     end
 
@@ -29,7 +29,7 @@ module CMSScanner
 
     # @return [ Array<String> ] All the references URLs
     def references_urls
-      cve_urls + secunia_urls + osvdb_urls + exploitdb_urls + urls + msf_urls +
+      cve_urls + exploitdb_urls + urls + msf_urls +
         packetstorm_urls + securityfocus_urls
     end
 
@@ -46,36 +46,6 @@ module CMSScanner
     # @return [ String ] The URL to the CVE
     def cve_url(cve)
       "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-#{cve}"
-    end
-
-    # @return [ Array<String> ] The Secunia IDs
-    def secunia_ids
-      references[:secunia] || []
-    end
-
-    # @return [ Array<String> ]
-    def secunia_urls
-      secunia_ids.reduce([]) { |acc, elem| acc << secunia_url(elem) }
-    end
-
-    # @return [ String ] The URL to the Secunia advisory
-    def secunia_url(id)
-      "https://secuniaresearch.flexerasoftware.com/advisories/#{id}/"
-    end
-
-    # @return [ Array<String> ] The OSVDB IDs
-    def osvdb_ids
-      references[:osvdb] || []
-    end
-
-    # @return [ Array<String> ]
-    def osvdb_urls
-      osvdb_ids.reduce([]) { |acc, elem| acc << osvdb_url(elem) }
-    end
-
-    # @return [ String ] The URL to the ExploitDB advisory
-    def osvdb_url(id)
-      "http://osvdb.org/show/osvdb/#{id}"
     end
 
     # @return [ Array<String> ] The ExploitDB ID
@@ -125,7 +95,7 @@ module CMSScanner
 
     # @return [ String ]
     def packetstorm_url(id)
-      "http://packetstormsecurity.com/files/#{id}/"
+      "https://packetstormsecurity.com/files/#{id}/"
     end
 
     # @return [ Array<String> ] The Security Focus IDs
@@ -140,7 +110,7 @@ module CMSScanner
 
     # @return [ String ]
     def securityfocus_url(id)
-      "http://www.securityfocus.com/bid/#{id}/"
+      "https://www.securityfocus.com/bid/#{id}/"
     end
   end
 end
