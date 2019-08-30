@@ -22,6 +22,8 @@ describe CMSScanner::Controllers do
   subject(:controllers)  { described_class.new }
   let(:controller_mod) { CMSScanner::Controller }
 
+  its(:'option_parser.config_files.result_key') { should eql 'cli_options' }
+
   describe '#<<' do
     its(:size) { should be 0 }
 
@@ -138,7 +140,7 @@ describe CMSScanner::Controllers do
     end
   end
 
-  describe '#register_options_files' do
+  describe '#register_config_files' do
     it 'register the correct files' do
       expect(File).to receive(:exist?).exactly(4).times.and_return(true)
 
@@ -146,12 +148,12 @@ describe CMSScanner::Controllers do
       option_parser = controllers.option_parser
 
       [Dir.home, Dir.pwd].each do |dir|
-        option_parser.options_files.class.supported_extensions.each do |ext|
-          expected << File.join(dir, '.cms_scanner', "cli_options.#{ext}")
+        option_parser.config_files.class.supported_extensions.each do |ext|
+          expected << File.join(dir, '.cms_scanner', "scan.#{ext}")
         end
       end
 
-      expect(option_parser.options_files.map(&:path)).to eql expected
+      expect(option_parser.config_files.map(&:path)).to eql expected
     end
   end
 end
