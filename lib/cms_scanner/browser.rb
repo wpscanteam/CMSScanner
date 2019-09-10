@@ -57,6 +57,8 @@ module CMSScanner
         # See http://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html
         params[:ssl_verifypeer] = false
         params[:ssl_verifyhost] = 0
+        # TLSv1.0 and plus, allows to use a protocol potentially lower than the OS default
+        params[:sslversion] = :tlsv1
       end
 
       typhoeus_to_browser_opts.each do |typhoeus_opt, browser_opt|
