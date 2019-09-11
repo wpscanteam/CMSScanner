@@ -59,7 +59,9 @@ module CMSScanner
                                  default: 60),
           OptPositiveInteger.new(['--connect-timeout SECONDS', 'The connection timeout in seconds'],
                                  default: 30),
-          OptBoolean.new(['--disable-tls-checks', 'Disables SSL/TLS certificate verification'])
+          OptBoolean.new(['--disable-tls-checks',
+                          'Disables SSL/TLS certificate verification, and downgrade to TLS1.0+ ' \
+                          '(requires cURL 7.66 for the latter)'])
         ] + cli_browser_proxy_options + cli_browser_cookies_options + cli_browser_cache_options
       end
 

@@ -42,8 +42,7 @@ describe CMSScanner::Browser do
           cache_ttl: 200, connecttimeout: 10,
           userpwd: 'log:pwd', proxyuserpwd: 'u:pwd',
           cookiejar: options[:cookie_jar], cookiefile: options[:cookie_jar],
-          ssl_verifypeer: false, ssl_verifyhost: 0,
-          sslversion: :tlsv1
+          ssl_verifypeer: false, ssl_verifyhost: 0, sslversion: :tlsv1
         ).merge(headers: default[:headers].merge('Host' => 'testing', 'Test' => 'aa', 'Referer' => 'http://wp.lo/'))
       end
 
