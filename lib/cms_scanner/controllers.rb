@@ -9,14 +9,16 @@ module CMSScanner
     def initialize(option_parser = OptParseValidator::OptParser.new(nil, 40))
       @option_parser = option_parser
 
-      register_options_files
+      register_config_files
+
+      option_parser.config_files.result_key = 'cli_options'
     end
 
     # Adds the potential option file paths to the option_parser
-    def register_options_files
+    def register_config_files
       [Dir.home, Dir.pwd].each do |dir|
-        option_parser.options_files.class.supported_extensions.each do |ext|
-          @option_parser.options_files << Pathname.new(dir).join(".#{NS.app_name}", "cli_options.#{ext}").to_s
+        option_parser.config_files.class.supported_extensions.each do |ext|
+          option_parser.config_files << Pathname.new(dir).join(".#{NS.app_name}", "scan.#{ext}").to_s
         end
       end
     end

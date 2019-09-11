@@ -27,8 +27,8 @@ describe 'SubScanner' do
 
       # Testing the override of the register_options_files
       class Controllers < CMSScanner::Controllers
-        def register_options_files
-          option_parser.options_files << File.join(".#{SubScanner.app_name}", 'rspec.yml')
+        def register_config_files
+          option_parser.config_files << File.join(".#{SubScanner.app_name}", 'rspec.yml')
         end
       end
 
@@ -102,16 +102,16 @@ describe 'SubScanner' do
         end
       end
 
-      describe '#register_options_files' do
-        let(:options_file_path) { '.subscanner/rspec.yml' }
+      describe '#register_config_files' do
+        let(:config_file_path) { '.subscanner/rspec.yml' }
 
         it 'register the correct file' do
           allow(File).to receive(:exist?).and_call_original
-          allow(File).to receive(:exist?).with(options_file_path).and_return(true)
+          allow(File).to receive(:exist?).with(config_file_path).and_return(true)
 
           option_parser = SubScanner::Scan.new.controllers.option_parser
 
-          expect(option_parser.options_files.map(&:path)).to eql [options_file_path]
+          expect(option_parser.config_files.map(&:path)).to eql [config_file_path]
         end
       end
     end
