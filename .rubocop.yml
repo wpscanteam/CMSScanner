@@ -5,14 +5,6 @@ AllCops:
     - '*.gemspec'
     - 'vendor/**/*'
     - 'example/**/*'
-ClassVars:
-  Enabled: false
-LineLength:
-  Max: 120
-MethodLength:
-  Max: 18
-  Exclude:
-    - app/controllers/core/cli_options.rb
 Lint/UriEscapeUnescape:
   Enabled: false
 Metrics/AbcSize:
@@ -22,8 +14,16 @@ Metrics/BlockLength:
     - 'spec/**/*'
 Metrics/CyclomaticComplexity:
   Max: 10
+Metrics/LineLength:
+  Max: 120
+Metrics/MethodLength:
+  Max: 18
+  Exclude:
+    - app/controllers/core/cli_options.rb
 Metrics/PerceivedComplexity:
   Max: 9
+Style/ClassVars:
+  Enabled: false
 Style/Documentation:
   Enabled: false
 Style/FormatStringToken:
