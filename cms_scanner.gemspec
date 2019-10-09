@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'bundler',             '>= 1.6'
   s.add_development_dependency 'coveralls',           '~> 0.8.0'
   s.add_development_dependency 'rake',                '~> 13.0'
-  s.add_development_dependency 'rspec',               '~> 3.8.0'
+  s.add_development_dependency 'rspec',               '~> 3.9.0'
   s.add_development_dependency 'rspec-its',           '~> 1.3.0'
   s.add_development_dependency 'rubocop',             '~> 0.75.0'
   s.add_development_dependency 'rubocop-performance', '~> 1.5.0'
