@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'pathname'
 if (Gem.win_platform?)
   begin
     require 'sys/proctable'
