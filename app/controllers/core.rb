@@ -69,7 +69,7 @@ module CMSScanner
       def after_scan
         @stop_time   = Time.now
         @elapsed     = @stop_time - @start_time
-        @used_memory = memory_usage - @start_memory
+        @used_memory = GetProcessMem.new.bytes - @start_memory
 
         output('finished',
                cached_requests: NS.cached_requests,
