@@ -27,12 +27,7 @@ module CMSScanner
     # @note This is used to detect potential custom 404 responding with a 200
     # @return [ String ] The hash of a 404
     def error_404_hash
-      @error_404_hash ||= self.class.page_hash(non_existant_page_url)
-    end
-
-    # @return [ String ] The URL of an unlikely existant page
-    def non_existant_page_url
-      uri.join(Digest::MD5.hexdigest(rand(999_999_999).to_s) + '.html').to_s
+      @error_404_hash ||= self.class.page_hash(error_404_res)
     end
 
     # @param [ Typhoeus::Response, String ] page

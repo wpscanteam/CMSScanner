@@ -67,7 +67,7 @@ describe CMSScanner::Target do
 
   describe '#error_404_hash' do
     it 'returns the md5sum of the 404 page' do
-      stub_request(:any, /.*/).to_return(status: 404, body: '404 page !')
+      stub_request(:any, /.*\.html$/).to_return(status: 404, body: '404 page !')
 
       expect(target.error_404_hash).to eql md5sum('404 page !')
     end
