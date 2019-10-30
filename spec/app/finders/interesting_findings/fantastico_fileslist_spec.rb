@@ -31,10 +31,19 @@ describe CMSScanner::Finders::InterestingFindings::FantasticoFileslist do
         end
       end
 
+      context 'when no Content-Type header' do
+        it 'return nil' do
+          stub_request(:get, file_url)
+            .to_return(status: 200, body: 'not empty', headers: {})
+
+          expect(finder.aggressive).to eql nil
+        end
+      end
+
       context 'when not a text/plain Content-Type' do
         it 'return nil' do
           stub_request(:get, file_url)
-            .to_return(status: 200, body: 'not empty', headers: { 'Content-Type' => 'text/html ' })
+            .to_return(status: 200, body: 'not empty', headers: { 'Content-Type' => 'text/html' })
 
           expect(finder.aggressive).to eql nil
         end

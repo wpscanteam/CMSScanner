@@ -11,7 +11,7 @@ module CMSScanner
           res  = target.head_and_get(path)
 
           return if res.body.strip.empty?
-          return unless res.headers && res.headers['Content-Type'] =~ %r{\Atext/plain}
+          return unless res.headers && res.headers['Content-Type']&.start_with?('text/plain')
 
           NS::Model::FantasticoFileslist.new(target.url(path), confidence: 70, found_by: found_by)
         end
