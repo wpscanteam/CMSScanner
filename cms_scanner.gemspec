@@ -31,7 +31,7 @@ Gem::Specification.new do |s|
   # Required by get_process_mem. I wish they were included directly in the gem :/
   # See https://github.com/schneems/get_process_mem/issues/38
   s.add_dependency 'ffi', '~> 1.11'
-  s.add_dependency 'sys-proctable', '~> 1.1.5' # 1.2.x is only supported by the master of get_process_mem, see https://github.com/schneems/get_process_mem/issues/38
+  s.add_dependency 'sys-proctable', '>= 1.1.5', '< 1.3.0' # 1.2.x is only supported by the master of get_process_mem, see https://github.com/schneems/get_process_mem/issues/38
 
   s.add_development_dependency 'bundler',             '>= 1.6'
   s.add_development_dependency 'coveralls',           '~> 0.8.0'
