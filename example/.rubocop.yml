@@ -1,21 +1,22 @@
+require: rubocop-performance
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
   Exclude:
-    - '*.gemspec'
-    - 'vendor/**/*'
-LineLength:
+  - '*.gemspec'
+  - 'vendor/**/*'
+Metrics/AbcSize:
+  Max: 25
+Metrics/CyclomaticComplexity:
+  Max: 10
+Metrics/LineLength:
   Max: 120
-ClassVars:
+Metrics/MethodLength:
+  Max: 17
+Metrics/PerceivedComplexity:
+  Max: 9
+Style/ClassVars:
   Enabled: false
 Style/RescueModifier:
   Enabled: false
 Style/SignalException:
   EnforcedStyle: semantic
-MethodLength:
-  Max: 17
-Metrics/AbcSize:
-  Max: 25
-Metrics/CyclomaticComplexity:
-  Max: 10
-Metrics/PerceivedComplexity:
-  Max: 9
