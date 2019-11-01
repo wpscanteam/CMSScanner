@@ -3,6 +3,10 @@
 describe CMSScanner::Finders::Finder do
   subject(:finder) { described_class.new('target') }
 
+  its(:titleize) { should eql 'Finder' }
+  its(:browser)  { should be_a CMSScanner::Browser }
+  its(:hydra)    { should be_a Typhoeus::Hydra }
+
   describe '#create_progress_bar' do
     before { finder.create_progress_bar(opts) }
 
@@ -40,10 +44,6 @@ describe CMSScanner::Finders::Finder do
     end
   end
 
-  its(:browser) { should be_a CMSScanner::Browser }
-
-  its(:hydra) { should be_a Typhoeus::Hydra }
-
   class SpecCallerLocation
     attr_reader :call
 
@@ -60,7 +60,7 @@ describe CMSScanner::Finders::Finder do
     end
   end
 
-  describe '#found_by, #titleize' do
+  describe '#found_by' do
     context 'when no klass supplied' do
       context 'when no passive or aggresive match' do
         it 'returns nil' do
@@ -83,17 +83,17 @@ describe CMSScanner::Finders::Finder do
     {
       Rspec: 'Rspec', Error404Page: 'Error 404 Page',
       CssId: 'Css Id', Something12Db2: 'Something 12 Db2'
-    }.each do |klass_name, expected_title|
-      context "when class #{klass_name} supplied" do
+    }.each do |klass, expected_title|
+      context "when class #{klass} supplied" do
         it 'returns the expected string' do
           allow(finder).to receive(:caller_locations)
             .and_return([SpecCallerLocation.new("/aaaaa/file.rb:xx:in `passive'")])
 
           expected = "#{expected_title} (Passive Detection)"
 
-          klass = Object.const_set(klass_name, Class.new(described_class))
+          # klass = Object.const_set(klass_name, Class.new(described_class))
 
-          expect(finder.found_by(klass.new('target'))).to eql expected
+          expect(finder.found_by(klass)).to eql expected
         end
       end
     end

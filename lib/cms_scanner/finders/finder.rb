@@ -54,16 +54,17 @@ module CMSScanner
         @hydra ||= browser.hydra
       end
 
-      # @param [ Class ] klass
+      # @param [String, Class ] klass
       # @return [ String ]
-      def found_by(klass = self)
+      def found_by(klass = self.class)
         caller_locations.each do |call|
           label = call.label
 
           next unless %w[aggressive passive].include? label
 
-          # The titleize method is the one from this class, not from ActiveSupport
-          return "#{klass.titleize} (#{label.capitalize} Detection)"
+          title = klass.to_s.demodulize.gsub(/(\d+)[a-z]+/i, '_\0').titleize(keep_id_suffix: true)
+
+          return "#{title} (#{label.capitalize} Detection)"
         end
         nil
       end
