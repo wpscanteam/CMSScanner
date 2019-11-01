@@ -44,7 +44,23 @@ describe CMSScanner::Finders::Finder do
 
   its(:hydra) { should be_a Typhoeus::Hydra }
 
-  describe '#found_by' do
+  class SpecCallerLocation
+    attr_reader :call
+
+    def initialize(call)
+      @call = call
+    end
+
+    def label
+      @label ||= call[/`([^']+)'$/, 1]
+    end
+
+    def to_s
+      call
+    end
+  end
+
+  describe '#found_by, #titleize' do
     context 'when no klass supplied' do
       context 'when no passive or aggresive match' do
         it 'returns nil' do
@@ -54,24 +70,32 @@ describe CMSScanner::Finders::Finder do
         end
       end
 
-      # TODO: make the below work
-      # context 'when aggressive match' do
-      #  it 'returns the expected string' do
-      #    expect(finder).to receive(:caller_locations)
-      #      .and_return([Thread::Backtrace::Location.new("/aaaaa/file.rb:xx:in `aggressive'")])
-      #
-      #    expect(finder.found_by).to eql 'Finder (Aggressive Detection)'
-      #  end
-      # end
+      context 'when aggressive match' do
+        it 'returns the expected string' do
+          expect(finder).to receive(:caller_locations)
+            .and_return([SpecCallerLocation.new("/aaaaa/file.rb:xx:in `aggressive'")])
+
+          expect(finder.found_by).to eql 'Finder (Aggressive Detection)'
+        end
+      end
     end
 
-    # context 'when class supplied' do
-    #  it 'returns the expected string' do
-    #    expect(finder).to receive(:caller_locations)
-    #      .and_return(["/aaaaa/file.rb:xx:in `passive'"])
-    #
-    #    expect(finder.found_by('Rspec')).to eql 'Rspec (Passive Detection)'
-    #  end
-    # end
+    {
+      Rspec: 'Rspec', Error404Page: 'Error 404 Page',
+      CssId: 'Css Id', Something12Db2: 'Something 12 Db2'
+    }.each do |klass_name, expected_title|
+      context "when class #{klass_name} supplied" do
+        it 'returns the expected string' do
+          allow(finder).to receive(:caller_locations)
+            .and_return([SpecCallerLocation.new("/aaaaa/file.rb:xx:in `passive'")])
+
+          expected = "#{expected_title} (Passive Detection)"
+
+          klass = Object.const_set(klass_name, Class.new(described_class))
+
+          expect(finder.found_by(klass.new('target'))).to eql expected
+        end
+      end
+    end
   end
 end

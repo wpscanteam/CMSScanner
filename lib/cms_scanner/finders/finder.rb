@@ -20,7 +20,11 @@ module CMSScanner
 
       # @return [ String ] The titleized name of the finder
       def titleize
-        self.class.to_s.demodulize.underscore.titleize
+        # Put a _ char before any digits except those at the end, which will be replaced by a space
+        # Otherwise, class such as Error404Page are returned as Error404 Page instead of Error 404 page
+        # The keep_id_suffix is to concevert classes such as CssId to Css Id instead of Css
+
+        @titleize ||= self.class.to_s.demodulize.gsub(/(\d+)[a-z]+/i, '_\0').titleize(keep_id_suffix: true)
       end
 
       # @param [ Hash ] _opts
@@ -50,7 +54,7 @@ module CMSScanner
         @hydra ||= browser.hydra
       end
 
-      # @param [ String, Symbol ] klass
+      # @param [ Class ] klass
       # @return [ String ]
       def found_by(klass = self)
         caller_locations.each do |call|
@@ -58,6 +62,7 @@ module CMSScanner
 
           next unless %w[aggressive passive].include? label
 
+          # The titleize method is the one from this class, not from ActiveSupport
           return "#{klass.titleize} (#{label.capitalize} Detection)"
         end
         nil
