@@ -25,13 +25,9 @@ rvm:
   - 2.6.3
   - 2.6.4
   - 2.6.5
-  - ruby-head
 before_install:
   - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
   - gem update --system
-matrix:
-  allow_failures:
-    - rvm: ruby-head
 script:
   - bundle exec rubocop
   - bundle exec rspec
