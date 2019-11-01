@@ -78,11 +78,12 @@ module WebMock
 end
 # rubocop:enabled all
 
-SPECS                = Pathname.new(__FILE__).dirname
-CACHE                = SPECS.join('cache')
-FIXTURES             = SPECS.join('fixtures')
-FIXTURES_VIEWS       = FIXTURES.join('views')
-FIXTURES_FINDERS     = FIXTURES.join('finders')
-FIXTURES_MODELS      = FIXTURES.join('models')
-FIXTURES_CONTROLLERS = FIXTURES.join('controllers')
-APP_VIEWS            = File.join(CMSScanner::APP_DIR, 'views')
+SPECS                 = Pathname.new(__FILE__).dirname
+CACHE                 = SPECS.join('cache')
+FIXTURES              = SPECS.join('fixtures')
+FIXTURES_VIEWS        = FIXTURES.join('views')
+FIXTURES_FINDERS      = FIXTURES.join('finders')
+FIXTURES_MODELS       = FIXTURES.join('models')
+FIXTURES_CONTROLLERS  = FIXTURES.join('controllers')
+APP_VIEWS             = File.join(CMSScanner::APP_DIR, 'views')
+ERROR_404_URL_PATTERN = %r{/[a-z\d]{7}\.html$}

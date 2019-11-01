@@ -62,13 +62,13 @@ module CMSScanner
 
     # @return [ String ] The URL of an unlikely existant page
     def error_404_url
-      non_existant_page_url
+      @error_404_url ||= non_existant_page_url
     end
 
     # @return [ String ] The URL of an unlikely existant page
     # TODO: This will be removed in the next major version (0.7)
     def non_existant_page_url
-      uri.join(Digest::MD5.hexdigest(rand(999_999).to_s) + '.html').to_s
+      uri.join(Digest::MD5.hexdigest(rand(999_999).to_s)[0..6] + '.html').to_s
     end
 
     # Checks if the remote website is up.

@@ -64,6 +64,17 @@ describe CMSScanner::WebSite do
     end
   end
 
+  describe '#error_404_url' do
+    its(:error_404_url) { should match ERROR_404_URL_PATTERN }
+
+    it 'returns the same url when called more than once' do
+      url1 = web_site.error_404_url
+      url2 = web_site.error_404_url
+
+      expect(url1).to eql url2
+    end
+  end
+
   describe '#opts' do
     its(:opts) { should eql({}) }
 
