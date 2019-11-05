@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.test_files            = []
   s.require_paths         = ['lib']
 
-  s.add_dependency 'get_process_mem', '= 0.2.4'
+  s.add_dependency 'get_process_mem', '~> 0.2.5'
   s.add_dependency 'nokogiri', '~> 1.10.4'
   s.add_dependency 'opt_parse_validator', '~> 1.8.1'
   s.add_dependency 'public_suffix', '>= 3.0', '< 4.1'
@@ -28,10 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'xmlrpc', '~> 0.3'
   s.add_dependency 'yajl-ruby', '~> 1.4.1' # Better JSON parser regarding memory usage
 
-  # Required by get_process_mem. I wish they were included directly in the gem :/
-  # See https://github.com/schneems/get_process_mem/issues/38
-  s.add_dependency 'ffi', '~> 1.11'
-  s.add_dependency 'sys-proctable', '~> 1.1.5' # 1.2.x is only supported by the master of get_process_mem, see https://github.com/schneems/get_process_mem/issues/38
+  s.add_dependency 'sys-proctable', '~> 1.2.2' # Required by get_process_mem for Windows OS.
 
   s.add_development_dependency 'bundler',             '>= 1.6'
   s.add_development_dependency 'coveralls',           '~> 0.8.0'
