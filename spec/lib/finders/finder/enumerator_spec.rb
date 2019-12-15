@@ -172,7 +172,7 @@ describe CMSScanner::Finders::Finder::Enumerator do
           stub_request(:get, target_urls.key(2)).to_return(status: 200, body: 'rspec')
         end
 
-        it 'yield the expected items' do
+        it 'yield the expected item' do
           expect { |b| finder.enumerate(target_urls, opts, &b) }.to yield_with_args(Typhoeus::Response, 2)
         end
       end
@@ -205,6 +205,18 @@ describe CMSScanner::Finders::Finder::Enumerator do
             expect { |b| finder.enumerate(target_urls, opts, &b) }.to yield_successive_args(
               [Typhoeus::Response, 1], [Typhoeus::Response, 2]
             )
+          end
+        end
+
+        context 'when one header matches but the other not, using negative look-arounds' do
+          let(:opts) { super().merge(exclude_content: /\A((?!x\-cacheable)[\s\S])*\z/i) }
+
+          before do
+            stub_request(:head, target_urls.keys.last).and_return(status: 200, headers: { 'x-cacheable' => 'YES' })
+          end
+
+          it 'yield the expected item' do
+            expect { |b| finder.enumerate(target_urls, opts, &b) }.to yield_with_args(Typhoeus::Response, 2)
           end
         end
       end
