@@ -5,6 +5,8 @@ AllCops:
     - '*.gemspec'
     - 'vendor/**/*'
     - 'example/**/*'
+Layout/LineLength:
+  Max: 120
 Lint/UriEscapeUnescape:
   Enabled: false
 Metrics/AbcSize:
@@ -14,8 +16,6 @@ Metrics/BlockLength:
     - 'spec/**/*'
 Metrics/CyclomaticComplexity:
   Max: 10
-Metrics/LineLength:
-  Max: 120
 Metrics/MethodLength:
   Max: 18
   Exclude:

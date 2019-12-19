@@ -25,9 +25,6 @@ rvm:
   - 2.6.3
   - 2.6.4
   - 2.6.5
-before_install:
-  - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
-  - gem update --system
 script:
   - bundle exec rubocop
   - bundle exec rspec
