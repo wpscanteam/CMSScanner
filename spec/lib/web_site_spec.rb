@@ -51,7 +51,7 @@ describe CMSScanner::WebSite do
       it 'encodes the path' do
         expect(web_site.url('f ile.txt')).to eql "#{url}/f%20ile.txt"
         expect(web_site.url('s/a%.txt')).to eql "#{url}/s/a%25.txt"
-        expect(web_site.url('#file.txt#')).to eql "#{url}/#file.txt%23"
+        expect(web_site.url('#file.txt#')).to eql "#{url}/%23file.txt%23"
       end
 
       context 'when relative path' do

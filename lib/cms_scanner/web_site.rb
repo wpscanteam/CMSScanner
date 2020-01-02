@@ -29,7 +29,7 @@ module CMSScanner
     def url(path = nil)
       return @uri.to_s unless path
 
-      @uri.join(Addressable::URI.encode(path)).to_s
+      @uri.join(Addressable::URI.encode(path).gsub('#', '%23')).to_s
     end
 
     attr_writer :homepage_res
