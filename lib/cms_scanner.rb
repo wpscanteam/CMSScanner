@@ -16,6 +16,7 @@ require 'erb'
 require 'uri'
 require 'fileutils'
 require 'pathname'
+require 'socket'
 require 'timeout'
 require 'xmlrpc/client'
 # Monkey Patches/Fixes

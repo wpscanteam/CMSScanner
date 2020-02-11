@@ -2,5 +2,6 @@
   "start_time": 1414670521,
   "start_memory": 10,
   "target_url": "http://e.org/",
+  "target_ip": "127.0.0.1",
   "effective_url": "http://e.org/home"
 }

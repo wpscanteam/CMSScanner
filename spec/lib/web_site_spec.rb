@@ -64,6 +64,20 @@ describe CMSScanner::WebSite do
     end
   end
 
+  describe '#ip' do
+    context 'when target host not known' do
+      let(:url) { 'http://lab.local' }
+
+      its(:ip) { should eql 'Unknown' }
+    end
+
+    context 'when target host known' do
+      before { expect(IPSocket).to receive(:getaddress).and_return('127.0.0.1') }
+
+      its(:ip) { should eql '127.0.0.1' }
+    end
+  end
+
   describe '#error_404_url' do
     its(:error_404_url) { should match ERROR_404_URL_PATTERN }
 

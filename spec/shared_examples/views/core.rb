@@ -3,7 +3,7 @@
 shared_examples 'App::Views::Core' do
   let(:controller) { CMSScanner::Controller::Core.new }
   let(:start)      { Time.at(1_414_670_521).in_time_zone('Europe/London') }
-  let(:tpl_vars)   { { url: target_url, start_time: start } }
+  let(:tpl_vars)   { { url: target_url, ip: '127.0.0.1', start_time: start } }
 
   describe 'version' do
     let(:view) { 'version' }

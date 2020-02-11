@@ -32,6 +32,13 @@ module CMSScanner
       @uri.join(Addressable::URI.encode(path).gsub('#', '%23')).to_s
     end
 
+    # @return [ String ] The IP address of the target
+    def ip
+      @ip ||= IPSocket.getaddress(uri.host)
+    rescue SocketError
+      'Unknown'
+    end
+
     attr_writer :homepage_res
 
     # @return [ Typhoeus::Response ]
