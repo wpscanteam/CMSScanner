@@ -38,20 +38,9 @@ module CMSScanner
       Typhoeus::Request.new(url, request_params(params))
     end
 
-    # @return [ Hash ]
-    def typhoeus_to_browser_opts
-      { connecttimeout: :connect_timeout, cache_ttl: :cache_ttl,
-        proxy: :proxy, timeout: :request_timeout, cookiejar: :cookie_jar,
-        cookiefile: :cookie_jar, cookie: :cookie_string }
-    end
-
-    # @return [ Hash ]
-    def default_request_params
-      params = {
-        headers: { 'User-Agent' => user_agent, 'Referer' => url }.merge(headers || {}),
-        accept_encoding: 'gzip, deflate',
-        method: :get
-      }
+    # @return [ Hash ] The request params used to connect tothe  target as well as potential other systems such as API
+    def default_connect_request_params
+      params = {}
 
       if disable_tls_checks
         # See http://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html
@@ -61,7 +50,28 @@ module CMSScanner
         params[:sslversion] = :tlsv1
       end
 
-      typhoeus_to_browser_opts.each do |typhoeus_opt, browser_opt|
+      {
+        connecttimeout: :connect_timeout, cache_ttl: :cache_ttl,
+        proxy: :proxy, timeout: :request_timeout
+      }.each do |typhoeus_opt, browser_opt|
+        attr_value = public_send(browser_opt)
+        params[typhoeus_opt] = attr_value unless attr_value.nil?
+      end
+
+      params
+    end
+
+    # @return [ Hash ]
+    # The params are not cached (using @params ||= for example), so that they are set accordingly if updated
+    # by a controller/other piece of code
+    def default_request_params
+      params = default_connect_request_params.merge(
+        headers: { 'User-Agent' => user_agent, 'Referer' => url }.merge(headers || {}),
+        accept_encoding: 'gzip, deflate',
+        method: :get
+      )
+
+      { cookiejar: :cookie_jar, cookiefile: :cookie_jar, cookie: :cookie_string }.each do |typhoeus_opt, browser_opt|
         attr_value = public_send(browser_opt)
         params[typhoeus_opt] = attr_value unless attr_value.nil?
       end
