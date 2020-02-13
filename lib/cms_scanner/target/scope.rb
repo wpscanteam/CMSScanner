@@ -25,6 +25,9 @@ module CMSScanner
     # @yield [ Addressable::URI, Nokogiri::XML::Element ] The in scope url and its associated tag
     #
     # @return [ Array<Addressable::URI> ] The in scope absolute URIs detected in the response's body
+    #
+    # @note It is highly recommended to use the xpath parameter to focus on the uris needed, as this method can be quite
+    #       time consuming when there are a lof of uris to check
     def in_scope_uris(res, xpath = '//@href|//@src|//@data-src')
       found = []
 

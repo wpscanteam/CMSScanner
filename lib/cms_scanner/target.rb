@@ -92,6 +92,9 @@ module CMSScanner
     # @yield [ Addressable::URI, Nokogiri::XML::Element ] The url and its associated tag
     #
     # @return [ Array<Addressable::URI> ] The absolute URIs detected in the response's body from the HTML tags
+    #
+    # @note It is highly recommended to use the xpath parameter to focus on the uris needed, as this method can be quite
+    #       time consuming when there are a lof of uris to check
     def uris_from_page(page = nil, xpath = '//@href|//@src|//@data-src')
       page    = NS::Browser.get(url(page)) unless page.is_a?(Typhoeus::Response)
       found   = []
