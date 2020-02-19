@@ -12,6 +12,8 @@ end
 
 SimpleCov.start do
   enable_coverage :branch # Only supported for Ruby >= 2.5
+
+  add_filter '/example/'
   add_filter '/spec/'
-  add_filter '_helper.rb'
+  add_filter 'helper'
 end
