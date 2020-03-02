@@ -11,14 +11,7 @@ module CMSScanner
 
           return unless /by interconnect/i.match?(target.head_and_get(path).body)
 
-          NS::Model::InterestingFinding.new(target.url(path),
-                                            confidence: 100,
-                                            found_by: found_by,
-                                            references: references)
-        end
-
-        def references
-          { url: 'https://interconnectit.com/products/search-and-replace-for-wordpress-databases/' }
+          NS::Model::SearchReplaceDB2.new(target.url(path), confidence: 100, found_by: found_by)
         end
       end
     end

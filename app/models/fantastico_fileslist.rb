@@ -17,7 +17,7 @@ module CMSScanner
       end
 
       def references
-        { url: ['http://www.acunetix.com/vulnerabilities/fantastico-fileslist/'] }
+        @references ||= { url: ['http://www.acunetix.com/vulnerabilities/fantastico-fileslist/'] }
       end
     end
   end

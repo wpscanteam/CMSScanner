@@ -35,7 +35,7 @@ describe CMSScanner::Finders::InterestingFindings::SearchReplaceDB2 do
         let(:body) { File.read(fixtures.join('searchreplacedb2.php')) }
 
         it 'returns the InterestingFinding object' do
-          expect(finder.aggressive).to eql CMSScanner::Model::InterestingFinding.new(
+          expect(finder.aggressive).to eql CMSScanner::Model::SearchReplaceDB2.new(
             file_url,
             confidence: 100,
             found_by: 'Search Replace Db2 (Aggressive Detection)'

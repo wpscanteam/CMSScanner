@@ -35,8 +35,7 @@ module CMSScanner
 
             potential_urls << url
 
-            return NS::Model::XMLRPC.new(url, confidence: 30,
-                                              found_by: 'Link Tag (Passive Detection)')
+            return NS::Model::XMLRPC.new(url, confidence: 30, found_by: 'Link Tag (Passive Detection)')
           end
           nil
         end
@@ -52,9 +51,7 @@ module CMSScanner
 
             next unless /<methodResponse>/i.match?(res&.body)
 
-            return NS::Model::XMLRPC.new(potential_url,
-                                         confidence: 100,
-                                         found_by: DIRECT_ACCESS)
+            return NS::Model::XMLRPC.new(potential_url, confidence: 100, found_by: DIRECT_ACCESS)
           end
           nil
         end
