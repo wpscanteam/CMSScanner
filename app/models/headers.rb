@@ -34,6 +34,11 @@ module CMSScanner
           x-webkit-csp x-xss-protection
         ]
       end
+
+      # @return [ String ]
+      def to_s
+        @to_s ||= 'Headers'
+      end
     end
   end
 end

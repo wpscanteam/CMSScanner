@@ -4,6 +4,11 @@ module CMSScanner
   module Model
     # XML RPC
     class XMLRPC < InterestingFinding
+      # @return [ String ]
+      def to_s
+        @to_s ||= "XML-RPC seems to be enabled: #{url}"
+      end
+
       # @return [ Browser ]
       def browser
         @browser ||= NS::Browser.instance

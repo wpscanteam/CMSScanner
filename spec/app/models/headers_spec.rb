@@ -9,6 +9,10 @@ describe CMSScanner::Model::Headers do
 
   before { stub_request(:get, file.url).to_return(headers: headers) }
 
+  describe '#to_s' do
+    its(:to_s) { should eql 'Headers' }
+  end
+
   describe '#known_headers' do
     it 'does not contains dupliactes' do
       expect(file.known_headers).to eql file.known_headers.uniq

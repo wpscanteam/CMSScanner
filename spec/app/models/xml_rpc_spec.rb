@@ -9,6 +9,10 @@ describe CMSScanner::Model::XMLRPC do
     its(:type) { should eql 'xmlrpc' }
   end
 
+  describe '#to_s' do
+    its(:to_s) { should eql 'XML-RPC seems to be enabled: http://example.com/xmlrpc' }
+  end
+
   describe '#method_call' do
     after do
       request = xml_rpc.method_call(method, method_params, request_params)
