@@ -5,7 +5,7 @@ module CMSScanner
     # SearchReplaceDB2
     class SearchReplaceDB2 < InterestingFinding
       def references
-        @references ||= { url: 'https://interconnectit.com/products/search-and-replace-for-wordpress-databases/' }
+        @references ||= { url: ['https://interconnectit.com/products/search-and-replace-for-wordpress-databases/'] }
       end
     end
   end
