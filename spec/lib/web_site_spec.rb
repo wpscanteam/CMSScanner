@@ -78,6 +78,26 @@ describe CMSScanner::WebSite do
     end
   end
 
+  describe '#error_404_res' do
+    before { stub_request(:any, /[a-z\d]{6}\.html/).to_return(stubbed_response) }
+
+    context 'when no redirect' do
+      let(:stubbed_response) { { status: 200, body: 'hello world!' } }
+
+      its('error_404_res.body') { should eql 'hello world!' }
+    end
+
+    # TODO: Uncomment when webmock supports redirects
+    # context 'when redirect' do
+    #  let(:redirect) { web_site.url('redirect') }
+    #  let(:stubbed_response) { { status: 302, headers: { 'Location' => redirect } } }
+
+    #  before { stub_request(:get, redirect).to_return(status: 200, body: 'redirected!') }
+
+    #  its('error_404_res.body') { should eql 'redirected!' }
+    # end
+  end
+
   describe '#error_404_url' do
     its(:error_404_url) { should match ERROR_404_URL_PATTERN }
 

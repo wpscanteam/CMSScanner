@@ -57,7 +57,7 @@ module CMSScanner
 
     # @return [ Typhoeus::Response ]
     def error_404_res
-      @error_404_res ||= NS::Browser.get(error_404_url)
+      @error_404_res ||= NS::Browser.get_and_follow_location(error_404_url)
     end
 
     # @return [ String ] The URL of an unlikely existant page
