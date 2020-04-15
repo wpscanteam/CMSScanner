@@ -9,7 +9,7 @@ module CMSScanner
     module ClassMethods
       # @return [ Array<Symbol> ]
       def references_keys
-        @references_keys ||= %i[cve exploitdb url metasploit packetstorm securityfocus]
+        @references_keys ||= %i[cve exploitdb url metasploit packetstorm securityfocus youtube]
       end
     end
 
@@ -18,7 +18,13 @@ module CMSScanner
       @references = {}
 
       self.class.references_keys.each do |key|
-        @references[key] = [*refs[key]].map(&:to_s) if refs.key?(key)
+        next unless refs.key?(key)
+
+        @references[key] = if key == :youtube
+                             [*refs[:youtube]].map { |id| youtube_url(id) }
+                           else
+                             [*refs[key]].map(&:to_s)
+                           end
       end
     end
 
@@ -30,7 +36,7 @@ module CMSScanner
     # @return [ Array<String> ] All the references URLs
     def references_urls
       cve_urls + exploitdb_urls + urls + msf_urls +
-        packetstorm_urls + securityfocus_urls
+        packetstorm_urls + securityfocus_urls + youtube_urls
     end
 
     # @return [ Array<String> ] The CVEs
@@ -111,6 +117,16 @@ module CMSScanner
     # @return [ String ]
     def securityfocus_url(id)
       "https://www.securityfocus.com/bid/#{id}/"
+    end
+
+    # @return [ Array<String> ]
+    def youtube_urls
+      references[:youtube] || []
+    end
+
+    # @return [ String ]
+    def youtube_url(id)
+      "https://www.youtube.com/watch?v=#{id}"
     end
   end
 end

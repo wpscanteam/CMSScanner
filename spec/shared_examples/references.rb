@@ -4,17 +4,17 @@ shared_examples CMSScanner::References do
   describe '#references_keys' do
     it 'returns the expected array of symbols' do
       expect(subject.class.references_keys)
-        .to eql %i[cve exploitdb url metasploit packetstorm securityfocus]
+        .to eql %i[cve exploitdb url metasploit packetstorm securityfocus youtube]
     end
   end
 
   describe 'references' do
     context 'when no references' do
-      %i[cves exploitdb_ids urls msf_modules packetstorm_ids securityfocus_ids].each do |attribute|
+      %i[cves exploitdb_ids urls msf_modules packetstorm_ids securityfocus_ids youtube_urls].each do |attribute|
         its(attribute) { should eql([]) }
       end
 
-      %i[cve_urls exploitdb_urls msf_urls packetstorm_urls securityfocus_urls].each do |attribute|
+      %i[cve_urls exploitdb_urls msf_urls packetstorm_urls securityfocus_urls youtube_urls].each do |attribute|
         its(attribute) { should eql([]) }
       end
 
@@ -37,7 +37,8 @@ shared_examples CMSScanner::References do
           url: 'single-url',
           metasploit: '/exploit/yolo',
           packetstorm: 15,
-          securityfocus: 16
+          securityfocus: 16,
+          youtube: 'xAAAA'
         }
       end
 
@@ -58,6 +59,8 @@ shared_examples CMSScanner::References do
       its(:securityfocus_ids)  { should eq %w[16] }
       its(:securityfocus_urls) { should eql %w[https://www.securityfocus.com/bid/16/] }
 
+      its(:youtube_urls) { should eql %w[https://www.youtube.com/watch?v=xAAAA] }
+
       its(:references_urls) do
         should eql [
           'https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-11',
@@ -65,7 +68,8 @@ shared_examples CMSScanner::References do
           'single-url',
           'https://www.rapid7.com/db/modules/exploit/yolo',
           'https://packetstormsecurity.com/files/15/',
-          'https://www.securityfocus.com/bid/16/'
+          'https://www.securityfocus.com/bid/16/',
+          'https://www.youtube.com/watch?v=xAAAA'
         ]
       end
     end
@@ -80,7 +84,8 @@ shared_examples CMSScanner::References do
           url: %w[single-url another-url],
           metasploit: %w[/exploit/yolo exploit/aa],
           packetstorm: [50, 51],
-          securityfocus: [60, 61]
+          securityfocus: [60, 61],
+          youtube: %w[xBBBB]
         }
       end
 
@@ -116,6 +121,8 @@ shared_examples CMSScanner::References do
                       https://www.securityfocus.com/bid/61/]
       end
 
+      its(:youtube_urls) { should eql %w[https://www.youtube.com/watch?v=xBBBB] }
+
       its(:references_urls) do
         should eql [
           'https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-10',
@@ -129,7 +136,8 @@ shared_examples CMSScanner::References do
           'https://packetstormsecurity.com/files/50/',
           'https://packetstormsecurity.com/files/51/',
           'https://www.securityfocus.com/bid/60/',
-          'https://www.securityfocus.com/bid/61/'
+          'https://www.securityfocus.com/bid/61/',
+          'https://www.youtube.com/watch?v=xBBBB'
         ]
       end
     end
