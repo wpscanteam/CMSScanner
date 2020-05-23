@@ -58,7 +58,7 @@ module CMSScanner
                    [*scope.domains[1..-1]].map(&:to_s) + scope.invalid_domains
                  end
 
-      domains.map! { |d| Regexp.escape(d.gsub(%r{/$}, '')).gsub('\*', '.*').gsub('/', '\\\\\?/') }
+      domains.map! { |d| Regexp.escape(d.delete_suffix('/')).gsub('\*', '.*').gsub('/', '\\\\\?/') }
 
       domains[0].gsub!(Regexp.escape(uri.host), Regexp.escape(uri.host) + '(?::\\d+)?') if uri.port
 
