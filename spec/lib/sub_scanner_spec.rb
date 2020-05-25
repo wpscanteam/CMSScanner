@@ -65,7 +65,7 @@ describe 'SubScanner' do
 
       expect(scanner.formatter).to receive(:output)
         .ordered
-        .with('@usage', msg: 'One of the following options is required: url, help, hh, version')
+        .with('@usage', msg: 'One of the following options is required: --url, --help, --hh, --version')
 
       expect(scanner.formatter).to receive(:beautify).ordered
 

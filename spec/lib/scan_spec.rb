@@ -39,7 +39,7 @@ describe CMSScanner::Scan do
     context 'when no required option supplied' do
       it 'calls the formatter to display the usage view' do
         expect(scanner.formatter).to receive(:output)
-          .with('@usage', msg: 'One of the following options is required: url, help, hh, version')
+          .with('@usage', msg: 'One of the following options is required: --url, --help, --hh, --version')
       end
     end
 
