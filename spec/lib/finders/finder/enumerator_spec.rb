@@ -209,7 +209,7 @@ describe CMSScanner::Finders::Finder::Enumerator do
         end
 
         context 'when one header matches but the other not, using negative look-arounds' do
-          let(:opts) { super().merge(exclude_content: /\A((?!x\-cacheable)[\s\S])*\z/i) }
+          let(:opts) { super().merge(exclude_content: /\A((?!x-cacheable)[\s\S])*\z/i) }
 
           before do
             stub_request(:head, target_urls.keys.last).and_return(status: 200, headers: { 'x-cacheable' => 'YES' })
