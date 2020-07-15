@@ -18,6 +18,15 @@ describe CMSScanner::ProgressBarNullOutput do
 
         expect(output.log).to eql(%w[M1 M2])
       end
+
+      it 'does not add duplicate' do
+        output.log 'M1'
+        output.log 'M1'
+        output.log 'M2'
+
+        expect(output.logs).to eql(%w[M1 M2])
+        expect(output.log).to eql(%w[M1 M2])
+      end
     end
   end
 end

@@ -94,6 +94,8 @@ describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
             .to_timeout
         end
 
+        CMSScanner::ParsedCli.options = { verbose: defined?(verbose) ? verbose : false }
+
         finder.attack(users, passwords)
       end
 
@@ -128,10 +130,24 @@ describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
       context 'when unknown error' do
         let(:stub_params) { { status: 200, body: 'Error: Something went wrong' } }
 
-        it 'logs to correct message' do
-          expect(finder.progress_bar.log).to eql [
-            "Error: Unknown response received Code: 200\nBody: Error: Something went wrong"
-          ]
+        context 'when no --verbose' do
+          let(:verbose) { false }
+
+          it 'logs to correct message' do
+            expect(finder.progress_bar.log).to eql [
+              'Error: Unknown response received Code: 200'
+            ]
+          end
+        end
+
+        context 'when --verbose' do
+          let(:verbose) { true }
+
+          it 'logs to correct message' do
+            expect(finder.progress_bar.log).to eql [
+              "Error: Unknown response received Code: 200\nBody: Error: Something went wrong"
+            ]
+          end
         end
       end
     end

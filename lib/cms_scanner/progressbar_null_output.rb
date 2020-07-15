@@ -17,7 +17,7 @@ module CMSScanner
     def log(string = nil)
       return logs if string.nil?
 
-      logs << string
+      logs << string unless logs.include?(string)
     end
   end
 end

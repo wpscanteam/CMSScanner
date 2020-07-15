@@ -105,8 +105,10 @@ module CMSScanner
                     "No response from remote server. WAF/IPS? (#{response.return_message})"
                   elsif response.code.to_s.start_with?('50')
                     'Server error, try reducing the number of threads.'
-                  else
+                  elsif NS::ParsedCli.verbose?
                     "Unknown response received Code: #{response.code}\nBody: #{response.body}"
+                  else
+                    "Unknown response received Code: #{response.code}"
                   end
 
           progress_bar.log("Error: #{error}")
