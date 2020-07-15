@@ -20,7 +20,7 @@ describe CMSScanner::Finders::BaseFinders do
       %i[passive aggressive].each do |symbol|
         it 'returns it in an array' do
           @mode     = symbol
-          @expected = [*symbol]
+          @expected = Array(symbol)
         end
       end
     end

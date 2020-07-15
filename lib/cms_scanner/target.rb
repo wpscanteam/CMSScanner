@@ -18,7 +18,7 @@ module CMSScanner
       super(url, opts)
 
       scope << uri.host
-      [*opts[:scope]].each { |s| scope << s }
+      Array(opts[:scope]).each { |s| scope << s }
     end
 
     # @param [ Hash ] opts

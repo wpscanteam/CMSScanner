@@ -21,9 +21,9 @@ module CMSScanner
         next unless refs.key?(key)
 
         @references[key] = if key == :youtube
-                             [*refs[:youtube]].map { |id| youtube_url(id) }
+                             Array(refs[:youtube]).map { |id| youtube_url(id) }
                            else
-                             [*refs[key]].map(&:to_s)
+                             Array(refs[key]).map(&:to_s)
                            end
       end
     end

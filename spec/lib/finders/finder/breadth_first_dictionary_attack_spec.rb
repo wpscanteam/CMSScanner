@@ -16,7 +16,7 @@ describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
     end
 
     def errored_response?(response)
-      response.timed_out? || response.body =~ /Error:/
+      response.timed_out? || response.body.include?('Error:')
     end
   end
 
