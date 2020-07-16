@@ -26,14 +26,14 @@ describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
 
   describe '#attack' do
     let(:users) { %w[admin root user].map { |u| CMSScanner::Model::User.new(u) } }
-    let(:passwords) { %w[pwd admin P@ssw0rd] }
+    let(:wordlist_path) { FIXTURES.join('passwords.txt').to_s }
 
     before do
       # Mock all login requests to 401
-      passwords.each do |password|
+      File.foreach(wordlist_path) do |password|
         users.each do |user|
           stub_request(:post, login_url)
-            .with(body: { username: user.username, pwd: password })
+            .with(body: { username: user.username, pwd: password.chomp })
             .to_return(status: 401)
         end
       end
@@ -41,7 +41,7 @@ describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
 
     context 'when no valid credentials' do
       it 'does not yield anything' do
-        expect { |block| finder.attack(users, passwords, &block) }.not_to yield_control
+        expect { |block| finder.attack(users, wordlist_path, &block) }.not_to yield_control
       end
 
       context 'when trying to increment above current progress' do
@@ -50,12 +50,12 @@ describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
           expect_any_instance_of(ProgressBar::Base)
             .to receive(:progress)
             .at_least(1)
-            .and_return(users.size * passwords.size)
+            .and_return(users.size * File.open(wordlist_path).count)
 
           expect_any_instance_of(ProgressBar::Base)
             .not_to receive(:increment)
 
-          expect { |block| finder.attack(users, passwords, &block) }.not_to yield_control
+          expect { |block| finder.attack(users, wordlist_path, &block) }.not_to yield_control
         end
       end
     end
@@ -68,7 +68,7 @@ describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
       end
 
       it 'yields the matching user' do
-        expect { |block| finder.attack(users, passwords, &block) }
+        expect { |block| finder.attack(users, wordlist_path, &block) }
           .to yield_with_args(CMSScanner::Model::User.new('admin', password: 'admin'))
       end
 
@@ -76,7 +76,7 @@ describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
         it 'does not raise an error' do
           expect_any_instance_of(ProgressBar::Base).to receive(:total=).and_raise ProgressBar::InvalidProgressError
 
-          expect { |block| finder.attack(users, passwords, &block) }
+          expect { |block| finder.attack(users, wordlist_path, &block) }
             .to yield_with_args(CMSScanner::Model::User.new('admin', password: 'admin'))
         end
       end
@@ -96,7 +96,7 @@ describe CMSScanner::Finders::Finder::BreadthFirstDictionaryAttack do
 
         CMSScanner::ParsedCli.options = { verbose: defined?(verbose) ? verbose : false }
 
-        finder.attack(users, passwords)
+        finder.attack(users, wordlist_path)
       end
 
       context 'when request timeout' do

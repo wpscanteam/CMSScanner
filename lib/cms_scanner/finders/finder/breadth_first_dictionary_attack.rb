@@ -6,20 +6,22 @@ module CMSScanner
       # Module to provide an easy way to perform password attacks
       module BreadthFirstDictionaryAttack
         # @param [ Array<CMSScanner::Model::User> ] users
-        # @param [ Array<String> ] passwords
+        # @param [ String ] wordlist_path
         # @param [ Hash ] opts
         # @option opts [ Boolean ] :show_progression
         #
         # @yield [ CMSScanner::User ] When a valid combination is found
         #
         # Due to Typhoeus threads shenanigans, in rare cases the progress-bar might
-        # be incorrect updated, hence the 'rescue ProgressBar::InvalidProgressError'
+        # be incorrectly updated, hence the 'rescue ProgressBar::InvalidProgressError'
         #
         # TODO: Make rubocop happy about metrics etc
         #
         # rubocop:disable all
-        def attack(users, passwords, opts = {})
-          create_progress_bar(total: users.size * passwords.size, show_progression: opts[:show_progression])
+        def attack(users, wordlist_path, opts = {})
+          wordlist = File.open(wordlist_path)
+
+          create_progress_bar(total: users.size * wordlist.count, show_progression: opts[:show_progression])
 
           queue_count         = 0
           # Keep the number of requests sent for each users
@@ -28,7 +30,8 @@ module CMSScanner
 
           users.each { |u| user_requests_count[u.username] = 0 }
 
-          passwords.each do |password|
+          File.foreach(wordlist) do |password|
+            password.chomp!
             remaining_users = users.select { |u| u.password.nil? }
 
             break if remaining_users.empty?
@@ -47,7 +50,7 @@ module CMSScanner
                   user.password = password
 
                   begin
-                    progress_bar.total -= passwords.size - user_requests_count[user.username]
+                    progress_bar.total -= wordlist.count - user_requests_count[user.username]
                   rescue ProgressBar::InvalidProgressError
                   end
 
