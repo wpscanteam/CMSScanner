@@ -30,8 +30,7 @@ module CMSScanner
 
           users.each { |u| user_requests_count[u.username] = 0 }
 
-          File.foreach(wordlist) do |password|
-            password.chomp!
+          File.foreach(wordlist, chomp: true) do |password|
             remaining_users = users.select { |u| u.password.nil? }
 
             break if remaining_users.empty?
