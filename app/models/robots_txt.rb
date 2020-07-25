@@ -4,6 +4,11 @@ module CMSScanner
   module Model
     # Robots.txt
     class RobotsTxt < InterestingFinding
+      # @return [ String ]
+      def to_s
+        @to_s ||= "robots.txt found: #{url}"
+      end
+
       # @todo Better detection, currently everything not empty or / is returned
       #
       # @return [ Array<String> ] The interesting Allow/Disallow rules detected

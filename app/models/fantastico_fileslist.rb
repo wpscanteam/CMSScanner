@@ -2,8 +2,16 @@
 
 module CMSScanner
   module Model
-    # FantasticoFileslist
+    # Fantastico is a commercial script library that automates the installation of web applications to a website.
+    # Fantastico scripts are executed from the administration area of a website control panel such as cPanel.
+    # It creates a file named fantastico_fileslist.txt that is publicly available and contains a list of all the
+    # files from the current directory. The contents of this file may expose sensitive information to an attacker.
     class FantasticoFileslist < InterestingFinding
+      # @return [ String ]
+      def to_s
+        @to_s ||= "Fantastico list found: #{url}"
+      end
+
       # @return [ Array<String> ] The interesting files/dirs detected
       def interesting_entries
         results = []
@@ -17,7 +25,9 @@ module CMSScanner
       end
 
       def references
-        @references ||= { url: ['http://www.acunetix.com/vulnerabilities/fantastico-fileslist/'] }
+        @references ||= {
+          url: ['https://web.archive.org/web/20140518040021/http://www.acunetix.com/vulnerabilities/fantastico-fileslist/']
+        }
       end
     end
   end
