@@ -4,7 +4,7 @@ describe CMSScanner::Finders::InterestingFindings::SearchReplaceDB2 do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
-  let(:file_url)   { url + 'searchreplacedb2.php' }
+  let(:file_url)   { "#{url}searchreplacedb2.php" }
   let(:fixtures)   { FIXTURES_FINDERS.join('interesting_findings', 'search_replace_db_2') }
 
   before { expect(finder.target).to receive(:head_or_get_params).and_return(method: :head) }

@@ -4,7 +4,7 @@ describe CMSScanner::Finders::InterestingFindings::XMLRPC do
   subject(:finder)  { described_class.new(target) }
   let(:target)      { CMSScanner::Target.new(url) }
   let(:url)         { 'http://e.org/' }
-  let(:xml_rpc_url) { url + 'xmlrpc.php' }
+  let(:xml_rpc_url) { "#{url}xmlrpc.php" }
   let(:fixtures)    { FIXTURES_FINDERS.join('interesting_findings', 'xml_rpc') }
 
   describe '#potential_urls' do

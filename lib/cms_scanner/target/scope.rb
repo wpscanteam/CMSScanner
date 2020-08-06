@@ -60,7 +60,7 @@ module CMSScanner
 
       domains.map! { |d| Regexp.escape(d.delete_suffix('/')).gsub('\*', '.*').gsub('/', '\\\\\?/') }
 
-      domains[0].gsub!(Regexp.escape(uri.host), Regexp.escape(uri.host) + '(?::\\d+)?') if uri.port
+      domains[0].gsub!(Regexp.escape(uri.host), "#{Regexp.escape(uri.host)}(?::\\d+)?") if uri.port
 
       @scope_url_pattern = %r{https?:\\?/\\?/(?:#{domains.join('|')})\\?/?}i
     end

@@ -4,7 +4,7 @@ describe CMSScanner::Finders::InterestingFindings::RobotsTxt do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
-  let(:robots_url) { url + 'robots.txt' }
+  let(:robots_url) { "#{url}robots.txt" }
   let(:fixtures)   { FIXTURES_FINDERS.join('interesting_findings', 'robots_txt') }
 
   before { expect(finder.target).to receive(:head_or_get_params).and_return(method: :head) }

@@ -4,7 +4,7 @@ describe CMSScanner::Finders::InterestingFindings::FantasticoFileslist do
   subject(:finder) { described_class.new(target) }
   let(:target)     { CMSScanner::Target.new(url) }
   let(:url)        { 'http://example.com/' }
-  let(:file_url)   { url + 'fantastico_fileslist.txt' }
+  let(:file_url)   { "#{url}fantastico_fileslist.txt" }
   let(:fixtures)   { FIXTURES_FINDERS.join('interesting_findings', 'fantastico_fileslist') }
 
   before { expect(finder.target).to receive(:head_or_get_params).and_return(method: :head) }

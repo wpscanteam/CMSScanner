@@ -59,7 +59,7 @@ module CMSScanner
       #
       # @return [ String ] The expiration file path associated to the key
       def entry_expiration_path(key)
-        entry_path(key) + '.expiration'
+        "#{entry_path(key)}.expiration"
       end
 
       private
