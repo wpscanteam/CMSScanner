@@ -15,6 +15,10 @@ Lint/MissingSuper:
   Enabled: false
 Lint/UriEscapeUnescape:
   Enabled: false
+Lint/UselessMethodDefinition:
+  Exclude:
+    - spec/lib/finders/same_type_finder_spec.rb
+    - spec/lib/finders/unique_finder_spec.rb
 Metrics/AbcSize:
   Max: 28
 Metrics/BlockLength:
@@ -30,6 +34,9 @@ Metrics/PerceivedComplexity:
   Max: 9
 Style/ClassVars:
   Enabled: false
+Style/CombinableLoops:
+  Exclude:
+    - spec/lib/controllers_spec.rb
 Style/Documentation:
   Enabled: false
 Style/FormatStringToken:
