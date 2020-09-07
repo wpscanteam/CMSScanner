@@ -57,10 +57,12 @@ module CMSScanner
       # @param [String, Class ] klass
       # @return [ String ]
       def found_by(klass = self.class)
+        labels = %w[aggressive passive]
+
         caller_locations.each do |call|
           label = call.label
 
-          next unless %w[aggressive passive].include? label
+          next unless labels.include? label
 
           title = klass.to_s.demodulize.gsub(/(\d+)[a-z]+/i, '_\0').titleize(keep_id_suffix: true)
 

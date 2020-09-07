@@ -40,10 +40,11 @@ describe CMSScanner::Finders::IndependentFinders do
 
       context 'when :mixed mode' do
         let(:mode) { :mixed }
+        let(:modes) { %i[passive aggressive] }
 
         it 'calls :passive then :aggressive on each finder' do
           finders.each do |finder|
-            %i[passive aggressive].each do |method|
+            modes.each do |method|
               expect(finder).to receive(method).with(hash_including(found: [])).ordered
             end
           end
