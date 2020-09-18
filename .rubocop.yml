@@ -8,6 +8,8 @@ AllCops:
     - 'example/**/*'
 Layout/LineLength:
   Max: 120
+Lint/ConstantDefinitionInBlock:
+  Enabled: false
 Lint/FloatComparison:
   Exclude:
     - spec/app/models/version_spec.rb
