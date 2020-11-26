@@ -32,7 +32,7 @@ def rspec_parsed_options(args)
                 CMSScanner::Controller::Core.new <<
                 CMSScanner::Controller::InterestingFindings.new
 
-  controllers.option_parser.results(args.split(' '))
+  controllers.option_parser.results(args.split)
 end
 
 # TODO: remove when https://github.com/bblimke/webmock/issues/552 fixed
