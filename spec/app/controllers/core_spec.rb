@@ -17,7 +17,7 @@ describe CMSScanner::Controller::Core do
       expect(core.cli_options.map(&:to_sym)).to match_array(
         %i[
           banner cache_dir cache_ttl clear_cache connect_timeout cookie_jar cookie_string
-          detection_mode disable_tls_checks format headers help hh http_auth ignore_main_redirect
+          detection_mode disable_tls_checks force format headers help hh http_auth ignore_main_redirect
           max_scan_duration max_threads output proxy proxy_auth random_user_agent request_timeout
           scope throttle url user_agent user_agents_list verbose version vhost
         ]
@@ -197,15 +197,24 @@ describe CMSScanner::Controller::Core do
           end
         end
 
-        context 'when --random-user-agent-provided' do
+        context 'when --random-user-agent provided' do
           let(:cli_args) { "#{super()} --random-user-agent" }
 
           it 'raises an error with the correct message' do
             expect { core.before_scan }.to raise_error(
               CMSScanner::Error::AccessForbidden,
               'The target is responding with a 403, this might be due to a WAF. ' \
-              'Well... --random-user-agent didn\'t work, you\'re on your own now!'
+              'Well... --random-user-agent didn\'t work, use --force to skip this check if needed.'
             )
+          end
+        end
+
+        context 'when --force provided' do
+          let(:cli_args) { "#{super()} --force" }
+
+          it 'does not raise an error' do
+            expect { core.before_scan }.to_not raise_error
+            expect(core.target.homepage_url).to eql target_url
           end
         end
       end

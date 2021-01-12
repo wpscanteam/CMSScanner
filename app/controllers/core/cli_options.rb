@@ -10,7 +10,8 @@ module CMSScanner
         [
           OptURL.new(['-u', '--url URL', 'The URL to scan'],
                      required_unless: %i[help hh version],
-                     default_protocol: 'http')
+                     default_protocol: 'http'),
+          OptBoolean.new(['--force', 'Do not check if target returns a 403'])
         ] + mixed_cli_options + [
           OptFilePath.new(['-o', '--output FILE', 'Output to FILE'], writable: true, exists: false),
           OptChoice.new(['-f', '--format FORMAT',

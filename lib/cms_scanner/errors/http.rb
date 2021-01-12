@@ -44,7 +44,7 @@ module CMSScanner
 
       def to_s
         msg = if random_user_agent_used
-                'Well... --random-user-agent didn\'t work, you\'re on your own now!'
+                'Well... --random-user-agent didn\'t work, use --force to skip this check if needed.'
               else
                 'Please re-try with --random-user-agent'
               end

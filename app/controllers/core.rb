@@ -43,7 +43,7 @@ module CMSScanner
         when 401
           raise Error::HTTPAuthRequired
         when 403
-          raise Error::AccessForbidden, NS::ParsedCli.random_user_agent
+          raise Error::AccessForbidden, NS::ParsedCli.random_user_agent unless NS::ParsedCli.force
         when 407
           raise Error::ProxyAuthRequired
         end
