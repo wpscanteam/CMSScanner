@@ -30,6 +30,7 @@ module CMSScanner
       @run_error = e
 
       formatter.output('@scan_aborted',
+                       url: controllers.first.target.url,
                        reason: e.is_a?(Interrupt) ? 'Canceled by User' : e.message,
                        trace: e.backtrace,
                        verbose: NS::ParsedCli.verbose ||

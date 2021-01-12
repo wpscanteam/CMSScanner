@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 describe CMSScanner::Scan do
-  subject(:scanner)    { described_class.new }
-  let(:controller)     { CMSScanner::Controller }
+  subject(:scanner) { described_class.new }
+  let(:controller)  { CMSScanner::Controller }
+  let(:target_url)  { 'http://example.com/' }
 
   before do
     Object.send(:remove_const, :ARGV)
@@ -47,12 +48,12 @@ describe CMSScanner::Scan do
       it 'aborts the scan with the correct output' do
         expect(scanner.controllers.option_parser).to receive(:results).and_return({})
 
-        expect(scanner.controllers.first)
-          .to receive(:before_scan)
-          .and_raise(Interrupt)
+        expect(scanner.controllers.first).to receive(:before_scan).and_raise(Interrupt)
 
-        expect(scanner.formatter).to receive(:output)
-          .with('@scan_aborted', hash_including(reason: 'Canceled by User', trace: anything, verbose: false))
+        expect(scanner.formatter).to receive(:output).with(
+          '@scan_aborted',
+          hash_including(reason: 'Canceled by User', trace: anything, verbose: false, url: target_url)
+        )
       end
     end
 
@@ -77,10 +78,10 @@ describe CMSScanner::Scan do
             .to receive(:before_scan)
             .and_raise(run_error.class, run_error.message)
 
-          expect(scanner.formatter).to receive(:output)
-            .with('@scan_aborted', hash_including(reason: run_error.message,
-                                                  trace: anything,
-                                                  verbose: expected_verbose))
+          expect(scanner.formatter).to receive(:output).with(
+            '@scan_aborted',
+            hash_including(reason: run_error.message, trace: anything, verbose: expected_verbose, url: target_url)
+          )
         end
       end
     end
