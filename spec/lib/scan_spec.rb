@@ -52,7 +52,7 @@ describe CMSScanner::Scan do
 
         expect(scanner.formatter).to receive(:output).with(
           '@scan_aborted',
-          hash_including(reason: 'cli option', trace: anything, verbose: false)
+          reason: 'cli option', trace: anything, verbose: false
         )
       end
     end
@@ -65,7 +65,7 @@ describe CMSScanner::Scan do
 
         expect(scanner.formatter).to receive(:output).with(
           '@scan_aborted',
-          hash_including(reason: 'Canceled by User', trace: anything, verbose: false, url: target_url)
+          reason: 'Canceled by User', trace: anything, verbose: false, url: target_url
         )
       end
     end
@@ -93,7 +93,7 @@ describe CMSScanner::Scan do
 
           expect(scanner.formatter).to receive(:output).with(
             '@scan_aborted',
-            hash_including(reason: run_error.message, trace: anything, verbose: expected_verbose, url: target_url)
+            reason: run_error.message, trace: anything, verbose: expected_verbose, url: target_url
           )
         end
       end
