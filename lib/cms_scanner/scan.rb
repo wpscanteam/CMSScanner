@@ -29,12 +29,15 @@ module CMSScanner
     rescue NoMemoryError, ScriptError, SecurityError, SignalException, StandardError, SystemStackError => e
       @run_error = e
 
-      formatter.output('@scan_aborted',
-                       url: controllers.first.target.url,
-                       reason: e.is_a?(Interrupt) ? 'Canceled by User' : e.message,
-                       trace: e.backtrace,
-                       verbose: NS::ParsedCli.verbose ||
-                                run_error_exit_code == NS::ExitCode::EXCEPTION)
+      output_params = {
+        reason: e.is_a?(Interrupt) ? 'Canceled by User' : e.message,
+        trace: e.backtrace,
+        verbose: NS::ParsedCli.verbose || run_error_exit_code == NS::ExitCode::EXCEPTION
+      }
+
+      output_params[:url] = controllers.first.target.url if NS::ParsedCli.url
+
+      formatter.output('@scan_aborted', output_params)
     ensure
       formatter.beautify
     end

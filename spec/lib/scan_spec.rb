@@ -44,9 +44,22 @@ describe CMSScanner::Scan do
       end
     end
 
+    context 'when an error is raised by OptParseValidator' do
+      it 'aborts the scan with the correct output (ie w/o the url key)' do
+        expect(scanner.controllers.option_parser).to receive(:results).and_return({})
+
+        expect(scanner.controllers.first).to receive(:before_scan).and_raise(OptParseValidator::Error, 'cli option')
+
+        expect(scanner.formatter).to receive(:output).with(
+          '@scan_aborted',
+          hash_including(reason: 'cli option', trace: anything, verbose: false)
+        )
+      end
+    end
+
     context 'when an Interrupt is raised during the scan' do
       it 'aborts the scan with the correct output' do
-        expect(scanner.controllers.option_parser).to receive(:results).and_return({})
+        expect(scanner.controllers.option_parser).to receive(:results).and_return({ url: target_url })
 
         expect(scanner.controllers.first).to receive(:before_scan).and_raise(Interrupt)
 
@@ -72,7 +85,7 @@ describe CMSScanner::Scan do
         let(:run_error) { error }
 
         it 'aborts the scan with the associated output' do
-          expect(scanner.controllers.option_parser).to receive(:results).and_return({})
+          expect(scanner.controllers.option_parser).to receive(:results).and_return({ url: target_url })
 
           expect(scanner.controllers.first)
             .to receive(:before_scan)
