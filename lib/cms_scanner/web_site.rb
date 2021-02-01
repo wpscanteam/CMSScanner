@@ -71,7 +71,6 @@ module CMSScanner
     #
     # @return [ Boolean ]
     def online?(path = nil)
-      # Style/IfWithBooleanLiteralBranches (False Positive, https://github.com/rubocop-hq/rubocop/issues/9459)
       NS::Browser.get(url(path)).code.nonzero? ? true : false
     end
 
