@@ -86,7 +86,7 @@ module CMSScanner
 
     # @return [ String ] The URL to the metasploit module page
     def msf_url(mod)
-      "https://www.rapid7.com/db/modules/#{mod.sub(%r{^/}, '')}"
+      "https://www.rapid7.com/db/modules/#{mod.sub(%r{^/}, '')}/"
     end
 
     # @return [ Array<String> ] The Packetstormsecurity IDs
