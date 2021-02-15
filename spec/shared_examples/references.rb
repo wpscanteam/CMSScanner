@@ -105,8 +105,8 @@ shared_examples CMSScanner::References do
 
       its(:msf_modules) { should eql %w[/exploit/yolo exploit/aa] }
       its(:msf_urls) do
-        should eql %w[https://www.rapid7.com/db/modules/exploit/yolo
-                      https://www.rapid7.com/db/modules/exploit/aa]
+        should eql %w[https://www.rapid7.com/db/modules/exploit/yolo/
+                      https://www.rapid7.com/db/modules/exploit/aa/]
       end
 
       its(:packetstorm_ids) { should eq %w[50 51] }
@@ -132,7 +132,7 @@ shared_examples CMSScanner::References do
           'single-url',
           'another-url',
           'https://www.rapid7.com/db/modules/exploit/yolo/',
-          'https://www.rapid7.com/db/modules/exploit/aa',
+          'https://www.rapid7.com/db/modules/exploit/aa/',
           'https://packetstormsecurity.com/files/50/',
           'https://packetstormsecurity.com/files/51/',
           'https://www.securityfocus.com/bid/60/',
