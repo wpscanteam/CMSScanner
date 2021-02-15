@@ -51,7 +51,7 @@ shared_examples CMSScanner::References do
       its(:urls) { should eql %w[single-url] }
 
       its(:msf_modules) { should eql %w[/exploit/yolo] }
-      its(:msf_urls) { should eql %w[https://www.rapid7.com/db/modules/exploit/yolo] }
+      its(:msf_urls) { should eql %w[https://www.rapid7.com/db/modules/exploit/yolo/] }
 
       its(:packetstorm_ids)  { should eq %w[15] }
       its(:packetstorm_urls) { should eql %w[https://packetstormsecurity.com/files/15/] }
@@ -66,7 +66,7 @@ shared_examples CMSScanner::References do
           'https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-11',
           'https://www.exploit-db.com/exploits/14/',
           'single-url',
-          'https://www.rapid7.com/db/modules/exploit/yolo',
+          'https://www.rapid7.com/db/modules/exploit/yolo/',
           'https://packetstormsecurity.com/files/15/',
           'https://www.securityfocus.com/bid/16/',
           'https://www.youtube.com/watch?v=xAAAA'
@@ -131,7 +131,7 @@ shared_examples CMSScanner::References do
           'https://www.exploit-db.com/exploits/41/',
           'single-url',
           'another-url',
-          'https://www.rapid7.com/db/modules/exploit/yolo',
+          'https://www.rapid7.com/db/modules/exploit/yolo/',
           'https://www.rapid7.com/db/modules/exploit/aa',
           'https://packetstormsecurity.com/files/50/',
           'https://packetstormsecurity.com/files/51/',
