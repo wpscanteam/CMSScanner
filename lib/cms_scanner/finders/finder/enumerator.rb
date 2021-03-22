@@ -59,6 +59,8 @@ module CMSScanner
 
           full_res = NS::Browser.get(head_res.effective_url, full_request_params)
 
+          return unless valid_response_codes.include?(full_res.code)
+
           return if target.homepage_or_404?(full_res) ||
                     opts[:exclude_content] && full_res.body&.match(opts[:exclude_content])
 

@@ -28,14 +28,25 @@ describe CMSScanner::Finders::Finder::Enumerator do
     end
 
     context 'when check_full_response is true' do
-      let(:opts) { super().merge(check_full_response: true) }
-      let(:body) { '' }
+      let(:opts)   { super().merge(check_full_response: true) }
+      let(:body)   { '' }
+      let(:status) { 200 }
 
-      before { stub_request(:get, effective_url).to_return(body: body) }
+      before { stub_request(:get, effective_url).to_return(body: body, status: status) }
 
       context 'when the body matches the 404 homepage' do
         it 'returns nil' do
           expect(target).to receive(:homepage_or_404?).and_return(true)
+
+          expect(finder.maybe_get_full_response(head_res, opts)).to eql nil
+        end
+      end
+
+      context 'when the status is not valid' do
+        let(:status) { 404 }
+
+        it 'returns nil' do
+          allow(target).to receive(:homepage_or_404?).and_return(false)
 
           expect(finder.maybe_get_full_response(head_res, opts)).to eql nil
         end
