@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'get_process_mem', '~> 0.2.5'
   s.add_dependency 'nokogiri', '~> 1.11.0'
-  s.add_dependency 'opt_parse_validator', '~> 1.9.3'
+  s.add_dependency 'opt_parse_validator', '~> 1.9.4'
   s.add_dependency 'public_suffix', '~> 4.0.3'
   s.add_dependency 'ruby-progressbar', '>= 1.10', '< 1.12'
   s.add_dependency 'typhoeus', '>= 1.3', '< 1.5'
