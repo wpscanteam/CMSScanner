@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'public_suffix', '~> 4.0.3'
   s.add_dependency 'ruby-progressbar', '>= 1.10', '< 1.12'
   s.add_dependency 'typhoeus', '>= 1.3', '< 1.5'
+  s.add_dependency 'ethon', '~> 0.14.0' # https://github.com/typhoeus/ethon/issues/185
   s.add_dependency 'xmlrpc', '~> 0.3'
   s.add_dependency 'yajl-ruby', '~> 1.4.1' # Better JSON parser regarding memory usage
 
