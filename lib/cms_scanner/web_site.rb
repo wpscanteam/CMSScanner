@@ -8,19 +8,20 @@ module CMSScanner
     # @param [ String ] site_url
     # @param [ Hash ] opts
     def initialize(site_url, opts = {})
-      self.url = +site_url
+      self.url = site_url
       @opts    = opts
     end
 
     def url=(site_url)
-      # Add a trailing slash to the site url
-      # Making also sure the site_url is unfrozen
-      +site_url << '/' if site_url[-1, 1] != '/'
+      new_url = site_url.dup
 
-      # Use the validator to ensure the site_url has a correct format
-      OptParseValidator::OptURL.new([]).validate(site_url)
+      # Add a trailing slash to the URL
+      new_url << '/' if new_url[-1, 1] != '/'
 
-      @uri = Addressable::URI.parse(site_url).normalize
+      # Use the validator to ensure the URL has a correct format
+      OptParseValidator::OptURL.new([]).validate(new_url)
+
+      @uri = Addressable::URI.parse(new_url).normalize
     end
 
     # @param [ String ] path Optional path to merge with the uri
