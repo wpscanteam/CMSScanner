@@ -27,6 +27,15 @@ describe CMSScanner::WebSite do
         expect(web_site.url).to eq('http://site.com/')
         expect(web_site.uri).to be_a Addressable::URI
       end
+
+      it 'does not modify the original url given' do
+        url = 'http://site.com'
+
+        web_site.url = url
+
+        expect(url).to eql('http://site.com')
+        expect(web_site.url).to eq('http://site.com/')
+      end
     end
 
     context 'when non ascii chars' do
