@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'ethon', '~> 0.14.0' # https://github.com/typhoeus/ethon/issues/185
   s.add_dependency 'get_process_mem', '~> 0.2.5'
-  s.add_dependency 'nokogiri', '~> 1.11.4'
+  s.add_dependency 'nokogiri', '>= 1.11.4', '< 1.13.0'
   s.add_dependency 'opt_parse_validator', '~> 1.9.4'
   s.add_dependency 'public_suffix', '~> 4.0.3'
   s.add_dependency 'ruby-progressbar', '>= 1.10', '< 1.12'
