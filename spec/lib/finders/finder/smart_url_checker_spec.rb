@@ -23,7 +23,7 @@ describe CMSScanner::Finders::Finder::SmartURLChecker do
     before { expect(finder).to receive(:aggressive_urls).and_return(%w[u1 u2 u3]) }
 
     after do
-      expect(finder).to receive(:process_urls).with(@expected_urls, mode: mode)
+      expect(finder).to receive(:process_urls).with(@expected_urls, { mode: mode })
       finder.aggressive(mode: mode)
     end
 
