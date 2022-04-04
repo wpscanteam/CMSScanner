@@ -188,8 +188,20 @@ describe CMSScanner::WebSite do
         stub_request(:head, web_site.homepage_url).to_return(status: status)
       end
 
+      context 'when HEAD dropped/timeout' do
+        let(:status) { 0 }
+
+        its(:head_or_get_params) { should eql(method: :get, maxfilesize: 1) }
+      end
+
       context 'when HEAD not supported' do
         let(:status) { 405 }
+
+        its(:head_or_get_params) { should eql(method: :get, maxfilesize: 1) }
+      end
+
+      context 'when HEAD not implemented' do
+        let(:status) { 501 }
 
         its(:head_or_get_params) { should eql(method: :get, maxfilesize: 1) }
       end
