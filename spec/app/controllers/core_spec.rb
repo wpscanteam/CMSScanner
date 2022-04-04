@@ -182,6 +182,33 @@ describe CMSScanner::Controller::Core do
             # expect(core.target).to receive(:homepage_res).and_call_original
             # expect(core.target.homepage_url).to eql redirection # Doesn't work, no idea why :x
           end
+
+          context 'when http to https' do
+            let(:redirection) { target_url.gsub(/^http/, 'https') }
+
+            it 'sets the target url to the redirection' do
+              expect { core.before_scan }.to_not raise_error
+              expect(core.target.url).to eql redirection
+
+              # Needs that as the Target.url is set to the redirection
+              # otherwise the next spec which will run have the target url of redirection rather than target_url
+              CMSScanner::Controller::Base.reset
+            end
+
+            context 'when --ignore-main-redirect' do
+              let(:cli_args) { "#{super()} --ignore-main-redirect" }
+
+              it 'does not set the target url to the redirection' do
+                stub_request(:get, redirection).to_return(status: 200) # because reason
+
+                expect { core.before_scan }.to_not raise_error
+                expect(core.target.url).to eql target_url
+
+                expect(core.target).to receive(:homepage_res).and_call_original
+                expect(core.target.homepage_url).to eql target_url
+              end
+            end
+          end
         end
       end
 

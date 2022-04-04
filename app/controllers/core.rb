@@ -48,14 +48,28 @@ module CMSScanner
           raise Error::ProxyAuthRequired
         end
 
-        # Checks for redirects
-        # An out of scope redirect will raise an Error::HTTPRedirect
-        effective_url = target.homepage_res.effective_url
+        handle_redirection(res)
+      end
+
+      # Checks for redirects, an out of scope redirect will raise an Error::HTTPRedirect
+      #
+      # @param [ Typhoeus::Response ] res
+      def handle_redirection(res)
+        effective_url = target.homepage_res.effective_url # Basically get and follow location of target.url
+        effective_uri = Addressable::URI.parse(effective_url)
+
+        # Case of http://a.com => https://a.com (or the opposite)
+        if !NS::ParsedCli.ignore_main_redirect && target.uri.domain == effective_uri.domain &&
+           target.uri.path == effective_uri.path && target.uri.scheme != effective_uri.scheme
+
+          target.url = effective_url
+        end
 
         return if target.in_scope?(effective_url)
 
         raise Error::HTTPRedirect, effective_url unless NS::ParsedCli.ignore_main_redirect
 
+        # Sets back homepage_res to unfollowed location in case of ignore_main_redirect used
         target.homepage_res = res
       end
 
