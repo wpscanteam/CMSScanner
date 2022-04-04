@@ -115,7 +115,7 @@ module CMSScanner
 
     # @return [ Hash ] The Typhoeus params to use to perform head requests
     def head_or_get_params
-      @head_or_get_params ||= if NS::Browser.head(homepage_url).code == 405
+      @head_or_get_params ||= if [0, 405, 501].include?(NS::Browser.head(homepage_url).code)
                                 { method: :get, maxfilesize: 1 }
                               else
                                 { method: :head }
