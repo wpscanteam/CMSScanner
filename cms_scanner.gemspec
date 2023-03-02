@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'nokogiri', '>= 1.11.4', '< 1.15.0'
   s.add_dependency 'opt_parse_validator', '~> 1.9.5'
   s.add_dependency 'public_suffix', '>= 4.0.3', '< 5.1.0'
-  s.add_dependency 'ruby-progressbar', '>= 1.10', '< 1.12'
+  s.add_dependency 'ruby-progressbar', '>= 1.10', '< 1.13'
   s.add_dependency 'typhoeus', '>= 1.3', '< 1.5'
   s.add_dependency 'xmlrpc', '~> 0.3'
   s.add_dependency 'yajl-ruby', '~> 1.4.1' # Better JSON parser regarding memory usage
