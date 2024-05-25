@@ -51,9 +51,26 @@ module CMSScanner
         handle_redirection(res)
       end
 
-      # def saml_authentication_required(res)
-      #   return true
-      # end
+      def handle_scheme_change(effective_url, effective_uri)
+        # Case of http://a.com => https://a.com (or the opposite)
+        if !NS::ParsedCli.ignore_main_redirect && target.uri.domain == effective_uri.domain &&
+           target.uri.path == effective_uri.path && target.uri.scheme != effective_uri.scheme
+
+          target.url = effective_url
+        end
+      end
+
+      # Handle redirect if the target contains 'SAMLRequest', indicating a need for SAML authentication.
+      #
+      # @param [ Addressable::URI ] effective_uri
+      # @raise [ Error::SAMLAuthenticationRequired ] If the effective_uri contains 'SAMLRequest'
+      #
+      # @return [ Void ]
+      def handle_saml_authentication(effective_uri)
+        return false unless effective_uri
+
+        raise Error::SAMLAuthenticationRequired if effective_uri.to_s.match?(/[?&]SAMLRequest/i)
+      end
 
       # Checks for redirects, an out of scope redirect will raise an Error::HTTPRedirect
       #
@@ -62,18 +79,8 @@ module CMSScanner
         effective_url = target.homepage_res.effective_url # Basically get and follow location of target.url
         effective_uri = Addressable::URI.parse(effective_url)
 
-        # if saml_authentication_required(res)
-        #   # handle_saml_authentication(res)
-        #   raise Error::SAMLAuthenticationRequired
-        # end
-
-        # Case of http://a.com => https://a.com (or the opposite)
-        if !NS::ParsedCli.ignore_main_redirect && target.uri.domain == effective_uri.domain &&
-           target.uri.path == effective_uri.path && target.uri.scheme != effective_uri.scheme
-
-          target.url = effective_url
-        end
-
+        handle_saml_authentication(effective_uri)
+        handle_scheme_change(effective_url, effective_uri)
         return if target.in_scope?(effective_url)
 
         raise Error::HTTPRedirect, effective_url unless NS::ParsedCli.ignore_main_redirect

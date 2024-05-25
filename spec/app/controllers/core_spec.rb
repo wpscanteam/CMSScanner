@@ -152,7 +152,7 @@ describe CMSScanner::Controller::Core do
             it 'raises an error' do
               expect { core.before_scan }.to raise_error(
                 CMSScanner::Error::HTTPRedirect,
-                "The URL blah blah blah supplied redirects to #{redirection}." \
+                "The URL supplied redirects to #{redirection}." \
                 ' Use the --ignore-main-redirect option to ignore the redirection and scan the target,' \
                 ' or change the --url option value to the redirected URL.'
               )
@@ -344,6 +344,31 @@ describe CMSScanner::Controller::Core do
         .with('finished', hash_including(*keys), 'core')
 
       core.after_scan
+    end
+  end
+
+  describe '#handle_redirection' do
+    let(:redirection) { 'http://example.com/?SAMLRequest=value' }
+    let(:response) { Typhoeus::Response.new(effective_url: redirection) }
+
+    before do
+      allow(core.target).to receive(:homepage_res).and_return(response)
+      allow(core.target).to receive(:in_scope?).with(redirection).and_return(true)
+      allow(Addressable::URI).to receive(:parse).with(redirection).and_return(Addressable::URI.parse(redirection))
+    end
+
+    context 'when redirection URL contains SAMLRequest' do
+      it 'raises SAMLAuthenticationRequired error' do
+        expect { core.handle_redirection(response) }.to raise_error(CMSScanner::Error::SAMLAuthenticationRequired)
+      end
+    end
+
+    context 'when redirection URL does not contain SAMLRequest' do
+      let(:redirection) { 'http://example.com/' }  # No SAMLRequest in the URL
+
+      it 'does not raise any error' do
+        expect { core.handle_redirection(response) }.not_to raise_error
+      end
     end
   end
 end
