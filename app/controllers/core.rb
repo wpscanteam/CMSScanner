@@ -51,6 +51,10 @@ module CMSScanner
         handle_redirection(res)
       end
 
+      # def saml_authentication_required(res)
+      #   return true
+      # end
+
       # Checks for redirects, an out of scope redirect will raise an Error::HTTPRedirect
       #
       # @param [ Typhoeus::Response ] res
@@ -58,10 +62,10 @@ module CMSScanner
         effective_url = target.homepage_res.effective_url # Basically get and follow location of target.url
         effective_uri = Addressable::URI.parse(effective_url)
 
-        if saml_authentication_required?(res)
-          # handle_saml_authentication(res)
-          raise Error::SAMLAuthenticationRequired
-        end
+        # if saml_authentication_required(res)
+        #   # handle_saml_authentication(res)
+        #   raise Error::SAMLAuthenticationRequired
+        # end
 
         # Case of http://a.com => https://a.com (or the opposite)
         if !NS::ParsedCli.ignore_main_redirect && target.uri.domain == effective_uri.domain &&
