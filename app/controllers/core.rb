@@ -60,6 +60,17 @@ module CMSScanner
         end
       end
 
+      # Checks if the effective_uri contains a SAMLRequest
+      #
+      # @param [ Addressable::URI ] effective_uri
+      #
+      # @return [ Boolean ]
+      def saml_request?(effective_uri)
+        return false unless effective_uri
+
+        effective_uri.to_s.match?(/[?&]SAMLRequest/i)
+      end
+
       # Handle redirect if the target contains 'SAMLRequest', indicating a need for SAML authentication.
       #
       # @param [ Addressable::URI ] effective_uri
@@ -67,9 +78,22 @@ module CMSScanner
       #
       # @return [ Void ]
       def handle_saml_authentication(effective_uri)
-        return false unless effective_uri
+        raise Error::SAMLAuthenticationRequired unless NS::ParsedCli.expect_saml
 
-        raise Error::SAMLAuthenticationRequired if effective_uri.to_s.match?(/[?&]SAMLRequest/i)
+        cookies = BrowserAuthenticator.authenticate(effective_uri.to_s)
+
+        # Extract name=value pairs and concatenate into a single string
+        cookie_string = cookies.map do |cookie|
+          cookie.split(';').first # Takes only the part before the first semicolon (name=value)
+        end.join('; ')
+
+        puts cookie_string
+
+        # Now, use these cookies for the scanning process
+        # NS::Browser.instance.headers['Cookie'] = cookie_string
+        # Continue scanning
+
+        raise Error::SAMLAuthenticationRequired
       end
 
       # Checks for redirects, an out of scope redirect will raise an Error::HTTPRedirect
@@ -79,7 +103,7 @@ module CMSScanner
         effective_url = target.homepage_res.effective_url # Basically get and follow location of target.url
         effective_uri = Addressable::URI.parse(effective_url)
 
-        handle_saml_authentication(effective_uri)
+        handle_saml_authentication(effective_uri) if saml_request?(effective_uri)
         handle_scheme_change(effective_url, effective_uri)
         return if target.in_scope?(effective_url)
 

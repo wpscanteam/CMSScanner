@@ -19,7 +19,7 @@ describe CMSScanner::Controller::Core do
           banner cache_dir cache_ttl clear_cache connect_timeout cookie_jar cookie_string
           detection_mode disable_tls_checks force format headers help hh http_auth ignore_main_redirect
           max_scan_duration max_threads output proxy proxy_auth random_user_agent request_timeout
-          scope throttle url user_agent user_agents_list verbose version vhost
+          scope throttle url user_agent user_agents_list verbose version vhost expect_saml
         ]
       )
     end
