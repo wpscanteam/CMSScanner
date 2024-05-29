@@ -80,20 +80,11 @@ module CMSScanner
       def handle_saml_authentication(effective_uri)
         raise Error::SAMLAuthenticationRequired unless NS::ParsedCli.expect_saml
 
-        cookies = BrowserAuthenticator.authenticate(effective_uri.to_s)
+        # Authenticate using the ferrum browser
+        BrowserAuthenticator.authenticate(effective_uri.to_s)
 
-        # Extract name=value pairs and concatenate into a single string
-        cookie_string = cookies.map do |cookie|
-          cookie.split(';').first # Takes only the part before the first semicolon (name=value)
-        end.join('; ')
-
-        puts cookie_string
-
-        # Now, use these cookies for the scanning process
-        # NS::Browser.instance.headers['Cookie'] = cookie_string
-        # Continue scanning
-
-        raise Error::SAMLAuthenticationRequired
+        # Resume the scan by following the redirect
+        target.opts[:ignore_main_redirect] = true
       end
 
       # Checks for redirects, an out of scope redirect will raise an Error::HTTPRedirect
@@ -102,6 +93,10 @@ module CMSScanner
       def handle_redirection(res)
         effective_url = target.homepage_res.effective_url # Basically get and follow location of target.url
         effective_uri = Addressable::URI.parse(effective_url)
+
+        if NS::ParsedCli.expect_saml && !saml_request?(effective_uri)
+          puts 'SAML authentication was expected but not required.'
+        end
 
         handle_saml_authentication(effective_uri) if saml_request?(effective_uri)
         handle_scheme_change(effective_url, effective_uri)

@@ -12,9 +12,6 @@ module BrowserAuthenticator
     puts 'Please log in through the opened browser window. Press enter once done.'
     gets # Waits for user input
 
-    cookies = browser.cookies.all.to_a
     browser.quit
-
-    cookies
   end
 end
