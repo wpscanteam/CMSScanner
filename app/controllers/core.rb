@@ -78,13 +78,26 @@ module CMSScanner
       #
       # @return [ Void ]
       def handle_saml_authentication(effective_uri)
+        # If we ended up here, the cookie_string is set, and no --expect-saml flag was included
+        raise Error::SAMLAuthenticationFailed if NS::ParsedCli.cookie_string && !NS::ParsedCli.expect_saml
+        # If we ended up here but no --expect-saml flag was included
         raise Error::SAMLAuthenticationRequired unless NS::ParsedCli.expect_saml
 
         # Authenticate using the ferrum browser
-        BrowserAuthenticator.authenticate(effective_uri.to_s)
+        cookie_string = BrowserAuthenticator.authenticate(effective_uri.to_s)
 
-        # Resume the scan by following the redirect
-        target.opts[:ignore_main_redirect] = true
+        target_url = target.url # Needed for overriding in tests
+
+        # Filter out --expect-saml, --cookie-string, and --no-banner flags from the original options
+        filtered_options = ARGV.reject do |arg|
+          arg.start_with?('--expect-saml', '--cookie-string', '--no-banner')
+        end.join(' ')
+
+        # Restart the scan with the cookies set and pass in the original options filtered
+        command = "wpscan --url #{target_url} --cookie-string '#{cookie_string}' --no-banner #{filtered_options}"
+        raise Error::AuthenticatedRescanFailure, command unless Kernel.system(command)
+
+        exit(NS::ExitCode::OK)
       end
 
       # Checks for redirects, an out of scope redirect will raise an Error::HTTPRedirect
@@ -93,6 +106,11 @@ module CMSScanner
       def handle_redirection(res)
         effective_url = target.homepage_res.effective_url # Basically get and follow location of target.url
         effective_uri = Addressable::URI.parse(effective_url)
+
+        if NS::ParsedCli.expect_saml && !saml_request?(effective_uri)
+          puts 'SAML authentication was expected but not required.'
+          puts # New line to serve as buffer before the scan results start
+        end
 
         handle_saml_authentication(effective_uri) if saml_request?(effective_uri)
         handle_scheme_change(effective_url, effective_uri)
