@@ -94,10 +94,6 @@ module CMSScanner
         effective_url = target.homepage_res.effective_url # Basically get and follow location of target.url
         effective_uri = Addressable::URI.parse(effective_url)
 
-        if NS::ParsedCli.expect_saml && !saml_request?(effective_uri)
-          puts 'SAML authentication was expected but not required.'
-        end
-
         handle_saml_authentication(effective_uri) if saml_request?(effective_uri)
         handle_scheme_change(effective_url, effective_uri)
         return if target.in_scope?(effective_url)
