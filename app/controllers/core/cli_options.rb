@@ -51,7 +51,6 @@ module CMSScanner
                           exists: true,
                           advanced: true,
                           default: APP_DIR.join('user_agents.txt')),
-          OptCredentials.new(['--http-auth login:password']),
           OptPositiveInteger.new(['-t', '--max-threads VALUE', 'The max threads to use'],
                                  default: 5),
           OptPositiveInteger.new(['--throttle MilliSeconds', 'Milliseconds to wait before doing another web request. ' \
@@ -63,7 +62,7 @@ module CMSScanner
           OptBoolean.new(['--disable-tls-checks',
                           'Disables SSL/TLS certificate verification, and downgrade to TLS1.0+ ' \
                           '(requires cURL 7.66 for the latter)'])
-        ] + cli_browser_proxy_options + cli_browser_cookies_options + cli_browser_cache_options
+        ] + cli_authentication_options + cli_browser_cookies_options + cli_browser_cache_options
       end
 
       # @return [ Array<OptParseValidator::OptBase> ]
@@ -76,11 +75,13 @@ module CMSScanner
       end
 
       # @return [ Array<OptParseValidator::OptBase> ]
-      def cli_browser_proxy_options
+      def cli_authentication_options
         [
+          OptCredentials.new(['--http-auth login:password', 'HTTP Authentication credentials']),
           OptProxy.new(['--proxy protocol://IP:port',
                         'Supported protocols depend on the cURL installed']),
-          OptCredentials.new(['--proxy-auth login:password'])
+          OptCredentials.new(['--proxy-auth login:password', 'Proxy authentication credentials']),
+          OptBoolean.new(['--expect-saml', 'Expect SAML authentication to be required'], advanced: true)
         ]
       end
 

@@ -28,8 +28,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'typhoeus', '>= 1.3', '< 1.5'
   s.add_dependency 'xmlrpc', '~> 0.3'
   s.add_dependency 'yajl-ruby', '~> 1.4.1' # Better JSON parser regarding memory usage
-
   s.add_dependency 'sys-proctable', '>= 1.2.2', '< 1.4.0' # Required by get_process_mem for Windows OS.
+  s.add_dependency "ferrum", "~> 0.8"
 
   s.add_development_dependency 'bundler',             '>= 1.6'
   s.add_development_dependency 'rake',                '~> 13.0'
