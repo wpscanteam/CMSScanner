@@ -41,6 +41,7 @@ require 'cms_scanner/references'
 require 'cms_scanner/finders'
 require 'cms_scanner/vulnerability'
 require 'cms_scanner/progressbar_null_output'
+require 'cms_scanner/browser_authenticator'
 
 # Module
 module CMSScanner

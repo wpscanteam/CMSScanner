@@ -9,3 +9,4 @@ end
 
 require_relative 'errors/http'
 require_relative 'errors/scan'
+require_relative 'errors/saml'

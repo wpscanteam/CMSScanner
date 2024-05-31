@@ -51,6 +51,55 @@ module CMSScanner
         handle_redirection(res)
       end
 
+      def handle_scheme_change(effective_url, effective_uri)
+        # Case of http://a.com => https://a.com (or the opposite)
+        if !NS::ParsedCli.ignore_main_redirect && target.uri.domain == effective_uri.domain &&
+           target.uri.path == effective_uri.path && target.uri.scheme != effective_uri.scheme
+
+          target.url = effective_url
+        end
+      end
+
+      # Checks if the effective_uri contains a SAMLRequest
+      #
+      # @param [ Addressable::URI ] effective_uri
+      #
+      # @return [ Boolean ]
+      def saml_request?(effective_uri)
+        return false unless effective_uri
+
+        effective_uri.to_s.match?(/[?&]SAMLRequest/i)
+      end
+
+      # Handle redirect if the target contains 'SAMLRequest', indicating a need for SAML authentication.
+      #
+      # @param [ Addressable::URI ] effective_uri
+      # @raise [ Error::SAMLAuthenticationRequired ] If the effective_uri contains 'SAMLRequest'
+      #
+      # @return [ Void ]
+      def handle_saml_authentication(effective_uri)
+        # If we ended up here, the cookie_string is set, and no --expect-saml flag was included
+        raise Error::SAMLAuthenticationFailed if NS::ParsedCli.cookie_string && !NS::ParsedCli.expect_saml
+        # If we ended up here but no --expect-saml flag was included
+        raise Error::SAMLAuthenticationRequired unless NS::ParsedCli.expect_saml
+
+        # Authenticate using the ferrum browser
+        cookie_string = BrowserAuthenticator.authenticate(effective_uri.to_s)
+
+        target_url = target.url # Needed for overriding in tests
+
+        # Filter out --expect-saml, --cookie-string, and --no-banner flags from the original options
+        filtered_options = ARGV.reject do |arg|
+          arg.start_with?('--expect-saml', '--cookie-string', '--no-banner')
+        end.join(' ')
+
+        # Restart the scan with the cookies set and pass in the original options filtered
+        command = "wpscan --url #{target_url} --cookie-string '#{cookie_string}' --no-banner #{filtered_options}"
+        raise Error::AuthenticatedRescanFailure, command unless Kernel.system(command)
+
+        exit(NS::ExitCode::OK)
+      end
+
       # Checks for redirects, an out of scope redirect will raise an Error::HTTPRedirect
       #
       # @param [ Typhoeus::Response ] res
@@ -58,13 +107,13 @@ module CMSScanner
         effective_url = target.homepage_res.effective_url # Basically get and follow location of target.url
         effective_uri = Addressable::URI.parse(effective_url)
 
-        # Case of http://a.com => https://a.com (or the opposite)
-        if !NS::ParsedCli.ignore_main_redirect && target.uri.domain == effective_uri.domain &&
-           target.uri.path == effective_uri.path && target.uri.scheme != effective_uri.scheme
-
-          target.url = effective_url
+        if NS::ParsedCli.expect_saml && !saml_request?(effective_uri)
+          puts 'SAML authentication was expected but not required.'
+          puts # New line to serve as buffer before the scan results start
         end
 
+        handle_saml_authentication(effective_uri) if saml_request?(effective_uri)
+        handle_scheme_change(effective_url, effective_uri)
         return if target.in_scope?(effective_url)
 
         raise Error::HTTPRedirect, effective_url unless NS::ParsedCli.ignore_main_redirect
