@@ -71,23 +71,6 @@ module CMSScanner
         effective_uri.to_s.match?(/[?&]SAMLRequest/i)
       end
 
-      # Builds the command to run the authenticated scan
-      #
-      # @param [ String ] cookie_string
-      # @param [ String ] target_url
-      #
-      # @return [ String ] The command to run
-      def build_command(cookie_string, target_url)
-        # Filter out --expect-saml, --cookie-string, and --no-banner flags from the original options
-        filtered_options = ARGV.reject do |arg|
-          arg.start_with?('--expect-saml', '--cookie-string', '--no-banner')
-        end.join(' ')
-
-        # Build the command
-        "wpscan --url #{target_url} --cookie-string '#{cookie_string}' --no-banner #{filtered_options}"
-      end
-
-
       # Handle redirect if the target contains 'SAMLRequest', indicating a need for SAML authentication.
       #
       # @param [ Addressable::URI ] effective_uri
@@ -102,10 +85,16 @@ module CMSScanner
 
         # Authenticate using the ferrum browser
         cookie_string = BrowserAuthenticator.authenticate(effective_uri.to_s)
-        target_url    = target.url # Needed for overriding in tests
-        command       = build_command(cookie_string, target_url)
+
+        target_url = target.url # Needed for overriding in tests
+
+        # Filter out --expect-saml, --cookie-string, and --no-banner flags from the original options
+        filtered_options = ARGV.reject do |arg|
+          arg.start_with?('--expect-saml', '--cookie-string', '--no-banner')
+        end.join(' ')
 
         # Restart the scan with the cookies set and pass in the original options filtered
+        command = "wpscan --url #{target_url} --cookie-string '#{cookie_string}' --no-banner #{filtered_options}"
         raise Error::AuthenticatedRescanFailure, command unless Kernel.system(command)
 
         exit(NS::ExitCode::OK)
