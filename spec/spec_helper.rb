@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'simplecov' # More config is defined in ./.simplecov
 require 'rspec/its'
 require 'webmock/rspec'
-require 'active_support/deprecation'
+require 'active_support'
 require 'active_support/time'
 
 # See http://betterspecs.org/
