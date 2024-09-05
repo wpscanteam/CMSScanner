@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'ethon', '>= 0.14', '< 0.17' # https://github.com/typhoeus/ethon/issues/185
   s.add_dependency 'get_process_mem', '~> 0.2.5'
   s.add_dependency 'nokogiri', '~> 1.16'
-  s.add_dependency 'opt_parse_validator', '~> 1.9.5'
+  s.add_dependency 'opt_parse_validator', '~> 1.10.0'
   s.add_dependency 'public_suffix', '>= 4.0.3', '< 6.1'
   s.add_dependency 'ruby-progressbar', '>= 1.10', '< 1.14'
   s.add_dependency 'typhoeus', '>= 1.3', '< 1.5'
@@ -30,6 +30,11 @@ Gem::Specification.new do |s|
   s.add_dependency 'yajl-ruby', '~> 1.4.1' # Better JSON parser regarding memory usage
 
   s.add_dependency 'sys-proctable', '>= 1.2.2', '< 1.4.0' # Required by get_process_mem for Windows OS.
+
+  # Fixes warning: ostruct was loaded from the standard library
+  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.3')
+    s.add_dependency('ostruct', '~> 0.6')
+  end
 
   s.add_development_dependency 'bundler',             '>= 1.6'
   s.add_development_dependency 'rake',                '~> 13.0'
