@@ -11,6 +11,7 @@ require 'ruby-progressbar'
 require 'opt_parse_validator'
 require 'active_support/concern'
 require 'active_support/inflector'
+require 'active_support/deprecation'
 # Standard Libs
 require 'erb'
 require 'uri'
