@@ -1,7 +1,4 @@
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-
-require 'cms_scanner/version'
+require_relative 'lib/cms_scanner/version'
 
 Gem::Specification.new do |s|
   s.name                  = 'cms_scanner'
