@@ -61,6 +61,9 @@ module CMSScanner
 
         caller_locations.each do |call|
           label = call.label
+          # Since ruby 3.4, the label contains the full name, including module and class
+          # rather than just the method like in ruby < 3.4
+          label = label[/#(.*)/i, 1] if label.include?('#')
 
           next unless labels.include? label
 
