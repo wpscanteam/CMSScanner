@@ -7,7 +7,7 @@ module CMSScanner
       # Fix for "Double/Dynamic Inclusion Problem"
       def self.included(base)
         base.include References
-        super(base)
+        super
       end
 
       FINDING_OPTS = %i[confidence confirmed_by references found_by interesting_entries].freeze
@@ -32,7 +32,7 @@ module CMSScanner
 
       # @param [ Integer ] value
       def confidence=(value)
-        @confidence = value >= 100 ? 100 : value
+        @confidence = [value, 100].min
       end
 
       # @param [ Hash ] opts
