@@ -152,9 +152,9 @@ describe CMSScanner::Controller::Core do
             it 'raises an error' do
               expect { core.before_scan }.to raise_error(
                 CMSScanner::Error::HTTPRedirect,
-                "The URL supplied redirects to #{redirection}." \
-                ' Use the --ignore-main-redirect option to ignore the redirection and scan the target,' \
-                ' or change the --url option value to the redirected URL.'
+                "The URL supplied redirects to #{redirection}. " \
+                'Use the --ignore-main-redirect option to ignore the redirection and scan the target, ' \
+                'or change the --url option value to the redirected URL.'
               )
             end
           end
