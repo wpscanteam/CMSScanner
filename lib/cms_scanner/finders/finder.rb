@@ -57,14 +57,11 @@ module CMSScanner
       # @param [String, Class ] klass
       # @return [ String ]
       def found_by(klass = self.class)
-        labels = %w[aggressive passive]
-
         caller_locations.each do |call|
-          p call
           label = call.label
-          p label
 
-          next unless labels.include? label
+          # Since ruby 3.4, the label contains the full name, including module and class rather than just the method like in ruby < 3.4
+          next unless label =~ %r{aggressive|passive}i
 
           title = klass.to_s.demodulize.gsub(/(\d+)[a-z]+/i, '_\0').titleize(keep_id_suffix: true)
 
