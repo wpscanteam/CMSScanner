@@ -134,7 +134,7 @@ module CMSScanner
     const_set(:NS, base)
 
     base.extend(ClassMethods)
-    super(base)
+    super
   end
 end
 

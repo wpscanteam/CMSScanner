@@ -31,7 +31,7 @@ module CMSScanner
 
       unless include?(controller)
         option_parser.add(*options) if options
-        super(controller)
+        super
       end
       self
     end

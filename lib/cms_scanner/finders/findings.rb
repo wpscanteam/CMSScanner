@@ -19,7 +19,7 @@ module CMSScanner
           return self
         end
 
-        super(finding)
+        super
       end
     end
   end

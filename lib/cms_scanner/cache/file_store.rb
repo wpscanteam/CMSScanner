@@ -17,7 +17,7 @@ module CMSScanner
         @storage_path = File.expand_path(storage_path)
         @serializer   = serializer
 
-        FileUtils.mkdir_p(@storage_path) unless Dir.exist?(@storage_path)
+        FileUtils.mkdir_p(@storage_path)
       end
 
       # TODO: rename this to clear ?

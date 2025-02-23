@@ -154,7 +154,7 @@ describe CMSScanner::Finders::UniqueFinders do
       context 'when :mixed mode' do
         let(:opts) { super().merge(mode: :mixed) }
 
-        it 'calls all #passive then #aggressive methods on finders and returns the '\
+        it 'calls all #passive then #aggressive methods on finders and returns the ' \
            'result which reaches 100% confidence during the process' do
           expect(finders[0]).to receive(:passive)
             .with(hash_including(found: [])).ordered.and_call_original

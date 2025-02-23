@@ -87,9 +87,9 @@ describe CMSScanner::Model::XMLRPC do
     context 'when a correct response' do
       it 'returns the expected array' do
         stub_request(:post, xml_rpc.url).and_return(
-          body: '<?xml version="1.0" ?><methodResponse><params><param><value><array><data>'\
-                '<value><string>system.listMethods</string></value>'\
-                '<value><string>m1</string></value>'\
+          body: '<?xml version="1.0" ?><methodResponse><params><param><value><array><data>' \
+                '<value><string>system.listMethods</string></value>' \
+                '<value><string>m1</string></value>' \
                 '</data></array></value></param></params></methodResponse>'
         )
 

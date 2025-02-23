@@ -15,7 +15,7 @@ module CMSScanner
     # @param [ Hash ] opts
     # @option opts [ Array<PublicSuffix::Domain, String> ] :scope
     def initialize(url, opts = {})
-      super(url, opts)
+      super
 
       scope << uri.host
       Array(opts[:scope]).each { |s| scope << s }
