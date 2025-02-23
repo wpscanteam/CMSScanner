@@ -60,7 +60,9 @@ module CMSScanner
         labels = %w[aggressive passive]
 
         caller_locations.each do |call|
+          p call
           label = call.label
+          p label
 
           next unless labels.include? label
 
