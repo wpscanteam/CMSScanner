@@ -1,5 +1,5 @@
 
-Scan Aborted: <%= @reason %>
+<%= @update ? "Update" : "Scan" %> Aborted: <%= @reason %>
 <% if @verbose -%>
 Trace: <%= @trace.join("\n") %>
 <% end %>

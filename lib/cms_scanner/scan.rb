@@ -30,6 +30,7 @@ module CMSScanner
       @run_error = e
 
       output_params = {
+        update: !! NS::ParsedCli.update,
         reason: e.is_a?(Interrupt) ? 'Canceled by User' : e.message,
         trace: e.backtrace,
         verbose: NS::ParsedCli.verbose || run_error_exit_code == NS::ExitCode::EXCEPTION
