@@ -52,7 +52,7 @@ describe CMSScanner::Scan do
 
         expect(scanner.formatter).to receive(:output).with(
           '@scan_aborted',
-          { reason: 'cli option', trace: anything, verbose: false }
+          { update: false, reason: 'cli option', trace: anything, verbose: false }
         )
       end
     end
@@ -65,7 +65,7 @@ describe CMSScanner::Scan do
 
         expect(scanner.formatter).to receive(:output).with(
           '@scan_aborted',
-          { reason: 'Canceled by User', trace: anything, verbose: false, url: target_url }
+          { update: false, reason: 'Canceled by User', trace: anything, verbose: false, url: target_url }
         )
       end
     end
