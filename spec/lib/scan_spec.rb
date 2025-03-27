@@ -93,7 +93,7 @@ describe CMSScanner::Scan do
 
           expect(scanner.formatter).to receive(:output).with(
             '@scan_aborted',
-            { reason: run_error.message, trace: anything, verbose: expected_verbose, url: target_url }
+            { update: false, reason: run_error.message, trace: anything, verbose: expected_verbose, url: target_url }
           )
         end
       end
