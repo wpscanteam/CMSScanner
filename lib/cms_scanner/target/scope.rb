@@ -53,9 +53,9 @@ module CMSScanner
       domains = [uri.host + uri.path]
 
       domains += if scope.domains.empty?
-                   Array(scope.invalid_domains[1..-1])
+                   Array(scope.invalid_domains[1..])
                  else
-                   Array(scope.domains[1..-1]).map(&:to_s) + scope.invalid_domains
+                   Array(scope.domains[1..]).map(&:to_s) + scope.invalid_domains
                  end
 
       domains.map! { |d| Regexp.escape(d.delete_suffix('/')).gsub('\*', '.*').gsub('/', '\\\\\?/') }
@@ -91,7 +91,7 @@ module CMSScanner
         if PublicSuffix.valid?(host, ignore_private: true)
           domain = PublicSuffix.parse(host, ignore_private: true)
 
-          domains.each { |d| return true if domain.match(d) }
+          domains.each { |d| return true if domain.match?(d) }
         else
           invalid_domains.each { |d| return true if host == d }
         end

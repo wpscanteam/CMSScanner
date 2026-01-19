@@ -84,8 +84,6 @@ module CMSScanner
         puts render(tpl, vars, controller_name)
       end
 
-      ERB_SUPPORTS_KVARGS = ::ERB.instance_method(:initialize).parameters.assoc(:key) # Ruby 2.6+
-
       # @param [ String ] tpl
       # @param [ Hash ] vars
       # @param [ String ] controller_name
@@ -95,12 +93,7 @@ module CMSScanner
 
         # '-' is used to disable new lines when -%> is used
         # See http://www.ruby-doc.org/stdlib-2.1.1/libdoc/erb/rdoc/ERB.html
-        # Since ruby 2.6, KVARGS are supported and passing argument is deprecated in ruby 3+
-        if ERB_SUPPORTS_KVARGS
-          ERB.new(File.read(view_path(tpl)), trim_mode: '-').result(binding)
-        else
-          ERB.new(File.read(view_path(tpl)), nil, '-').result(binding)
-        end
+        ERB.new(File.read(view_path(tpl)), trim_mode: '-').result(binding)
       end
 
       # @param [ Hash ] vars

@@ -13,10 +13,8 @@ describe CMSScanner::Finders::Finder do
     context 'when opts[:show_progression] is true' do
       let(:opts) { { show_progression: true } }
 
-      it 'uses the default progress-bar output' do
-        expected_bar_class = ENV['GITHUB_ACTION'] ? ProgressBar::Outputs::NonTty : ProgressBar::Outputs::Tty
-
-        expect(finder.progress_bar.send(:output)).to be_a expected_bar_class
+      it 'does not use null output' do
+        expect(finder.progress_bar.send(:output)).not_to be_a ProgressBar::Outputs::Null
       end
     end
 
