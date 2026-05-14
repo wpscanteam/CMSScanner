@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.test_files            = []
   s.require_paths         = ['lib']
 
-  s.add_dependency 'ethon', '>= 0.14', '< 0.17' # https://github.com/typhoeus/ethon/issues/185
+  s.add_dependency 'ethon', '>= 0.14', '< 0.19' # https://github.com/typhoeus/ethon/issues/185
   s.add_dependency 'get_process_mem', '>= 0.2.5', '< 1.1.0'
   s.add_dependency 'nokogiri', '~> 1.16'
   s.add_dependency 'opt_parse_validator', '~> 1.10.1'
